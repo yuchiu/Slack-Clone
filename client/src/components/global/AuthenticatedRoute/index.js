@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-class AuthRoute extends React.Component {
+class AuthenticatedRoute extends React.Component {
   render() {
-    const { isUserAuthenticated, component: Component, ...rest } = this.props;
+    const { isUserLoggedIn, component: Component, ...rest } = this.props;
     return (
       <Route
         {...rest}
         render={props =>
-          isUserAuthenticated ? (
+          isUserLoggedIn ? (
             <Component {...props} />
           ) : (
             <Redirect to={{ pathname: "/login" }} />
@@ -20,9 +20,9 @@ class AuthRoute extends React.Component {
   }
 }
 const stateToProps = state => ({
-  isUserAuthenticated: state.userReducer.isUserAuthenticated
+  isUserLoggedIn: state.userReducer.isUserLoggedIn
 });
 export default connect(
   stateToProps,
   null
-)(AuthRoute);
+)(AuthenticatedRoute);

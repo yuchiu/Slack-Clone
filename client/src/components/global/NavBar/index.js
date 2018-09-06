@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu, Icon } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+
+import { userAction } from "@/actions";
+import AuthNavBar from "./AuthNavBar";
+import UnauthNavBar from "./UnauthNavBar";
 
 class NavBar extends React.Component {
   state = {
@@ -16,49 +19,50 @@ class NavBar extends React.Component {
   };
 
   handleLogout = () => {
-    const { history } = this.props;
+    const { logoutUser, history } = this.props;
+    logoutUser();
     history.push("/");
   };
 
   render() {
+    const { isUserLoggedIn, username } = this.props;
+    const { current } = this.state;
     return (
       <div className="navbar-container">
-        <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal"
-        >
-          <Menu.Item key="landing">
-            <Link to="/">
-              <Icon type="home" />
-              Slack
-            </Link>
-          </Menu.Item>
-          <Menu.Item style={{ float: "right" }}>
-            <Link to="/register">
-              <Icon type="user-add" />
-              register
-            </Link>
-          </Menu.Item>
-          <Menu.Item style={{ float: "right" }}>
-            <Link to="/login">
-              <Icon type="login" />
-              login
-            </Link>
-          </Menu.Item>
-        </Menu>
+        {isUserLoggedIn && (
+          <AuthNavBar
+            handleClick={this.handleClick}
+            selectedKeys={[current]}
+            username={username}
+            handleLogout={this.handleLogout}
+          />
+        )}
+        {!isUserLoggedIn && (
+          <UnauthNavBar
+            handleClick={this.handleClick}
+            selectedKeys={[current]}
+          />
+        )}
       </div>
     );
   }
 }
 
 NavBar.propTypes = {
+  isUserLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired
 };
 
-const stateToProps = state => ({});
+const stateToProps = state => ({
+  isUserLoggedIn: state.userReducer.isUserLoggedIn,
+  username: state.userReducer.user.username
+});
 
-const dispatchToProps = dispatch => ({});
+const dispatchToProps = dispatch => ({
+  logoutUser: () => {
+    dispatch(userAction.logoutUser());
+  }
+});
 
 export default withRouter(
   connect(

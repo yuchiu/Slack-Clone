@@ -1,5 +1,6 @@
 import NavBar from "./NavBar";
 import InlineError from "./InlineError";
-import AuthRoute from "./AuthRoute";
+import AuthenticatedRoute from "./AuthenticatedRoute";
+import TokenAuthUser from "./TokenAuthUser";
 
-export { NavBar, InlineError, AuthRoute };
+export { NavBar, InlineError, AuthenticatedRoute, TokenAuthUser };
