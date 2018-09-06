@@ -1,14 +1,13 @@
 import bcrypt from "bcryptjs";
 
-const hashPassword = async (user, options) => {
+const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;
-  if (!user.changed("password")) {
-    return;
+  if (user.changed("password")) {
+    const hashedPassword = await bcrypt.hash(user.password, SALT_FACTOR);
+    // eslint-disable-next-line
+      user.password = hashedPassword;
+    return hashedPassword;
   }
-  const hashedPassword = await bcrypt.hash(user.password, SALT_FACTOR);
-  // eslint-disable-next-line
-    user.password = hashedPassword;
-  return hashedPassword;
 };
 
 export default (sequelize, DataTypes) => {
@@ -51,9 +50,8 @@ export default (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: hashPassword,
-        beforeUpdate: hashPassword,
-        beforeSave: hashPassword
+        beforeCreate: hashPasswordIfChanged,
+        beforeUpdate: hashPasswordIfChanged
       }
     }
   );
@@ -72,12 +70,8 @@ export default (sequelize, DataTypes) => {
 
   // eslint-disable-next-line func-names
   User.prototype.comparePassword = async function(password) {
-    try {
-      const isPasswordMatch = await bcrypt.compare(password, this.password);
-      return isPasswordMatch;
-    } catch (err) {
-      console.log(err);
-    }
+    const isPasswordMatch = await bcrypt.compare(password, this.password);
+    return isPasswordMatch;
   };
 
   User.prototype.userSummary = user => {

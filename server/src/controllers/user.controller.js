@@ -15,7 +15,7 @@ const jwtSignUser = user => {
   }
 };
 
-const authController = {
+export default {
   getUser: async (req, res) => {
     try {
       const { username } = req.params;
@@ -105,7 +105,7 @@ const authController = {
 
       /* validated */
       if (isPasswordValid) {
-        res.status(200).send({
+        return res.status(200).send({
           user: user.userSummary(user),
           token: jwtSignUser(user)
         });
@@ -176,5 +176,3 @@ const authController = {
     }
   }
 };
-
-export default authController;
