@@ -14,12 +14,22 @@ const jwtSignUser = user => {
     console.log(err);
   }
 };
+const userSummary = user => {
+  const summary = {
+    username: user.username,
+    email: user.email
+  };
+  return summary;
+};
 
 export default {
   getUser: async (req, res) => {
     try {
       const { username } = req.params;
-      const user = await models.User.findOne({ where: { username } });
+      const user = await models.User.findOne({
+        where: { username },
+        raw: true
+      });
 
       /* user not registered */
       if (!user) {
@@ -29,7 +39,7 @@ export default {
       }
 
       res.status(200).send({
-        user: user.userSummary(user)
+        user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -50,7 +60,8 @@ export default {
       }
 
       const isUsernameRegistered = await models.User.findOne({
-        where: { username: credentials.username }
+        where: { username: credentials.username },
+        raw: true
       });
 
       /* username already registered */
@@ -63,7 +74,8 @@ export default {
       const isEmailRegistered = await models.User.findOne({
         where: {
           email: credentials.email
-        }
+        },
+        raw: true
       });
 
       /* email already registered */
@@ -76,7 +88,7 @@ export default {
       /* credential is validated */
       const user = await models.User.create(credentials);
       res.status(200).send({
-        user: user.userSummary(user),
+        user: userSummary(user),
         token: jwtSignUser(user)
       });
     } catch (err) {
@@ -106,7 +118,7 @@ export default {
       /* validated */
       if (isPasswordValid) {
         return res.status(200).send({
-          user: user.userSummary(user),
+          user: userSummary(user.dataValues),
           token: jwtSignUser(user)
         });
       }
@@ -127,11 +139,12 @@ export default {
       // req.user is retreived from bearer token of auth.policy
       const { username } = req.user;
       const user = await models.User.findOne({
-        where: { username }
+        where: { username },
+        raw: true
       });
-
+      console.log(userSummary(user));
       res.status(200).send({
-        user: user.userSummary(user)
+        user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -141,15 +154,18 @@ export default {
     }
   },
 
+  /** ******************** */
+  /* Not Implemented yet   */
+  /** ******************** */
   updateUser: async (req, res) => {
     try {
-      /** ******************** */
-      /* Not Implemented yet */
-      /** ******************** */
       const { username } = req.params;
-      const user = await models.User.findOne({ where: { username } });
+      const user = await models.User.findOne({
+        where: { username },
+        raw: true
+      });
       res.status(200).send({
-        user: user.userSummary(user)
+        user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -158,15 +174,18 @@ export default {
       });
     }
   },
+  /** ******************** */
+  /* Not Implemented yet   */
+  /** ******************** */
   deleteUser: async (req, res) => {
     try {
-      /** ******************** */
-      /* Not Implemented yet */
-      /** ******************** */
       const { username } = req.params;
-      const user = await models.User.findOne({ where: { username } });
+      const user = await models.User.findOne({
+        where: { username },
+        raw: true
+      });
       res.status(200).send({
-        user: user.userSummary(user)
+        user: userSummary(user)
       });
     } catch (err) {
       console.log(err);

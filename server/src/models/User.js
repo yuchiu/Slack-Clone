@@ -74,13 +74,5 @@ export default (sequelize, DataTypes) => {
     return isPasswordMatch;
   };
 
-  User.prototype.userSummary = user => {
-    const summary = {
-      username: user.username,
-      email: user.email,
-      timestamp: user.timestamp
-    };
-    return summary;
-  };
   return User;
 };

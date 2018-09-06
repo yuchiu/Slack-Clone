@@ -9,6 +9,7 @@ import bodyParser from "body-parser";
 import models from "./models";
 import config from "../config";
 import routers from "./routers";
+
 import "./utils/passport";
 
 const app = express();

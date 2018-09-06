@@ -1,7 +1,7 @@
 import passport from "passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
-import { UserModel } from "../models";
+import models from "../models";
 import config from "../../config";
 
 passport.use(
@@ -12,8 +12,9 @@ passport.use(
     },
     async (jwtPayload, done) => {
       try {
-        const user = await UserModel.findOne({
-          _id: jwtPayload._id
+        const user = await models.User.findOne({
+          where: { id: jwtPayload.id },
+          raw: true
         });
         if (!user) {
           return done(new Error(), false);
