@@ -1,4 +1,15 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+
+const hashPassword = async (user, options) => {
+  const SALT_FACTOR = 10;
+  if (!user.changed("password")) {
+    return;
+  }
+  const hashedPassword = await bcrypt.hash(user.password, SALT_FACTOR);
+  // eslint-disable-next-line
+    user.password = hashedPassword;
+  return hashedPassword;
+};
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -13,7 +24,7 @@ export default (sequelize, DataTypes) => {
             msg: "The username can only contain letters and numbers"
           },
           len: {
-            args: [3, 25],
+            args: [4, 128],
             msg: "The username needs to be between 3 and 25 characteres long"
           }
         }
@@ -32,19 +43,17 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           len: {
-            args: [4, 100],
-            msg: "The password needs to be between 4 and 100 characteres long"
+            args: [4, 128],
+            msg: "The password needs to be between 4 and 128 characteres long"
           }
         }
       }
     },
     {
       hooks: {
-        afterValidate: async user => {
-          const hashedPassword = await bcrypt.hash(user.password, 12);
-          // eslint-disable-next-line
-          user.password = hashedPassword;
-        }
+        beforeCreate: hashPassword,
+        beforeUpdate: hashPassword,
+        beforeSave: hashPassword
       }
     }
   );
@@ -61,5 +70,23 @@ export default (sequelize, DataTypes) => {
     });
   };
 
+  // eslint-disable-next-line func-names
+  User.prototype.comparePassword = async function(password) {
+    try {
+      const isPasswordMatch = await bcrypt.compare(password, this.password);
+      return isPasswordMatch;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  User.prototype.userSummary = user => {
+    const summary = {
+      username: user.username,
+      email: user.email,
+      timestamp: user.timestamp
+    };
+    return summary;
+  };
   return User;
 };

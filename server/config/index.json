@@ -1,6 +1,0 @@
-{
-  "MONGO_LOCAL_URI": "mongodb://localhost:27017/todays-news",
-  "MONGO_CLOUD_URI": "mongodb://admin01:admin01@ds111492.mlab.com:11492/todays-news",
-  "PORT": 3030,
-  "JWT_SECRET": "ckmksadii8jrei8riwe3897547fjujrf928r32"
-}

@@ -1,22 +1,25 @@
-import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-import { UserModel } from "../models";
-import { jwtSignUser } from "../utils";
+import models from "../models";
+import config from "../../config";
 
-const userSummary = user => {
-  const summary = {
-    username: user.username,
-    email: user.email,
-    timestamp: user.timestamp
-  };
-  return summary;
+const jwtSignUser = user => {
+  try {
+    const userJson = user.toJSON();
+    const ONE_WEEK = 60 * 60 * 24 * 7;
+    return jwt.sign(userJson, config.JWT_SECRET, {
+      expiresIn: ONE_WEEK
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const authController = {
   getUser: async (req, res) => {
     try {
       const { username } = req.params;
-      const user = await UserModel.findOne({ username });
+      const user = await models.User.findOne({ where: { username } });
 
       /* user not registered */
       if (!user) {
@@ -26,7 +29,7 @@ const authController = {
       }
 
       res.status(200).send({
-        user: userSummary(user)
+        user: user.userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -39,35 +42,41 @@ const authController = {
     try {
       const credentials = req.body;
 
-      const isUsernameRegistered = await UserModel.findOne({
-        username: credentials.username
+      /* username or email is missing */
+      if (!credentials.username || !credentials.email) {
+        res.status(500).send({
+          error: "username and email are required"
+        });
+      }
+
+      const isUsernameRegistered = await models.User.findOne({
+        where: { username: credentials.username }
       });
 
       /* username already registered */
       if (isUsernameRegistered) {
         res.status(403).send({
-          confirmation: false,
           error: `username: ${credentials.username} is already registered`
         });
       }
 
-      const isEmailRegistered = await UserModel.findOne({
-        email: credentials.email
+      const isEmailRegistered = await models.User.findOne({
+        where: {
+          email: credentials.email
+        }
       });
 
       /* email already registered */
       if (isEmailRegistered) {
         res.status(403).send({
-          confirmation: false,
           error: `email: ${credentials.email} is already registered`
         });
       }
 
       /* credential is validated */
-      credentials.password = await bcrypt.hash(credentials.password, 10);
-      const user = await UserModel.create(credentials);
+      const user = await models.User.create(credentials);
       res.status(200).send({
-        user: userSummary(user),
+        user: user.userSummary(user),
         token: jwtSignUser(user)
       });
     } catch (err) {
@@ -80,8 +89,9 @@ const authController = {
   loginUser: async (req, res) => {
     try {
       const credentials = req.body;
-      console.log(req.body);
-      const user = await UserModel.findOne({ username: credentials.username });
+      const user = await models.User.findOne({
+        where: { username: credentials.username }
+      });
 
       /* user not registered */
       if (!user) {
@@ -91,22 +101,19 @@ const authController = {
       }
 
       /* validate password */
-      const isPasswordValid = await bcrypt.compare(
-        credentials.password,
-        user.toJSON().password
-      );
+      const isPasswordValid = await user.comparePassword(credentials.password);
 
-      /* invalid password */
-      if (!isPasswordValid) {
-        res.status(403).send({
-          error: "invalid password"
+      /* validated */
+      if (isPasswordValid) {
+        res.status(200).send({
+          user: user.userSummary(user),
+          token: jwtSignUser(user)
         });
       }
 
-      /* password is validated */
-      res.status(200).send({
-        user: userSummary(user),
-        token: jwtSignUser(user)
+      /* invalid password */
+      res.status(403).send({
+        error: "invalid password"
       });
     } catch (err) {
       console.log(err);
@@ -119,13 +126,12 @@ const authController = {
     try {
       // req.user is retreived from bearer token of auth.policy
       const { username } = req.user;
-      const user = await UserModel.findOne({
-        username
+      const user = await models.User.findOne({
+        where: { username }
       });
 
       res.status(200).send({
-        confirmation: true,
-        user: userSummary(user)
+        user: user.userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -134,21 +140,16 @@ const authController = {
       });
     }
   },
+
   updateUser: async (req, res) => {
     try {
+      /** ******************** */
+      /* Not Implemented yet */
+      /** ******************** */
       const { username } = req.params;
-      const isUserCreated = await UserModel.findOne({ username });
-
-      /* user not registered */
-      if (!isUserCreated) {
-        return res.status(403).send({
-          error: `this account ${username} is not yet registered`
-        });
-      }
-
-      const user = await UserModel.findOneAndUpdate({ username }, req.body);
+      const user = await models.User.findOne({ where: { username } });
       res.status(200).send({
-        user: userSummary(user)
+        user: user.userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -159,19 +160,13 @@ const authController = {
   },
   deleteUser: async (req, res) => {
     try {
+      /** ******************** */
+      /* Not Implemented yet */
+      /** ******************** */
       const { username } = req.params;
-      const isUserCreated = await UserModel.findOne({ username });
-
-      /* user not registered */
-      if (!isUserCreated) {
-        return res.status(403).send({
-          error: `this account ${username} is not yet registered`
-        });
-      }
-
-      const user = await UserModel.findOneAndRemove({ username });
+      const user = await models.User.findOne({ where: { username } });
       res.status(200).send({
-        user: userSummary(user)
+        user: user.userSummary(user)
       });
     } catch (err) {
       console.log(err);

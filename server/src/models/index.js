@@ -1,25 +1,20 @@
 import Sequelize from "sequelize";
+import config from "../../config";
 
 const sequelize = new Sequelize(
-  process.env.NODE_ENV || "slack",
-  "postgres",
-  "postgres",
-  {
-    dialect: "postgres",
-    operatorsAliases: Sequelize.Op,
-    define: {
-      underscored: true
-    }
-  }
+  config.DB.DB_NAME,
+  config.DB.DB_USER,
+  config.DB.DB_PASS,
+  config.DB.OPTIONS
 );
 
 const models = {
-  User: sequelize.import("./user"),
-  Channel: sequelize.import("./channel"),
-  Message: sequelize.import("./message"),
-  Team: sequelize.import("./team"),
-  Member: sequelize.import("./member"),
-  DirectMessage: sequelize.import("./directMessage")
+  User: sequelize.import("./User"),
+  Channel: sequelize.import("./Channel"),
+  Message: sequelize.import("./Message"),
+  Team: sequelize.import("./Team"),
+  Member: sequelize.import("./Member"),
+  DirectMessage: sequelize.import("./DirectMessage")
 };
 
 Object.keys(models).forEach(modelName => {
