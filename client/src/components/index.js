@@ -9,6 +9,7 @@ import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 import CreateTeamPage from "./CreateTeamPage";
 import WorkSpacePage from "./WorkSpacePage";
+import ErrorPage from "./ErrorPage";
 import NotFoundPage from "./NotFoundPage";
 
 class Router extends React.Component {
@@ -26,7 +27,7 @@ class Router extends React.Component {
   render() {
     const { hasError } = this.state;
     return hasError ? (
-      <h2>Error occured while rendering this page</h2>
+      <ErrorPage />
     ) : (
       <BrowserRouter>
         <React.Fragment>
