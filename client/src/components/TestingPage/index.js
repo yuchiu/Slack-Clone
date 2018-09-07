@@ -4,15 +4,13 @@ import PropTypes from "prop-types";
 import TextChanger from "./TextChanger";
 import { NavBar } from "@/components/global";
 
-const TestingPage = ({ history }) => (
-  <div>
-    <NavBar history={history} />
-    <TextChanger />
-  </div>
+const TestingPage = () => (
+  <React.Fragment>
+    <NavBar />
+    <main className="testing-page">
+      <TextChanger />
+    </main>
+  </React.Fragment>
 );
-
-TestingPage.propTypes = {
-  history: PropTypes.object.isRequired
-};
 
 export default TestingPage;

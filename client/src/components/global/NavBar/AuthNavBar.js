@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Menu, Icon } from "antd";
+import SlackLogo from "../SlackLogo";
 
 class AuthNavBar extends React.Component {
   render() {
@@ -10,7 +11,7 @@ class AuthNavBar extends React.Component {
       <Menu onClick={handleClick} selectedKeys={selectedKeys} mode="horizontal">
         <Menu.Item key="landing">
           <Link to="/">
-            <Icon type="home" />
+            <SlackLogo size="32" />
             Slack
           </Link>
         </Menu.Item>

@@ -47,7 +47,7 @@ class Router extends React.Component {
               component={WorkSpacePage}
             />
             <AuthenticatedRoute exact path="/testing" component={TestingPage} />
-            <Route component={NotFoundPage} />
+            <Route exact path="/:unfoundLocation" component={NotFoundPage} />
           </Switch>
         </React.Fragment>
       </BrowserRouter>

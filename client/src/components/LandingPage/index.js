@@ -1,16 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { NavBar } from "@/components/global";
 
-const LandingPage = ({ history }) => (
-  <div>
-    <NavBar history={history} />
-  </div>
+const LandingPage = () => (
+  <React.Fragment>
+    <NavBar />
+    <main className="landing-page">Slack Clone</main>
+  </React.Fragment>
 );
-
-LandingPage.propTypes = {
-  history: PropTypes.object.isRequired
-};
 
 export default LandingPage;

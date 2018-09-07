@@ -80,14 +80,16 @@ class RegisterPage extends React.Component {
       <React.Fragment>
         {isUserLoggedIn && <Redirect to="/" />}
         <NavBar />
-        <RegisterForm
-          handleRegister={this.handleRegister}
-          onChange={this.handleChange}
-          redirectToLogin={this.redirectToLogin}
-          clientErrors={clientErrors}
-          credentials={credentials}
-        />
-        {error && <InlineError text={error} />}
+        <main className="register-page">
+          <RegisterForm
+            handleRegister={this.handleRegister}
+            onChange={this.handleChange}
+            redirectToLogin={this.redirectToLogin}
+            clientErrors={clientErrors}
+            credentials={credentials}
+          />
+          {error && <InlineError text={error} />}
+        </main>
       </React.Fragment>
     );
   }

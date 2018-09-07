@@ -61,15 +61,17 @@ class LoginPage extends React.Component {
       <React.Fragment>
         {isUserLoggedIn && <Redirect to="/" />}
         <NavBar />
-        <LoginForm
-          handleLogin={this.handleLogin}
-          onChange={this.handleChange}
-          redirectToRegister={this.redirectToRegister}
-          clientErrors={clientErrors}
-          credentials={credentials}
-        />
-        <br />
-        {error && <InlineError text={error} />}
+        <main className="login-page">
+          <LoginForm
+            handleLogin={this.handleLogin}
+            onChange={this.handleChange}
+            redirectToRegister={this.redirectToRegister}
+            clientErrors={clientErrors}
+            credentials={credentials}
+          />
+          <br />
+          {error && <InlineError text={error} />}
+        </main>
       </React.Fragment>
     );
   }
