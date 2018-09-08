@@ -31,7 +31,7 @@ class Router extends React.Component {
     ) : (
       <BrowserRouter>
         <React.Fragment>
-          {/* try to log in user automatically if auth info exist */}
+          {/* try to log in user automatically if token exist in local storage */}
           <TokenAuthUser />
           <Switch>
             <Route exact path="/" component={LandingPage} />
