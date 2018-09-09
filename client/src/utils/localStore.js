@@ -1,31 +1,14 @@
 export default {
-  /**
-   * Authenticate a user. Save a token string in Local Storage
-   *
-   * @param {string} token
-   */
+  /* Authenticate a user. Save a token string in Local Storage */
   authenticateUser: data => {
     localStorage.setItem("token", data.token);
   },
 
-  /**
-   * Check if a user is authenticated - check if a token is saved in Local Storage
-   *
-   * @returns {boolean}
-   */
-  isUserLoggedIn: () => localStorage.getItem("token") !== null,
-
-  /**
-   * Deauthenticate a user. Remove token and email from Local Storage.
-   *
-   */
+  /* Deauthenticate a user. Remove token and email from Local Storage. */
   deauthenticateUser: () => {
     localStorage.removeItem("token");
   },
-  /**
-   * Get a token value.
-   *
-   * @returns {string}
-   */
+
+  /* Get a token value. */
   getToken: () => localStorage.getItem("token")
 };

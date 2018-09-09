@@ -1,7 +1,4 @@
 export default {
-  /* testing */
-  FETCH_TEXT: "FETCH_TEXT",
-
   /* users */
   AUTO_LOGIN: "AUTO_LOGIN",
   LOGIN_USER: "LOGIN_USER",

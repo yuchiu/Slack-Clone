@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./index.scss";
 import { AuthenticatedRoute, TokenAuthUser } from "./global";
 import LandingPage from "./LandingPage";
-import TestingPage from "./TestingPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 import CreateTeamPage from "./CreateTeamPage";
@@ -47,7 +46,6 @@ class Router extends React.Component {
               path="/workspace"
               component={WorkSpacePage}
             />
-            <AuthenticatedRoute exact path="/testing" component={TestingPage} />
             <Route exact path="/:unfoundLocation" component={NotFoundPage} />
           </Switch>
         </React.Fragment>

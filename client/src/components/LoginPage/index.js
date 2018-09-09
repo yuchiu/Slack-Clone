@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { validateForm } from "@/utils";
+import { validateForm, sessionStore } from "@/utils";
 import { userAction } from "@/actions";
 import { NavBar, InlineError } from "@/components/global";
 import LoginForm from "./LoginForm";
@@ -56,7 +56,8 @@ class LoginPage extends React.Component {
 
   render() {
     const { clientErrors, credentials } = this.state;
-    const { isUserLoggedIn, error } = this.props;
+    const { error } = this.props;
+    const isUserLoggedIn = sessionStore.getLoginStatus();
     return (
       <React.Fragment>
         {isUserLoggedIn && <Redirect to="/" />}
@@ -80,12 +81,10 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
-  isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: state.userReducer.isUserLoggedIn,
   error: state.userReducer.error
 });
 

@@ -1,0 +1,11 @@
+/* Messages Component */
+.messages-container {
+  /* autoprefixer: off */
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}

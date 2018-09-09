@@ -1,10 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
+import { sessionStore } from "@/utils/";
 
 class AuthenticatedRoute extends React.Component {
   render() {
-    const { isUserLoggedIn, component: Component, ...rest } = this.props;
+    const { component: Component, ...rest } = this.props;
+    const isUserLoggedIn = sessionStore.getLoginStatus();
     return (
       <Route
         {...rest}
@@ -19,10 +20,5 @@ class AuthenticatedRoute extends React.Component {
     );
   }
 }
-const stateToProps = state => ({
-  isUserLoggedIn: state.userReducer.isUserLoggedIn
-});
-export default connect(
-  stateToProps,
-  null
-)(AuthenticatedRoute);
+
+export default AuthenticatedRoute;
