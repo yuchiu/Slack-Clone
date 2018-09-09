@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { userAction } from "@/actions";
+import { authAction } from "@/actions";
 import AuthNavBar from "./AuthNavBar";
 import UnauthNavBar from "./UnauthNavBar";
-import { sessionStore } from "@/utils/";
 
 class NavBar extends React.Component {
   state = {
@@ -26,8 +25,7 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { username } = this.props;
-    const isUserLoggedIn = sessionStore.getLoginStatus();
+    const { isUserLoggedIn, username } = this.props;
     const { current } = this.state;
     return (
       <div className="navbar-container">
@@ -51,16 +49,18 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
+  isUserLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired
 };
 
 const stateToProps = state => ({
+  isUserLoggedIn: state.authReducer.isUserLoggedIn,
   username: state.userReducer.user.username
 });
 
 const dispatchToProps = dispatch => ({
   logoutUser: () => {
-    dispatch(userAction.logoutUser());
+    dispatch(authAction.logoutUser());
   }
 });
 

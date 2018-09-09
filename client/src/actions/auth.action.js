@@ -1,9 +1,9 @@
 import constants from "@/constants";
-import { userService } from "./services";
+import { authService } from "./services";
 
 export default {
   autoAuth: () => async dispatch => {
-    const response = await userService.autoAuth();
+    const response = await authService.autoAuth();
     const { data } = response;
     dispatch({
       type: constants.AUTO_LOGIN,
@@ -13,7 +13,7 @@ export default {
 
   registerUser: credentials => async dispatch => {
     try {
-      const response = await userService.registerUser(credentials);
+      const response = await authService.registerUser(credentials);
       const { data } = response;
       dispatch({
         type: constants.LOGIN_USER,
@@ -30,7 +30,7 @@ export default {
 
   loginUser: credentials => async dispatch => {
     try {
-      const response = await userService.loginUser(credentials);
+      const response = await authService.loginUser(credentials);
       const { data } = response;
       dispatch({
         type: constants.LOGIN_USER,

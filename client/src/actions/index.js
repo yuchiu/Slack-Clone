@@ -1,3 +1,3 @@
-import userAction from "./user.action";
+import authAction from "./auth.action";
 
-export { userAction };
+export { authAction };
