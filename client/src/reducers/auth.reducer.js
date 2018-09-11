@@ -7,12 +7,8 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const newState = Object.assign({}, state);
+  const newState = { ...state };
   switch (action.type) {
-    case constants.AUTH_ERROR:
-      newState.error = action.payload.error;
-      return newState;
-
     case constants.AUTO_LOGIN:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
@@ -31,6 +27,11 @@ export default (state = initialState, action) => {
       localStore.deauthenticateUser();
       newState.error = "";
       return newState;
+
+    case constants.AUTH_ERROR:
+      newState.error = action.payload.error;
+      return newState;
+
     default:
       return state;
   }

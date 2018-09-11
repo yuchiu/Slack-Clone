@@ -1,64 +1,45 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
 import Proptypes from "prop-types";
+import { connect } from "react-redux";
 
 import "./index.scss";
+import ChannelHeader from "./ChannelHeader";
+import ChannelList from "./ChannelList";
+import DirectMessageHeader from "./DirectMessageHeader";
+import DirectMessageList from "./DirectMessageList";
+import SideBarHeader from "./SideBarHeader";
 
 class LeftSideBar extends React.Component {
   state = {};
 
   render() {
+    const { user } = this.props;
     return (
       <div className="leftsidebar">
-        <div className="leftsidebar__header">
-          <h1 className="leftsidebar__header__teamname">
-            <Icon className="team-bell" name="bell outline" />
-            team name
-          </h1>
-          <h1 className="leftsidebar__header__username">username</h1>
-        </div>
+        <SideBarHeader user={user} />
         <ul className="leftsidebar__List">
-          <span>
-            <Icon name="comment alternate" />
-            All Threads
-          </span>
-          <h1 className="leftsidebar__List__header">CHANNELS</h1>
-          <li className="leftsidebar__List__item leftsidebar__List__item--link">
-            # channel name
-          </li>{" "}
-          <li className="leftsidebar__List__item leftsidebar__List__item--link">
-            # channel name
-          </li>{" "}
-          <li className="leftsidebar__List__item leftsidebar__List__item--link">
-            # channel name
-          </li>
+          <ChannelHeader />
+          <ChannelList />
         </ul>
         <ul className="leftsidebar__List">
-          <h1 className="leftsidebar__List__header">
-            DIRECT MESSAGES
-            <Icon
-              className="leftsidebar__List__header__icon leftsidebar__List__header__icon--closer"
-              onClick={this.toggleDirectMessageModal}
-              name="plus circle"
-            />
-          </h1>
-          <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-            <Bubble /> username
-          </li>{" "}
-          <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-            <Bubble /> username
-          </li>{" "}
-          <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-            <Bubble /> username
-          </li>
+          <DirectMessageHeader />
+          <DirectMessageList />
         </ul>
       </div>
     );
   }
 }
-const Bubble = ({ on = true }) =>
-  on ? <span className="leftsidebar__List__bubble">●</span> : "○";
-
 LeftSideBar.propTypes = {};
 
-export default LeftSideBar;
+/* user, channel, direct messages */
+const stateToProps = state => ({
+  user: state.userReducer.user,
+  currentTeam: state.teamReducer.currentTeam
+});
+
+const dispatchToProps = dispatch => ({});
+
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(LeftSideBar);

@@ -7,28 +7,31 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const newState = Object.assign({}, state);
+  const newState = { ...state };
   switch (action.type) {
     case constants.AUTO_LOGIN:
-      newState.teams = action.payload.teams;
+      newState.teamList = action.payload.teamList;
+      newState.currentTeam = action.payload.teamList[0];
       return newState;
 
     case constants.LOGIN_USER:
-      newState.teams = action.payload.teams;
+      newState.teamList = action.payload.teamList;
+      newState.currentTeam = action.payload.teamList[0];
       return newState;
 
     case constants.LOGOUT_USER:
-      newState.teams = [];
+      newState.teamList = [];
+      newState.currentTeam = {};
+      newState.error = "";
+      return newState;
+
+    case constants.CREATE_TEAM:
+      newState.currentTeam = action.payload.team;
       newState.error = "";
       return newState;
 
     case constants.CREATE_TEAM_ERROR:
       newState.error = action.payload.error;
-      return newState;
-
-    case constants.CREATE_TEAM:
-      newState.team = action.payload;
-      newState.error = "";
       return newState;
 
     default:

@@ -2,12 +2,11 @@ import constants from "@/constants";
 
 const initialState = {
   user: {},
-  teams: [],
   error: ""
 };
 
 export default (state = initialState, action) => {
-  const newState = Object.assign({}, state);
+  const newState = { ...state };
   switch (action.type) {
     case constants.AUTO_LOGIN:
       newState.user = action.payload.user;
