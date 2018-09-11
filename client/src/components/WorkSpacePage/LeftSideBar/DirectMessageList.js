@@ -1,21 +1,21 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 class DirectMessageList extends React.Component {
   state = {};
 
   render() {
+    const { directMessageMemberList } = this.props;
     return (
       <React.Fragment>
-        <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-          <Bubble /> username
-        </li>{" "}
-        <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-          <Bubble /> username
-        </li>{" "}
-        <li className="leftsidebar__List__item  leftsidebar__List__item--link">
-          <Bubble /> username
-        </li>
+        {directMessageMemberList.map(directMessageMember => (
+          <li
+            key={directMessageMember.id}
+            className="leftsidebar__List__item leftsidebar__List__item--link"
+          >
+            <Bubble /> {directMessageMember.username}
+          </li>
+        ))}
       </React.Fragment>
     );
   }
@@ -23,6 +23,8 @@ class DirectMessageList extends React.Component {
 const Bubble = ({ on = true }) =>
   on ? <span className="leftsidebar__List__bubble">●</span> : "○";
 
-DirectMessageList.propTypes = {};
+DirectMessageList.propTypes = {
+  directMessageMemberList: PropTypes.array.isRequired
+};
 
 export default DirectMessageList;

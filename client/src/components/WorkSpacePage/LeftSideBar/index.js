@@ -48,12 +48,17 @@ class LeftSideBar extends React.Component {
   };
 
   render() {
-    const { user, currentTeam } = this.props;
     const {
       openAddTeamMemberModal,
       openAddChannelModal,
       openAddDirectMessageModal
     } = this.state;
+    const {
+      user,
+      currentTeam,
+      directMessageMemberList,
+      channelList
+    } = this.props;
     return (
       <React.Fragment>
         <section className="leftsidebar">
@@ -63,13 +68,15 @@ class LeftSideBar extends React.Component {
               isAdmin={currentTeam.admin}
               toggleAddChannelModal={this.toggleAddChannelModal}
             />
-            <ChannelList />
+            <ChannelList channelList={channelList} />
           </ul>
           <ul className="leftsidebar__List">
             <DirectMessageHeader
               toggleAddDirectMessageModal={this.toggleAddDirectMessageModal}
             />
-            <DirectMessageList />
+            <DirectMessageList
+              directMessageMemberList={directMessageMemberList}
+            />
           </ul>
           <InviteMemberSection
             isAdmin={currentTeam.admin}
@@ -105,7 +112,9 @@ LeftSideBar.propTypes = {
 /* user, channel, direct messages */
 const stateToProps = state => ({
   user: state.userReducer.user,
-  currentTeam: state.teamReducer.currentTeam
+  currentTeam: state.teamReducer.currentTeam,
+  channelList: state.channelReducer.channelList,
+  directMessageMemberList: state.directMessageReducer.directMessageMemberList
 });
 
 const dispatchToProps = dispatch => ({});

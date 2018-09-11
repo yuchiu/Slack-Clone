@@ -4,7 +4,7 @@ import { sessionStore } from "@/utils";
 const initialState = {
   teamList: [],
   currentTeam: {},
-  isTeamCreated: false,
+  currentTeamMembers: [],
   error: ""
 };
 
@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
       if (action.payload.teamList) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
-        sessionStore.setTeamToTrue();
+        sessionStore.setTeamId(newState.currentTeam.id);
       }
       return newState;
 
@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
       if (action.payload.teamList) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
-        sessionStore.setTeamToTrue();
+        sessionStore.setTeamId(newState.currentTeam.id);
       }
       return newState;
 
@@ -31,14 +31,20 @@ export default (state = initialState, action) => {
       newState.teamList = [];
       newState.currentTeam = {};
       newState.error = "";
-      sessionStore.setTeamToFalse();
+      newState.currentTeamMembers = [];
+      sessionStore.removeTeamId();
       return newState;
 
     case constants.CREATE_TEAM:
       newState.teamList = action.payload.teamList;
       newState.currentTeam = action.payload.team;
       newState.error = "";
-      sessionStore.setTeamToTrue();
+      sessionStore.setTeamId(newState.currentTeam.id);
+      return newState;
+
+    case constants.GET_TEAM_ASSOCIATED_LIST:
+      newState.error = "";
+      newState.currentTeamMembers = action.payload.teamMemberList;
       return newState;
 
     case constants.TEAM_ERROR:

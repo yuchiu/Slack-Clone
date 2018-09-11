@@ -11,13 +11,13 @@ export default {
   getLoginStatus: () => sessionStorage.getItem("loginStatus") === "true",
 
   /* save user has team */
-  setTeamToTrue: () => {
-    sessionStorage.setItem("isTeamSet", true);
+  setTeamId: id => {
+    sessionStorage.setItem("teamId", id);
   },
   /* set user has no team */
-  setTeamToFalse: () => {
-    sessionStorage.setItem("isTeamSet", false);
+  removeTeamId: () => {
+    sessionStorage.setItem("teamId", 0);
   },
   /* check if user has team */
-  getTeamStatus: () => sessionStorage.getItem("isTeamSet") === "true"
+  getTeamId: () => sessionStorage.getItem("teamId")
 };

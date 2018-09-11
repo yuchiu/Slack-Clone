@@ -18,13 +18,12 @@ export default {
       });
     }
   },
-  getTeam: teamId => async dispatch => {
+  getTeamAssociatedList: teamId => async dispatch => {
     try {
-      console.log("getteam");
-      const response = await teamService.getTeam(teamId);
+      const response = await teamService.getTeamAssociatedList(teamId);
       const { data } = response;
       dispatch({
-        type: constants.GET_TEAM,
+        type: constants.GET_TEAM_ASSOCIATED_LIST,
         payload: data
       });
     } catch (err) {

@@ -14,13 +14,17 @@ import RightSideBar from "./RightSideBar";
 
 class WorkSpacePage extends React.Component {
   componentDidMount() {
-    const { currentTeam, getTeam } = this.props;
+    const { getTeamAssociatedList } = this.props;
     if (this.isCurrentTeamExist()) {
-      getTeam(currentTeam.id);
+      const teamId = sessionStore.getTeamId();
+      getTeamAssociatedList(teamId);
     }
   }
 
-  isCurrentTeamExist = () => sessionStore.getTeamStatus("isTeamSet");
+  isCurrentTeamExist = () => {
+    if (sessionStore.getTeamId() === "0") return false;
+    return true;
+  };
 
   render() {
     return (
@@ -51,8 +55,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  getTeam: teamId => {
-    teamAction.getTeam(teamId);
+  getTeamAssociatedList: teamId => {
+    dispatch(teamAction.getTeamAssociatedList(teamId));
   }
 });
 

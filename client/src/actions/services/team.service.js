@@ -5,7 +5,7 @@ export default {
     const response = await APIV1().post(`/teams`, teamFormInfo);
     return response;
   },
-  getTeam: async teamId => {
+  getTeamAssociatedList: async teamId => {
     const response = await APIV1().get(`/teams/${teamId}`);
     return response;
   }
