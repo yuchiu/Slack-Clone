@@ -47,7 +47,7 @@ export default app => {
     - get all members of a team
     - add team member
   */
-  team.get("/:teamId", authPolicy.tokenAuth, teamController.getTeamMembers);
+  team.get("/:teamId", authPolicy.tokenAuth, teamController.getTeam);
   team.post("/", authPolicy.tokenAuth, teamController.create);
   team.post("/:teamId", authPolicy.tokenAuth, teamController.addTeamMember);
 

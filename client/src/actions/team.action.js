@@ -13,7 +13,24 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.CREATE_TEAM_ERROR,
+        type: constants.TEAM_ERROR,
+        payload: data
+      });
+    }
+  },
+  getTeam: teamId => async dispatch => {
+    try {
+      console.log("getteam");
+      const response = await teamService.getTeam(teamId);
+      const { data } = response;
+      dispatch({
+        type: constants.GET_TEAM,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.TEAM_ERROR,
         payload: data
       });
     }

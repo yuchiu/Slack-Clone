@@ -40,9 +40,18 @@ export default {
         );
         return team;
       });
-      console.log(response);
+      /* get user's teams */
+      const teamList = await models.sequelize.query(
+        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        {
+          replacements: [currentUserId],
+          model: models.Team,
+          raw: true
+        }
+      );
       res.status(200).send({
-        team: response
+        team: response,
+        teamList
       });
     } catch (err) {
       console.log(err);
@@ -92,7 +101,7 @@ export default {
       });
     }
   },
-  getTeamMembers: async (req, res) => {
+  getTeam: async (req, res) => {
     try {
       const teamId = req.body;
       console.log(req.body);

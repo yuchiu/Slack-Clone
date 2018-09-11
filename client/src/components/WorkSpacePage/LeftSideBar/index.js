@@ -13,10 +13,10 @@ class LeftSideBar extends React.Component {
   state = {};
 
   render() {
-    const { user } = this.props;
+    const { user, currentTeam } = this.props;
     return (
       <div className="leftsidebar">
-        <SideBarHeader user={user} />
+        <SideBarHeader user={user} currentTeam={currentTeam} />
         <ul className="leftsidebar__List">
           <ChannelHeader />
           <ChannelList />
@@ -29,7 +29,9 @@ class LeftSideBar extends React.Component {
     );
   }
 }
-LeftSideBar.propTypes = {};
+LeftSideBar.propTypes = {
+  currentTeam: Proptypes.object.isRequired
+};
 
 /* user, channel, direct messages */
 const stateToProps = state => ({

@@ -7,5 +7,6 @@ export default {
 
   /* team */
   CREATE_TEAM: "CREATE_TEAM",
-  CREATE_TEAM_ERROR: "CREATE_TEAM_ERROR"
+  GET_TEAM: "GET_TEAM",
+  TEAM_ERROR: "TEAM_ERROR"
 };

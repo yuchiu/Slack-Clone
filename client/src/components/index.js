@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./index.scss";
+import "@/utils/axisoInterceptors";
 import { AuthenticatedRoute, TokenAuthUser } from "./global";
 import LandingPage from "./LandingPage";
 import RegisterPage from "./RegisterPage";

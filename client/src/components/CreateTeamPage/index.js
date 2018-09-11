@@ -1,6 +1,7 @@
 import React from "react";
 import Proptypes from "prop-types";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { teamAction } from "@/actions";
 import { NavBar, InlineError } from "../global";
@@ -20,7 +21,7 @@ class CreateTeamPage extends React.Component {
     });
   };
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
     // validate user's login info on client side
     const clientErrors = validateForm.createTeam(this.state);
     this.setState({ clientErrors });
@@ -28,8 +29,9 @@ class CreateTeamPage extends React.Component {
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
       const { name } = this.state;
-      const { createTeam } = this.props;
+      const { createTeam, history } = this.props;
       createTeam({ name });
+      history.push("/workspace");
     }
   };
 
