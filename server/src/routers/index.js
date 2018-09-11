@@ -41,12 +41,15 @@ export default app => {
   user.put("/:username", userController.update);
   user.delete("/:username", userController.delete);
 
-  /* teams routes */
-  // team.get("/", authPolicy.tokenAuth, teamController.getAll);
-  // team.get("/:teamId", authPolicy.tokenAuth, teamController.get);
-  // team.post("/", authPolicy.tokenAuth, teamController.create);
-  // team.put("/:teamId", authPolicy.tokenAuth, teamController.update);
-  // team.delete("/:teamId", authPolicy.tokenAuth, teamController.delete);
+  /*
+    teams routes
+    - create team
+    - get all members of a team
+    - add team member
+  */
+  team.get("/:teamId", authPolicy.tokenAuth, teamController.getTeamMembers);
+  team.post("/", authPolicy.tokenAuth, teamController.create);
+  team.post("/:teamId", authPolicy.tokenAuth, teamController.addTeamMember);
 
   /* channels routes */
 

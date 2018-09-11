@@ -1,6 +1,6 @@
 import { APIV1 } from "./API";
 
-const userService = {
+export default {
   autoAuth: async () => {
     const response = await APIV1().get(`/auth`);
     return response;
@@ -18,5 +18,3 @@ const userService = {
     return response;
   }
 };
-
-export default userService;

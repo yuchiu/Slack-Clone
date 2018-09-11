@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
     const { isUserLoggedIn, error } = this.props;
     return (
       <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/" />}
+        {isUserLoggedIn && <Redirect to="/workspace" />}
         <NavBar />
         <main className="login-page">
           <LoginForm

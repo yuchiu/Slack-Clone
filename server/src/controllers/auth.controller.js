@@ -90,11 +90,20 @@ export default {
       /* validate password */
       const isPasswordValid = await user.comparePassword(credentials.password);
 
-      /* validated */
+      /* get user's teams */
+      const teams = await models.sequelize.query(
+        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        {
+          replacements: [user.id],
+          model: models.Team,
+          raw: true
+        }
+      );
       if (isPasswordValid) {
         return res.status(200).send({
           user: userSummary(user.dataValues),
-          token: jwtSignUser(user)
+          token: jwtSignUser(user),
+          teams
         });
       }
 
@@ -117,9 +126,18 @@ export default {
         where: { id: userId },
         raw: true
       });
-      console.log(userSummary(user));
+      /* get user's teams */
+      const teams = await models.sequelize.query(
+        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        {
+          replacements: [user.id],
+          model: models.Team,
+          raw: true
+        }
+      );
       res.status(200).send({
-        user: userSummary(user)
+        user: userSummary(user),
+        teams
       });
     } catch (err) {
       console.log(err);

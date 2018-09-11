@@ -1,7 +1,9 @@
 import React from "react";
 import Proptypes from "prop-types";
+import { connect } from "react-redux";
 
-import { NavBar } from "../global";
+import { teamAction } from "@/actions";
+import { NavBar, InlineError } from "../global";
 import { validateForm } from "../../utils";
 import CreateTeamForm from "./CreateTeamForm";
 
@@ -26,12 +28,14 @@ class CreateTeamPage extends React.Component {
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
       const { name } = this.state;
-      console.log(`creating team ${name}`);
+      const { createTeam } = this.props;
+      createTeam({ name });
     }
   };
 
   render() {
     const { clientErrors, name } = this.state;
+    const { error } = this.props;
 
     return (
       <React.Fragment>
@@ -43,9 +47,23 @@ class CreateTeamPage extends React.Component {
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
           />
+          {error && <InlineError text={error} />}
         </main>
       </React.Fragment>
     );
   }
 }
-export default CreateTeamPage;
+
+const stateToProps = state => ({
+  error: state.teamReducer.error
+});
+
+const dispatchToProps = dispatch => ({
+  createTeam: teamFormInfo => {
+    dispatch(teamAction.createTeam(teamFormInfo));
+  }
+});
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(CreateTeamPage);

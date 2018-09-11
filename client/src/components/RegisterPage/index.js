@@ -78,7 +78,7 @@ class RegisterPage extends React.Component {
     const { isUserLoggedIn, error } = this.props;
     return (
       <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/" />}
+        {isUserLoggedIn && <Redirect to="/create-team" />}
         <NavBar />
         <main className="register-page">
           <RegisterForm
