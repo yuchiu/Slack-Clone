@@ -47,9 +47,13 @@ export default app => {
     - get all members of a team
     - add team member
   */
-  team.get("/:teamId", authPolicy.tokenAuth, teamController.getTeam);
   team.post("/", authPolicy.tokenAuth, teamController.create);
   team.post("/:teamId", authPolicy.tokenAuth, teamController.addTeamMember);
+  team.get(
+    "/:teamId",
+    authPolicy.tokenAuth,
+    teamController.getTeamAssociatedList
+  );
 
   /* channels routes */
 

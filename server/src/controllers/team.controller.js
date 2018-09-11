@@ -101,12 +101,13 @@ export default {
       });
     }
   },
-  getTeam: async (req, res) => {
+  getTeamAssociatedList: async (req, res) => {
     try {
-      const teamId = req.body;
-      console.log(req.body);
+      // req.user is retreived from bearer token of auth.policy
+      const currentUserId = req.user.id;
+      const { teamId } = req.params;
 
-      const teamMembers = await models.sequelize.query(
+      const teamMemberList = await models.sequelize.query(
         "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
         {
           replacements: [teamId],
@@ -114,9 +115,28 @@ export default {
           raw: true
         }
       );
-      console.log(teamMembers);
+      const channelList = await models.Channel.findAll({
+        where: { teamId },
+        raw: true
+      });
+      const directMessageMemberList = await models.sequelize.query(
+        "select distinct on (u.id) u.id, u.username from users as u join direct_messages as dm on (u.id = dm.sender_id) or (u.id = dm.receiver_id) where (:currentUserId = dm.sender_id or :currentUserId = dm.receiver_id) and dm.team_id = :teamId",
+        {
+          replacements: { currentUserId, teamId },
+          model: models.User,
+          raw: true
+        }
+      );
+      // console.log("teamMemberList");
+      // console.log(teamMemberList);
+      // console.log("channelList");
+      // console.log(channelList);
+      // console.log("directMessageMemberList");
+      // console.log(directMessageMemberList);
       res.status(200).send({
-        teamMembers
+        teamMemberList,
+        channelList,
+        directMessageMemberList
       });
     } catch (err) {
       console.log(err);
