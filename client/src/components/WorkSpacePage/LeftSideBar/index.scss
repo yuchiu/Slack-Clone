@@ -9,13 +9,18 @@
   color: rgba($white, 0.6);
   &__invite {
     padding: 15px 0px 10px $paddingLeft;
+    color: $white;
     &:hover {
       background: #3e313c;
       cursor: pointer;
     }
+    &__plus {
+      font-size: 16px;
+    }
   }
   &__header {
     padding: 15px 0px 10px $paddingLeft;
+    margin-bottom: 15px;
     &:hover {
       background: #3e313c;
       cursor: pointer;
@@ -25,6 +30,7 @@
       padding: 0px;
       margin: 0px;
       color: $white;
+      margin-bottom: 5px;
     }
     &__username {
       color: rgba($white, 0.6);
@@ -51,7 +57,7 @@
           cursor: pointer;
         }
         &--closer {
-          padding-left: 67px;
+          padding-left: 70px;
         }
       }
     }

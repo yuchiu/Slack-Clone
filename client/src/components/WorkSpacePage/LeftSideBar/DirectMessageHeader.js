@@ -6,12 +6,13 @@ class DirectMessageHeader extends React.Component {
   state = {};
 
   render() {
+    const { toggleAddDirectMessageModal } = this.props;
     return (
       <h1 className="leftsidebar__List__header">
         DIRECT MESSAGES
         <Icon
           className="leftsidebar__List__header__icon leftsidebar__List__header__icon--closer"
-          onClick={this.toggleDirectMessageModal}
+          onClick={toggleAddDirectMessageModal}
           name="plus circle"
         />
       </h1>

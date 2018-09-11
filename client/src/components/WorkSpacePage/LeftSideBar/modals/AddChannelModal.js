@@ -8,7 +8,7 @@ import { validateForm } from "@/utils";
 class ModalComponent extends React.Component {
   state = {
     clientError: {},
-    email: ""
+    channelName: ""
   };
 
   handleChange = e => {
@@ -23,7 +23,7 @@ class ModalComponent extends React.Component {
       serverError: ""
     });
     // validate user's login info on client side
-    const clientError = validateForm.invitePeople(this.state);
+    const clientError = validateForm.addChannel(this.state);
     this.setState({ clientError });
 
     // proceed to send data to server if there's no error
@@ -37,30 +37,32 @@ class ModalComponent extends React.Component {
     e.preventDefault();
     this.setState({
       clientError: {},
-      email: ""
+      channelName: ""
     });
     onClose();
   };
 
   render() {
     const { open } = this.props;
-    const { email, clientError } = this.state;
+    const { channelName, clientError } = this.state;
 
     return (
       <Modal open={open} onClose={this.handleClose}>
-        <Modal.Header>Invite People</Modal.Header>
+        <Modal.Header>Create Channel</Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Field>
               <Input
-                value={email}
+                value={channelName}
                 onChange={this.handleChange}
-                name="email"
+                name="channelName"
                 fluid
-                placeholder="User's Email"
+                placeholder="channel name"
               />
             </Form.Field>
-            {clientError.email && <InlineError text={clientError.email} />}
+            {clientError.channelName && (
+              <InlineError text={clientError.channelName} />
+            )}
             <br />
             <Form.Group widths="equal">
               <Button onClick={this.handleSubmit} fluid>

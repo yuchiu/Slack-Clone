@@ -8,7 +8,7 @@ import { validateForm } from "@/utils";
 class ModalComponent extends React.Component {
   state = {
     clientError: {},
-    email: ""
+    username: ""
   };
 
   handleChange = e => {
@@ -37,30 +37,32 @@ class ModalComponent extends React.Component {
     e.preventDefault();
     this.setState({
       clientError: {},
-      email: ""
+      username: ""
     });
     onClose();
   };
 
   render() {
     const { open } = this.props;
-    const { email, clientError } = this.state;
+    const { username, clientError } = this.state;
 
     return (
       <Modal open={open} onClose={this.handleClose}>
-        <Modal.Header>Invite People</Modal.Header>
+        <Modal.Header>Invite Team Member</Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Field>
               <Input
-                value={email}
+                value={username}
                 onChange={this.handleChange}
-                name="email"
+                name="username"
                 fluid
-                placeholder="User's Email"
+                placeholder="username"
               />
             </Form.Field>
-            {clientError.email && <InlineError text={clientError.email} />}
+            {clientError.username && (
+              <InlineError text={clientError.username} />
+            )}
             <br />
             <Form.Group widths="equal">
               <Button onClick={this.handleSubmit} fluid>

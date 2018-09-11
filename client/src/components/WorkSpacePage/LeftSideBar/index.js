@@ -8,24 +8,93 @@ import ChannelList from "./ChannelList";
 import DirectMessageHeader from "./DirectMessageHeader";
 import DirectMessageList from "./DirectMessageList";
 import SideBarHeader from "./SideBarHeader";
+import InviteMemberSection from "./InviteMemberSection";
+import {
+  AddChannelModal,
+  AddDirectMessageModal,
+  AddTeamMemberModal
+} from "./modals";
 
 class LeftSideBar extends React.Component {
-  state = {};
+  state = {
+    openAddChannelModal: false,
+    openAddTeamMemberModal: false,
+    openAddDirectMessageModal: false
+  };
+
+  toggleAddChannelModal = e => {
+    if (e) {
+      e.preventDefault();
+    }
+    this.setState({ openAddChannelModal: !this.state.openAddChannelModal });
+  };
+
+  toggleAddDirectMessageModal = e => {
+    if (e) {
+      e.preventDefault();
+    }
+    this.setState({
+      openAddDirectMessageModal: !this.state.openAddDirectMessageModal
+    });
+  };
+
+  toggleAddTeamMemberModal = e => {
+    if (e) {
+      e.preventDefault();
+    }
+    this.setState({
+      openAddTeamMemberModal: !this.state.openAddTeamMemberModal
+    });
+  };
 
   render() {
     const { user, currentTeam } = this.props;
+    const {
+      openAddTeamMemberModal,
+      openAddChannelModal,
+      openAddDirectMessageModal
+    } = this.state;
     return (
-      <div className="leftsidebar">
-        <SideBarHeader user={user} currentTeam={currentTeam} />
-        <ul className="leftsidebar__List">
-          <ChannelHeader />
-          <ChannelList />
-        </ul>
-        <ul className="leftsidebar__List">
-          <DirectMessageHeader />
-          <DirectMessageList />
-        </ul>
-      </div>
+      <React.Fragment>
+        <section className="leftsidebar">
+          <SideBarHeader user={user} currentTeam={currentTeam} />
+          <ul className="leftsidebar__List">
+            <ChannelHeader
+              isAdmin={currentTeam.admin}
+              toggleAddChannelModal={this.toggleAddChannelModal}
+            />
+            <ChannelList />
+          </ul>
+          <ul className="leftsidebar__List">
+            <DirectMessageHeader
+              toggleAddDirectMessageModal={this.toggleAddDirectMessageModal}
+            />
+            <DirectMessageList />
+          </ul>
+          <InviteMemberSection
+            isAdmin={currentTeam.admin}
+            toggleAddTeamMemberModal={this.toggleAddTeamMemberModal}
+          />
+        </section>
+        <AddChannelModal
+          teamId={currentTeam.id}
+          onClose={this.toggleAddChannelModal}
+          open={openAddChannelModal}
+          key="sidebar-add-channel-modal"
+        />
+        <AddDirectMessageModal
+          teamId={currentTeam.id}
+          onClose={this.toggleAddDirectMessageModal}
+          open={openAddDirectMessageModal}
+          key="sidebar-direct-message-modal"
+        />
+        <AddTeamMemberModal
+          teamId={currentTeam.id}
+          onClose={this.toggleAddTeamMemberModal}
+          open={openAddTeamMemberModal}
+          key="Invite-people-modal"
+        />
+      </React.Fragment>
     );
   }
 }
