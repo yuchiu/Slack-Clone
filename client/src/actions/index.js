@@ -1,4 +1,5 @@
 import authAction from "./auth.action";
 import teamAction from "./team.action";
+import channelAction from "./channel.action";
 
-export { authAction, teamAction };
+export { authAction, channelAction, teamAction };

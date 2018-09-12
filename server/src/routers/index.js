@@ -48,7 +48,7 @@ export default app => {
     - add team member
   */
   team.post("/", authPolicy.tokenAuth, teamController.create);
-  team.post("/:teamId", authPolicy.tokenAuth, teamController.addTeamMember);
+  team.post("/members", authPolicy.tokenAuth, teamController.addTeamMember);
   team.get(
     "/:teamId",
     authPolicy.tokenAuth,
@@ -56,6 +56,7 @@ export default app => {
   );
 
   /* channels routes */
+  channel.post("/", authPolicy.tokenAuth, channelController.create);
 
   /* direct messages routes */
 

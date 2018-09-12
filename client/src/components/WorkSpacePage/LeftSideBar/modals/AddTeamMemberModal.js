@@ -1,11 +1,13 @@
 import React from "react";
 import { Form, Input, Button, Modal, Message } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+import { teamAction } from "@/actions";
 import { InlineError } from "@/components/global";
 import { validateForm } from "@/utils";
 
-class ModalComponent extends React.Component {
+class AddTeamMemberModal extends React.Component {
   state = {
     clientError: {},
     username: ""
@@ -28,7 +30,10 @@ class ModalComponent extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      console.log("handleSubmit");
+      const { addTeamMember, currentTeam, onClose } = this.props;
+      const { username } = this.state;
+      addTeamMember({ teamId: currentTeam.id, targetUsername: username });
+      onClose();
     }
   };
 
@@ -79,9 +84,23 @@ class ModalComponent extends React.Component {
   }
 }
 
-ModalComponent.propTypes = {
-  open: Proptypes.bool.isRequired,
-  onClose: Proptypes.func.isRequired
+const stateToProps = state => ({
+  currentTeam: state.teamReducer.currentTeam,
+  error: state.teamReducer.error
+});
+
+const dispatchToProps = dispatch => ({
+  addTeamMember: addMemberInfo => {
+    dispatch(teamAction.addTeamMember(addMemberInfo));
+  }
+});
+AddTeamMemberModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  addTeamMember: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
-export default ModalComponent;
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(AddTeamMemberModal);

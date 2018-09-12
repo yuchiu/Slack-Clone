@@ -1,11 +1,13 @@
 import React from "react";
 import { Form, Input, Button, Modal, Message } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import { InlineError } from "@/components/global";
 import { validateForm } from "@/utils";
+import { channelAction } from "@/actions";
 
-class ModalComponent extends React.Component {
+class AddChannelModal extends React.Component {
   state = {
     clientError: {},
     channelName: ""
@@ -28,7 +30,10 @@ class ModalComponent extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      console.log("handleSubmit");
+      const { createChannel, currentTeam, onClose } = this.props;
+      const { channelName } = this.state;
+      createChannel({ teamId: currentTeam.id, channelName });
+      onClose();
     }
   };
 
@@ -66,7 +71,7 @@ class ModalComponent extends React.Component {
             <br />
             <Form.Group widths="equal">
               <Button onClick={this.handleSubmit} fluid>
-                Invite
+                Create Channel
               </Button>
               <Button fluid onClick={this.handleClose}>
                 Cancel
@@ -79,9 +84,23 @@ class ModalComponent extends React.Component {
   }
 }
 
-ModalComponent.propTypes = {
-  open: Proptypes.bool.isRequired,
-  onClose: Proptypes.func.isRequired
+const stateToProps = state => ({
+  currentTeam: state.teamReducer.currentTeam,
+  error: state.teamReducer.error
+});
+
+const dispatchToProps = dispatch => ({
+  createChannel: channelFormInfo => {
+    dispatch(channelAction.createChannel(channelFormInfo));
+  }
+});
+AddChannelModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  createChannel: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
-export default ModalComponent;
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(AddChannelModal);

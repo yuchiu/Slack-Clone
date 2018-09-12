@@ -18,6 +18,22 @@ export default {
       });
     }
   },
+  addTeamMember: addMemberInfo => async dispatch => {
+    try {
+      const response = await teamService.addTeamMember(addMemberInfo);
+      const { data } = response;
+      dispatch({
+        type: constants.ADD_TEAM_MEMBER,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.TEAM_ERROR,
+        payload: data
+      });
+    }
+  },
   getTeamAssociatedList: teamId => async dispatch => {
     try {
       const response = await teamService.getTeamAssociatedList(teamId);

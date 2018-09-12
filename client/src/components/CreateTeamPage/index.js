@@ -1,7 +1,6 @@
 import React from "react";
 import Proptypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 import { teamAction } from "@/actions";
 import { NavBar, InlineError } from "../global";

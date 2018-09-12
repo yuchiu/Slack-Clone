@@ -1,13 +1,5 @@
 import models from "../models";
 
-const userSummary = user => {
-  const summary = {
-    username: user.username,
-    email: user.email
-  };
-  return summary;
-};
-
 export default {
   create: async (req, res) => {
     try {
@@ -64,15 +56,15 @@ export default {
     try {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
-      const teamId = req.body;
-      const targetUserEmail = req.body;
+      const { teamId } = req.body;
+      const { targetUsername } = req.body;
       console.log(req.body);
       const memberPromise = models.Member.findOne(
         { where: { teamId, currentUserId } },
         { raw: true }
       );
       const userToAddPromise = models.User.findOne(
-        { where: { email: targetUserEmail } },
+        { where: { username: targetUsername } },
         { raw: true }
       );
       const [member, userToAdd] = await Promise.all([
