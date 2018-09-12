@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 class RedirectWorkSpacePage extends React.Component {
   render() {
-    return <Redirect to="workspace/channel" />;
+    return <Redirect to="/workspace/channel" />;
   }
 }
 

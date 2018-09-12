@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import "./index.scss";
 import { sessionStore } from "@/utils";
-import { teamAction } from "@/actions";
+import { teamAction, channelAction } from "@/actions";
 import LeftSideBar from "./LeftSideBar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
@@ -24,6 +24,20 @@ class WorkSpacePage extends React.Component {
   isCurrentTeamExist = () => {
     if (sessionStore.getTeamId() === "0") return false;
     return true;
+  };
+
+  componentDidUpdate = () => {
+    const {
+      getCurrentTeam,
+      getCurrentChannel,
+      teamList,
+      channelList,
+      match: { params }
+    } = this.props;
+    if (teamList.length > 0 && channelList.length > 0) {
+      getCurrentTeam(params);
+      getCurrentChannel(params);
+    }
   };
 
   render() {
@@ -47,18 +61,24 @@ class WorkSpacePage extends React.Component {
 }
 
 WorkSpacePage.propTypes = {
-  currentTeam: PropTypes.object,
   params: PropTypes.object,
   match: PropTypes.object
 };
 
 const stateToProps = state => ({
-  currentTeam: state.teamReducer.currentTeam
+  teamList: state.teamReducer.teamList,
+  channelList: state.channelReducer.channelList
 });
 
 const dispatchToProps = dispatch => ({
   getTeamAssociatedList: teamId => {
     dispatch(teamAction.getTeamAssociatedList(teamId));
+  },
+  getCurrentTeam: params => {
+    dispatch(teamAction.getCurrentTeam(params));
+  },
+  getCurrentChannel: params => {
+    dispatch(channelAction.getCurrentChannel(params));
   }
 });
 

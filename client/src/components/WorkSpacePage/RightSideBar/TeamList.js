@@ -7,13 +7,13 @@ import { teamAction } from "@/actions";
 
 class TeamList extends React.Component {
   handleClick = teamId => {
-    const { getTeam, getTeamAssociatedList } = this.props;
-    getTeam(teamId);
+    const { switchTeam, getTeamAssociatedList } = this.props;
+    switchTeam(teamId);
     getTeamAssociatedList(teamId);
   };
 
   render() {
-    const { teamList } = this.props;
+    const { teamList, currentChannel } = this.props;
     return (
       <React.Fragment>
         {teamList.map((team, i) => (
@@ -39,12 +39,13 @@ TeamList.propTypes = {
 
 const stateToProps = state => ({
   teamList: state.teamReducer.teamList,
+  currentChannel: state.channelReducer.currentChannel,
   error: state.teamReducer.error
 });
 
 const dispatchToProps = dispatch => ({
-  getTeam: teamId => {
-    dispatch(teamAction.getTeam(teamId));
+  switchTeam: teamId => {
+    dispatch(teamAction.switchTeam(teamId));
   },
   getTeamAssociatedList: teamId => {
     dispatch(teamAction.getTeamAssociatedList(teamId));

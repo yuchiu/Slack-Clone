@@ -7,8 +7,8 @@ import { channelAction } from "@/actions";
 
 class ChannelList extends React.Component {
   handleClick = channelId => {
-    const { getChannel } = this.props;
-    getChannel(channelId);
+    const { switchChannel } = this.props;
+    switchChannel(channelId);
   };
 
   render() {
@@ -35,8 +35,8 @@ ChannelList.propTypes = {
   channelList: PropTypes.array.isRequired
 };
 const dispatchToProps = dispatch => ({
-  getChannel: channelId => {
-    dispatch(channelAction.getChannel(channelId));
+  switchChannel: channelId => {
+    dispatch(channelAction.switchChannel(channelId));
   }
 });
 

@@ -6,6 +6,22 @@ const initialState = {
   error: ""
 };
 
+const getCurrentChannelFromParams = (
+  channelList,
+  currentChannel,
+  channelIdFromParams
+) => {
+  console.log(channelList, currentChannel, channelIdFromParams);
+  if (!channelIdFromParams) {
+    return currentChannel;
+  }
+  /* return current channel using params */
+  const currentChannelFromParams = channelList.find(
+    channel => channel.id === parseInt(channelIdFromParams, 10)
+  );
+  return currentChannelFromParams;
+};
+
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
@@ -21,9 +37,18 @@ export default (state = initialState, action) => {
       newState.error = "";
       return newState;
 
-    case constants.GET_CHANNEL:
+    case constants.SWITCH_CHANNEL:
       newState.currentChannel = state.channelList.find(
         channel => channel.id === action.payload
+      );
+      newState.error = "";
+      return newState;
+
+    case constants.GET_CURRENT_CHANNEL || constants.GET_CURRENT_TEAM:
+      newState.currentChannel = getCurrentChannelFromParams(
+        state.channelList,
+        state.currentChannel,
+        action.payload.channelId
       );
       newState.error = "";
       return newState;

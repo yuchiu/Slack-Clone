@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import "./index.scss";
 
 class MainHeader extends React.Component {
+  componentDidMount() {}
+
   currentPath = () => {
     const {
       match: { path }
@@ -19,33 +21,13 @@ class MainHeader extends React.Component {
     return null;
   };
 
-  getCurrentChannelFromParams = channelList => {
-    const {
-      currentChannel,
-      match: { params }
-    } = this.props;
-
-    /* return default current channel if params is empty */
-    if (!params.channelId) {
-      return currentChannel;
-    }
-
-    /* return current channel using params */
-    const currentChannelFromParams = channelList.find(
-      channel => channel.id === parseInt(params.channelId, 10)
-    );
-    return currentChannelFromParams;
-  };
-
   render() {
-    const { currentTeamMembers, channelList } = this.props;
+    const { currentTeamMembers, currentChannel } = this.props;
     return (
       <div className="main-header">
         {this.currentPath() === "channel" && (
           <h1 className="main-header__title">
-            #{" "}
-            {channelList.length > 0 &&
-              this.getCurrentChannelFromParams(channelList).name}
+            # {currentChannel.name}
             <span className="main-header__title__span">
               <i className="users icon main-header__title__span__icon" />{" "}
               <span className="main-header__title__span__number">
@@ -66,8 +48,7 @@ MainHeader.propTypes = {};
 
 const stateToProps = state => ({
   currentTeamMembers: state.teamReducer.currentTeamMembers,
-  currentChannel: state.channelReducer.currentChannel,
-  channelList: state.channelReducer.channelList
+  currentChannel: state.channelReducer.currentChannel
 });
 
 const dispatchToProps = dispatch => ({});

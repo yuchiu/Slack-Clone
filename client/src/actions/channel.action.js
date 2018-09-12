@@ -18,10 +18,16 @@ export default {
       });
     }
   },
-  getChannel: channelId => async dispatch => {
+  switchChannel: channelId => async dispatch => {
     dispatch({
-      type: constants.GET_CHANNEL,
+      type: constants.SWITCH_CHANNEL,
       payload: channelId
+    });
+  },
+  getCurrentChannel: params => async dispatch => {
+    dispatch({
+      type: constants.GET_CURRENT_CHANNEL,
+      payload: params
     });
   }
 };

@@ -18,13 +18,18 @@ export default {
       });
     }
   },
-  getTeam: teamId => async dispatch => {
+  switchTeam: teamId => async dispatch => {
     dispatch({
-      type: constants.GET_TEAM,
+      type: constants.SWITCH_TEAM,
       payload: teamId
     });
   },
-
+  getCurrentTeam: params => async dispatch => {
+    dispatch({
+      type: constants.GET_CURRENT_TEAM,
+      payload: params
+    });
+  },
   addTeamMember: addMemberInfo => async dispatch => {
     try {
       const response = await teamService.addTeamMember(addMemberInfo);

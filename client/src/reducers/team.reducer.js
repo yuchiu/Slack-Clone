@@ -7,6 +7,17 @@ const initialState = {
   currentTeamMembers: [],
   error: ""
 };
+const getCurrentTeamFromParams = (teamList, currentTeam, teamIdFromParams) => {
+  /* return default current team if params is empty */
+  if (!teamIdFromParams) {
+    return currentTeam;
+  }
+  /* return current team using params */
+  const currentTeamFromParams = teamList.find(
+    team => team.id === parseInt(teamIdFromParams, 10)
+  );
+  return currentTeamFromParams;
+};
 
 export default (state = initialState, action) => {
   const newState = { ...state };
@@ -42,12 +53,20 @@ export default (state = initialState, action) => {
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
-    case constants.GET_TEAM:
+    case constants.SWITCH_TEAM:
       newState.currentTeam = state.teamList.find(
         team => team.id === action.payload
       );
-      console.log(newState.currentTeam);
       sessionStore.setTeamId(newState.currentTeam.id);
+      newState.error = "";
+      return newState;
+
+    case constants.GET_CURRENT_TEAM:
+      newState.currentTeam = getCurrentTeamFromParams(
+        state.teamList,
+        state.currentTeam,
+        action.payload.teamId
+      );
       newState.error = "";
       return newState;
 
