@@ -20,5 +20,7 @@ export default {
         error: "server error"
       });
     }
-  }
+  },
+  createMessage: async data =>
+    `${data} received! return data back from controller`
 };

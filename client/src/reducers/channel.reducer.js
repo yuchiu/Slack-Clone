@@ -11,8 +11,6 @@ const getCurrentChannelFromParams = (
   currentChannel,
   channelIdFromParams
 ) => {
-  console.log("channelList, currentChannel, channelIdFromParams");
-  console.log(channelList, currentChannel, channelIdFromParams);
   if (!channelIdFromParams) {
     return currentChannel;
   }

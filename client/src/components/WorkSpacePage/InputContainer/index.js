@@ -1,13 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Input, Form, Button } from "semantic-ui-react";
+import io from "socket.io-client";
 
 import "./index.scss";
+
+const socket = io("ws://localhost:3030");
+
+socket.on("receiveMsg", data => {
+  console.log(data);
+});
 
 class InputContainer extends React.Component {
   state = {
     message: ""
   };
+
+  componentDidMount() {
+    socket.emit("sendMsg", "aloha");
+  }
 
   handleChange = e => {
     const { name, value } = e.target;

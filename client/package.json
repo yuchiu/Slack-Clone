@@ -28,6 +28,7 @@
     "redux-thunk": "^2.2.0",
     "resolve": "1.6.0",
     "semantic-ui-react": "^0.82.3",
+    "socket.io-client": "^2.1.1",
     "validator": "^10.6.0",
     "whatwg-fetch": "2.0.3"
   },

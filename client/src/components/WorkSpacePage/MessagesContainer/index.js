@@ -1,41 +1,20 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import "./index.scss";
-import avatar from "@/assets/images/avatar.png";
+import Message from "./Message";
 
 class ChannelMessagesContainer extends React.Component {
   render() {
+    const { channelMessageList } = this.props;
     return (
       <div className="messages-container">
         <Comment.Group>
-          <Comment>
-            <Comment.Avatar src={avatar} />
-            <Comment.Content>
-              <Comment.Author as="a">username</Comment.Author>
-              <Comment.Metadata>
-                <div>Aug 8, 2018</div>
-              </Comment.Metadata>
-              <Comment.Text>aloha!</Comment.Text>
-              <Comment.Actions>
-                <Comment.Action>Reply</Comment.Action>
-              </Comment.Actions>
-            </Comment.Content>
-          </Comment>{" "}
-          <Comment>
-            <Comment.Avatar src={avatar} />
-            <Comment.Content>
-              <Comment.Author as="a">username</Comment.Author>
-              <Comment.Metadata>
-                <div>Aug 8, 2018</div>
-              </Comment.Metadata>
-              <Comment.Text>aloha!</Comment.Text>
-              <Comment.Actions>
-                <Comment.Action>Reply</Comment.Action>
-              </Comment.Actions>
-            </Comment.Content>
-          </Comment>
+          {channelMessageList.map(message => (
+            <Message key={message.id} message={message} />
+          ))}
         </Comment.Group>
       </div>
     );
@@ -43,4 +22,11 @@ class ChannelMessagesContainer extends React.Component {
 }
 ChannelMessagesContainer.propTypes = {};
 
-export default ChannelMessagesContainer;
+const stateToProps = state => ({
+  channelMessageList: state.channelMessageReducer.channelMessageList
+});
+
+export default connect(
+  stateToProps,
+  null
+)(ChannelMessagesContainer);
