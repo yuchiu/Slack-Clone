@@ -6,7 +6,18 @@
   font-weight: 900;
   grid-column: 2;
   grid-row: 1;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 20px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  &__title {
+    &__span {
+      font-size: 20px;
+      &__icon {
+      }
+      &__number {
+      }
+    }
+  }
 }

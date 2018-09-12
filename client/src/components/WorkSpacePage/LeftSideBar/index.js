@@ -56,7 +56,7 @@ class LeftSideBar extends React.Component {
     const {
       user,
       currentTeam,
-      directMessageMemberList,
+      directMessageGroupList,
       channelList
     } = this.props;
     return (
@@ -75,7 +75,7 @@ class LeftSideBar extends React.Component {
               toggleAddDirectMessageModal={this.toggleAddDirectMessageModal}
             />
             <DirectMessageList
-              directMessageMemberList={directMessageMemberList}
+              directMessageGroupList={directMessageGroupList}
             />
           </ul>
           <InviteMemberSection
@@ -114,7 +114,7 @@ const stateToProps = state => ({
   user: state.userReducer.user,
   currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList,
-  directMessageMemberList: state.directMessageReducer.directMessageMemberList
+  directMessageGroupList: state.directMessageGroupReducer.directMessageGroupList
 });
 
 const dispatchToProps = dispatch => ({});
