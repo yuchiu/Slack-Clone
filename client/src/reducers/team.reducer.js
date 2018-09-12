@@ -67,6 +67,7 @@ export default (state = initialState, action) => {
         state.currentTeam,
         action.payload.teamId
       );
+      sessionStore.setTeamId(newState.currentTeam.id);
       newState.error = "";
       return newState;
 

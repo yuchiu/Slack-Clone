@@ -67,6 +67,7 @@ WorkSpacePage.propTypes = {
 
 const stateToProps = state => ({
   teamList: state.teamReducer.teamList,
+  currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList
 });
 

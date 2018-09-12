@@ -11,6 +11,7 @@ const getCurrentChannelFromParams = (
   currentChannel,
   channelIdFromParams
 ) => {
+  console.log("channelList, currentChannel, channelIdFromParams");
   console.log(channelList, currentChannel, channelIdFromParams);
   if (!channelIdFromParams) {
     return currentChannel;
@@ -28,6 +29,7 @@ export default (state = initialState, action) => {
     case constants.GET_TEAM_ASSOCIATED_LIST:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channelList[0];
+
       newState.error = "";
       return newState;
 
@@ -44,7 +46,7 @@ export default (state = initialState, action) => {
       newState.error = "";
       return newState;
 
-    case constants.GET_CURRENT_CHANNEL || constants.GET_CURRENT_TEAM:
+    case constants.GET_CURRENT_CHANNEL:
       newState.currentChannel = getCurrentChannelFromParams(
         state.channelList,
         state.currentChannel,
