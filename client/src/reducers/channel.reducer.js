@@ -25,6 +25,12 @@ export default (state = initialState, action) => {
       newState.error = action.payload.error;
       return newState;
 
+    case constants.GET_CHANNEL:
+      newState.currentChannel = state.channelList.find(
+        channel => channel.id === action.payload
+      );
+      return newState;
+
     default:
       return state;
   }

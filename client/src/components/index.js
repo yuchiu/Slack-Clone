@@ -44,7 +44,12 @@ class Router extends React.Component {
             />
             <AuthenticatedRoute
               exact
-              path="/workspace"
+              path="/workspace/channel/:teamId?/:channelId?"
+              component={WorkSpacePage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/workspace/direct-message/:teamId?/:userId?"
               component={WorkSpacePage}
             />
             <Route exact path="/:unfoundLocation" component={NotFoundPage} />

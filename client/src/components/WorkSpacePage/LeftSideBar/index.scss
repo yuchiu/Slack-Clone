@@ -20,7 +20,7 @@
   }
   &__header {
     padding: 15px 0px 10px $paddingLeft;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     &:hover {
       background: #3e313c;
       cursor: pointer;
@@ -43,6 +43,7 @@
     width: 100%;
     list-style: none;
     padding-left: $paddingLeft;
+    cursor: pointer;
     &__bubble {
       color: #38978d;
       padding-right: 3px;
@@ -61,15 +62,21 @@
         }
       }
     }
-    &__item {
-      padding: 3px;
-      font-size: 15px;
-      padding-left: 5px;
-      &:hover {
-        background: #3e313c;
+    &__link {
+      &:focus,
+      &:active & {
+        text-decoration: none;
       }
-      &--link {
-        color: rgba($white, 0.6);
+      &__item {
+        padding: 3px;
+        font-size: 15px;
+        padding-left: 5px;
+        &:hover {
+          background: #3e313c;
+        }
+        &--link {
+          color: rgba($white, 0.6);
+        }
       }
     }
   }

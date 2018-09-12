@@ -11,7 +11,8 @@ export default {
   ADD_TEAM_MEMBER: "ADD_TEAM_MEMBER",
   TEAM_ERROR: "TEAM_ERROR",
 
-  /* team */
+  /* channel */
   CREATE_CHANNEL: "CREATE_CHANNEL",
+  GET_CHANNEL: "GET_CHANNEL",
   CHANNEL_ERROR: "CHANNEL_ERROR"
 };

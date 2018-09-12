@@ -68,7 +68,7 @@ class LeftSideBar extends React.Component {
               isAdmin={currentTeam.admin}
               toggleAddChannelModal={this.toggleAddChannelModal}
             />
-            <ChannelList channelList={channelList} />
+            <ChannelList teamId={currentTeam.id} channelList={channelList} />
           </ul>
           <ul className="leftsidebar__List">
             <DirectMessageHeader

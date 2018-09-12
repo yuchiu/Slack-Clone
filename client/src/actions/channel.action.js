@@ -17,5 +17,11 @@ export default {
         payload: data
       });
     }
+  },
+  getChannel: channelId => async dispatch => {
+    dispatch({
+      type: constants.GET_CHANNEL,
+      payload: channelId
+    });
   }
 };

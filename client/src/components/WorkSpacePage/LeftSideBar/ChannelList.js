@@ -1,20 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { channelAction } from "@/actions";
 
 class ChannelList extends React.Component {
-  state = {};
+  handleClick = channelId => {
+    const { getChannel } = this.props;
+    getChannel(channelId);
+  };
 
   render() {
-    const { channelList } = this.props;
+    const { channelList, teamId } = this.props;
     return (
       <React.Fragment>
-        {channelList.map(channel => (
-          <li
-            key={channel.id}
-            className="leftsidebar__List__item leftsidebar__List__item--link"
+        {channelList.map((channel, i) => (
+          <Link
+            className="leftsidebar__List__link"
+            key={`index${i}channelid${channel.id}`}
+            to={`/workspace/channel/${teamId}/${channel.id}`}
+            onClick={this.handleClick.bind(this, channel.id)}
           >
-            {channel.name}
-          </li>
+            <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
+              # {channel.name}
+            </li>
+          </Link>
         ))}
       </React.Fragment>
     );
@@ -23,5 +34,13 @@ class ChannelList extends React.Component {
 ChannelList.propTypes = {
   channelList: PropTypes.array.isRequired
 };
+const dispatchToProps = dispatch => ({
+  getChannel: channelId => {
+    dispatch(channelAction.getChannel(channelId));
+  }
+});
 
-export default ChannelList;
+export default connect(
+  null,
+  dispatchToProps
+)(ChannelList);

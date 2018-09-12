@@ -39,7 +39,7 @@ class AuthNavBar extends React.Component {
           </Menu.ItemGroup>
         </Menu.SubMenu>
         <Menu.Item style={{ float: "right" }}>
-          <Link to="/workspace">
+          <Link to="/workspace/channel">
             <Icon type="appstore" />
             WorkSpace
           </Link>

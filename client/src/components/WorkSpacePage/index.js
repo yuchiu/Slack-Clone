@@ -47,7 +47,9 @@ class WorkSpacePage extends React.Component {
 }
 
 WorkSpacePage.propTypes = {
-  currentTeam: PropTypes.object
+  currentTeam: PropTypes.object,
+  params: PropTypes.object,
+  match: PropTypes.object
 };
 
 const stateToProps = state => ({
