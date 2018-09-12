@@ -21,11 +21,12 @@ class AddTeamMemberModal extends React.Component {
   };
 
   handleSubmit = async () => {
-    this.setState({
-      serverError: ""
-    });
     // validate user's login info on client side
-    const clientError = validateForm.invitePeople(this.state);
+    const { currentTeamMembers } = this.props;
+    const clientError = validateForm.inviteToTeam(
+      this.state,
+      currentTeamMembers
+    );
     this.setState({ clientError });
 
     // proceed to send data to server if there's no error
@@ -70,10 +71,10 @@ class AddTeamMemberModal extends React.Component {
             )}
             <br />
             <Form.Group widths="equal">
-              <Button onClick={this.handleSubmit} fluid>
+              <Button type="button" onClick={this.handleSubmit} fluid>
                 Invite
               </Button>
-              <Button fluid onClick={this.handleClose}>
+              <Button type="button" fluid onClick={this.handleClose}>
                 Cancel
               </Button>
             </Form.Group>
@@ -86,6 +87,7 @@ class AddTeamMemberModal extends React.Component {
 
 const stateToProps = state => ({
   currentTeam: state.teamReducer.currentTeam,
+  currentTeamMembers: state.teamReducer.currentTeamMembers,
   error: state.teamReducer.error
 });
 

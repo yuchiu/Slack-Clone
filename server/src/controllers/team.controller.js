@@ -58,9 +58,8 @@ export default {
       const currentUserId = req.user.id;
       const { teamId } = req.body;
       const { targetUsername } = req.body;
-      console.log(req.body);
       const memberPromise = models.Member.findOne(
-        { where: { teamId, currentUserId } },
+        { where: { teamId, userId: currentUserId } },
         { raw: true }
       );
       const userToAddPromise = models.User.findOne(
@@ -82,9 +81,16 @@ export default {
         });
       }
       await models.Member.create({ userId: userToAdd.id, teamId });
-      const team = await models.Team.find({ where: { id: teamId } });
+      const teamMemberList = await models.sequelize.query(
+        "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
+        {
+          replacements: [teamId],
+          model: models.User,
+          raw: true
+        }
+      );
       res.status(200).send({
-        team
+        teamMemberList
       });
     } catch (err) {
       console.log(err);

@@ -43,8 +43,13 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.GET_TEAM_ASSOCIATED_LIST:
-      newState.error = "";
       newState.currentTeamMembers = action.payload.teamMemberList;
+      newState.error = "";
+      return newState;
+
+    case constants.ADD_TEAM_MEMBER:
+      newState.currentTeamMembers = action.payload.teamMemberList;
+      newState.error = "";
       return newState;
 
     case constants.TEAM_ERROR:

@@ -21,9 +21,6 @@ class AddChannelModal extends React.Component {
   };
 
   handleSubmit = async () => {
-    this.setState({
-      serverError: ""
-    });
     // validate user's login info on client side
     const clientError = validateForm.addChannel(this.state);
     this.setState({ clientError });
@@ -70,10 +67,10 @@ class AddChannelModal extends React.Component {
             )}
             <br />
             <Form.Group widths="equal">
-              <Button onClick={this.handleSubmit} fluid>
+              <Button type="button" onClick={this.handleSubmit} fluid>
                 Create Channel
               </Button>
-              <Button fluid onClick={this.handleClose}>
+              <Button type="button" fluid onClick={this.handleClose}>
                 Cancel
               </Button>
             </Form.Group>

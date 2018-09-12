@@ -15,6 +15,7 @@ export default {
     }
     return clientErrors;
   },
+
   register: data => {
     const clientErrors = {};
     if (!data.username) {
@@ -34,6 +35,7 @@ export default {
     }
     return clientErrors;
   },
+
   addChannel: data => {
     const clientErrors = {};
     if (!data.channelName) {
@@ -44,7 +46,29 @@ export default {
     }
     return clientErrors;
   },
-  invitePeople: data => {
+
+  inviteToTeam: (data, currentTeamMembers) => {
+    const clientErrors = {};
+    const isMember = (formUsername, teamMembers) => {
+      const findMember = teamMembers.filter(
+        member => member.username === formUsername
+      );
+      if (findMember.length > 0) return true;
+      return false;
+    };
+    if (!data.username) {
+      clientErrors.username = "Can't be blank";
+    } else if (data.username.length < 1 || data.username.length > 32) {
+      clientErrors.username = "Length of username have to be between 1 to 32";
+    } else if (isMember(data.username, currentTeamMembers)) {
+      clientErrors.username = `User: ${
+        data.username
+      } is already member of the team`;
+    }
+    return clientErrors;
+  },
+
+  addDirectMessage: data => {
     const clientErrors = {};
     if (!data.username) {
       clientErrors.username = "Can't be blank";
