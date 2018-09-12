@@ -35,6 +35,15 @@ export default {
     }
     return clientErrors;
   },
+  createTeam: data => {
+    const clientErrors = {};
+    if (!data.name) {
+      clientErrors.name = "Can't be blank";
+    } else if (data.name.length < 1 || data.name.length > 32) {
+      clientErrors.name = "Length of team name have to be between 1 to 32";
+    }
+    return clientErrors;
+  },
 
   addChannel: data => {
     const clientErrors = {};

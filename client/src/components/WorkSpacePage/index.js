@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import "./index.scss";
 import { sessionStore } from "@/utils";
 import { teamAction } from "@/actions";
-import "./index.scss";
 import LeftSideBar from "./LeftSideBar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";

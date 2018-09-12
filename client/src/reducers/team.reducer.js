@@ -42,6 +42,15 @@ export default (state = initialState, action) => {
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
+    case constants.GET_TEAM:
+      newState.currentTeam = state.teamList.find(
+        team => team.id === action.payload
+      );
+      console.log(newState.currentTeam);
+      sessionStore.setTeamId(newState.currentTeam.id);
+      newState.error = "";
+      return newState;
+
     case constants.GET_TEAM_ASSOCIATED_LIST:
       newState.currentTeamMembers = action.payload.teamMemberList;
       newState.error = "";

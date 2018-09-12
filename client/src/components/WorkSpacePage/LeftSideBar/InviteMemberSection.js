@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 class InviteMemberSection extends React.Component {
   state = {};

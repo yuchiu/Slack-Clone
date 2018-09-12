@@ -3,7 +3,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import "@/utils/axisoInterceptors";
 import "./index.scss";
-import { AuthenticatedRoute, TokenAuthUser } from "./global";
+import {
+  AuthenticatedRoute,
+  TokenAuthUser,
+  RedirectWorkSpacePage
+} from "./global";
 import LandingPage from "./LandingPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
@@ -41,6 +45,11 @@ class Router extends React.Component {
               exact
               path="/create-team"
               component={CreateTeamPage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/workspace/"
+              component={RedirectWorkSpacePage}
             />
             <AuthenticatedRoute
               exact

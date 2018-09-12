@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "./index.scss";
@@ -106,7 +106,7 @@ class LeftSideBar extends React.Component {
   }
 }
 LeftSideBar.propTypes = {
-  currentTeam: Proptypes.object.isRequired
+  currentTeam: PropTypes.object.isRequired
 };
 
 /* user, channel, direct messages */

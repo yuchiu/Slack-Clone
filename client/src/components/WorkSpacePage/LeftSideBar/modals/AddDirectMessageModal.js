@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Modal, Message } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 import { InlineError } from "@/components/global";
 import { validateForm } from "@/utils";
@@ -77,8 +77,8 @@ class ModalComponent extends React.Component {
 }
 
 ModalComponent.propTypes = {
-  open: Proptypes.bool.isRequired,
-  onClose: Proptypes.func.isRequired
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
 export default ModalComponent;

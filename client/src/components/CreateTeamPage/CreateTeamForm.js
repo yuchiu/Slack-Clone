@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Input, Header, Container } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 import { InlineError } from "../global";
 

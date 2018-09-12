@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
@@ -27,10 +27,10 @@ class CreateTeamPage extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
+      const { createTeam, currentTeam, history } = this.props;
       const { name } = this.state;
-      const { createTeam, history } = this.props;
       createTeam({ name });
-      history.push("/workspace");
+      history.push(`/workspace/channel/${currentTeam.id}`);
     }
   };
 
@@ -56,7 +56,8 @@ class CreateTeamPage extends React.Component {
 }
 
 const stateToProps = state => ({
-  error: state.teamReducer.error
+  error: state.teamReducer.error,
+  currentTeam: state.teamReducer.currentTeam
 });
 
 const dispatchToProps = dispatch => ({

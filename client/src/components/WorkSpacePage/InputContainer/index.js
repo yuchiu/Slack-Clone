@@ -1,5 +1,5 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import { Input, Form, Button } from "semantic-ui-react";
 
 import "./index.scss";
@@ -49,6 +49,6 @@ class InputContainer extends React.Component {
 }
 
 InputContainer.propTypes = {
-  placeholder: Proptypes.string
+  placeholder: PropTypes.string
 };
 export default InputContainer;

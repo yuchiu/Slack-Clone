@@ -1,6 +1,6 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 import "./index.scss";
 import avatar from "@/assets/images/avatar.png";
