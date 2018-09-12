@@ -6,8 +6,7 @@ export default {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const { channelId } = req.params;
-
-      const channelMessageList = models.ChannelMessage.findAll(
+      const channelMessageList = await models.ChannelMessage.findAll(
         { order: [["created_at", "ASC"]], where: { channelId } },
         { raw: true }
       );

@@ -1,10 +1,10 @@
 import constants from "@/constants";
-import { channelService } from "./services";
+import { messageService } from "./services";
 
 export default {
   getChannelMessageList: channelId => async dispatch => {
     try {
-      const response = await channelService.createChannel(channelId);
+      const response = await messageService.getChannelMessageList(channelId);
       const { data } = response;
       dispatch({
         type: constants.GET_CHANNEL_MESSAGE_LIST,
@@ -13,7 +13,7 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.CHANNEL_MESSAGE_ERROR,
+        type: constants.MESSAGE_ERROR,
         payload: data
       });
     }
