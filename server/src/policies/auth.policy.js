@@ -2,7 +2,7 @@ import Joi from "joi";
 import passport from "passport";
 
 export default {
-  tokenAuth: (req, res, next) => {
+  authentication: (req, res, next) => {
     passport.authenticate("jwt", (err, user) => {
       if (err || !user) {
         res.status(403).send({

@@ -20,10 +20,8 @@ export default app => {
   const channelMessage = express.Router();
   const directMessage = express.Router();
 
-  /* append api to app */
-  app.use("/api/v1", apiv1);
-
   /* routes to api v1 routes  */
+  app.use("/api/v1", apiv1);
   apiv1.use("/auth", auth);
   apiv1.use("/users", user);
   apiv1.use("/channels", channel);
@@ -32,7 +30,7 @@ export default app => {
   apiv1.use("/channel-messages", channelMessage);
 
   /* auth routes */
-  auth.get("/", authPolicy.tokenAuth, authController.bearerTokenAuth);
+  auth.get("/", authPolicy.authentication, authController.bearerTokenAuth);
   auth.post("/", authPolicy.registerRule, authController.create);
   auth.post("/:username", authController.login);
 
@@ -41,24 +39,28 @@ export default app => {
   user.put("/:username", userController.update);
   user.delete("/:username", userController.delete);
 
-  /*
-    teams routes
-    - create team
-    - get all members of a team
-    - add team member
-  */
-  team.post("/", authPolicy.tokenAuth, teamController.create);
-  team.post("/members", authPolicy.tokenAuth, teamController.addTeamMember);
+  /* teams routes */
+  team.post("/", authPolicy.authentication, teamController.create);
+  team.post(
+    "/members",
+    authPolicy.authentication,
+    teamController.addTeamMember
+  );
   team.get(
     "/:teamId",
-    authPolicy.tokenAuth,
+    authPolicy.authentication,
     teamController.getTeamAssociatedList
   );
 
   /* channels routes */
-  channel.post("/", authPolicy.tokenAuth, channelController.create);
-
-  /* direct messages routes */
+  channel.post("/", authPolicy.authentication, channelController.create);
 
   /* channel messages routes */
+  channelMessage.get(
+    "/:channelId",
+    authPolicy.authentication,
+    channelMessageController.getChannelMessage
+  );
+
+  /* direct messages routes */
 };
