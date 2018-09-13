@@ -38,7 +38,10 @@ export default {
     });
   },
 
-  clearSocketConnection: () => {
+  clearSocketConnection: () => dispatch => {
     messageService.clearSocketConnection();
+    dispatch({
+      type: constants.CLEAR_SOCKET_CONNECTION
+    });
   }
 };

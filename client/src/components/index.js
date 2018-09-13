@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-// import "@/utils/axisoInterceptors";
 import "./index.scss";
 import {
   AuthenticatedRoute,

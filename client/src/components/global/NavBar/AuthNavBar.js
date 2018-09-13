@@ -1,56 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Menu, Icon } from "antd";
+import { Menu, Dropdown } from "semantic-ui-react";
 import SlackLogo from "../SlackLogo";
 
 class AuthNavBar extends React.Component {
   render() {
-    const { handleClick, selectedKeys, username, handleLogout } = this.props;
+    const { username, handleLogout, history } = this.props;
     return (
-      <Menu onClick={handleClick} selectedKeys={selectedKeys} mode="horizontal">
-        <Menu.Item key="landing">
-          <Link to="/">
-            <SlackLogo size="32" />
-            Slack
-          </Link>
+      <Menu size="large">
+        <Menu.Item name="home" onClick={() => history.push("/")}>
+          <SlackLogo size="32" />
+          Slack
         </Menu.Item>
-        <Menu.SubMenu
-          style={{ float: "right" }}
-          title={
-            <span>
-              <Icon type="user" />
-              {username}
-            </span>
-          }
-        >
-          <Menu.ItemGroup title="User's Setting">
-            <Menu.Item key="my-profile">
-              <Link to="/create-team">My Profile</Link>
-            </Menu.Item>
-            <Menu.Item key="edit-profile">
-              <Link to="/create-team">Setting</Link>
-            </Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup title="______________">
-            <Menu.Item key="logout">
-              <p onClick={handleLogout}>Log Out</p>
-            </Menu.Item>
-          </Menu.ItemGroup>
-        </Menu.SubMenu>
-        <Menu.Item style={{ float: "right" }}>
-          <Link to="/workspace/channel">
-            <Icon type="appstore" />
+
+        <Menu.Menu position="right">
+          <Menu.Item
+            name="workspace"
+            onClick={() => history.push("/workspace/channel")}
+          >
             WorkSpace
-          </Link>
-        </Menu.Item>
+          </Menu.Item>
+          <Dropdown item text={username}>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => history.push("/create-team")}>
+                My Profile
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => history.push("/create-team")}>
+                Setting
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>Log Out</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Menu>
       </Menu>
     );
   }
 }
 AuthNavBar.propTypes = {
-  selectedKeys: PropTypes.array,
-  handleClick: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
   handleLogout: PropTypes.func.isRequired
 };

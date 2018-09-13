@@ -22,6 +22,11 @@ export default (state = initialState, action) => {
       }
       return newState;
 
+    case constants.CLEAR_SOCKET_CONNECTION:
+      newState.messageList = [];
+      newState.error = "";
+      return newState;
+
     case constants.MESSAGE_ERROR:
       newState.error = action.payload.error;
       return newState;

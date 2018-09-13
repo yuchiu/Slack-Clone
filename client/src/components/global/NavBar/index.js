@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { authAction } from "@/actions";
@@ -8,16 +8,6 @@ import AuthNavBar from "./AuthNavBar";
 import UnauthNavBar from "./UnauthNavBar";
 
 class NavBar extends React.Component {
-  state = {
-    current: ""
-  };
-
-  handleClick = e => {
-    this.setState({
-      current: e.key
-    });
-  };
-
   handleLogout = () => {
     const { logoutUser, history } = this.props;
     logoutUser();
@@ -25,24 +15,17 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { isUserLoggedIn, username } = this.props;
-    const { current } = this.state;
+    const { isUserLoggedIn, username, history } = this.props;
     return (
       <div className="navbar-container">
         {isUserLoggedIn && (
           <AuthNavBar
-            handleClick={this.handleClick}
-            selectedKeys={[current]}
+            history={history}
             username={username}
             handleLogout={this.handleLogout}
           />
         )}
-        {!isUserLoggedIn && (
-          <UnauthNavBar
-            handleClick={this.handleClick}
-            selectedKeys={[current]}
-          />
-        )}
+        {!isUserLoggedIn && <UnauthNavBar history={history} />}
       </div>
     );
   }
