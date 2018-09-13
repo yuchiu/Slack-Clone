@@ -28,10 +28,13 @@ export default {
     messageService.receiveChannelMessage(dispatch);
   },
 
-  channelMessageReceived: data => dispatch => {
+  channelMessageReceived: data => (dispatch, getState) => {
+    const { currentChannel } = getState().channelReducer;
+    const newData = { ...data };
+    newData.currentChannel = currentChannel;
     dispatch({
       type: constants.CHANNEL_MESSAGE_RECEIVED,
-      payload: data
+      payload: newData
     });
   },
 

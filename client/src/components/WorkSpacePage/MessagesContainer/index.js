@@ -2,14 +2,16 @@ import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import "./index.scss";
 import Message from "./Message";
 import { messageAction } from "@/actions";
 
-class ChannelMessagesContainer extends React.Component {
+class MessagesContainer extends React.Component {
   state = {
-    isMessageFetched: false
+    isMessageFetched: false,
+    currentChannelParams: 0
   };
 
   componentDidMount() {
@@ -18,13 +20,27 @@ class ChannelMessagesContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    const { getChannelMessageList, currentChannel } = this.props;
+    const {
+      getChannelMessageList,
+      currentChannel,
+      match: { params }
+    } = this.props;
+
+    /* fetch channel message list if currentchannel exist, then set isMessageFetched to true */
     if (
       Object.keys(currentChannel).length > 0 &&
       !this.state.isMessageFetched
     ) {
       getChannelMessageList(currentChannel.id);
       this.setState({ isMessageFetched: true });
+    }
+
+    /* refetch channel message again if channel has changed */
+    if (this.state.currentChannelParams !== params.channelId) {
+      this.setState({
+        currentChannelParams: params.channelId,
+        isMessageFetched: false
+      });
     }
   }
 
@@ -46,7 +62,7 @@ class ChannelMessagesContainer extends React.Component {
     );
   }
 }
-ChannelMessagesContainer.propTypes = {};
+MessagesContainer.propTypes = {};
 
 const stateToProps = state => ({
   messageList: state.messageReducer.messageList,
@@ -64,7 +80,9 @@ const dispatchToProps = dispatch => ({
   }
 });
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(ChannelMessagesContainer);
+export default withRouter(
+  connect(
+    stateToProps,
+    dispatchToProps
+  )(MessagesContainer)
+);

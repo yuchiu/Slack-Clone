@@ -14,8 +14,12 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.CHANNEL_MESSAGE_RECEIVED:
-      newState.messageList = action.payload.channelMessageList;
-      newState.error = "";
+      if (
+        action.payload.message.channelId === action.payload.currentChannel.id
+      ) {
+        newState.messageList = action.payload.channelMessageList;
+        newState.error = "";
+      }
       return newState;
 
     case constants.MESSAGE_ERROR:
