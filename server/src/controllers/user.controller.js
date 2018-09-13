@@ -2,6 +2,7 @@ import models from "../models";
 
 const userSummary = user => {
   const summary = {
+    id: user.id,
     username: user.username,
     email: user.email
   };

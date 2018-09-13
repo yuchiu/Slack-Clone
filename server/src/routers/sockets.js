@@ -6,10 +6,9 @@ import {
 export default io => {
   io.on("connection", socket => {
     console.log("socket io connected");
-    socket.on("sendMsg", async data => {
+    socket.on("sendChannelMessage", async data => {
       const response = await channelMessageController.createMessage(data);
-      console.log(response);
-      io.emit("receiveMsg", response);
+      io.emit("receiveChannelMessage", response);
     });
   });
 };

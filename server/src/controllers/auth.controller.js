@@ -14,8 +14,10 @@ const jwtSignUser = user => {
     console.log(err);
   }
 };
+
 const userSummary = user => {
   const summary = {
+    id: user.id,
     username: user.username,
     email: user.email
   };
