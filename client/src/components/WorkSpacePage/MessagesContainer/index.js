@@ -2,7 +2,6 @@ import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 import "./index.scss";
 import Message from "./Message";
@@ -11,6 +10,7 @@ import { messageAction } from "@/actions";
 class MessagesContainer extends React.Component {
   state = {
     isMessageFetched: false,
+    currentTeamParams: 0,
     currentChannelParams: 0
   };
 
@@ -20,27 +20,27 @@ class MessagesContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    const {
-      getChannelMessageList,
-      currentChannel,
-      match: { params }
-    } = this.props;
+    const { getChannelMessageList, currentChannel, currentTeam } = this.props;
 
-    /* fetch channel message list if currentchannel exist, then set isMessageFetched to true */
-    if (
-      Object.keys(currentChannel).length > 0 &&
-      !this.state.isMessageFetched
-    ) {
+    /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
+    if (this.isCurrentDataFetched() && !this.state.isMessageFetched) {
       getChannelMessageList(currentChannel.id);
       this.setState({ isMessageFetched: true });
     }
 
     /* refetch channel message again if channel has changed */
-    if (this.state.currentChannelParams !== params.channelId) {
-      this.setState({
-        currentChannelParams: params.channelId,
-        isMessageFetched: false
-      });
+    if (this.isCurrentDataFetched()) {
+      const { currentChannelParams, currentTeamParams } = this.state;
+      if (
+        currentChannelParams !== currentChannel.id ||
+        currentTeamParams !== currentTeam.id
+      ) {
+        this.setState({
+          currentChannelParams: currentChannel.id,
+          currentTeamParams: currentTeam.id,
+          isMessageFetched: false
+        });
+      }
     }
   }
 
@@ -48,6 +48,17 @@ class MessagesContainer extends React.Component {
     const { clearSocketConnection } = this.props;
     clearSocketConnection();
   }
+
+  isCurrentDataFetched = () => {
+    const { currentChannel, currentTeam } = this.props;
+    if (
+      Object.keys(currentChannel).length > 0 &&
+      Object.keys(currentTeam).length > 0
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   render() {
     const { messageList } = this.props;
@@ -66,6 +77,7 @@ MessagesContainer.propTypes = {};
 
 const stateToProps = state => ({
   messageList: state.messageReducer.messageList,
+  currentTeam: state.teamReducer.currentTeam,
   currentChannel: state.channelReducer.currentChannel
 });
 const dispatchToProps = dispatch => ({
@@ -80,9 +92,7 @@ const dispatchToProps = dispatch => ({
   }
 });
 
-export default withRouter(
-  connect(
-    stateToProps,
-    dispatchToProps
-  )(MessagesContainer)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(MessagesContainer);
