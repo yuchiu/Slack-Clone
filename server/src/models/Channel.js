@@ -4,18 +4,36 @@ export default (sequelize, DataTypes) => {
     public: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
+    },
+    directMessage: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
 
   Channel.associate = models => {
     // 1:M
     Channel.belongsTo(models.Team, {
-      foreignKey: { name: "teamId", field: "team_id" }
+      foreignKey: {
+        name: "teamId",
+        field: "team_id"
+      }
     });
     // N:M
     Channel.belongsToMany(models.User, {
       through: "channel_member",
-      foreignKey: { name: "channelId", field: "channel_id" }
+      foreignKey: {
+        name: "channelId",
+        field: "channel_id"
+      }
+    });
+
+    Channel.belongsToMany(models.User, {
+      through: models.PrivateChannelMember,
+      foreignKey: {
+        name: "channelId",
+        field: "channel_id"
+      }
     });
   };
 

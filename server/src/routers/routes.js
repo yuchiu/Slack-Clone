@@ -22,7 +22,7 @@ export default app => {
 
   /* routes to api v1 routes  */
   app.use("/api/v1", apiv1);
-  apiv1.use("/auth", auth);
+  apiv1.use("/auths", auth);
   apiv1.use("/users", user);
   apiv1.use("/channels", channel);
   apiv1.use("/teams", team);

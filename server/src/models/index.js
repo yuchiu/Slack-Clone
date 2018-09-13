@@ -11,9 +11,10 @@ const sequelize = new Sequelize(
 const models = {
   User: sequelize.import("./User"),
   Channel: sequelize.import("./Channel"),
-  ChannelMessage: sequelize.import("./ChannelMessage"),
   Team: sequelize.import("./Team"),
   Member: sequelize.import("./Member"),
+  PrivateChannelMember: sequelize.import("./PrivateChannelMember"),
+  ChannelMessage: sequelize.import("./ChannelMessage"),
   DirectMessage: sequelize.import("./DirectMessage")
 };
 
