@@ -12,6 +12,11 @@ class ChannelMessagesContainer extends React.Component {
     isMessageFetched: false
   };
 
+  componentDidMount() {
+    const { receiveChannelMessage } = this.props;
+    receiveChannelMessage();
+  }
+
   componentDidUpdate() {
     const { getChannelMessageList, currentChannel } = this.props;
     if (
@@ -21,6 +26,11 @@ class ChannelMessagesContainer extends React.Component {
       getChannelMessageList(currentChannel.id);
       this.setState({ isMessageFetched: true });
     }
+  }
+
+  componentWillUnmount() {
+    const { clearSocketConnection } = this.props;
+    clearSocketConnection();
   }
 
   render() {
@@ -45,6 +55,12 @@ const stateToProps = state => ({
 const dispatchToProps = dispatch => ({
   getChannelMessageList: channelId => {
     dispatch(messageAction.getChannelMessageList(channelId));
+  },
+  clearSocketConnection: () => {
+    dispatch(messageAction.clearSocketConnection());
+  },
+  receiveChannelMessage: () => {
+    dispatch(messageAction.receiveChannelMessage());
   }
 });
 

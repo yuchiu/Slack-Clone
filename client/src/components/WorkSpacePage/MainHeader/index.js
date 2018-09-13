@@ -3,29 +3,22 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
+import { currentPath } from "@/utils";
+
 import "./index.scss";
 
 class MainHeader extends React.Component {
   componentDidMount() {}
 
-  currentPath = () => {
+  render() {
     const {
+      currentTeamMembers,
+      currentChannel,
       match: { path }
     } = this.props;
-    if (path.toLowerCase().includes("channel")) {
-      return "channel";
-    }
-    if (path.toLowerCase().includes("direct-message")) {
-      return "direct-message";
-    }
-    return null;
-  };
-
-  render() {
-    const { currentTeamMembers, currentChannel } = this.props;
     return (
       <div className="main-header">
-        {this.currentPath() === "channel" && (
+        {currentPath(path) === "channel" && (
           <h1 className="main-header__title">
             # {currentChannel.name}
             <span className="main-header__title__span">
@@ -36,7 +29,7 @@ class MainHeader extends React.Component {
             </span>
           </h1>
         )}
-        {this.currentPath() === "direct-message" && (
+        {currentPath(path) === "direct-message" && (
           <h1 className="main-header__title"># target User</h1>
         )}
       </div>

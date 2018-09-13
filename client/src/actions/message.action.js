@@ -17,5 +17,25 @@ export default {
         payload: data
       });
     }
+  },
+
+  sendChannelMessage: messageData => () => {
+    messageService.sendChannelMessage(messageData);
+  },
+
+  /* pass in dispatch, let socket.io dispatch channelMessageReceived when data is received */
+  receiveChannelMessage: () => dispatch => {
+    messageService.receiveChannelMessage(dispatch);
+  },
+
+  channelMessageReceived: data => dispatch => {
+    dispatch({
+      type: constants.CHANNEL_MESSAGE_RECEIVED,
+      payload: data
+    });
+  },
+
+  clearSocketConnection: () => {
+    messageService.clearSocketConnection();
   }
 };

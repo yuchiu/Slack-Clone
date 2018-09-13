@@ -15,6 +15,8 @@ import RightSideBar from "./RightSideBar";
 class WorkSpacePage extends React.Component {
   componentDidMount() {
     const { getTeamAssociatedList } = this.props;
+
+    /* get channelList, directMessageList, teamMembers when component mount */
     if (this.isCurrentTeamExist()) {
       const teamId = sessionStore.getTeamId();
       getTeamAssociatedList(teamId);
@@ -34,6 +36,8 @@ class WorkSpacePage extends React.Component {
       channelList,
       match: { params }
     } = this.props;
+
+    /* get currentTeam based on params, if params is missing then use previous states */
     if (teamList.length > 0 && channelList.length > 0) {
       getCurrentTeam(params);
       getCurrentChannel(params);
@@ -45,7 +49,7 @@ class WorkSpacePage extends React.Component {
       <React.Fragment>
         {/* redirect to create team if user is not in any team */}
         {!this.isCurrentTeamExist() && <Redirect to="create-team" />}
-        {/* render workspace is currentTeam exist */}
+        {/* render workspace if currentTeam exist */}
         {this.isCurrentTeamExist() && (
           <main className="workspace-page">
             <LeftSideBar />

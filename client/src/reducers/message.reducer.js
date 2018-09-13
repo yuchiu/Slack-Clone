@@ -13,6 +13,11 @@ export default (state = initialState, action) => {
       newState.error = "";
       return newState;
 
+    case constants.CHANNEL_MESSAGE_RECEIVED:
+      newState.messageList = action.payload.channelMessageList;
+      newState.error = "";
+      return newState;
+
     case constants.MESSAGE_ERROR:
       newState.error = action.payload.error;
       return newState;

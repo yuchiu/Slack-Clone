@@ -11,7 +11,7 @@ class Message extends React.Component {
       <Comment>
         <Comment.Avatar src={avatar} />
         <Comment.Content>
-          <Comment.Author as="a">{message.user.username}</Comment.Author>
+          <Comment.Author as="a">{message.username}</Comment.Author>
           <Comment.Metadata>
             <span>{message.created_at}</span>
           </Comment.Metadata>

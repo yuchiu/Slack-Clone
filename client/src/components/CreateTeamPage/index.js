@@ -30,7 +30,7 @@ class CreateTeamPage extends React.Component {
       const { createTeam, currentTeam, history } = this.props;
       const { name } = this.state;
       createTeam({ name });
-      history.push(`/workspace/channel/${currentTeam.id}`);
+      history.push(`/workspace/channel/`);
     }
   };
 

@@ -1,24 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Form, Button } from "semantic-ui-react";
-import io from "socket.io-client";
+import { Input, Form } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./index.scss";
-
-const socket = io("ws://localhost:3030");
-
-socket.on("receiveMsg", data => {
-  console.log(data);
-});
+import { messageAction } from "@/actions";
+import { currentPath } from "@/utils";
 
 class InputContainer extends React.Component {
   state = {
-    message: ""
+    ENTER_KEY: 13,
+    text: ""
   };
-
-  componentDidMount() {
-    socket.emit("sendMsg", "aloha");
-  }
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -27,30 +21,65 @@ class InputContainer extends React.Component {
     });
   };
 
-  handleSubmit = async () => {
-    const { message } = this.state;
-    const { onSubmit } = this.props;
-    if (message) {
-      await onSubmit(message);
-      this.setState({ message: "" });
+  sendChannelMessage = () => {
+    const { text } = this.state;
+    if (text) {
+      const { sendChannelMessage, user, currentChannel } = this.props;
+      sendChannelMessage({
+        channelId: currentChannel.id,
+        userId: user.id,
+        username: user.username,
+        text
+      });
+      this.setState({ text: "" });
+    }
+  };
+
+  sendDirectMessage = () => {
+    const { text } = this.state;
+    if (text) {
+      console.log(text);
+      this.setState({ text: "" });
     }
   };
 
   render() {
-    const { message } = this.state;
+    const { text, ENTER_KEY } = this.state;
+    const {
+      currentChannel,
+      match: { path }
+    } = this.props;
     return (
       <div className="input-container">
         <Form>
           <Form.Group widths="equal">
             <Form.Field>
-              <Input
-                fluid
-                focus
-                name="message"
-                value={message}
-                placeholder={`# Someone`}
-                onChange={this.handleChange}
-              />
+              {currentPath(path) === "channel" && (
+                <Input
+                  fluid
+                  focus
+                  name="text"
+                  value={text}
+                  placeholder={`# ${currentChannel.name}`}
+                  onChange={this.handleChange}
+                  onKeyDown={e => {
+                    if (e.keyCode === ENTER_KEY) this.sendChannelMessage();
+                  }}
+                />
+              )}
+              {currentPath(path) === "direct-message" && (
+                <Input
+                  fluid
+                  focus
+                  name="text"
+                  value={text}
+                  placeholder={`# Someone`}
+                  onChange={this.handleChange}
+                  onKeyDown={e => {
+                    if (e.keyCode === ENTER_KEY) this.sendDirectMessage();
+                  }}
+                />
+              )}
             </Form.Field>
           </Form.Group>
         </Form>
@@ -62,4 +91,20 @@ class InputContainer extends React.Component {
 InputContainer.propTypes = {
   placeholder: PropTypes.string
 };
-export default InputContainer;
+const stateToProps = state => ({
+  user: state.userReducer.user,
+  currentTeamMembers: state.teamReducer.currentTeamMembers,
+  currentChannel: state.channelReducer.currentChannel
+});
+
+const dispatchToProps = dispatch => ({
+  sendChannelMessage: messageData =>
+    dispatch(messageAction.sendChannelMessage(messageData))
+});
+
+export default withRouter(
+  connect(
+    stateToProps,
+    dispatchToProps
+  )(InputContainer)
+);
