@@ -24,11 +24,11 @@ class InputContainer extends React.Component {
   sendChannelMessage = () => {
     const { text } = this.state;
     if (text) {
-      const { sendChannelMessage, user, currentChannel } = this.props;
+      const { sendChannelMessage, currentUser, currentChannel } = this.props;
       sendChannelMessage({
         channelId: currentChannel.id,
-        userId: user.id,
-        username: user.username,
+        userId: currentUser.id,
+        username: currentUser.username,
         text
       });
       this.setState({ text: "" });
@@ -92,7 +92,7 @@ InputContainer.propTypes = {
   placeholder: PropTypes.string
 };
 const stateToProps = state => ({
-  user: state.userReducer.user,
+  currentUser: state.userReducer.currentUser,
   currentTeamMembers: state.teamReducer.currentTeamMembers,
   currentChannel: state.channelReducer.currentChannel
 });

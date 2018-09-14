@@ -38,7 +38,7 @@ NavBar.propTypes = {
 
 const stateToProps = state => ({
   isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  username: state.userReducer.user.username
+  username: state.userReducer.currentUser.username
 });
 
 const dispatchToProps = dispatch => ({

@@ -54,7 +54,7 @@ class LeftSideBar extends React.Component {
       openAddDirectMessageModal
     } = this.state;
     const {
-      user,
+      currentUser,
       currentTeam,
       directMessageGroupList,
       channelList
@@ -62,7 +62,7 @@ class LeftSideBar extends React.Component {
     return (
       <React.Fragment>
         <section className="leftsidebar">
-          <SideBarHeader user={user} currentTeam={currentTeam} />
+          <SideBarHeader currentUser={currentUser} currentTeam={currentTeam} />
           <ul className="leftsidebar__List">
             <ChannelHeader
               isAdmin={currentTeam.admin}
@@ -109,9 +109,9 @@ LeftSideBar.propTypes = {
   currentTeam: PropTypes.object.isRequired
 };
 
-/* user, channel, direct messages */
+/* currentUser, channel, direct messages */
 const stateToProps = state => ({
-  user: state.userReducer.user,
+  currentUser: state.userReducer.currentUser,
   currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList,
   directMessageGroupList: state.directMessageGroupReducer.directMessageGroupList

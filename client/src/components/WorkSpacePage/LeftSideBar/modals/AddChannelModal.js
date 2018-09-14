@@ -1,5 +1,12 @@
 import React from "react";
-import { Form, Input, Button, Modal, Message } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Button,
+  Modal,
+  Checkbox,
+  Dropdown
+} from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -10,6 +17,8 @@ import { channelAction } from "@/actions";
 class AddChannelModal extends React.Component {
   state = {
     clientError: {},
+    members: [],
+    isChannelPrivate: true,
     channelName: ""
   };
 
@@ -18,6 +27,7 @@ class AddChannelModal extends React.Component {
     this.setState({
       [name]: value
     });
+    console.log(this.state);
   };
 
   handleSubmit = async () => {
@@ -39,18 +49,34 @@ class AddChannelModal extends React.Component {
     e.preventDefault();
     this.setState({
       clientError: {},
+      members: [],
+      isChannelPublic: true,
       channelName: ""
     });
     onClose();
   };
 
+  toggleCheckboxValue = e => {
+    this.setState({
+      isChannelPrivate: !this.state.isChannelPrivate
+    });
+  };
+
+  saveMember;
+
   render() {
-    const { open } = this.props;
-    const { channelName, clientError } = this.state;
+    const { open, currentTeamMembers, currentUser } = this.props;
+    const { channelName, isChannelPrivate, members, clientError } = this.state;
 
     return (
       <Modal open={open} onClose={this.handleClose}>
-        <Modal.Header>Create Channel</Modal.Header>
+        <Modal.Header>
+          {!isChannelPrivate ? (
+            <span>Create Public Channel</span>
+          ) : (
+            <span>Create Private Channel</span>
+          )}
+        </Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -64,6 +90,43 @@ class AddChannelModal extends React.Component {
             </Form.Field>
             {clientError.channelName && (
               <InlineError text={clientError.channelName} />
+            )}
+            <br />
+            <Form.Field>
+              <Checkbox
+                toggle
+                value={!isChannelPrivate}
+                label="Public"
+                onChange={this.toggleCheckboxValue}
+              />
+            </Form.Field>
+            {isChannelPrivate ? (
+              <Form.Field>
+                <Dropdown
+                  placeholder="select members to join your private channel"
+                  fluid
+                  multiple
+                  search
+                  selection
+                  options={currentTeamMembers
+                    .filter(member => member.id !== currentUser.id)
+                    .map(member => ({
+                      key: member.id,
+                      value: member.id,
+                      text: member.username
+                    }))}
+                  onChange={(e, { value }) => {
+                    this.setState({
+                      members: value
+                    });
+                  }}
+                />
+              </Form.Field>
+            ) : (
+              <span style={{ fontSize: "20px" }}>
+                <i className="users icon " />{" "}
+                <span className="">{currentTeamMembers.length} members</span>
+              </span>
             )}
             <br />
             <Form.Group widths="equal">
@@ -83,6 +146,8 @@ class AddChannelModal extends React.Component {
 
 const stateToProps = state => ({
   currentTeam: state.teamReducer.currentTeam,
+  currentUser: state.userReducer.currentUser,
+  currentTeamMembers: state.teamReducer.currentTeamMembers,
   error: state.teamReducer.error
 });
 

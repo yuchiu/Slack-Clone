@@ -6,7 +6,7 @@ class SideBarHeader extends React.Component {
   state = {};
 
   render() {
-    const { user, currentTeam } = this.props;
+    const { currentUser, currentTeam } = this.props;
     return (
       <div className="leftsidebar">
         <div className="leftsidebar__header">
@@ -14,7 +14,9 @@ class SideBarHeader extends React.Component {
             <Icon className="team-bell" name="bell outline" />
             {currentTeam.name}
           </h1>
-          <h1 className="leftsidebar__header__username">{user.username}</h1>
+          <h1 className="leftsidebar__header__username">
+            {currentUser.username}
+          </h1>
         </div>
       </div>
     );
