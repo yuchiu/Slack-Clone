@@ -6,6 +6,27 @@ export default {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const { channelId } = req.params;
+
+      /* find channel user request to get message */
+      const channel = await models.Channel.findOne({
+        raw: true,
+        where: { id: channelId }
+      });
+      /* check if channel is private */
+      if (!channel.public) {
+        /* check if user is member of private channel */
+        const member = await models.PrivateChannelMember.findOne({
+          raw: true,
+          where: { channelId, userId: currentUserId }
+        });
+        /* return error if user is not member */
+        if (!member) {
+          res.status(403).send({
+            error: "you are not member of the private channel"
+          });
+        }
+      }
+
       const channelMessageList = await models.ChannelMessage.findAll(
         { order: [["created_at", "ASC"]], where: { channelId } },
         { raw: true }

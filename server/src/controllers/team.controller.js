@@ -113,10 +113,17 @@ export default {
           raw: true
         }
       );
-      const channelList = await models.Channel.findAll({
-        where: { teamId },
-        raw: true
-      });
+      const channelList = await models.sequelize.query(
+        `
+          select distinct on (id) *
+          from channels as c, private_channel_members as pcm 
+          where c.team_id = :teamId and (c.public = true or (pcm.user_id = :userId and c.id = pcm.channel_id));`,
+        {
+          replacements: { teamId, userId: currentUserId },
+          model: models.Channel,
+          raw: true
+        }
+      );
       const messageGroupList = await models.sequelize.query(
         "select distinct on (u.id) u.id, u.username from users as u join group_messages as dm on (u.id = dm.sender_id) or (u.id = dm.receiver_id) where (:currentUserId = dm.sender_id or :currentUserId = dm.receiver_id) and dm.team_id = :teamId",
         {

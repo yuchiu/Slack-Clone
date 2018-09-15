@@ -45,7 +45,6 @@ export default {
         where: { teamId },
         raw: true
       });
-      console.log(response, channelList);
       res.status(200).send({
         channel: response,
         channelList
