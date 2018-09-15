@@ -1,23 +1,23 @@
 export default (sequelize, DataTypes) => {
-  const DirectMessage = sequelize.define("direct_message", {
+  const GroupMessage = sequelize.define("group_message", {
     text: DataTypes.STRING
   });
 
-  DirectMessage.associate = models => {
+  GroupMessage.associate = models => {
     // 1:M
-    DirectMessage.belongsTo(models.Team, {
+    GroupMessage.belongsTo(models.Team, {
       foreignKey: {
         name: "teamId",
         field: "team_id"
       }
     });
-    DirectMessage.belongsTo(models.User, {
+    GroupMessage.belongsTo(models.User, {
       foreignKey: {
         name: "receiverId",
         field: "receiver_id"
       }
     });
-    DirectMessage.belongsTo(models.User, {
+    GroupMessage.belongsTo(models.User, {
       foreignKey: {
         name: "senderId",
         field: "sender_id"
@@ -25,5 +25,5 @@ export default (sequelize, DataTypes) => {
     });
   };
 
-  return DirectMessage;
+  return GroupMessage;
 };

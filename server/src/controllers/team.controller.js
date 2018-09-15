@@ -117,8 +117,8 @@ export default {
         where: { teamId },
         raw: true
       });
-      const directMessageGroupList = await models.sequelize.query(
-        "select distinct on (u.id) u.id, u.username from users as u join direct_messages as dm on (u.id = dm.sender_id) or (u.id = dm.receiver_id) where (:currentUserId = dm.sender_id or :currentUserId = dm.receiver_id) and dm.team_id = :teamId",
+      const messageGroupList = await models.sequelize.query(
+        "select distinct on (u.id) u.id, u.username from users as u join group_messages as dm on (u.id = dm.sender_id) or (u.id = dm.receiver_id) where (:currentUserId = dm.sender_id or :currentUserId = dm.receiver_id) and dm.team_id = :teamId",
         {
           replacements: { currentUserId, teamId },
           model: models.User,
@@ -129,7 +129,7 @@ export default {
       res.status(200).send({
         teamMemberList,
         channelList,
-        directMessageGroupList
+        messageGroupList
       });
     } catch (err) {
       console.log(err);

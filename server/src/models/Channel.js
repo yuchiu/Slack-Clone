@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    directMessage: {
+    groupMessage: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }

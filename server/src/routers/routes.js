@@ -4,9 +4,9 @@ import {
   userController,
   authController,
   channelController,
-  channelMessageController,
-  teamController,
-  directMessageController
+  messageGroupController,
+  messageController,
+  teamController
 } from "../controllers";
 import { authPolicy } from "../policies";
 
@@ -17,17 +17,17 @@ export default app => {
   const auth = express.Router();
   const channel = express.Router();
   const team = express.Router();
-  const channelMessage = express.Router();
-  const directMessage = express.Router();
+  const message = express.Router();
+  const messageGroup = express.Router();
 
   /* routes to api v1 routes  */
   app.use("/api/v1", apiv1);
   apiv1.use("/auths", auth);
   apiv1.use("/users", user);
   apiv1.use("/channels", channel);
+  apiv1.use("/message-groups", messageGroup);
   apiv1.use("/teams", team);
-  apiv1.use("/direct-messages", directMessage);
-  apiv1.use("/channel-messages", channelMessage);
+  apiv1.use("/messages", message);
 
   /* auth routes */
   auth.get("/", authPolicy.authentication, authController.bearerTokenAuth);
@@ -55,12 +55,17 @@ export default app => {
   /* channels routes */
   channel.post("/", authPolicy.authentication, channelController.create);
 
-  /* channel messages routes */
-  channelMessage.get(
-    "/:channelId",
-    authPolicy.authentication,
-    channelMessageController.getChannelMessage
-  );
+  /* messageGroup routes */
+  // messageGroup.post("/", console.log("create message group"));
 
-  /* direct messages routes */
+  /* messages routes */
+  message.get(
+    "/channels/:channelId",
+    authPolicy.authentication,
+    messageController.getChannelMessage
+  );
+  // message.get(
+  //   "/message-groups/:userId",
+  //   console.log("get message group's message")
+  // );
 };
