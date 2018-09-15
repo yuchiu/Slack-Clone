@@ -50,8 +50,14 @@ class AddChannelModal extends React.Component {
       createChannel({
         teamId: currentTeam.id,
         channelName,
-        isChannelPrivate,
-        members
+        isPublic: !isChannelPrivate,
+        membersList: members
+      });
+      this.setState({
+        clientError: {},
+        members: [],
+        isChannelPrivate: true,
+        channelName: ""
       });
       onClose();
     }
