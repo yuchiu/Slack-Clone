@@ -4,12 +4,12 @@ export default {
   login: data => {
     const clientErrors = {};
     if (!data.username) {
-      clientErrors.username = "Can't be blank";
+      clientErrors.username = "Username can't be blank";
     } else if (data.username.length < 4 || data.username.length > 32) {
       clientErrors.username = "Length of user name have to be between 4 to 32";
     }
     if (!data.password) {
-      clientErrors.password = "Can't be blank";
+      clientErrors.password = "Password can't be blank";
     } else if (data.password.length < 4 || data.password.length > 32) {
       clientErrors.password = "Length of user name have to be between 4 to 32";
     }
@@ -19,17 +19,17 @@ export default {
   register: data => {
     const clientErrors = {};
     if (!data.username) {
-      clientErrors.username = "Can't be blank";
+      clientErrors.username = "Username can't be blank";
     } else if (data.username.length < 4 || data.username.length > 32) {
       clientErrors.username = "Length of user name have to be between 4 to 32";
     }
     if (!data.password) {
-      clientErrors.password = "Can't be blank";
+      clientErrors.password = "Password can't be blank";
     } else if (data.password.length < 4 || data.password.length > 32) {
       clientErrors.password = "Length of password have to be between 4 to 32";
     }
     if (!data.email) {
-      clientErrors.email = "Can't be blank";
+      clientErrors.email = "Email can't be blank";
     } else if (!Validator.isEmail(data.email)) {
       clientErrors.email = "Invalid email";
     }
@@ -38,7 +38,7 @@ export default {
   createTeam: data => {
     const clientErrors = {};
     if (!data.name) {
-      clientErrors.name = "Can't be blank";
+      clientErrors.name = "Team name can't be blank";
     } else if (data.name.length < 1 || data.name.length > 32) {
       clientErrors.name = "Length of team name have to be between 1 to 32";
     }
@@ -48,10 +48,15 @@ export default {
   addChannel: data => {
     const clientErrors = {};
     if (!data.channelName) {
-      clientErrors.channelName = "Can't be blank";
+      clientErrors.channelName = "Channel name can't be blank";
     } else if (data.channelName.length < 1 || data.channelName.length > 32) {
       clientErrors.channelName =
         "Length of channel name have to be between 1 to 32";
+    }
+    if (data.isChannelPrivate) {
+      if (data.members.length < 1) {
+        clientErrors.members = "At least one member have to be selected";
+      }
     }
     return clientErrors;
   },
@@ -66,7 +71,7 @@ export default {
       return false;
     };
     if (!data.username) {
-      clientErrors.username = "Can't be blank";
+      clientErrors.username = "Username can't be blank";
     } else if (data.username.length < 1 || data.username.length > 32) {
       clientErrors.username = "Length of username have to be between 1 to 32";
     } else if (isMember(data.username, currentTeamMembers)) {
@@ -77,12 +82,10 @@ export default {
     return clientErrors;
   },
 
-  addDirectMessage: data => {
+  addMessageGroup: data => {
     const clientErrors = {};
-    if (!data.username) {
-      clientErrors.username = "Can't be blank";
-    } else if (data.username.length < 1 || data.username.length > 32) {
-      clientErrors.username = "Length of username have to be between 1 to 32";
+    if (data.members.length < 1) {
+      clientErrors.members = "At least one member have to be selected";
     }
     return clientErrors;
   }

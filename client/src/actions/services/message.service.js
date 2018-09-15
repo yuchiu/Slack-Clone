@@ -7,7 +7,7 @@ const socket = io("ws://localhost:3030");
 
 export default {
   getChannelMessageList: async channelId => {
-    const response = await APIV1().get(`/channel-messages/${channelId}`);
+    const response = await APIV1().get(`/messages/channels/${channelId}`);
     return response;
   },
 

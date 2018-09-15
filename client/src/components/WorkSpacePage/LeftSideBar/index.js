@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 import "./index.scss";
 import ChannelHeader from "./ChannelHeader";
 import ChannelList from "./ChannelList";
-import DirectMessageHeader from "./DirectMessageHeader";
-import DirectMessageList from "./DirectMessageList";
+import MessageGroupHeader from "./MessageGroupHeader";
+import MessageGroupList from "./MessageGroupList";
 import SideBarHeader from "./SideBarHeader";
 import InviteMemberSection from "./InviteMemberSection";
 import {
   AddChannelModal,
-  AddDirectMessageModal,
+  AddMessageGroupModal,
   AddTeamMemberModal
 } from "./modals";
 
@@ -19,7 +19,7 @@ class LeftSideBar extends React.Component {
   state = {
     openAddChannelModal: false,
     openAddTeamMemberModal: false,
-    openAddDirectMessageModal: false
+    openAddMessageGroupModal: false
   };
 
   toggleAddChannelModal = e => {
@@ -29,12 +29,12 @@ class LeftSideBar extends React.Component {
     this.setState({ openAddChannelModal: !this.state.openAddChannelModal });
   };
 
-  toggleAddDirectMessageModal = e => {
+  toggleAddMessageGroupModal = e => {
     if (e) {
       e.preventDefault();
     }
     this.setState({
-      openAddDirectMessageModal: !this.state.openAddDirectMessageModal
+      openAddMessageGroupModal: !this.state.openAddMessageGroupModal
     });
   };
 
@@ -51,12 +51,12 @@ class LeftSideBar extends React.Component {
     const {
       openAddTeamMemberModal,
       openAddChannelModal,
-      openAddDirectMessageModal
+      openAddMessageGroupModal
     } = this.state;
     const {
       currentUser,
       currentTeam,
-      directMessageGroupList,
+      messageGroupList,
       channelList
     } = this.props;
     return (
@@ -71,12 +71,10 @@ class LeftSideBar extends React.Component {
             <ChannelList teamId={currentTeam.id} channelList={channelList} />
           </ul>
           <ul className="leftsidebar__List">
-            <DirectMessageHeader
-              toggleAddDirectMessageModal={this.toggleAddDirectMessageModal}
+            <MessageGroupHeader
+              toggleAddMessageGroupModal={this.toggleAddMessageGroupModal}
             />
-            <DirectMessageList
-              directMessageGroupList={directMessageGroupList}
-            />
+            <MessageGroupList messageGroupList={messageGroupList} />
           </ul>
           <InviteMemberSection
             isAdmin={currentTeam.admin}
@@ -89,10 +87,10 @@ class LeftSideBar extends React.Component {
           open={openAddChannelModal}
           key="sidebar-add-channel-modal"
         />
-        <AddDirectMessageModal
+        <AddMessageGroupModal
           teamId={currentTeam.id}
-          onClose={this.toggleAddDirectMessageModal}
-          open={openAddDirectMessageModal}
+          onClose={this.toggleAddMessageGroupModal}
+          open={openAddMessageGroupModal}
           key="sidebar-direct-message-modal"
         />
         <AddTeamMemberModal
@@ -114,7 +112,7 @@ const stateToProps = state => ({
   currentUser: state.userReducer.currentUser,
   currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList,
-  directMessageGroupList: state.directMessageGroupReducer.directMessageGroupList
+  messageGroupList: state.messageGroupReducer.messageGroupList
 });
 
 const dispatchToProps = dispatch => ({});

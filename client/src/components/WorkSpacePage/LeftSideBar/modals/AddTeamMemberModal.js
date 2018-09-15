@@ -58,12 +58,13 @@ class AddTeamMemberModal extends React.Component {
         <Modal.Content>
           <Form>
             <Form.Field>
+              <label>Add user to the team:</label>
               <Input
                 value={username}
                 onChange={this.handleChange}
                 name="username"
                 fluid
-                placeholder="username"
+                placeholder="# username"
               />
             </Form.Field>
             {clientError.username && (

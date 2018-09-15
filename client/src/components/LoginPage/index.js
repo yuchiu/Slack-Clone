@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import "./index.scss";
 import { validateForm } from "@/utils";
 import { authAction } from "@/actions";
 import { NavBar, InlineError } from "@/components/global";

@@ -35,7 +35,7 @@ class InputContainer extends React.Component {
     }
   };
 
-  sendDirectMessage = () => {
+  sendGroupMessage = () => {
     const { text } = this.state;
     if (text) {
       console.log(text);
@@ -76,7 +76,7 @@ class InputContainer extends React.Component {
                   placeholder={`# Someone`}
                   onChange={this.handleChange}
                   onKeyDown={e => {
-                    if (e.keyCode === ENTER_KEY) this.sendDirectMessage();
+                    if (e.keyCode === ENTER_KEY) this.sendGroupMessage();
                   }}
                 />
               )}

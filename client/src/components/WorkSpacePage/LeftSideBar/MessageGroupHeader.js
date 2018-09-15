@@ -2,23 +2,23 @@ import React from "react";
 import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-class DirectMessageHeader extends React.Component {
+class MessageGroupHeader extends React.Component {
   state = {};
 
   render() {
-    const { toggleAddDirectMessageModal } = this.props;
+    const { toggleAddMessageGroupModal } = this.props;
     return (
       <h1 className="leftsidebar__List__header">
         DIRECT MESSAGES
         <Icon
           className="leftsidebar__List__header__icon leftsidebar__List__header__icon--closer"
-          onClick={toggleAddDirectMessageModal}
+          onClick={toggleAddMessageGroupModal}
           name="plus circle"
         />
       </h1>
     );
   }
 }
-DirectMessageHeader.propTypes = {};
+MessageGroupHeader.propTypes = {};
 
-export default DirectMessageHeader;
+export default MessageGroupHeader;

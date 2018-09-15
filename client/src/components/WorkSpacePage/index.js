@@ -16,7 +16,7 @@ class WorkSpacePage extends React.Component {
   componentDidMount() {
     const { getTeamAssociatedList } = this.props;
 
-    /* get channelList, directMessageList, teamMembers when component mount */
+    /* get channelList, messageGroupList, teamMembers when component mount */
     if (this.isCurrentTeamExist()) {
       const teamId = sessionStore.getTeamId();
       getTeamAssociatedList(teamId);
