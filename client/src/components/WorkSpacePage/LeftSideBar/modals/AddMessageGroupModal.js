@@ -65,6 +65,9 @@ class AddMessageGroupModal extends React.Component {
           <Form>
             <Form.Field>
               <label>Select members for direct messaging:</label>
+              {clientError.members && (
+                <InlineError text={clientError.members} />
+              )}
               <Dropdown
                 placeholder="# username"
                 fluid
@@ -86,7 +89,6 @@ class AddMessageGroupModal extends React.Component {
                 }}
               />
             </Form.Field>
-            {clientError.members && <InlineError text={clientError.members} />}
             <br />
             <Form.Group widths="equal">
               <Button type="button" onClick={this.handleSubmit} fluid>

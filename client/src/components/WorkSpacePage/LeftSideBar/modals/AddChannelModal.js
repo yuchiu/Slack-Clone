@@ -99,6 +99,9 @@ class AddChannelModal extends React.Component {
           <Form>
             <Form.Field>
               <label>Channel name:</label>
+              {clientError.channelName && (
+                <InlineError text={clientError.channelName} />
+              )}
               <Input
                 value={channelName}
                 onChange={this.handleChange}
@@ -107,9 +110,6 @@ class AddChannelModal extends React.Component {
                 placeholder="# random channel"
               />
             </Form.Field>
-            {clientError.channelName && (
-              <InlineError text={clientError.channelName} />
-            )}
             <Form.Field>
               <Checkbox
                 toggle
@@ -121,6 +121,9 @@ class AddChannelModal extends React.Component {
             {isChannelPrivate ? (
               <Form.Field>
                 <label>Select members to join your private channel:</label>
+                {clientError.members && (
+                  <InlineError text={clientError.members} />
+                )}
                 <Dropdown
                   placeholder="# username"
                   fluid
@@ -149,7 +152,6 @@ class AddChannelModal extends React.Component {
               </div>
             )}
             <br />
-            {clientError.members && <InlineError text={clientError.members} />}
             <Form.Group widths="equal">
               <Button type="button" onClick={this.handleSubmit} fluid>
                 Create Channel

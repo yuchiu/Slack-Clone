@@ -59,6 +59,9 @@ class AddTeamMemberModal extends React.Component {
           <Form>
             <Form.Field>
               <label>Add user to the team:</label>
+              {clientError.username && (
+                <InlineError text={clientError.username} />
+              )}
               <Input
                 value={username}
                 onChange={this.handleChange}
@@ -67,9 +70,6 @@ class AddTeamMemberModal extends React.Component {
                 placeholder="# username"
               />
             </Form.Field>
-            {clientError.username && (
-              <InlineError text={clientError.username} />
-            )}
             <br />
             <Form.Group widths="equal">
               <Button type="button" onClick={this.handleSubmit} fluid>
