@@ -1,0 +1,22 @@
+[
+  {
+    "userId": "1",
+    "teamId": "1",
+    "admin": true
+  },
+  {
+    "userId": "2",
+    "teamId": "2",
+    "admin": true
+  },
+  {
+    "userId": "3",
+    "teamId": "3",
+    "admin": true
+  },
+  {
+    "userId": "4",
+    "teamId": "4",
+    "admin": true
+  }
+]

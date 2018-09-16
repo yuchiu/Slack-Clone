@@ -14,14 +14,6 @@ export default {
           { transaction }
         );
         const team = teamData.dataValues;
-        await models.Channel.create(
-          {
-            name: "general",
-            public: true,
-            teamId: team.id
-          },
-          { transaction }
-        );
         await models.Member.create(
           {
             teamId: team.id,
@@ -30,6 +22,20 @@ export default {
           },
           { transaction }
         );
+        const channel = await models.Channel.create(
+          {
+            name: "general",
+            public: true,
+            teamId: team.id
+          },
+          { transaction }
+        );
+
+        await models.ChannelMember.create({
+          userId: currentUserId,
+          channelId: channel.id
+        });
+
         return team;
       });
       /* get user's teams */
@@ -80,6 +86,8 @@ export default {
           error: "user does not exist"
         });
       }
+
+      /* create new member  */
       await models.Member.create({ userId: userToAdd.id, teamId });
       const teamMemberList = await models.sequelize.query(
         "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
@@ -89,8 +97,35 @@ export default {
           raw: true
         }
       );
+
+      /* find the initial channel general and add new user to the general channel */
+      const initialChannel = await models.sequelize.query(
+        "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+        {
+          replacements: [teamId],
+          model: models.Channel,
+          raw: true
+        }
+      );
+      const initialChannelId = initialChannel[0].id;
+
+      await models.ChannelMember.create({
+        userId: userToAdd.id,
+        channelId: initialChannelId
+      });
+
+      /*  return team and channel member list */
+      const channelMemberList = await models.sequelize.query(
+        "select * from users as u join channel_members as cm on cm.user_id = u.id where cm.channel_id = ?",
+        {
+          replacements: [initialChannelId],
+          model: models.User,
+          raw: true
+        }
+      );
       res.status(200).send({
-        teamMemberList
+        teamMemberList,
+        channelMemberList
       });
     } catch (err) {
       console.log(err);

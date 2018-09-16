@@ -1,0 +1,22 @@
+[
+  {
+    "teamId": "1",
+    "name": "general",
+    "public": true
+  },
+  {
+    "teamId": "2",
+    "name": "general",
+    "public": true
+  },
+  {
+    "teamId": "3",
+    "name": "general",
+    "public": true
+  },
+  {
+    "teamId": "4",
+    "name": "general",
+    "public": true
+  }
+]

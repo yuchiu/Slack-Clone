@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
+    "seed": "babel-node seed/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
+    "bluebird": "^3.5.2",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
