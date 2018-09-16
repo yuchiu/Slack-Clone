@@ -24,6 +24,22 @@ export default {
       payload: channelId
     });
   },
+  getChannelAssociatedList: channelId => async dispatch => {
+    try {
+      const response = await channelService.getChannelAssociatedList(channelId);
+      const { data } = response;
+      dispatch({
+        type: constants.GET_CHANNEL_ASSOCIATED_LIST,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.MESSAGE_ERROR,
+        payload: data
+      });
+    }
+  },
   getCurrentChannel: params => async dispatch => {
     dispatch({
       type: constants.GET_CURRENT_CHANNEL,

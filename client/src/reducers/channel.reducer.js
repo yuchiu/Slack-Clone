@@ -3,6 +3,7 @@ import constants from "@/constants";
 const initialState = {
   channelList: [],
   currentChannel: {},
+  currentChannelMembers: [],
   error: ""
 };
 
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
     case constants.CREATE_CHANNEL:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channel;
+      newState.currentChannelMembers = action.payload.channelMemberList;
       newState.error = "";
       return newState;
 
@@ -53,6 +55,10 @@ export default (state = initialState, action) => {
       newState.error = "";
       return newState;
 
+    case constants.GET_CHANNEL_ASSOCIATED_LIST:
+      newState.currentChannelMembers = action.payload.channelMemberList;
+      newState.error = "";
+      return newState;
     case constants.CHANNEL_ERROR:
       newState.error = action.payload.error;
       return newState;

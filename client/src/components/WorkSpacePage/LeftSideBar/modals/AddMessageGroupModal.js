@@ -60,7 +60,7 @@ class AddMessageGroupModal extends React.Component {
 
     return (
       <Modal open={open} onClose={this.handleClose}>
-        <Modal.Header>Add to Direct Message</Modal.Header>
+        <Modal.Header>Create Direct Message Group</Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -92,7 +92,7 @@ class AddMessageGroupModal extends React.Component {
             <br />
             <Form.Group widths="equal">
               <Button type="button" onClick={this.handleSubmit} fluid>
-                Invite
+                Start Direct Message
               </Button>
               <Button type="button" fluid onClick={this.handleClose}>
                 Cancel

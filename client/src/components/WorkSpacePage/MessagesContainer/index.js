@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import Message from "./Message";
-import { messageAction } from "@/actions";
+import { messageAction, channelAction } from "@/actions";
 
 class MessagesContainer extends React.Component {
   state = {
@@ -20,11 +20,15 @@ class MessagesContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    const { getChannelMessageList, currentChannel, currentTeam } = this.props;
+    const {
+      getChannelAssociatedList,
+      currentChannel,
+      currentTeam
+    } = this.props;
 
     /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
     if (this.isCurrentDataFetched() && !this.state.isMessageFetched) {
-      getChannelMessageList(currentChannel.id);
+      getChannelAssociatedList(currentChannel.id);
       this.setState({ isMessageFetched: true });
     }
 
@@ -81,8 +85,8 @@ const stateToProps = state => ({
   currentChannel: state.channelReducer.currentChannel
 });
 const dispatchToProps = dispatch => ({
-  getChannelMessageList: channelId => {
-    dispatch(messageAction.getChannelMessageList(channelId));
+  getChannelAssociatedList: channelId => {
+    dispatch(channelAction.getChannelAssociatedList(channelId));
   },
   clearSocketConnection: () => {
     dispatch(messageAction.clearSocketConnection());

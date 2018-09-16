@@ -8,7 +8,7 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.GET_CHANNEL_MESSAGE_LIST:
+    case constants.GET_CHANNEL_ASSOCIATED_LIST:
       newState.messageList = action.payload.channelMessageList;
       newState.error = "";
       return newState;

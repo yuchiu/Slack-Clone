@@ -12,7 +12,7 @@ class MainHeader extends React.Component {
 
   render() {
     const {
-      currentTeamMembers,
+      currentChannelMembers,
       currentChannel,
       match: { path }
     } = this.props;
@@ -21,10 +21,15 @@ class MainHeader extends React.Component {
         {currentPath(path) === "channel" && (
           <h1 className="main-header__title">
             # {currentChannel.name}
+            {currentChannel.public ? (
+              <span> (public) </span>
+            ) : (
+              <span> (private) </span>
+            )}
             <span className="main-header__title__span">
               <i className="users icon main-header__title__span__icon" />{" "}
               <span className="main-header__title__span__number">
-                {currentTeamMembers.length}
+                {currentChannelMembers.length}
               </span>
             </span>
           </h1>
@@ -40,7 +45,7 @@ class MainHeader extends React.Component {
 MainHeader.propTypes = {};
 
 const stateToProps = state => ({
-  currentTeamMembers: state.teamReducer.currentTeamMembers,
+  currentChannelMembers: state.channelReducer.currentChannelMembers,
   currentChannel: state.channelReducer.currentChannel
 });
 
