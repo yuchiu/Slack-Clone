@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
     case constants.AUTO_LOGIN:
-      if (action.payload.teamList) {
+      if (action.payload.teamList && action.payload.teamList.length > 0) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
         sessionStore.setTeamId(newState.currentTeam.id);
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.LOGIN_USER:
-      if (action.payload.teamList) {
+      if (action.payload.teamList && action.payload.teamList.length > 0) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
         sessionStore.setTeamId(newState.currentTeam.id);

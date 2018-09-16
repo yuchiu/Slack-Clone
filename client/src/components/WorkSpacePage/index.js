@@ -48,7 +48,7 @@ class WorkSpacePage extends React.Component {
     return (
       <React.Fragment>
         {/* redirect to create team if user is not in any team */}
-        {!this.isCurrentTeamExist() && <Redirect to="create-team" />}
+        {!this.isCurrentTeamExist() && <Redirect to="/create-team" />}
         {/* render workspace if currentTeam exist */}
         {this.isCurrentTeamExist() && (
           <main className="workspace-page">
