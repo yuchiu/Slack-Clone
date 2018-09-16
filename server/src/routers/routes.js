@@ -54,16 +54,15 @@ export default app => {
 
   /* channels routes */
   channel.post("/", authPolicy.authentication, channelController.create);
-
+  channel.get(
+    "/:channelId",
+    authPolicy.authentication,
+    channelController.getChannelAssociatedList
+  );
   /* messageGroup routes */
   // messageGroup.post("/", console.log("create message group"));
 
   /* messages routes */
-  message.get(
-    "/channels/:channelId",
-    authPolicy.authentication,
-    messageController.getChannelMessage
-  );
   // message.get(
   //   "/message-groups/:userId",
   //   console.log("get message group's message")

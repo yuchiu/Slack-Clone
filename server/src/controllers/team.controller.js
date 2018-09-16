@@ -116,7 +116,7 @@ export default {
       const channelList = await models.sequelize.query(
         `
           select distinct on (id) *
-          from channels as c left outer join private_channel_members as pcm
+          from channels as c left outer join channel_members as pcm
           on c.id = pcm.channel_id
           where c.team_id = :teamId and (c.public = true or pcm.user_id = :userId);`,
         {
