@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Form } from "semantic-ui-react";
+import { Button, Icon, Input } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./index.scss";
 import { messageAction } from "@/actions";
+import { FileUpload } from "@/components/global";
 
 class InputContainer extends React.Component {
   state = {
@@ -39,23 +40,22 @@ class InputContainer extends React.Component {
     const { currentChannel } = this.props;
     return (
       <div className="input-container">
-        <Form>
-          <Form.Group widths="equal">
-            <Form.Field>
-              <Input
-                fluid
-                focus
-                name="text"
-                value={text}
-                placeholder={`# ${currentChannel.name}`}
-                onChange={this.handleChange}
-                onKeyDown={e => {
-                  if (e.keyCode === ENTER_KEY) this.sendMessage();
-                }}
-              />
-            </Form.Field>
-          </Form.Group>
-        </Form>
+        <FileUpload>
+          <Button icon>
+            <Icon name="paperclip" />
+          </Button>
+        </FileUpload>
+        <Input
+          fluid
+          focus
+          name="text"
+          value={text}
+          placeholder={`# ${currentChannel.name}`}
+          onChange={this.handleChange}
+          onKeyDown={e => {
+            if (e.keyCode === ENTER_KEY) this.sendMessage();
+          }}
+        />
       </div>
     );
   }

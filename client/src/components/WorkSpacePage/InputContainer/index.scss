@@ -4,4 +4,6 @@
   grid-column: 2;
   grid-row: 3;
   margin: 15px;
+  display: grid;
+  grid-template-columns: 45px auto;
 }

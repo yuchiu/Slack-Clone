@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import Message from "./Message";
+import { FileUpload } from "@/components/global";
 import { messageAction, channelAction } from "@/actions";
 
 class MessagesContainer extends React.Component {
@@ -67,13 +68,13 @@ class MessagesContainer extends React.Component {
   render() {
     const { messageList } = this.props;
     return (
-      <div className="messages-container">
+      <FileUpload disableClick cssClass="messages-container">
         <Comment.Group>
           {messageList.map(message => (
             <Message key={message.id} message={message} />
           ))}
         </Comment.Group>
-      </div>
+      </FileUpload>
     );
   }
 }

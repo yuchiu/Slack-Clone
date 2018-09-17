@@ -16,24 +16,25 @@ class MessageGroupList extends React.Component {
     const { messageGroupList, teamId, currentUser } = this.props;
     return (
       <React.Fragment>
-        {messageGroupList.map((messageGroup, i) => (
-          <Link
-            className="leftsidebar__List__link"
-            key={`index-${i}-channelid-${messageGroup.id}`}
-            to={`/workspace/${teamId}/${messageGroup.id}`}
-            onClick={this.handleClick.bind(this, messageGroup.id)}
-          >
-            <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-              <Bubble />{" "}
-              {messageGroupList && messageGroupList.length > 0
-                ? filterOutCurrentUsername(
-                    messageGroup.name,
-                    currentUser.username
-                  )
-                : null}
-            </li>
-          </Link>
-        ))}
+        {messageGroupList.length > 0 &&
+          messageGroupList.map((messageGroup, i) => (
+            <Link
+              className="leftsidebar__List__link"
+              key={`index-${i}-channelid-${messageGroup.id}`}
+              to={`/workspace/${teamId}/${messageGroup.id}`}
+              onClick={this.handleClick.bind(this, messageGroup.id)}
+            >
+              <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
+                <Bubble />{" "}
+                {messageGroupList && messageGroupList.length > 0
+                  ? filterOutCurrentUsername(
+                      messageGroup.name,
+                      currentUser.username
+                    )
+                  : null}
+              </li>
+            </Link>
+          ))}
       </React.Fragment>
     );
   }

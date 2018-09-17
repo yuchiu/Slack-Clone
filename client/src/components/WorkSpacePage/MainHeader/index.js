@@ -14,7 +14,7 @@ class MainHeader extends React.Component {
     return (
       <div className="main-header">
         <h1 className="main-header__title">
-          {currentChannel.messageGroup ? (
+          {currentChannel.message_group ? (
             <React.Fragment>
               <span>
                 {filterOutCurrentUsername(

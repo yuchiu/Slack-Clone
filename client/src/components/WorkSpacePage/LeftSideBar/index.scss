@@ -5,6 +5,7 @@
   /* autoprefixer: off */
   grid-column: 1;
   grid-row: 1/4;
+  overflow-y: auto;
   background-color: #4e3a4c;
   color: rgba($white, 0.6);
   &__invite {

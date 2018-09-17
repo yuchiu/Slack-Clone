@@ -11,6 +11,10 @@ export default {
     messageService.receiveMessage(dispatch);
   },
 
+  sendFile: file => () => {
+    console.log(file);
+  },
+
   messageReceived: data => (dispatch, getState) => {
     const { currentChannel } = getState().channelReducer;
     const newData = { ...data };
