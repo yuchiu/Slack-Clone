@@ -34,6 +34,10 @@ class AddTeamMemberModal extends React.Component {
       const { addTeamMember, currentTeam, onClose } = this.props;
       const { username } = this.state;
       addTeamMember({ teamId: currentTeam.id, targetUsername: username });
+      this.setState({
+        clientError: {},
+        username: ""
+      });
       onClose();
     }
   };
@@ -41,6 +45,10 @@ class AddTeamMemberModal extends React.Component {
   handleClose = e => {
     const { onClose } = this.props;
     e.preventDefault();
+    this.setState({
+      clientError: {},
+      username: ""
+    });
     this.setState({
       clientError: {},
       username: ""

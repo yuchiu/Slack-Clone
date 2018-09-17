@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Modal, Dropdown } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import { channelAction } from "@/actions";
 import { InlineError } from "@/components/global";
@@ -16,14 +17,29 @@ class AddMessageGroupModal extends React.Component {
   componentWillUnmount() {
     this.setState({
       clientError: {},
-      members: []
+      members: [],
+      channelName: ""
     });
   }
 
-  handleChange = e => {
-    const { name, value } = e.target;
+  handleChange = (e, { value }) => {
+    e.persist();
+    const { currentTeamMembers, currentUser } = this.props;
+    let memberNameList = currentUser.username;
+    if (value.length > 0) {
+      for (let i = 0; i < value.length; i++) {
+        for (let j = 0; j < currentTeamMembers.length; j++) {
+          if (value[i] === currentTeamMembers[j].id) {
+            memberNameList = memberNameList.concat(
+              `, ${currentTeamMembers[j].username}`
+            );
+          }
+        }
+      }
+    }
     this.setState({
-      [name]: value
+      members: value,
+      channelName: memberNameList
     });
   };
 
@@ -35,12 +51,18 @@ class AddMessageGroupModal extends React.Component {
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
       const { createChannel, currentTeam, onClose } = this.props;
-      const { members } = this.state;
+      const { members, channelName } = this.state;
       createChannel({
         teamId: currentTeam.id,
         messageGroup: true,
         isPublic: false,
+        channelName,
         membersList: members
+      });
+      this.setState({
+        clientError: {},
+        members: [],
+        channelName: ""
       });
       onClose();
     }
@@ -51,7 +73,8 @@ class AddMessageGroupModal extends React.Component {
     e.preventDefault();
     this.setState({
       clientError: {},
-      members: []
+      members: [],
+      channelName: ""
     });
     onClose();
   };
@@ -84,11 +107,7 @@ class AddMessageGroupModal extends React.Component {
                     value: member.id,
                     text: member.username
                   }))}
-                onChange={(e, { value }) => {
-                  this.setState({
-                    members: value
-                  });
-                }}
+                onChange={this.handleChange}
               />
             </Form.Field>
             <br />

@@ -3,13 +3,5 @@ import InlineError from "./InlineError";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import TokenAuthUser from "./TokenAuthUser";
 import SlackLogo from "./SlackLogo";
-import RedirectWorkSpacePage from "./RedirectWorkSpacePage";
 
-export {
-  NavBar,
-  InlineError,
-  RedirectWorkSpacePage,
-  AuthenticatedRoute,
-  TokenAuthUser,
-  SlackLogo
-};
+export { NavBar, InlineError, AuthenticatedRoute, TokenAuthUser, SlackLogo };

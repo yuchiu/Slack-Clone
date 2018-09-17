@@ -30,12 +30,17 @@ export default {
           },
           { transaction }
         );
+        console.log(channel);
+        console.log(currentUserId, channel.id);
+        await models.ChannelMember.create(
+          {
+            userId: currentUserId,
+            channelId: channel.dataValues.id
+          },
+          { transaction }
+        );
 
-        await models.ChannelMember.create({
-          userId: currentUserId,
-          channelId: channel.id
-        });
-
+        console.log("44444444444444");
         return team;
       });
       /* get user's teams */

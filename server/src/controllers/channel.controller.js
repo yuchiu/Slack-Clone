@@ -16,57 +16,39 @@ export default {
         { where: { teamId, userId: currentUserId } },
         { raw: true }
       );
-      // user have to be admin to create channel
-      if (!member.admin) {
-        return res.status(403).send({
-          error: "You have to be admin of the team to create channels"
-        });
-      }
-
       const response = await models.sequelize.transaction(async transaction => {
-        /* ******************************************************** */
+        let channel;
+
         /*  check if it's message group */
-        if (messageGroup) {
-          const members = membersList.filter(
-            memberId => memberId !== currentUserId
-          );
+        if (!messageGroup) {
+          // user have to be admin to create public or private channel
+          if (!member.admin) {
+            return res.status(403).send({
+              error: "You have to be admin of the team to create channels"
+            });
+          }
 
-          /* find username of members and assign it to Channel Model */
-
-          const memberNames = "message group";
-          const channel = await models.Channel.create(
+          channel = await models.Channel.create(
             {
-              name: memberNames,
+              name: channelName,
+              public: isPublic,
+              teamId
+            },
+            { transaction }
+          );
+        }
+        if (messageGroup) {
+          channel = await models.Channel.create(
+            {
+              name: channelName,
               public: isPublic,
               messageGroup: true,
               teamId
             },
             { transaction }
           );
-          /*  filter out private channel members */
-          members.push(currentUserId);
-          const ChannelMembers = members.map(memberId => ({
-            userId: memberId,
-            channelId: channel.dataValues.id
-          }));
-          /* create channel member relation for private member */
-          await models.ChannelMember.bulkCreate(ChannelMembers, {
-            transaction
-          });
-
-          /*  return channel created and private channel members */
-          return { channel, channelMemberList: ChannelMembers };
         }
-        /* ********************************************************* */
 
-        const channel = await models.Channel.create(
-          {
-            name: channelName,
-            public: isPublic,
-            teamId
-          },
-          { transaction }
-        );
         /*  check if it's private channel */
         if (!isPublic) {
           /*  filter out private channel members */
@@ -108,10 +90,18 @@ export default {
         return { channel, channelMemberList: teamMemberList };
       });
 
-      const channelList = await models.Channel.findAll({
-        where: { teamId },
-        raw: true
-      });
+      const channelList = await models.sequelize.query(
+        `
+          select distinct on (id) *
+          from channels as c left outer join channel_members as pcm
+          on c.id = pcm.channel_id
+          where c.team_id = :teamId and (c.public = true or pcm.user_id = :userId);`,
+        {
+          replacements: { teamId, userId: currentUserId },
+          model: models.Channel,
+          raw: true
+        }
+      );
       res.status(200).send({
         channelList,
         channel: response.channel,

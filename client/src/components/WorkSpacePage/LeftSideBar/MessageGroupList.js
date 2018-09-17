@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { filterOutCurrentUsername } from "@/utils";
 import { channelAction } from "@/actions";
 
 class MessageGroupList extends React.Component {
@@ -12,7 +13,7 @@ class MessageGroupList extends React.Component {
   };
 
   render() {
-    const { messageGroupList, teamId } = this.props;
+    const { messageGroupList, teamId, currentUser } = this.props;
     return (
       <React.Fragment>
         {messageGroupList.map((messageGroup, i) => (
@@ -23,7 +24,13 @@ class MessageGroupList extends React.Component {
             onClick={this.handleClick.bind(this, messageGroup.id)}
           >
             <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-              <Bubble /> {messageGroup.name}
+              <Bubble />{" "}
+              {messageGroupList
+                ? filterOutCurrentUsername(
+                    messageGroup.name,
+                    currentUser.username
+                  )
+                : null}
             </li>
           </Link>
         ))}
@@ -38,6 +45,10 @@ MessageGroupList.propTypes = {
   messageGroupList: PropTypes.array.isRequired
 };
 
+const stateToProps = state => ({
+  currentUser: state.userReducer.currentUser
+});
+
 const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
@@ -45,6 +56,6 @@ const dispatchToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  stateToProps,
   dispatchToProps
 )(MessageGroupList);
