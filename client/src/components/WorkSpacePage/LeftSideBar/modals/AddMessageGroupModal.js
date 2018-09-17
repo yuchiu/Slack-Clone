@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Button, Modal, Dropdown } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import _ from "lodash";
 
 import { channelAction } from "@/actions";
 import { InlineError } from "@/components/global";

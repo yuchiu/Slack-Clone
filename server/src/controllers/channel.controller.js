@@ -38,6 +38,29 @@ export default {
           );
         }
         if (messageGroup) {
+          /* check if message group already created between requested members */
+          const allMembers = [...membersList, currentUserId];
+          const [data, result] = await models.sequelize.query(
+            `
+          select c.id, c.name
+          from channels as c, channel_members cm
+          where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
+          group by c.id, c.name
+          having array_agg(cm.user_id) @> Array[${allMembers.join(
+            ","
+          )}] and count(cm.user_id) = ${allMembers.length};
+          `,
+            { raw: true }
+          );
+
+          /* message group already exist, respond with error */
+          if (data.length) {
+            res.status(403).send({
+              error: "direct message between members has already been created"
+            });
+          }
+
+          /* conditions are validated, create the message group */
           channel = await models.Channel.create(
             {
               name: channelName,
@@ -87,7 +110,10 @@ export default {
         });
 
         /* return channel created and public channel members */
-        return { channel, channelMemberList: teamMemberList };
+        return {
+          channel: channel.dataValues,
+          channelMemberList: teamMemberList
+        };
       });
 
       const channelList = await models.sequelize.query(
@@ -102,6 +128,7 @@ export default {
           raw: true
         }
       );
+
       res.status(200).send({
         channelList,
         channel: response.channel,

@@ -75,9 +75,7 @@ export default {
     } else if (data.username.length < 1 || data.username.length > 32) {
       clientErrors.username = "Length of username have to be between 1 to 32";
     } else if (isMember(data.username, currentTeamMembers)) {
-      clientErrors.username = `User: ${
-        data.username
-      } is already member of the team`;
+      clientErrors.username = `${data.username} is already member of the team`;
     }
     return clientErrors;
   },

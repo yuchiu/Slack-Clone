@@ -24,10 +24,10 @@ const getCurrentChannelFromParams = (
 };
 
 const getChannelList = list =>
-  list.filter(channel => channel.messageGroup === false);
+  list.filter(channel => channel.message_group === false);
 
 const getGetMessageGroupList = list =>
-  list.filter(channel => channel.messageGroup === true);
+  list.filter(channel => channel.message_group === true);
 
 export default (state = initialState, action) => {
   const newState = { ...state };
