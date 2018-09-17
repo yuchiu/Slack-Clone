@@ -74,7 +74,10 @@ class LeftSideBar extends React.Component {
             <MessageGroupHeader
               toggleAddMessageGroupModal={this.toggleAddMessageGroupModal}
             />
-            <MessageGroupList messageGroupList={messageGroupList} />
+            <MessageGroupList
+              teamId={currentTeam.id}
+              messageGroupList={messageGroupList}
+            />
           </ul>
           <InviteMemberSection
             isAdmin={currentTeam.admin}
@@ -112,7 +115,7 @@ const stateToProps = state => ({
   currentUser: state.userReducer.currentUser,
   currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList,
-  messageGroupList: state.messageGroupReducer.messageGroupList
+  messageGroupList: state.channelReducer.messageGroupList
 });
 
 const dispatchToProps = dispatch => ({});

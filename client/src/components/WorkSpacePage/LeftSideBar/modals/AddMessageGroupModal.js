@@ -3,7 +3,7 @@ import { Form, Button, Modal, Dropdown } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { messageGroupAction } from "@/actions";
+import { channelAction } from "@/actions";
 import { InlineError } from "@/components/global";
 import { validateForm } from "@/utils";
 
@@ -34,11 +34,13 @@ class AddMessageGroupModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { createMessageGroup, currentTeam, onClose } = this.props;
+      const { createChannel, currentTeam, onClose } = this.props;
       const { members } = this.state;
-      createMessageGroup({
+      createChannel({
         teamId: currentTeam.id,
-        members
+        messageGroup: true,
+        isPublic: false,
+        membersList: members
       });
       onClose();
     }
@@ -116,8 +118,8 @@ const stateToProps = state => ({
   currentTeamMembers: state.teamReducer.currentTeamMembers
 });
 const dispatchToProps = dispatch => ({
-  createMessageGroup: messageGroupFormInfo => {
-    dispatch(messageGroupAction.createMessageGroup(messageGroupFormInfo));
+  createChannel: channelFormInfo => {
+    dispatch(channelAction.createChannel(channelFormInfo));
   }
 });
 export default connect(
