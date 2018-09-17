@@ -5,7 +5,13 @@ export default {
     try {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
-      const { teamId, channelName, isPublic, membersList } = req.body;
+      const {
+        teamId,
+        channelName,
+        isPublic,
+        membersList,
+        messageGroup
+      } = req.body;
       const member = await models.TeamMember.findOne(
         { where: { teamId, userId: currentUserId } },
         { raw: true }
@@ -18,6 +24,41 @@ export default {
       }
 
       const response = await models.sequelize.transaction(async transaction => {
+        /* ******************************************************** */
+        /*  check if it's message group */
+        if (messageGroup) {
+          const members = membersList.filter(
+            memberId => memberId !== currentUserId
+          );
+
+          /* find username of members and assign it to Channel Model */
+
+          const memberNames = "message group";
+          const channel = await models.Channel.create(
+            {
+              name: memberNames,
+              public: isPublic,
+              messageGroup: true,
+              teamId
+            },
+            { transaction }
+          );
+          /*  filter out private channel members */
+          members.push(currentUserId);
+          const ChannelMembers = members.map(memberId => ({
+            userId: memberId,
+            channelId: channel.dataValues.id
+          }));
+          /* create channel member relation for private member */
+          await models.ChannelMember.bulkCreate(ChannelMembers, {
+            transaction
+          });
+
+          /*  return channel created and private channel members */
+          return { channel, channelMemberList: ChannelMembers };
+        }
+        /* ********************************************************* */
+
         const channel = await models.Channel.create(
           {
             name: channelName,

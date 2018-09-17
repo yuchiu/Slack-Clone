@@ -4,7 +4,6 @@ import {
   userController,
   authController,
   channelController,
-  messageGroupController,
   messageController,
   teamController
 } from "../controllers";
@@ -59,9 +58,6 @@ export default app => {
     authPolicy.authentication,
     channelController.getChannelAssociatedList
   );
-  /* messageGroup routes */
-  // messageGroup.post("/", console.log("create message group"));
-
   /* messages routes */
   // message.get(
   //   "/message-groups/:userId",
