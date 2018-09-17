@@ -18,8 +18,8 @@ class MessageGroupList extends React.Component {
         {messageGroupList.map((messageGroup, i) => (
           <Link
             className="leftsidebar__List__link"
-            key={`index${i}channelid${messageGroup.id}`}
-            to={`/workspace/channel/${teamId}/${messageGroup.id}`}
+            key={`index-${i}-channelid-${messageGroup.id}`}
+            to={`/workspace/${teamId}/${messageGroup.id}`}
             onClick={this.handleClick.bind(this, messageGroup.id)}
           >
             <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">

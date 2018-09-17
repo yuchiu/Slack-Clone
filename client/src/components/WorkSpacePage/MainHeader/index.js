@@ -3,40 +3,29 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import { currentPath } from "@/utils";
-
 import "./index.scss";
 
 class MainHeader extends React.Component {
   componentDidMount() {}
 
   render() {
-    const {
-      currentChannelMembers,
-      currentChannel,
-      match: { path }
-    } = this.props;
+    const { currentChannelMembers, currentChannel } = this.props;
     return (
       <div className="main-header">
-        {currentPath(path) === "channel" && (
-          <h1 className="main-header__title">
-            # {currentChannel.name}
-            {currentChannel.public ? (
-              <span> (public) </span>
-            ) : (
-              <span> (private) </span>
-            )}
-            <span className="main-header__title__span">
-              <i className="users icon main-header__title__span__icon" />{" "}
-              <span className="main-header__title__span__number">
-                {currentChannelMembers.length}
-              </span>
+        <h1 className="main-header__title">
+          # {currentChannel.name}
+          {currentChannel.public ? (
+            <span> (public) </span>
+          ) : (
+            <span> (private) </span>
+          )}
+          <span className="main-header__title__span">
+            <i className="users icon main-header__title__span__icon" />{" "}
+            <span className="main-header__title__span__number">
+              {currentChannelMembers.length}
             </span>
-          </h1>
-        )}
-        {currentPath(path) === "direct-message" && (
-          <h1 className="main-header__title"># target User</h1>
-        )}
+          </span>
+        </h1>
       </div>
     );
   }

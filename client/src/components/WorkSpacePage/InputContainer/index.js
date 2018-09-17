@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import { messageAction } from "@/actions";
-import { currentPath } from "@/utils";
 
 class InputContainer extends React.Component {
   state = {
@@ -35,51 +34,25 @@ class InputContainer extends React.Component {
     }
   };
 
-  sendGroupMessage = () => {
-    const { text } = this.state;
-    if (text) {
-      console.log(text);
-      this.setState({ text: "" });
-    }
-  };
-
   render() {
     const { text, ENTER_KEY } = this.state;
-    const {
-      currentChannel,
-      match: { path }
-    } = this.props;
+    const { currentChannel } = this.props;
     return (
       <div className="input-container">
         <Form>
           <Form.Group widths="equal">
             <Form.Field>
-              {currentPath(path) === "channel" && (
-                <Input
-                  fluid
-                  focus
-                  name="text"
-                  value={text}
-                  placeholder={`# ${currentChannel.name}`}
-                  onChange={this.handleChange}
-                  onKeyDown={e => {
-                    if (e.keyCode === ENTER_KEY) this.sendMessage();
-                  }}
-                />
-              )}
-              {currentPath(path) === "direct-message" && (
-                <Input
-                  fluid
-                  focus
-                  name="text"
-                  value={text}
-                  placeholder={`# Someone`}
-                  onChange={this.handleChange}
-                  onKeyDown={e => {
-                    if (e.keyCode === ENTER_KEY) this.sendGroupMessage();
-                  }}
-                />
-              )}
+              <Input
+                fluid
+                focus
+                name="text"
+                value={text}
+                placeholder={`# ${currentChannel.name}`}
+                onChange={this.handleChange}
+                onKeyDown={e => {
+                  if (e.keyCode === ENTER_KEY) this.sendMessage();
+                }}
+              />
             </Form.Field>
           </Form.Group>
         </Form>

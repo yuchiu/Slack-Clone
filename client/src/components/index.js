@@ -2,11 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./index.scss";
-import {
-  AuthenticatedRoute,
-  TokenAuthUser,
-  RedirectWorkSpacePage
-} from "./global";
+import { AuthenticatedRoute, TokenAuthUser } from "./global";
 import LandingPage from "./LandingPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
@@ -47,17 +43,7 @@ class Router extends React.Component {
             />
             <AuthenticatedRoute
               exact
-              path="/workspace/"
-              component={RedirectWorkSpacePage}
-            />
-            <AuthenticatedRoute
-              exact
-              path="/workspace/channel/:teamId?/:channelId?"
-              component={WorkSpacePage}
-            />
-            <AuthenticatedRoute
-              exact
-              path="/workspace/direct-message/:teamId?/:userId?"
+              path="/workspace/:teamId?/:channelId?"
               component={WorkSpacePage}
             />
             <Route exact path="/:unfoundLocation" component={NotFoundPage} />

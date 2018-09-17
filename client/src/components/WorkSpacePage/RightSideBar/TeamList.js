@@ -19,8 +19,8 @@ class TeamList extends React.Component {
         {teamList.map((team, i) => (
           <Link
             className="rightsidebar__list__link"
-            key={`index${i}teamid${team.id}`}
-            to={`/workspace/channel/${team.id}`}
+            key={`index-${i}teamid-${team.id}`}
+            to={`/workspace/${team.id}`}
             onClick={this.handleClick.bind(this, team.id)}
           >
             <li className="rightsidebar__list__link__item">

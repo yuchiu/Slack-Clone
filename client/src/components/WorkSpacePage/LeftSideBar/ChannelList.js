@@ -18,8 +18,8 @@ class ChannelList extends React.Component {
         {channelList.map((channel, i) => (
           <Link
             className="leftsidebar__List__link"
-            key={`index${i}channelid${channel.id}`}
-            to={`/workspace/channel/${teamId}/${channel.id}`}
+            key={`index-${i}-channelid-${channel.id}`}
+            to={`/workspace/${teamId}/${channel.id}`}
             onClick={this.handleClick.bind(this, channel.id)}
           >
             <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">

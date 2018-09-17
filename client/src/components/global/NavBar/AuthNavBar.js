@@ -17,7 +17,7 @@ class AuthNavBar extends React.Component {
         <Menu.Menu position="right">
           <Menu.Item
             name="workspace"
-            onClick={() => history.push("/workspace/channel")}
+            onClick={() => history.push("/workspace")}
           >
             WorkSpace
           </Menu.Item>
