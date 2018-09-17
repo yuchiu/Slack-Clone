@@ -2,21 +2,21 @@ import constants from "@/constants";
 import { messageService } from "./services";
 
 export default {
-  sendChannelMessage: messageData => () => {
-    messageService.sendChannelMessage(messageData);
+  sendMessage: messageData => () => {
+    messageService.sendMessage(messageData);
   },
 
-  /* pass in dispatch, let socket.io dispatch channelMessageReceived when data is received */
-  receiveChannelMessage: () => dispatch => {
-    messageService.receiveChannelMessage(dispatch);
+  /* pass in dispatch, let socket.io dispatch messageReceived when data is received */
+  receiveMessage: () => dispatch => {
+    messageService.receiveMessage(dispatch);
   },
 
-  channelMessageReceived: data => (dispatch, getState) => {
+  messageReceived: data => (dispatch, getState) => {
     const { currentChannel } = getState().channelReducer;
     const newData = { ...data };
     newData.currentChannel = currentChannel;
     dispatch({
-      type: constants.CHANNEL_MESSAGE_RECEIVED,
+      type: constants.MESSAGE_RECEIVED,
       payload: newData
     });
   },

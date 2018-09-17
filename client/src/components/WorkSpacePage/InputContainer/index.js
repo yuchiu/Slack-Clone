@@ -21,11 +21,11 @@ class InputContainer extends React.Component {
     });
   };
 
-  sendChannelMessage = () => {
+  sendMessage = () => {
     const { text } = this.state;
     if (text) {
-      const { sendChannelMessage, currentUser, currentChannel } = this.props;
-      sendChannelMessage({
+      const { sendMessage, currentUser, currentChannel } = this.props;
+      sendMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
@@ -63,7 +63,7 @@ class InputContainer extends React.Component {
                   placeholder={`# ${currentChannel.name}`}
                   onChange={this.handleChange}
                   onKeyDown={e => {
-                    if (e.keyCode === ENTER_KEY) this.sendChannelMessage();
+                    if (e.keyCode === ENTER_KEY) this.sendMessage();
                   }}
                 />
               )}
@@ -98,8 +98,7 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  sendChannelMessage: messageData =>
-    dispatch(messageAction.sendChannelMessage(messageData))
+  sendMessage: messageData => dispatch(messageAction.sendMessage(messageData))
 });
 
 export default withRouter(

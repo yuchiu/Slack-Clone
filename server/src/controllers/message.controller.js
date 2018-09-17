@@ -3,7 +3,7 @@ import models from "../models";
 export default {
   createMessage: async data => {
     const { channelId, userId, text, username } = data;
-    const messageResponse = await models.ChannelMessage.create({
+    const messageResponse = await models.Message.create({
       channelId,
       userId,
       username,
@@ -12,11 +12,11 @@ export default {
 
     const message = messageResponse.dataValues;
 
-    const channelMessageList = await models.ChannelMessage.findAll(
+    const messageList = await models.Message.findAll(
       { order: [["created_at", "ASC"]], where: { channelId } },
       { raw: true }
     );
 
-    return { channelMessageList, message };
+    return { messageList, message };
   }
 };

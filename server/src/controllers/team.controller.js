@@ -14,7 +14,7 @@ export default {
           { transaction }
         );
         const team = teamData.dataValues;
-        await models.Member.create(
+        await models.TeamMember.create(
           {
             teamId: team.id,
             userId: currentUserId,
@@ -40,7 +40,7 @@ export default {
       });
       /* get user's teams */
       const teamList = await models.sequelize.query(
-        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
         {
           replacements: [currentUserId],
           model: models.Team,
@@ -64,7 +64,7 @@ export default {
       const currentUserId = req.user.id;
       const { teamId } = req.body;
       const { targetUsername } = req.body;
-      const memberPromise = models.Member.findOne(
+      const memberPromise = models.TeamMember.findOne(
         { where: { teamId, userId: currentUserId } },
         { raw: true }
       );
@@ -88,9 +88,9 @@ export default {
       }
 
       /* create new member  */
-      await models.Member.create({ userId: userToAdd.id, teamId });
+      await models.TeamMember.create({ userId: userToAdd.id, teamId });
       const teamMemberList = await models.sequelize.query(
-        "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
+        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
         {
           replacements: [teamId],
           model: models.User,
@@ -141,7 +141,7 @@ export default {
       const { teamId } = req.params;
 
       const teamMemberList = await models.sequelize.query(
-        "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
+        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
         {
           replacements: [teamId],
           model: models.User,

@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const Message = sequelize.define("channel_message", {
+  const Message = sequelize.define("message", {
     text: DataTypes.STRING,
     username: DataTypes.STRING
   });

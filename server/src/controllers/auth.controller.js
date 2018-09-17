@@ -94,7 +94,7 @@ export default {
 
       /* get user's teams */
       const teamList = await models.sequelize.query(
-        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
         {
           replacements: [user.id],
           model: models.Team,
@@ -130,7 +130,7 @@ export default {
       });
       /* get user's teams */
       const teamList = await models.sequelize.query(
-        "select * from teams as team join members as member on team.id = member.team_id where member.user_id = ?",
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
         {
           replacements: [user.id],
           model: models.Team,

@@ -15,8 +15,8 @@ class MessagesContainer extends React.Component {
   };
 
   componentDidMount() {
-    const { receiveChannelMessage } = this.props;
-    receiveChannelMessage();
+    const { receiveMessage } = this.props;
+    receiveMessage();
   }
 
   componentDidUpdate() {
@@ -91,8 +91,8 @@ const dispatchToProps = dispatch => ({
   clearSocketConnection: () => {
     dispatch(messageAction.clearSocketConnection());
   },
-  receiveChannelMessage: () => {
-    dispatch(messageAction.receiveChannelMessage());
+  receiveMessage: () => {
+    dispatch(messageAction.receiveMessage());
   }
 });
 

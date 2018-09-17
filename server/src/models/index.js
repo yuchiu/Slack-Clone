@@ -12,10 +12,9 @@ const models = {
   User: sequelize.import("./User"),
   Channel: sequelize.import("./Channel"),
   Team: sequelize.import("./Team"),
-  Member: sequelize.import("./Member"),
+  TeamMember: sequelize.import("./TeamMember"),
   ChannelMember: sequelize.import("./ChannelMember"),
-  ChannelMessage: sequelize.import("./ChannelMessage"),
-  GroupMessage: sequelize.import("./GroupMessage")
+  Message: sequelize.import("./Message")
 };
 
 Object.keys(models).forEach(modelName => {

@@ -6,7 +6,7 @@ export default {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const { teamId, channelName, isPublic, membersList } = req.body;
-      const member = await models.Member.findOne(
+      const member = await models.TeamMember.findOne(
         { where: { teamId, userId: currentUserId } },
         { raw: true }
       );
@@ -48,7 +48,7 @@ export default {
 
         /* create channel member relation for public member */
         const teamMemberList = await models.sequelize.query(
-          "select * from users as u join members as m on m.user_id = u.id where m.team_id = ?",
+          "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
           {
             replacements: [teamId],
             model: models.User,
@@ -94,7 +94,7 @@ export default {
         raw: true,
         where: { id: channelId }
       });
-      const channelMessageList = await models.ChannelMessage.findAll(
+      const messageList = await models.Message.findAll(
         { order: [["created_at", "ASC"]], where: { channelId } },
         { raw: true }
       );
@@ -124,7 +124,7 @@ export default {
 
         /*  return channel's messages and channel private member list */
         return res.status(200).send({
-          channelMessageList,
+          messageList,
           channelMemberList: ChannelMemberList
         });
       }
@@ -139,7 +139,7 @@ export default {
         }
       );
       res.status(200).send({
-        channelMessageList,
+        messageList,
         channelMemberList
       });
     } catch (err) {

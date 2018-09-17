@@ -9,15 +9,15 @@ export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
     case constants.GET_CHANNEL_ASSOCIATED_LIST:
-      newState.messageList = action.payload.channelMessageList;
+      newState.messageList = action.payload.messageList;
       newState.error = "";
       return newState;
 
-    case constants.CHANNEL_MESSAGE_RECEIVED:
+    case constants.MESSAGE_RECEIVED:
       if (
         action.payload.message.channelId === action.payload.currentChannel.id
       ) {
-        newState.messageList = action.payload.channelMessageList;
+        newState.messageList = action.payload.messageList;
         newState.error = "";
       }
       return newState;

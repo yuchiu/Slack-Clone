@@ -1,10 +1,10 @@
 export default (sequelize, DataTypes) => {
-  const Member = sequelize.define("member", {
+  const TeamMember = sequelize.define("team_member", {
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
   });
 
-  return Member;
+  return TeamMember;
 };

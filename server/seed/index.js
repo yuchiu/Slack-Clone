@@ -3,7 +3,7 @@ import models from "../src/models";
 
 import users from "./users.json";
 import teams from "./teams.json";
-import members from "./members.json";
+import teamMembers from "./teamMembers.json";
 import channels from "./channels.json";
 import channelMembers from "./channelMembers.json";
 
@@ -12,8 +12,8 @@ models.sequelize.sync({ force: true }).then(async () => {
   console.log("✔ users populated");
   await Promise.all(teams.map(team => models.Team.create(team)));
   console.log("✔ teams populated");
-  await Promise.all(members.map(member => models.Member.create(member)));
-  console.log("✔ members populated");
+  await Promise.all(teamMembers.map(tm => models.TeamMember.create(tm)));
+  console.log("✔ team members populated");
   await Promise.all(channels.map(channel => models.Channel.create(channel)));
   console.log("✔ channels populated");
   await Promise.all(channelMembers.map(cm => models.ChannelMember.create(cm)));

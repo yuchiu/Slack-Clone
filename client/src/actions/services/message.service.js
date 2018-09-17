@@ -6,18 +6,18 @@ import { messageAction } from "@/actions";
 const socket = io("ws://localhost:3030");
 
 export default {
-  sendChannelMessage: messageData => {
-    socket.emit("sendChannelMessage", messageData);
+  sendMessage: messageData => {
+    socket.emit("sendMessage", messageData);
   },
 
-  /* dispatch channelMessageReceived when new data is received */
-  receiveChannelMessage: dispatch => {
-    socket.on("receiveChannelMessage", data => {
-      dispatch(messageAction.channelMessageReceived(data));
+  /* dispatch messageReceived when new data is received */
+  receiveMessage: dispatch => {
+    socket.on("receiveMessage", data => {
+      dispatch(messageAction.messageReceived(data));
     });
   },
 
   clearSocketConnection: () => {
-    socket.off("receiveChannelMessage");
+    socket.off("receiveMessage");
   }
 };
