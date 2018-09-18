@@ -11,10 +11,6 @@ export default {
     messageService.receiveMessage(dispatch);
   },
 
-  sendFile: file => () => {
-    console.log(file);
-  },
-
   messageReceived: data => (dispatch, getState) => {
     const { currentChannel } = getState().channelReducer;
     const newData = { ...data };
@@ -30,5 +26,24 @@ export default {
     dispatch({
       type: constants.CLEAR_SOCKET_CONNECTION
     });
+  },
+
+  fetchMoreMessage: currentMessageData => async dispatch => {
+    try {
+      const response = await messageService.fetchMoreMessage(
+        currentMessageData
+      );
+      const { data } = response;
+      dispatch({
+        type: constants.FETCH_MORE_MESSAGE,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.TEAM_ERROR,
+        payload: data
+      });
+    }
   }
 };

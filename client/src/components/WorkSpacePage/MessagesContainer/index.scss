@@ -4,9 +4,8 @@
   grid-column: 2;
   grid-row: 2;
   display: flex;
-  flex-direction: column-reverse;
   overflow-y: auto;
-  height: 100%;
+  flex-direction: column-reverse;
   padding-left: 20px;
   padding-right: 20px;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "semantic-ui-react";
+import { Comment, MessageList } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -65,16 +65,35 @@ class MessagesContainer extends React.Component {
     return false;
   };
 
+  loadmore = e => {
+    e.preventDefault();
+    const {
+      messageList,
+      fetchMoreMessage,
+      currentChannel,
+      hasMoreMessage
+    } = this.props;
+    if (hasMoreMessage) {
+      fetchMoreMessage({
+        channelId: currentChannel.id,
+        offset: messageList.length
+      });
+    }
+  };
+
   render() {
     const { messageList } = this.props;
     return (
-      <FileUpload disableClick cssClass="messages-container">
-        <Comment.Group>
-          {messageList.map(message => (
-            <Message key={message.id} message={message} />
-          ))}
-        </Comment.Group>
-      </FileUpload>
+      <React.Fragment>
+        <FileUpload disableClick cssClass="messages-container">
+          <button onClick={this.loadmore}>loadmore</button>
+          <Comment.Group>
+            {messageList.map((message, i) => (
+              <Message key={`${message.id}-${i}`} message={message} />
+            ))}
+          </Comment.Group>
+        </FileUpload>
+      </React.Fragment>
     );
   }
 }
@@ -83,11 +102,16 @@ MessagesContainer.propTypes = {};
 const stateToProps = state => ({
   messageList: state.messageReducer.messageList,
   currentTeam: state.teamReducer.currentTeam,
-  currentChannel: state.channelReducer.currentChannel
+  currentChannel: state.channelReducer.currentChannel,
+  hasMoreMessage: state.messageReducer.hasMoreMessage
 });
+
 const dispatchToProps = dispatch => ({
   getChannelAssociatedList: channelId => {
     dispatch(channelAction.getChannelAssociatedList(channelId));
+  },
+  fetchMoreMessage: currentMessageData => {
+    dispatch(messageAction.fetchMoreMessage(currentMessageData));
   },
   clearSocketConnection: () => {
     dispatch(messageAction.clearSocketConnection());

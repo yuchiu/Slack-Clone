@@ -19,5 +19,10 @@ export default {
 
   clearSocketConnection: () => {
     socket.off("receiveMessage");
+  },
+
+  fetchMoreMessage: async currentMessageData => {
+    const response = await APIV1().post(`/messages`, currentMessageData);
+    return response;
   }
 };

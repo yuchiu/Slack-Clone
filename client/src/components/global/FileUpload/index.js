@@ -11,8 +11,15 @@ class FileUpload extends React.Component {
   }
 
   handleUpload = file => {
-    const { sendFile } = this.props;
-    sendFile(file);
+    if (file) {
+      const { sendMessage, currentUser, currentChannel } = this.props;
+      sendMessage({
+        channelId: currentChannel.id,
+        userId: currentUser.id,
+        username: currentUser.username,
+        file: { data: file, name: file.name, size: file.size, type: file.type }
+      });
+    }
   };
 
   render() {
@@ -20,7 +27,7 @@ class FileUpload extends React.Component {
     return (
       <Dropzone
         className={`ignore ${cssClass}`}
-        onDrop={files => this.handleUpload(files)}
+        onDrop={file => this.handleUpload(file[0])}
         disableClick={disableClick}
       >
         {children}
@@ -29,11 +36,15 @@ class FileUpload extends React.Component {
   }
 }
 
+const stateToProps = state => ({
+  currentUser: state.userReducer.currentUser,
+  currentChannel: state.channelReducer.currentChannel
+});
 const dispatchToProps = dispatch => ({
-  sendFile: file => dispatch(messageAction.sendFile(file))
+  sendMessage: file => dispatch(messageAction.sendMessage(file))
 });
 
 export default connect(
-  null,
+  stateToProps,
   dispatchToProps
 )(FileUpload);
