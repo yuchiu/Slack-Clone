@@ -2,7 +2,6 @@ import constants from "@/constants";
 
 const initialState = {
   messageList: [],
-  hasMoreMessage: true,
   error: ""
 };
 
@@ -10,9 +9,6 @@ export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
     case constants.GET_CHANNEL_ASSOCIATED_LIST:
-      if (action.payload.messageList.length < 1) {
-        newState.hasMoreMessage = false;
-      }
       newState.messageList = action.payload.messageList;
       newState.error = "";
       return newState;
@@ -32,9 +28,6 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.FETCH_MORE_MESSAGE:
-      if (action.payload.messageList < 30) {
-        newState.hasMoreMessage = false;
-      }
       newState.messageList = action.payload.messageList.concat(
         state.messageList
       );

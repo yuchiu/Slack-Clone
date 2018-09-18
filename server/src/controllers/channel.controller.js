@@ -55,7 +55,7 @@ export default {
 
           /* message group already exist, respond with error */
           if (data.length) {
-            res.status(403).send({
+            return res.status(403).send({
               error: "direct message between members has already been created"
             });
           }
@@ -171,7 +171,7 @@ export default {
         });
         /* return error if user is not member */
         if (!member) {
-          res.status(403).send({
+          return res.status(403).send({
             error: "you are not member of the private channel"
           });
         }

@@ -1,9 +1,6 @@
-import io from "socket.io-client";
-
 import { APIV1 } from "./API";
+import socket from "./socket";
 import { messageAction } from "@/actions";
-
-const socket = io("ws://localhost:3030");
 
 export default {
   sendMessage: messageData => {

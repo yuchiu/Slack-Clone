@@ -3,8 +3,6 @@ import models from "../models";
 export default {
   createMessage: async data => {
     const { channelId, userId, text, username, file } = data;
-    console.log("file");
-    console.log(file);
     if (!file) {
       const messageResponse = await models.Message.create({
         channelId,

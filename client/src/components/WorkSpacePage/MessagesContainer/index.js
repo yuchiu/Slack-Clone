@@ -98,12 +98,10 @@ class MessagesContainer extends React.Component {
       currentChannel,
       hasMoreMessage
     } = this.props;
-    if (hasMoreMessage) {
-      fetchMoreMessage({
-        channelId: currentChannel.id,
-        offset: messageList.length
-      });
-    }
+    fetchMoreMessage({
+      channelId: currentChannel.id,
+      offset: messageList.length
+    });
   };
 
   render() {

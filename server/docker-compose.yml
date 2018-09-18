@@ -1,0 +1,28 @@
+version: "3"
+services:
+  pg_db:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: slack
+  web_server:
+    image: slack-clone-server
+    ports:
+      - "3030:3030"
+    networks:
+      - webnet
+    environment:
+      DB_HOST: pg_db
+      DB_PASS: postgres
+      DB_USER: postgres
+      DB_NAME: slack
+      NODE_ENV: production
+    depends_on:
+      - "pg_db"
+networks:
+  ? webnet

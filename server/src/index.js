@@ -25,10 +25,9 @@ app
   .use(cookieParser())
   .use(helmet())
   .use(compression())
-  .use(logger("dev"))
   .use(bodyParser.json())
-  .use(cors())
-  .use("/files", express.static("../assets/files"));
+  .use(cors());
+if (process.env.NODE_ENV !== "production") app.use(logger("dev"));
 
 routes(app);
 sockets(io);

@@ -31,7 +31,7 @@ export default {
 
       /* username or email is missing */
       if (!credentials.username || !credentials.email) {
-        res.status(500).send({
+        return res.status(500).send({
           error: "username and email are required"
         });
       }
@@ -43,7 +43,7 @@ export default {
 
       /* username already registered */
       if (isUsernameRegistered) {
-        res.status(403).send({
+        return res.status(403).send({
           error: `username: ${credentials.username} is already registered`
         });
       }
@@ -57,7 +57,7 @@ export default {
 
       /* email already registered */
       if (isEmailRegistered) {
-        res.status(403).send({
+        return res.status(403).send({
           error: `email: ${credentials.email} is already registered`
         });
       }

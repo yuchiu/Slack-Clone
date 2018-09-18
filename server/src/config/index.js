@@ -12,6 +12,7 @@ export default {
       dialect: "postgres",
       operatorsAliases: Sequelize.Op,
       logging: false,
+      host: process.env.DB_HOST || "localhost",
       define: {
         underscored: true
       }
