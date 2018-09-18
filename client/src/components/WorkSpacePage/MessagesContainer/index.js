@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { Comment, MessageList } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -9,24 +10,33 @@ import { FileUpload } from "@/components/global";
 import { messageAction, channelAction } from "@/actions";
 
 class MessagesContainer extends React.Component {
-  state = {
-    isMessageFetched: false,
-    currentTeamParams: 0,
-    currentChannelParams: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMessageFetched: false,
+      currentTeamParams: 0,
+      allowToFetchMore: true,
+      currentMessageLength: 0,
+      currentChannelParams: 0
+    };
+  }
 
   componentDidMount() {
-    const { receiveMessage } = this.props;
+    const { receiveMessage, messageList } = this.props;
     receiveMessage();
+    this.setState({
+      currentMessageList: messageList.length
+    });
+    this.scrollerDiv.addEventListener("scroll", () => this.handleScroll());
   }
 
   componentDidUpdate() {
     const {
       getChannelAssociatedList,
       currentChannel,
+      messageList,
       currentTeam
     } = this.props;
-
     /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
     if (this.isCurrentDataFetched() && !this.state.isMessageFetched) {
       getChannelAssociatedList(currentChannel.id);
@@ -65,8 +75,24 @@ class MessagesContainer extends React.Component {
     return false;
   };
 
-  loadmore = e => {
-    e.preventDefault();
+  handleScroll = () => {
+    const { allowToFetchMore } = this.state;
+    if (this.scrollerDiv.scrollTop < 50 && allowToFetchMore) {
+      this.setState({
+        allowToFetchMore: false
+      });
+      setTimeout(() => {
+        this.loadmore();
+      }, 1000);
+      setTimeout(() => {
+        this.setState({
+          allowToFetchMore: true
+        });
+      }, 1500);
+    }
+  };
+
+  loadmore = () => {
     const {
       messageList,
       fetchMoreMessage,
@@ -84,16 +110,20 @@ class MessagesContainer extends React.Component {
   render() {
     const { messageList } = this.props;
     return (
-      <React.Fragment>
-        <FileUpload disableClick cssClass="messages-container">
-          <button onClick={this.loadmore}>loadmore</button>
+      <div
+        className="messages-container"
+        ref={scrollerDiv => {
+          this.scrollerDiv = scrollerDiv;
+        }}
+      >
+        <FileUpload disableClick cssClass="messages-container__fileupload">
           <Comment.Group>
             {messageList.map((message, i) => (
               <Message key={`${message.id}-${i}`} message={message} />
             ))}
           </Comment.Group>
         </FileUpload>
-      </React.Fragment>
+      </div>
     );
   }
 }

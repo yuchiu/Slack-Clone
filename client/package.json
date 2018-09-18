@@ -139,6 +139,7 @@
       "import/no-unresolved": 0,
       "import/no-cycle": 0,
       "no-plusplus": 0,
+      "camelcase": 0,
       "prefer-destructuring": 0
     },
     "settings": {

@@ -3,9 +3,13 @@
   /* autoprefixer: off */
   grid-column: 2;
   grid-row: 2;
-  display: flex;
   overflow-y: auto;
   flex-direction: column-reverse;
+  display: flex;
   padding-left: 20px;
   padding-right: 20px;
+  &__fileupload {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
