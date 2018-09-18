@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import models from "../models";
-import config from "../../config";
+import config from "../config";
 
 const jwtSignUser = user => {
   try {

@@ -9,7 +9,7 @@ import compression from "compression";
 import bodyParser from "body-parser";
 
 import models from "./models";
-import config from "../config";
+import config from "./config";
 import { routes, sockets } from "./routers";
 
 import "./utils/passport";
