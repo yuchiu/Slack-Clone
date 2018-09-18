@@ -154,9 +154,10 @@ export default {
       });
       const messageList = await models.Message.findAll(
         {
-          order: [["created_at", "ASC"]],
+          order: [["created_at", "DESC"]],
           where: { channelId },
-          limit: 30
+          limit: 30,
+          offset: 0
         },
         { raw: true }
       );
@@ -201,7 +202,7 @@ export default {
         }
       );
       res.status(200).send({
-        messageList,
+        messageList: messageList.reverse(),
         channelMemberList
       });
     } catch (err) {
