@@ -1,12 +1,12 @@
 import express from "express";
+import http from "http";
+import socketIo from "socket.io";
 import cors from "cors";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import compression from "compression";
 import bodyParser from "body-parser";
-import http from "http";
-import socketIo from "socket.io";
 
 import models from "./models";
 import config from "../config";
@@ -19,15 +19,16 @@ const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(helmet());
-app.use(compression());
-app.use(logger("dev"));
-app.use(bodyParser.json());
-
-app.use(cors());
+app
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.json())
+  .use(cookieParser())
+  .use(helmet())
+  .use(compression())
+  .use(logger("dev"))
+  .use(bodyParser.json())
+  .use(cors())
+  .use("/files", express.static("../assets/files"));
 
 routes(app);
 sockets(io);

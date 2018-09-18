@@ -1,9 +1,29 @@
 export default (sequelize, DataTypes) => {
-  const Message = sequelize.define("message", {
-    text: DataTypes.STRING,
-    username: DataTypes.STRING
-  });
-
+  const Message = sequelize.define(
+    "message",
+    {
+      username: DataTypes.STRING,
+      text: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      url: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
+      filetype: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      }
+    },
+    {
+      indexes: [
+        {
+          fields: ["created_at"]
+        }
+      ]
+    }
+  );
   Message.associate = models => {
     // 1:M
     Message.belongsTo(models.Channel, {

@@ -17,14 +17,12 @@ export default app => {
   const channel = express.Router();
   const team = express.Router();
   const message = express.Router();
-  const messageGroup = express.Router();
 
   /* routes to api v1 routes  */
   app.use("/api/v1", apiv1);
   apiv1.use("/auths", auth);
   apiv1.use("/users", user);
   apiv1.use("/channels", channel);
-  apiv1.use("/message-groups", messageGroup);
   apiv1.use("/teams", team);
   apiv1.use("/messages", message);
 
@@ -59,6 +57,12 @@ export default app => {
     channelController.getChannelAssociatedList
   );
   /* messages routes */
+  message.post(
+    "/",
+    authPolicy.authentication,
+    messageController.getMoreMessage
+  );
+
   // message.get(
   //   "/message-groups/:userId",
   //   console.log("get message group's message")

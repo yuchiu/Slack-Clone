@@ -153,7 +153,11 @@ export default {
         where: { id: channelId }
       });
       const messageList = await models.Message.findAll(
-        { order: [["created_at", "ASC"]], where: { channelId } },
+        {
+          order: [["created_at", "ASC"]],
+          where: { channelId },
+          limit: 30
+        },
         { raw: true }
       );
 
