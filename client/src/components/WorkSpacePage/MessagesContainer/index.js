@@ -34,7 +34,6 @@ class MessagesContainer extends React.Component {
     const {
       getChannelAssociatedList,
       currentChannel,
-      messageList,
       currentTeam
     } = this.props;
     /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
@@ -83,12 +82,12 @@ class MessagesContainer extends React.Component {
       });
       setTimeout(() => {
         this.loadmore();
-      }, 1000);
+      }, 500);
       setTimeout(() => {
         this.setState({
           allowToFetchMore: true
         });
-      }, 1500);
+      }, 1000);
     }
   };
 

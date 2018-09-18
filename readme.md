@@ -1,6 +1,6 @@
 # Usage
 
-#### softwares this project is using during development
+### softwares this project is using during development
 
 ```
 postgres  10.5
@@ -9,31 +9,60 @@ npm       6.4.1
 nodejs    10.10.0
 ```
 
-## Development
+### DataBases
 
-#### DataBases
+- postgres needs to be setup first.
+  server's configuration for database is in server/src/config/index.js
 
-postgres needs to be setup first.
-server's configuration for database is in server/config/index.js
+  ```
+  /
+  └─server
+    └─src
+      └─config
+        └─index.js
+  ```
 
-#### Web Server - Terminal A
+### Web Server - Terminal A
 
-1.  install dependencies & start application
+#### development
 
-```
-npm install
-npm start
-```
+- install dependencies & start application
+  server will be listening to port 3030
 
-server will be listening to port 3030
+  ```
+  npm install
+  npm start
+  ```
 
-#### Web Client - Terminal B
+- populate postgres with sample data
 
-1.  install dependencies & start application
+  ```
+  npm run seed
+  ```
 
-```
-npm install
-npm start
-```
+#### production
 
-application will be running on http://localhost:3000
+- production build, output dist directory
+
+  ```
+  npm run build
+  ```
+
+- start application with production build
+  server will be listening to port 3030
+
+  ```
+  npm run serve
+  ```
+
+### Web Client - Terminal B
+
+#### development
+
+- install dependencies & start application
+  application will be running on http://localhost:3000
+
+  ```
+  npm install
+  npm start
+  ```

@@ -8,11 +8,20 @@ class FileUpload extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpload = this.handleUpload.bind(this);
+    this.state = {
+      error: ""
+    };
   }
 
   handleUpload = file => {
     if (file) {
       const { sendMessage, currentUser, currentChannel } = this.props;
+      if (file.size > 1024 * 1024 * 5) {
+        this.setState({
+          error: "file size exceed maximum size limit"
+        });
+      }
+      console.log(this.state.error);
       sendMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
