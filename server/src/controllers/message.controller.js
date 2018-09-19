@@ -1,7 +1,7 @@
 import fse from "fs-extra";
 import path from "path";
-import util from "util";
 
+import config from "../config";
 import models from "../models";
 
 export default {
@@ -50,7 +50,6 @@ export default {
         "../",
         "../",
         "assets",
-        "files",
         randomFileName
       );
 
@@ -61,13 +60,14 @@ export default {
         userId,
         username,
         filetype: file.type,
-        url: `http://localhost:3030/files/${randomFileName}`
+        url: `${config.SERVER_URL}/assets/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;
       return { message };
     } catch (err) {
-      return { error: "an error occured while creating message" };
+      console.log(err);
+      return { error: "error occured while creating message" };
     }
   },
   getMoreMessage: async (req, res) => {

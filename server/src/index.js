@@ -19,21 +19,10 @@ const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
 
-/* middlewares */
-app
-  .use(bodyParser.urlencoded({ extended: true }))
-  .use(bodyParser.json())
-  .use(cookieParser())
-  .use(helmet())
-  .use(compression())
-  .use(bodyParser.json());
-
-/* allow cors, allow dev logs */
+/* allow cors & dev logs */
 if (process.env.NODE_ENV === "development") {
-  app
-    .use(cors())
-    .use(logger("dev"))
-    .use("/files", express.static("./assets/files"));
+  app.use(cors());
+  app.use(logger("dev"));
 }
 
 /* use client production build */
@@ -44,17 +33,22 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+/* middlewares */
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(helmet());
+app.use(compression());
+app.use(bodyParser.json());
+app.use("/assets", express.static("./assets"));
+
 /* routes & websockets events listener */
 routes(app);
 sockets(io);
 
 /* listen to port */
 models.sequelize.sync().then(() => {
-  server.listen(config.PORT || 3030, () => {
-    if (config.PORT) {
-      console.log(`app listenning on port ${config.PORT}`);
-    } else {
-      console.log("app listenning on port 3030");
-    }
+  server.listen(config.PORT, () => {
+    console.log(`app listenning on port ${config.PORT}`);
   });
 });

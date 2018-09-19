@@ -1,10 +1,11 @@
 server {
-    location /assets/files {
-        alias /assets/files/;
+    location /assets {
+        alias /assets/;
         gzip_static on;
         expires max;
         add_header Cache-Control private;
     }
+    
     location / {
         proxy_pass http://backend:3030;
     }

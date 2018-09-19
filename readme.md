@@ -23,7 +23,7 @@
 ### Server (Development)
 
 - install dependencies & start application in server  
-  server will be listening to port 3030
+  server will be listening to http://localhost:3030
 
   ```npm ./server
   npm install
@@ -50,6 +50,17 @@
 
 ### 1. Production Build
 
+#### Server (Production)
+
+- install dependencies & run production build in server  
+  production build directory will be output to ./server/build  
+  the complete production include both frontend and backend will be contained inside server's build directory
+
+  ```npm ./server
+  npm install
+  npm run build
+  ```
+
 #### Client (Production)
 
 - install dependencies & run production build in client  
@@ -64,17 +75,6 @@
 
   ```npm ./client
   npm run afterbuild
-  ```
-
-#### Server (Production)
-
-- install dependencies & run production build in server  
-  production build directory will be output to ./server/build  
-  the complete production include both frontend and backend will be contained inside server's build directory
-
-  ```npm ./server
-  npm install
-  npm run build
   ```
 
 ### 2. Serving the Application
@@ -100,7 +100,7 @@
 - create directories in server for volumes that allows docker containers to persist its data
 
   ```shell ./server
-  mkdir pgdata files
+  mkdir pgdata assets
   ```
 
 - build the Docker image "slack-clone" using the production build
