@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import { messageAction } from "@/actions";
-import { FileUpload } from "@/components/global";
+import FileUpload from "./FileUpload";
 
 class InputContainer extends React.Component {
   state = {

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import Message from "./Message";
-import { FileUpload } from "@/components/global";
 import { messageAction, channelAction } from "@/actions";
 
 class MessagesContainer extends React.Component {
@@ -92,12 +91,7 @@ class MessagesContainer extends React.Component {
   };
 
   loadmore = () => {
-    const {
-      messageList,
-      fetchMoreMessage,
-      currentChannel,
-      hasMoreMessage
-    } = this.props;
+    const { messageList, fetchMoreMessage, currentChannel } = this.props;
     fetchMoreMessage({
       channelId: currentChannel.id,
       offset: messageList.length
@@ -113,13 +107,12 @@ class MessagesContainer extends React.Component {
           this.scrollerDiv = scrollerDiv;
         }}
       >
-        <FileUpload disableClick cssClass="messages-container__fileupload">
-          <Comment.Group>
-            {messageList.map((message, i) => (
-              <Message key={`${message.id}-${i}`} message={message} />
-            ))}
-          </Comment.Group>
-        </FileUpload>
+        {" "}
+        <Comment.Group>
+          {messageList.map((message, i) => (
+            <Message key={`${message.id}-${i}`} message={message} />
+          ))}
+        </Comment.Group>
       </div>
     );
   }

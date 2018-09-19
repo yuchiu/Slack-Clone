@@ -8,6 +8,8 @@ export default {
   createMessage: async data => {
     try {
       const { channelId, userId, text, username, file } = data;
+
+      /* check if it is upload or message */
       if (!file) {
         const messageResponse = await models.Message.create({
           channelId,
@@ -21,8 +23,18 @@ export default {
         return { message };
       }
 
+      /* validate files */
       if (file.size > 1024 * 1024 * 5) {
-        return { error: "file size exceed 5 mbs" };
+        return { error: "file exceed maximum size of 5 mbs" };
+      }
+      if (
+        !file.type.startsWith("image/") &&
+        !file.type === "text/plain" &&
+        !file.type.startsWith("audio/")
+      ) {
+        return {
+          error: "Files upload can only be in text, image, or audio type"
+        };
       }
 
       /* generate random name */

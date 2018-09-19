@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "semantic-ui-react";
 
 class AudioType extends React.Component {
   render() {
@@ -8,6 +9,11 @@ class AudioType extends React.Component {
         <audio controls>
           <source src={url} type={filetype} />
         </audio>
+        <br />
+        <a href={url} target="blank">
+          <Icon className="file audio" />
+          File Link
+        </a>
       </div>
     );
   }

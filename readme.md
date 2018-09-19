@@ -30,7 +30,7 @@
   npm start
   ```
 
-- populate postgres with sample data
+- populate postgres with sample data in server/seed
 
   ```npm ./server
   npm run seed

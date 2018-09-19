@@ -18,6 +18,15 @@ class FileUpload extends React.Component {
         fetchError("file size exceed maximum upload size of 5 mb");
         return;
       }
+      if (
+        !file.type.startsWith("image/") &&
+        !(file.type === "text/plain") &&
+        !file.type.startsWith("audio/")
+      ) {
+        const { fetchError } = this.props;
+        fetchError("Files upload can only be in text, image, or audio type");
+        return;
+      }
       sendMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
