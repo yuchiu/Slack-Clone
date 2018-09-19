@@ -40,7 +40,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
-app.use("/assets", express.static("./assets"));
+app.use("/assets", express.static("assets"));
 
 /* routes & websockets events listener */
 routes(app);

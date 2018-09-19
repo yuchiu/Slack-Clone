@@ -45,16 +45,12 @@ export default {
         .concat(Date.now().toString(36))
         .replace(/[^0-9a-z]/gi, "")
         .concat(`.${fileExtension}`);
-      const filePath = path.join(
-        __dirname,
-        "../",
-        "../",
-        "assets",
-        randomFileName
-      );
+      const filePath = `./assets/${randomFileName}`;
 
       /* write file and create message */
+
       await fse.outputFile(filePath, file.data);
+
       const messageResponse = await models.Message.create({
         channelId,
         userId,

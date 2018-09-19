@@ -29,7 +29,7 @@ services:
     image: nginx
     volumes:
       - ./mysite.template:/etc/nginx/conf.d/mysite.template
-      - ./assets:/assets
+      - ./assets:/app/assets
     ports:
       - "3030:80"
     networks:
