@@ -48,8 +48,8 @@ export default {
         channelId,
         userId,
         username,
-        type: file.type,
-        url: `localhost:3030/files/${randomFileName}`
+        filetype: file.type,
+        url: `http://localhost:3030/files/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;

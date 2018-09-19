@@ -2,9 +2,30 @@ import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import TextType from "./TextType";
+import ImageType from "./ImageType";
+import AudioType from "./AudioType";
 import avatar from "@/assets/images/avatar.png";
 
 class Message extends React.Component {
+  constructor(props) {
+    super(props);
+    this.displayFile = this.displayFile.bind(this);
+  }
+
+  displayFile = message => {
+    if (message.filetype.startsWith("image/")) {
+      return <ImageType url={message.url} alt="image" />;
+    }
+    if (message.filetype === "text/plain") {
+      return <TextType url={message.url} />;
+    }
+    if (message.filetype.startsWith("audio/")) {
+      return <AudioType url={message.url} filetype={message.filetype} />;
+    }
+    return null;
+  };
+
   render() {
     const { message } = this.props;
     return (
@@ -15,7 +36,11 @@ class Message extends React.Component {
           <Comment.Metadata>
             <span>{message.created_at}</span>
           </Comment.Metadata>
-          <Comment.Text>{message.text}</Comment.Text>
+          {message.url ? (
+            this.displayFile(message)
+          ) : (
+            <Comment.Text>{message.text}</Comment.Text>
+          )}
           <Comment.Actions>
             <Comment.Action>Reply</Comment.Action>
           </Comment.Actions>

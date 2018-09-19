@@ -26,16 +26,14 @@ app
   .use(cookieParser())
   .use(helmet())
   .use(compression())
-  .use(bodyParser.json())
-  .use("/files", express.static("./assets/files"));
+  .use(bodyParser.json());
 
 /* allow cors, allow dev logs */
 if (process.env.NODE_ENV === "development") {
-  const corsOptions = {
-    origin: "http://localhost:3000",
-    optionsSuccessStatus: 200
-  };
-  app.use(cors(corsOptions)).use(logger("dev"));
+  app
+    .use(cors())
+    .use(logger("dev"))
+    .use("/files", express.static("./assets/files"));
 }
 
 /* use client production build */

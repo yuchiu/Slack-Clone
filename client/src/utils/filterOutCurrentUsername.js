@@ -1,6 +1,9 @@
 export default (messageGroupName, currentUsername) => {
   const position = messageGroupName.indexOf(currentUsername);
 
+  if (!currentUsername || !messageGroupName) {
+    return null;
+  }
   // if current username at the begining
   if (position === 0)
     return messageGroupName.substring(
