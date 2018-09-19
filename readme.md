@@ -1,8 +1,8 @@
 # Slack Clone
 
-- Softwares required and versions this project is using
+- Required softwares and the versions this project is using
 
-  ```shell
+  ```version
   postgres 10.5
   npm 6.4.1
   nodejs 10.10.0
@@ -12,37 +12,36 @@
 
 ### DataBases
 
-- postgres needs to be setup first  
-  configuration for database is store in server/src/config/index.js
-
+- postgres needs to be setup first
+- configuration for database is store in server/src/config/index.js
 - PostgreSQL client also need to be install globally
 
   ```npm
-  npm install pg -g
+  npm install pg -global
   ```
 
-### Server(Development)
+### Server (Development)
 
 - install dependencies & start application in server
-  server will be listening to port 3030
+- server will be listening to port 3030
 
-  ```npm
+  ```npm ./server
   npm install
   npm start
   ```
 
 - populate postgres with sample data
 
-  ```npm
+  ```npm ./server
   npm run seed
   ```
 
-### Client(Development)
+### Client (Development)
 
 - install dependencies & start application in client
-  application will be running on http://localhost:3000
+- application will be running on http://localhost:3000
 
-  ```npm
+  ```npm ./client
   npm install
   npm start
   ```
@@ -51,29 +50,29 @@
 
 ### 1. Production Build
 
-#### Client(Production)
+#### Client (Production)
 
-- install dependencies & run production build in client  
-  production build directory will be output to ./client/build
+- install dependencies & run production build in client
+- production build directory will be output to ./client/build
 
-  ```npm
+  ```npm ./client
   npm install
   npm run build
   ```
 
 - move client production build directory as client into server's production build directory
 
-  ```npm
-  npm postbuild
+  ```npm ./client
+  npm run afterbuild
   ```
 
-#### Server(Production)
+#### Server (Production)
 
-- install dependencies & run production build in server  
-  production build directory will be output to ./server/build
-  the complete production include frontend and backend will be contained inside server's build directory
+- install dependencies & run production build in server
+- production build directory will be output to ./server/build
+- the complete production include both frontend and backend will be contained inside server's build directory
 
-  ```npm
+  ```npm ./server
   npm install
   npm run build
   ```
@@ -82,10 +81,10 @@
 
 #### Option A. Local Machine
 
-- start application with production build  
-  server will be listening to port 3030
+- start application with production build
+- server will be listening to port 3030
 
-  ```npm
+  ```npm ./server
   npm run serve
   ```
 
@@ -93,20 +92,26 @@
 
 - Softwares required for this build
 
-  ```shell
+  ```version
   docker
   docker-compose
   ```
 
+- create directories in server for volumes that allows docker containers to persist its data
+
+  ```shell ./server
+  mkdir pgdata files
+  ```
+
 - build the Docker image "slack-clone" using the production build
 
-  ```shell
+  ```shell ./server
   sudo docker build -t slack-clone .
   ```
 
 - start application with docker-compose
-  server will be listening to [https://localhost]
+- server will be listening to [https://localhost]
 
-  ```shell
+  ```shell ./server
   docker-compose up -d
   ```

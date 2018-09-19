@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/start.js",
     "build": "cross-env NODE_ENV=production node scripts/build.js",
-    "postbuild": "mkdir ../server/build ; mv build ../server/build/client",
+    "afterbuild": "mkdir ../server/build ; mv build ../server/build/client",
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
