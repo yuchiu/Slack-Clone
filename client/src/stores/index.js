@@ -6,8 +6,11 @@ import rootReducer from "@/reducers";
 
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk, logger)
+  process.env.NODE_ENV === "production"
+    ? applyMiddleware(thunk)
+    : (window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__(),
+      applyMiddleware(thunk, logger))
 );
 
 export default store;

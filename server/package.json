@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "build": "babel src -d dist",
-    "serve": "node dist/index.js",
+    "start": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "build": "babel src -d build",
+    "serve": "cross-env NODE_ENV=production node build/index.js",
     "seed": "babel-node seed/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

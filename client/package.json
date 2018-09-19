@@ -1,10 +1,11 @@
 {
-  "name": "job-listing",
+  "name": "slack-clone",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "cross-env NODE_ENV=development node scripts/start.js",
+    "build": "cross-env NODE_ENV=production node scripts/build.js",
+    "postbuild": "mkdir ../server/build ; mv build ../server/build/client",
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
@@ -41,6 +42,7 @@
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "cross-env": "^5.2.0",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",

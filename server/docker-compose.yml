@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: slack
   backend:
-    image: slack-clone-server
+    image: slack-clone
     networks:
       - webnet
     environment:
@@ -20,12 +20,15 @@ services:
       DB_USER: postgres
       DB_NAME: slack
       NODE_ENV: production
+    volumes:
+      - ./assets/files:/app/assets/files
     depends_on:
       - pg_db
   web:
     image: nginx
     volumes:
       - ./mysite.template:/etc/nginx/conf.d/mysite.template
+      - ./assets/files:/assets/files
     ports:
       - "3030:80"
     networks:
