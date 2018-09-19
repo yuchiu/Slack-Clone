@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 
 export default {
   PORT: process.env.PORT || 3030,
-  SERVER_URL: process.env.SERVER_URL || "http://localhost:3030",
+  SERVER_URL: process.env.SERVER_URL || "http://localhost",
   JWT_SECRET:
     process.env.JWT_SECRET || "ckmksadii8jrei8riwe3897547fjujrf928r32",
   DB: {

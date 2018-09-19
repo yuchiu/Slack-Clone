@@ -20,7 +20,8 @@ services:
       DB_USER: postgres
       DB_NAME: slack
       NODE_ENV: production
-      SERVER_URL: http://localhost:3030
+      SERVER_URL: http://localhost
+      PORT: 3030
     volumes:
       - ./assets:/app/assets
     depends_on:

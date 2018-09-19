@@ -56,7 +56,7 @@ export default {
         userId,
         username,
         filetype: file.type,
-        url: `${config.SERVER_URL}/assets/${randomFileName}`
+        url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;
