@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
       newState.error = action.payload.error;
       return newState;
 
+    case constants.UPLOAD_ERROR:
+      newState.error = action.payload;
+      return newState;
+
     case constants.CLEAR_ERROR:
       newState.error = "";
       return newState;

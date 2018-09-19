@@ -26,7 +26,7 @@ class MessageGroupList extends React.Component {
             >
               <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
                 <Bubble />{" "}
-                {messageGroupList && messageGroupList.length > 0
+                {messageGroupList
                   ? filterOutCurrentUsername(
                       messageGroup.name,
                       currentUser.username

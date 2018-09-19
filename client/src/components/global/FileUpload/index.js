@@ -2,31 +2,32 @@ import React from "react";
 import Dropzone from "react-dropzone";
 import { connect } from "react-redux";
 
-import { messageAction } from "@/actions";
+import { messageAction, errorAction } from "@/actions";
 
 class FileUpload extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpload = this.handleUpload.bind(this);
-    this.state = {
-      error: ""
-    };
   }
 
   handleUpload = file => {
     if (file) {
-      const { sendMessage, currentUser, currentChannel } = this.props;
+      const { sendMessage, currentUser, currentChannel, error } = this.props;
       if (file.size > 1024 * 1024 * 5) {
-        this.setState({
-          error: "file size exceed maximum size limit"
-        });
+        const { fetchError } = this.props;
+        fetchError("file size exceed maximum upload size of 5 mb");
+        return;
       }
-      console.log(this.state.error);
       sendMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
-        file: { data: file, name: file.name, size: file.size, type: file.type }
+        file: {
+          data: file,
+          name: file.name,
+          size: file.size,
+          type: file.type
+        }
       });
     }
   };
@@ -50,7 +51,8 @@ const stateToProps = state => ({
   currentChannel: state.channelReducer.currentChannel
 });
 const dispatchToProps = dispatch => ({
-  sendMessage: file => dispatch(messageAction.sendMessage(file))
+  sendMessage: file => dispatch(messageAction.sendMessage(file)),
+  fetchError: text => dispatch(errorAction.fetchError(text))
 });
 
 export default connect(

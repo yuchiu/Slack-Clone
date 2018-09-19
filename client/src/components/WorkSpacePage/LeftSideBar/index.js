@@ -28,8 +28,6 @@ class LeftSideBar extends React.Component {
   componentDidUpdate() {
     const { error } = this.props;
     const { openErrorModal } = this.state;
-    console.log("error");
-    console.log(error);
     if (error && !openErrorModal) {
       this.toggleErrorModal();
     }

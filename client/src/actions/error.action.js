@@ -5,5 +5,11 @@ export default {
     dispatch({
       type: constants.CLEAR_ERROR
     });
+  },
+  fetchError: text => dispatch => {
+    dispatch({
+      type: constants.UPLOAD_ERROR,
+      payload: text
+    });
   }
 };

@@ -26,7 +26,8 @@ app
   .use(cookieParser())
   .use(helmet())
   .use(compression())
-  .use(bodyParser.json());
+  .use(bodyParser.json())
+  .use("/files", express.static("./assets/files"));
 
 /* allow cors, allow dev logs */
 if (process.env.NODE_ENV === "development") {

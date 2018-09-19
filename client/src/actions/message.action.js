@@ -12,13 +12,21 @@ export default {
   },
 
   messageReceived: data => (dispatch, getState) => {
-    const { currentChannel } = getState().channelReducer;
-    const newData = { ...data };
-    newData.currentChannel = currentChannel;
-    dispatch({
-      type: constants.MESSAGE_RECEIVED,
-      payload: newData
-    });
+    if (data.error) {
+      dispatch({
+        type: constants.MESSAGE_ERROR,
+        payload: data
+      });
+    }
+    if (!data.error) {
+      const { currentChannel } = getState().channelReducer;
+      const newData = { ...data };
+      newData.currentChannel = currentChannel;
+      dispatch({
+        type: constants.MESSAGE_RECEIVED,
+        payload: newData
+      });
+    }
   },
 
   clearSocketConnection: () => dispatch => {
@@ -41,7 +49,7 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.TEAM_ERROR,
+        type: constants.MESSAGE_ERROR,
         payload: data
       });
     }

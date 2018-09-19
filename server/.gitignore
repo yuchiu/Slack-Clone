@@ -1,6 +1,7 @@
 dist
 build
 pgdata
+assets
 
 # editor
 .vs

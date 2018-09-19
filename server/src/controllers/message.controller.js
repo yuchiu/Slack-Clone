@@ -1,19 +1,61 @@
+import fse from "fs-extra";
+import path from "path";
+import util from "util";
+
 import models from "../models";
 
 export default {
   createMessage: async data => {
-    const { channelId, userId, text, username, file } = data;
-    if (!file) {
+    try {
+      const { channelId, userId, text, username, file } = data;
+      if (!file) {
+        const messageResponse = await models.Message.create({
+          channelId,
+          userId,
+          username,
+          text
+        });
+
+        const message = messageResponse.dataValues;
+
+        return { message };
+      }
+
+      if (file.size > 1024 * 1024 * 5) {
+        return { error: "file size exceed 5 mbs" };
+      }
+
+      /* generate random name */
+      const fileExtension = file.name.replace(/^.*\./, "");
+      const randomFileName = Math.random()
+        .toString(36)
+        .substring(2, 15)
+        .concat(Date.now().toString(36))
+        .replace(/[^0-9a-z]/gi, "")
+        .concat(`.${fileExtension}`);
+      const filePath = path.join(
+        __dirname,
+        "../",
+        "../",
+        "assets",
+        "files",
+        randomFileName
+      );
+
+      /* write file and create message */
+      await fse.outputFile(filePath, file.data);
       const messageResponse = await models.Message.create({
         channelId,
         userId,
         username,
-        text
+        type: file.type,
+        url: `localhost:3030/files/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;
-
       return { message };
+    } catch (err) {
+      return { error: "an error occured while creating message" };
     }
   },
   getMoreMessage: async (req, res) => {

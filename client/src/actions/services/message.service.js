@@ -9,11 +9,10 @@ export default {
 
   /* dispatch messageReceived when new data is received */
   receiveMessage: dispatch => {
-    socket.on("receiveMessage", data => {
-      dispatch(messageAction.messageReceived(data));
+    socket.on("receiveMessage", async data => {
+      if (data) dispatch(messageAction.messageReceived(data));
     });
   },
-
   clearSocketConnection: () => {
     socket.off("receiveMessage");
   },

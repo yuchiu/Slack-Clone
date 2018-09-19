@@ -69,7 +69,7 @@
 #### Server (Production)
 
 - install dependencies & run production build in server  
-  production build directory will be output to ./server/build
+  production build directory will be output to ./server/build  
   the complete production include both frontend and backend will be contained inside server's build directory
 
   ```npm ./server
