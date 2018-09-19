@@ -89,7 +89,9 @@ class RegisterPage extends React.Component {
             clientErrors={clientErrors}
             credentials={credentials}
           />
-          {error && <InlineError text={error} />}
+          <div className="inline-error--center">
+            {error && <InlineError text={`Error: ${error}`} />}
+          </div>
         </main>
       </React.Fragment>
     );
@@ -105,7 +107,7 @@ RegisterPage.propTypes = {
 
 const stateToProps = state => ({
   isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  error: state.userReducer.error
+  error: state.errorReducer.error
 });
 
 const dispatchToProps = dispatch => ({

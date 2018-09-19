@@ -4,8 +4,7 @@ import { sessionStore } from "@/utils";
 const initialState = {
   teamList: [],
   currentTeam: {},
-  currentTeamMembers: [],
-  error: ""
+  currentTeamMembers: []
 };
 const getCurrentTeamFromParams = (teamList, currentTeam, teamIdFromParams) => {
   /* return default current team if params is empty */
@@ -41,7 +40,6 @@ export default (state = initialState, action) => {
     case constants.LOGOUT_USER:
       newState.teamList = [];
       newState.currentTeam = {};
-      newState.error = "";
       newState.currentTeamMembers = [];
       sessionStore.removeTeamId();
       return newState;
@@ -49,7 +47,6 @@ export default (state = initialState, action) => {
     case constants.CREATE_TEAM:
       newState.teamList = action.payload.teamList;
       newState.currentTeam = action.payload.team;
-      newState.error = "";
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
@@ -58,7 +55,6 @@ export default (state = initialState, action) => {
         team => team.id === action.payload
       );
       sessionStore.setTeamId(newState.currentTeam.id);
-      newState.error = "";
       return newState;
 
     case constants.GET_CURRENT_TEAM:
@@ -68,21 +64,14 @@ export default (state = initialState, action) => {
         action.payload.teamId
       );
       sessionStore.setTeamId(newState.currentTeam.id);
-      newState.error = "";
       return newState;
 
     case constants.GET_TEAM_ASSOCIATED_LIST:
       newState.currentTeamMembers = action.payload.teamMemberList;
-      newState.error = "";
       return newState;
 
     case constants.ADD_TEAM_MEMBER:
       newState.currentTeamMembers = action.payload.teamMemberList;
-      newState.error = "";
-      return newState;
-
-    case constants.TEAM_ERROR:
-      newState.error = action.payload.error;
       return newState;
 
     default:

@@ -83,7 +83,7 @@ class AddMessageGroupModal extends React.Component {
     const { members, clientError } = this.state;
 
     return (
-      <Modal open={open} onClose={this.handleClose}>
+      <Modal size="small" open={open} onClose={this.handleClose}>
         <Modal.Header>Create Direct Message Group</Modal.Header>
         <Modal.Content>
           <Form>

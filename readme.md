@@ -22,8 +22,8 @@
 
 ### Server (Development)
 
-- install dependencies & start application in server
-- server will be listening to port 3030
+- install dependencies & start application in server  
+  server will be listening to port 3030
 
   ```npm ./server
   npm install
@@ -38,8 +38,8 @@
 
 ### Client (Development)
 
-- install dependencies & start application in client
-- application will be running on http://localhost:3000
+- install dependencies & start application in client  
+  application will be running on http://localhost:3000
 
   ```npm ./client
   npm install
@@ -52,8 +52,8 @@
 
 #### Client (Production)
 
-- install dependencies & run production build in client
-- production build directory will be output to ./client/build
+- install dependencies & run production build in client  
+  production build directory will be output to ./client/build
 
   ```npm ./client
   npm install
@@ -68,9 +68,9 @@
 
 #### Server (Production)
 
-- install dependencies & run production build in server
-- production build directory will be output to ./server/build
-- the complete production include both frontend and backend will be contained inside server's build directory
+- install dependencies & run production build in server  
+  production build directory will be output to ./server/build
+  the complete production include both frontend and backend will be contained inside server's build directory
 
   ```npm ./server
   npm install
@@ -81,8 +81,8 @@
 
 #### Option A. Local Machine
 
-- start application with production build
-- server will be listening to port 3030
+- start application with production build  
+  server will be listening to port 3030
 
   ```npm ./server
   npm run serve
@@ -109,8 +109,8 @@
   sudo docker build -t slack-clone .
   ```
 
-- start application with docker-compose
-- server will be listening to [https://localhost]
+- start application with docker-compose  
+  server will be listening to [https://localhost]
 
   ```shell ./server
   docker-compose up -d

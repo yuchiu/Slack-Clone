@@ -71,7 +71,9 @@ class LoginPage extends React.Component {
             credentials={credentials}
           />
           <br />
-          {error && <InlineError text={error} />}
+          <div className="inline-error--center">
+            {error && <InlineError text={`Error: ${error}`} />}
+          </div>
         </main>
       </React.Fragment>
     );
@@ -87,7 +89,7 @@ LoginPage.propTypes = {
 
 const stateToProps = state => ({
   isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  error: state.userReducer.error
+  error: state.errorReducer.error
 });
 
 const dispatchToProps = dispatch => ({

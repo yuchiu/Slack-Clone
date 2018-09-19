@@ -28,6 +28,12 @@ export default {
     } else if (data.password.length < 4 || data.password.length > 32) {
       clientErrors.password = "Length of password have to be between 4 to 32";
     }
+    if (!data.confirmPassword) {
+      clientErrors.confirmPassword = "Confirm password can't be blank";
+    } else if (data.password !== data.confirmPassword) {
+      clientErrors.confirmPassword =
+        "Password and confirm password have to be the same";
+    }
     if (!data.email) {
       clientErrors.email = "Email can't be blank";
     } else if (!Validator.isEmail(data.email)) {

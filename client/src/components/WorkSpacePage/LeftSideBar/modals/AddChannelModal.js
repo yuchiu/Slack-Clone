@@ -87,7 +87,7 @@ class AddChannelModal extends React.Component {
     const { channelName, isChannelPrivate, members, clientError } = this.state;
 
     return (
-      <Modal open={open} onClose={this.handleClose}>
+      <Modal size="small" open={open} onClose={this.handleClose}>
         <Modal.Header>
           {!isChannelPrivate ? (
             <span>Create Public Channel</span>
@@ -171,7 +171,7 @@ const stateToProps = state => ({
   currentTeam: state.teamReducer.currentTeam,
   currentUser: state.userReducer.currentUser,
   currentTeamMembers: state.teamReducer.currentTeamMembers,
-  error: state.teamReducer.error
+  error: state.errorReducer.error
 });
 
 const dispatchToProps = dispatch => ({

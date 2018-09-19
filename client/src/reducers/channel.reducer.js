@@ -4,8 +4,7 @@ const initialState = {
   channelList: [],
   currentChannel: {},
   currentChannelMembers: [],
-  messageGroupList: [],
-  error: ""
+  messageGroupList: []
 };
 
 const getCurrentChannelFromParams = (
@@ -39,7 +38,6 @@ export default (state = initialState, action) => {
       );
       newState.currentChannel = action.payload.channelList[0];
 
-      newState.error = "";
       return newState;
 
     case constants.CREATE_CHANNEL:
@@ -49,14 +47,14 @@ export default (state = initialState, action) => {
       );
       newState.currentChannel = action.payload.channel;
       newState.currentChannelMembers = action.payload.channelMemberList;
-      newState.error = "";
+
       return newState;
 
     case constants.SWITCH_CHANNEL:
       newState.currentChannel = state.channelList
         .concat(state.messageGroupList)
         .find(channel => channel.id === action.payload);
-      newState.error = "";
+
       return newState;
 
     case constants.GET_CURRENT_CHANNEL:
@@ -65,15 +63,12 @@ export default (state = initialState, action) => {
         state.currentChannel,
         action.payload.channelId
       );
-      newState.error = "";
+
       return newState;
 
     case constants.GET_CHANNEL_ASSOCIATED_LIST:
       newState.currentChannelMembers = action.payload.channelMemberList;
-      newState.error = "";
-      return newState;
-    case constants.CHANNEL_ERROR:
-      newState.error = action.payload.error;
+
       return newState;
 
     default:

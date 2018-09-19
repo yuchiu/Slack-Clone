@@ -45,7 +45,11 @@ const LoginForm = ({
       <Button type="primary" className="" size="large" onClick={handleLogin}>
         Log In
       </Button>
-      <br /> New to Slack? <a onClick={redirectToRegister}>Register</a>
+      <br />
+      <br /> New to Slack?{" "}
+      <a className="redirect" onClick={redirectToRegister}>
+        Register
+      </a>
     </Form>
   </Container>
 );

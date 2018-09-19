@@ -40,7 +40,7 @@ TeamList.propTypes = {
 const stateToProps = state => ({
   teamList: state.teamReducer.teamList,
   currentChannel: state.channelReducer.currentChannel,
-  error: state.teamReducer.error
+  error: state.errorReducer.error
 });
 
 const dispatchToProps = dispatch => ({

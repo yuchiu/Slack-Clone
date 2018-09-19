@@ -75,7 +75,11 @@ const RegisterForm = ({
       <Button type="primary" className="" size="large" onClick={handleRegister}>
         Register
       </Button>
-      <br /> Already have an account? <a onClick={redirectToLogin}>Log In</a>
+      <br />
+      <br /> Already have an account?{" "}
+      <a className="redirect" onClick={redirectToLogin}>
+        Log In
+      </a>
     </Form>
   </Container>
 );

@@ -30,7 +30,7 @@ class CreateTeamPage extends React.Component {
       const { createTeam, currentTeam, history } = this.props;
       const { name } = this.state;
       createTeam({ name });
-      history.push(`/workspace/`);
+      history.push(`/`);
     }
   };
 
@@ -56,7 +56,7 @@ class CreateTeamPage extends React.Component {
 }
 
 const stateToProps = state => ({
-  error: state.teamReducer.error,
+  error: state.errorReducer.error,
   currentTeam: state.teamReducer.currentTeam
 });
 

@@ -24,10 +24,7 @@ class AuthNavBar extends React.Component {
           <Dropdown item text={username}>
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => history.push("/create-team")}>
-                My Profile
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => history.push("/create-team")}>
-                Setting
+                Create Team
               </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Log Out</Dropdown.Item>
             </Dropdown.Menu>

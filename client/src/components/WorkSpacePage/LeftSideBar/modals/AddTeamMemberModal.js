@@ -61,7 +61,7 @@ class AddTeamMemberModal extends React.Component {
     const { username, clientError } = this.state;
 
     return (
-      <Modal open={open} onClose={this.handleClose}>
+      <Modal size="small" open={open} onClose={this.handleClose}>
         <Modal.Header>Invite Team Member</Modal.Header>
         <Modal.Content>
           <Form>
@@ -97,7 +97,7 @@ class AddTeamMemberModal extends React.Component {
 const stateToProps = state => ({
   currentTeam: state.teamReducer.currentTeam,
   currentTeamMembers: state.teamReducer.currentTeamMembers,
-  error: state.teamReducer.error
+  error: state.errorReducer.error
 });
 
 const dispatchToProps = dispatch => ({
