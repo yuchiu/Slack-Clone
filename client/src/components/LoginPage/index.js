@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import "./index.scss";
 import { validateForm } from "@/utils";
-import { authAction } from "@/actions";
+import { authAction, errorAction } from "@/actions";
 import { NavBar, InlineError } from "@/components/global";
 import LoginForm from "./LoginForm";
 
@@ -19,6 +19,8 @@ class LoginPage extends React.Component {
   };
 
   componentWillUnmount() {
+    const { clearError } = this.props;
+    clearError();
     this.setState({
       credentials: {
         username: "",
@@ -93,6 +95,7 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
+  clearError: () => dispatch(errorAction.clearError()),
   loginUser: credential => {
     dispatch(authAction.loginUser(credential));
   }

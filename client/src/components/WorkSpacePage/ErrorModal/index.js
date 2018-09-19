@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import "./ErrorModal.scss";
+import "./index.scss";
 
 class PopUpModal extends React.Component {
   state = {

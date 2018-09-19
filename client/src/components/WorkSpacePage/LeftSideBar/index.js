@@ -13,25 +13,15 @@ import { errorAction } from "@/actions";
 import {
   AddChannelModal,
   AddMessageGroupModal,
-  AddTeamMemberModal,
-  ErrorModal
+  AddTeamMemberModal
 } from "./modals";
 
 class LeftSideBar extends React.Component {
   state = {
     openAddChannelModal: false,
     openAddTeamMemberModal: false,
-    openAddMessageGroupModal: false,
-    openErrorModal: false
+    openAddMessageGroupModal: false
   };
-
-  componentDidUpdate() {
-    const { error } = this.props;
-    const { openErrorModal } = this.state;
-    if (error && !openErrorModal) {
-      this.toggleErrorModal();
-    }
-  }
 
   toggleAddChannelModal = e => {
     if (e) {
@@ -58,29 +48,17 @@ class LeftSideBar extends React.Component {
     });
   };
 
-  toggleErrorModal = e => {
-    if (e) {
-      e.preventDefault();
-    }
-    this.setState({
-      openErrorModal: !this.state.openErrorModal
-    });
-  };
-
   render() {
     const {
       openAddTeamMemberModal,
       openAddChannelModal,
-      openAddMessageGroupModal,
-      openErrorModal
+      openAddMessageGroupModal
     } = this.state;
     const {
       currentUser,
       currentTeam,
       messageGroupList,
-      channelList,
-      error,
-      clearError
+      channelList
     } = this.props;
     return (
       <React.Fragment>
@@ -125,13 +103,6 @@ class LeftSideBar extends React.Component {
           open={openAddTeamMemberModal}
           key="add-team-member-modal"
         />
-        <ErrorModal
-          onClose={this.toggleErrorModal}
-          open={openErrorModal}
-          error={error}
-          clearError={clearError}
-          key="error-modal"
-        />
       </React.Fragment>
     );
   }
@@ -145,15 +116,10 @@ const stateToProps = state => ({
   currentUser: state.userReducer.currentUser,
   currentTeam: state.teamReducer.currentTeam,
   channelList: state.channelReducer.channelList,
-  messageGroupList: state.channelReducer.messageGroupList,
-  error: state.errorReducer.error
-});
-
-const dispatchToProps = dispatch => ({
-  clearError: () => dispatch(errorAction.clearError())
+  messageGroupList: state.channelReducer.messageGroupList
 });
 
 export default connect(
   stateToProps,
-  dispatchToProps
+  null
 )(LeftSideBar);
