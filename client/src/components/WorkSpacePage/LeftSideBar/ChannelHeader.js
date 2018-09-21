@@ -14,12 +14,12 @@ class ChannelHeader extends React.Component {
           All Threads
         </span>
         <h1 className="leftsidebar__List__header">
-          CHANNELS
+          <span className="leftsidebar__List__header__title">CHANNELS</span>
           {isAdmin && (
             <Icon
               className="leftsidebar__List__header__icon"
               onClick={toggleAddChannelModal}
-              name="add circle"
+              name="plus circle"
             />
           )}
         </h1>

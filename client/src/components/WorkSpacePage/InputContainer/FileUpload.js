@@ -1,5 +1,6 @@
 import React from "react";
 import Dropzone from "react-dropzone";
+import { Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 import { messageAction, errorAction } from "@/actions";
@@ -49,7 +50,9 @@ class FileUpload extends React.Component {
         onDrop={file => this.handleUpload(file[0])}
         disableClick={disableClick}
       >
-        {children}
+        <Button icon>
+          <Icon name="paperclip" />
+        </Button>
       </Dropzone>
     );
   }

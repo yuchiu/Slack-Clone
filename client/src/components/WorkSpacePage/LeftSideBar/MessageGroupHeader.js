@@ -9,9 +9,11 @@ class MessageGroupHeader extends React.Component {
     const { toggleAddMessageGroupModal } = this.props;
     return (
       <h1 className="leftsidebar__List__header">
-        DIRECT MESSAGES
+        <span className="leftsidebar__List__header__title  leftsidebar__List__header__title--closer">
+          DIRECT MESSAGES
+        </span>
         <Icon
-          className="leftsidebar__List__header__icon leftsidebar__List__header__icon--closer"
+          className="leftsidebar__List__header__icon"
           onClick={toggleAddMessageGroupModal}
           name="plus circle"
         />

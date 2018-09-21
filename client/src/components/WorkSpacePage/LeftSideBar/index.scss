@@ -20,24 +20,43 @@
     }
   }
   &__header {
-    padding: 15px 0px 10px $paddingLeft;
-    margin-bottom: 10px;
-    &:hover {
-      background: #3e313c;
-      cursor: pointer;
+    &__top {
+      padding: 15px 0px 10px $paddingLeft;
+      &:hover {
+        background: #3e313c;
+        cursor: pointer;
+      }
+      &__teamname {
+        font-size: 20px;
+        padding: 0px;
+        margin: 0px;
+        color: $white;
+        margin-bottom: 5px;
+      }
     }
-    &__teamname {
-      font-size: 20px;
-      padding: 0px;
-      margin: 0px;
-      color: $white;
-      margin-bottom: 5px;
-    }
-    &__username {
-      color: rgba($white, 0.6);
-      font-size: 20px;
-      padding: 0px;
-      margin: 0px;
+    &__bottom {
+      padding: 15px 0px 10px $paddingLeft;
+      display: flex;
+      &:hover {
+        background: #3e313c;
+        cursor: pointer;
+      }
+      &__left {
+        &__avatar {
+          width: 40px;
+          border-radius: 2%;
+        }
+      }
+      &__right {
+        margin-left: 10px;
+        &__username {
+          color: rgba($white, 0.6);
+          font-size: 20px;
+          padding: 0px;
+          margin: 0px;
+          padding-bottom: 3px;
+        }
+      }
     }
   }
   &__List {
@@ -45,20 +64,22 @@
     list-style: none;
     padding-left: $paddingLeft;
     &__bubble {
-      color: #38978d;
+      color: #18b158;
       padding-right: 3px;
     }
     &__header {
       color: $white;
       font-size: 14px;
       padding: 5px 0px;
+      &__title {
+        padding-right: 120px;
+        &--closer {
+          padding-right: 71px;
+        }
+      }
       &__icon {
-        padding-left: 120px;
         &:hover {
           cursor: pointer;
-        }
-        &--closer {
-          padding-left: 70px;
         }
       }
     }

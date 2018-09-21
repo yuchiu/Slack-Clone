@@ -2,18 +2,15 @@ import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import TextType from "./TextType";
-import ImageType from "./ImageType";
-import AudioType from "./AudioType";
-import avatar from "@/assets/images/avatar.png";
+import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
   constructor(props) {
     super(props);
-    this.displayFile = this.displayFile.bind(this);
+    this.renderFile = this.renderFile.bind(this);
   }
 
-  displayFile = message => {
+  renderFile = message => {
     if (message.filetype.startsWith("image/")) {
       return <ImageType url={message.url} alt="image" />;
     }
@@ -39,7 +36,7 @@ class Message extends React.Component {
           <br />
           {message.url ? (
             <React.Fragment>
-              {this.displayFile(message)}
+              {this.renderFile(message)}
               <br />
             </React.Fragment>
           ) : (

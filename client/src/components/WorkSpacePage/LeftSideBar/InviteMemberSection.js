@@ -15,7 +15,6 @@ class InviteMemberSection extends React.Component {
             onClick={toggleAddTeamMemberModal}
           >
             <span className="leftsidebar__invite__plus">+</span> Invite People
-            To Team
           </div>
         )}
       </React.Fragment>
