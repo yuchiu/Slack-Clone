@@ -1,4 +1,8 @@
 import jwt from "jsonwebtoken";
+import fse from "fs-extra";
+import Identicon from "identicon.js";
+import randomstring from "randomstring";
+import randomHex from "randomhex";
 
 import models from "../models";
 import config from "../config";
@@ -19,7 +23,8 @@ const userSummary = user => {
   const summary = {
     id: user.id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    avatarurl: user.avatarurl
   };
   return summary;
 };
@@ -61,6 +66,19 @@ export default {
           error: `email: ${credentials.email} is already registered`
         });
       }
+      /* generate random icon for user */
+      const avatarData = new Identicon(randomHex(16), 420).toString();
+      const avatarString = `data:image/png;base64,${avatarData}`;
+      const avatarImage = avatarString.split(";base64,").pop();
+
+      const avatarName = randomstring.generate().concat(".png");
+      const filePath = `./assets/${avatarName}`;
+
+      await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
+
+      credentials.avatarurl = `${config.SERVER_URL}:${
+        config.PORT
+      }/assets/${avatarName}`;
 
       /* credential is validated */
       const user = await models.User.create(credentials);

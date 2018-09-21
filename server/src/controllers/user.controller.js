@@ -4,7 +4,8 @@ const userSummary = user => {
   const summary = {
     id: user.id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    avatarurl: user.avatarurl
   };
   return summary;
 };

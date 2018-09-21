@@ -2,21 +2,25 @@
   {
     "username": "yuchiu",
     "email": "yuchiu2002@hotmail.com",
-    "password": "1111"
+    "password": "1111",
+    "avatarurl": "https://i.imgur.com/EEM6baU.png"
   },
   {
     "username": "test",
     "email": "test@email.com",
-    "password": "1111"
+    "password": "1111",
+    "avatarurl": "https://i.imgur.com/EEM6baU.png"
   },
   {
     "username": "test2",
     "email": "test2@email.com",
-    "password": "1111"
+    "password": "1111",
+    "avatarurl": "https://i.imgur.com/EEM6baU.png"
   },
   {
     "username": "test3",
     "email": "test3@email.com",
-    "password": "1111"
+    "password": "1111",
+    "avatarurl": "https://i.imgur.com/EEM6baU.png"
   }
 ]

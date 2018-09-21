@@ -46,6 +46,10 @@ export default (sequelize, DataTypes) => {
             msg: "The password needs to be between 4 and 128 characteres long"
           }
         }
+      },
+      avatarurl: {
+        type: DataTypes.STRING,
+        defaultValue: ""
       }
     },
     {

@@ -1,6 +1,10 @@
 export default (sequelize, DataTypes) => {
   const Message = sequelize.define("message", {
     username: DataTypes.STRING,
+    avatarurl: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    },
     text: {
       type: DataTypes.STRING,
       defaultValue: ""

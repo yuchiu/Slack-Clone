@@ -1,5 +1,5 @@
 import fse from "fs-extra";
-import path from "path";
+import randomstring from "randomstring";
 
 import config from "../config";
 import models from "../models";
@@ -7,13 +7,14 @@ import models from "../models";
 export default {
   createMessage: async data => {
     try {
-      const { channelId, userId, text, username, file } = data;
+      const { channelId, userId, text, username, avatarurl, file } = data;
 
       /* check if it is upload or message */
       if (!file) {
         const messageResponse = await models.Message.create({
           channelId,
           userId,
+          avatarurl,
           username,
           text
         });
@@ -39,11 +40,8 @@ export default {
 
       /* generate random name */
       const fileExtension = file.name.replace(/^.*\./, "");
-      const randomFileName = Math.random()
-        .toString(36)
-        .substring(2, 15)
-        .concat(Date.now().toString(36))
-        .replace(/[^0-9a-z]/gi, "")
+      const randomFileName = randomstring
+        .generate()
         .concat(`.${fileExtension}`);
       const filePath = `./assets/${randomFileName}`;
 
