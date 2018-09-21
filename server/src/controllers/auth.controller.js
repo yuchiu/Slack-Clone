@@ -82,6 +82,36 @@ export default {
 
       /* credential is validated */
       const user = await models.User.create(credentials);
+
+      /* auto join demo team */
+      /* create new member  */
+      await models.TeamMember.create({ userId: user.id, teamId: 1 });
+      const teamMemberList = await models.sequelize.query(
+        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+        {
+          replacements: [1],
+          model: models.User,
+          raw: true
+        }
+      );
+
+      /* find the initial channel general and add new user to the general channel */
+      const initialChannel = await models.sequelize.query(
+        "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+        {
+          replacements: [1],
+          model: models.Channel,
+          raw: true
+        }
+      );
+      const initialChannelId = initialChannel[0].id;
+
+      await models.ChannelMember.create({
+        userId: user.id,
+        channelId: initialChannelId
+      });
+
+      /* response */
       res.status(200).send({
         user: userSummary(user),
         token: jwtSignUser(user)

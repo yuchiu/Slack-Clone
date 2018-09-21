@@ -18,5 +18,20 @@
     "userId": "4",
     "teamId": "4",
     "admin": true
+  },
+  {
+    "userId": "2",
+    "teamId": "1",
+    "admin": true
+  },
+  {
+    "userId": "3",
+    "teamId": "1",
+    "admin": true
+  },
+  {
+    "userId": "4",
+    "teamId": "1",
+    "admin": true
   }
 ]
