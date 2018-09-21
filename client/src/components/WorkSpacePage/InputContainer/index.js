@@ -29,6 +29,7 @@ class InputContainer extends React.Component {
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
+        avatarurl: currentUser.avatarurl,
         text
       });
       this.setState({ text: "" });

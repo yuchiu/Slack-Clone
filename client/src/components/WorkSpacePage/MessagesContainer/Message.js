@@ -30,12 +30,13 @@ class Message extends React.Component {
     const { message } = this.props;
     return (
       <Comment>
-        <Comment.Avatar src={avatar} />
+        <Comment.Avatar src={message.avatarurl} />
         <Comment.Content>
           <Comment.Author as="a">{message.username}</Comment.Author>
           <Comment.Metadata>
             <span>{message.created_at}</span>
           </Comment.Metadata>
+          <br />
           {message.url ? (
             <React.Fragment>
               {this.displayFile(message)}
