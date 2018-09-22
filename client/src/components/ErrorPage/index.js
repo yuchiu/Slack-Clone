@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NavBar } from "@/components/global";
+import { NavBar } from "@/components/common";
 import Content from "./Content";
 
 const ErrorPage = () => (

@@ -4,8 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { channelAction } from "@/actions";
-import { InlineError } from "@/components/global";
+import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
+import {
+  getCurrentTeam,
+  getCurrentUser,
+  getCurrentTeamMembers
+} from "@/reducers";
 
 class AddMessageGroupModal extends React.Component {
   state = {
@@ -131,9 +136,9 @@ AddMessageGroupModal.propTypes = {
 };
 
 const stateToProps = state => ({
-  currentTeam: state.teamReducer.currentTeam,
-  currentUser: state.userReducer.currentUser,
-  currentTeamMembers: state.teamReducer.currentTeamMembers
+  currentTeam: getCurrentTeam(state),
+  currentUser: getCurrentUser(state),
+  currentTeamMembers: getCurrentTeamMembers(state)
 });
 const dispatchToProps = dispatch => ({
   createChannel: channelFormInfo => {

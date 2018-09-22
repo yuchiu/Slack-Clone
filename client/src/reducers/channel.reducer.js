@@ -3,8 +3,7 @@ import constants from "@/constants";
 const initialState = {
   channelList: [],
   currentChannel: {},
-  currentChannelMembers: [],
-  messageGroupList: []
+  currentChannelMembers: []
 };
 
 const getCurrentChannelFromParams = (
@@ -22,53 +21,38 @@ const getCurrentChannelFromParams = (
   return currentChannelFromParams;
 };
 
-const getChannelList = list =>
-  list.filter(channel => channel.message_group === false);
-
-const getGetMessageGroupList = list =>
-  list.filter(channel => channel.message_group === true);
-
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
     case constants.GET_TEAM_ASSOCIATED_LIST:
-      newState.channelList = getChannelList(action.payload.channelList);
-      newState.messageGroupList = getGetMessageGroupList(
-        action.payload.channelList
-      );
+      newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channelList[0];
 
       return newState;
 
     case constants.CREATE_CHANNEL:
-      newState.channelList = getChannelList(action.payload.channelList);
-      newState.messageGroupList = getGetMessageGroupList(
-        action.payload.channelList
-      );
+      newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channel;
       newState.currentChannelMembers = action.payload.channelMemberList;
 
       return newState;
 
     case constants.SWITCH_CHANNEL:
-      newState.currentChannel = state.channelList
-        .concat(state.messageGroupList)
-        .find(channel => channel.id === action.payload);
-
+      newState.currentChannel = state.channelList.find(
+        channel => channel.id === action.payload
+      );
       return newState;
 
     case constants.GET_CURRENT_CHANNEL:
       newState.currentChannel = getCurrentChannelFromParams(
-        state.channelList.concat(state.messageGroupList),
+        state.channelList,
         state.currentChannel,
         action.payload.channelId
       );
-
       return newState;
 
     case constants.GET_CHANNEL_ASSOCIATED_LIST:
       newState.currentChannelMembers = action.payload.channelMemberList;
-
       return newState;
 
     default:

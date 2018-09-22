@@ -40,7 +40,7 @@ export default {
       });
     }
   },
-  getCurrentChannel: params => async dispatch => {
+  fetchCurrentChannel: params => async dispatch => {
     dispatch({
       type: constants.GET_CURRENT_CHANNEL,
       payload: params

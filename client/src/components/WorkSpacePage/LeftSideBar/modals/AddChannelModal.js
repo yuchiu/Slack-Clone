@@ -10,9 +10,15 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { InlineError } from "@/components/global";
+import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
 import { channelAction } from "@/actions";
+import {
+  getCurrentTeam,
+  getCurrentUser,
+  getCurrentTeamMembers,
+  getError
+} from "@/reducers";
 
 class AddChannelModal extends React.Component {
   state = {
@@ -168,10 +174,10 @@ class AddChannelModal extends React.Component {
 }
 
 const stateToProps = state => ({
-  currentTeam: state.teamReducer.currentTeam,
-  currentUser: state.userReducer.currentUser,
-  currentTeamMembers: state.teamReducer.currentTeamMembers,
-  error: state.errorReducer.error
+  currentTeam: getCurrentTeam(state),
+  currentUser: getCurrentUser(state),
+  currentTeamMembers: getCurrentTeamMembers(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({

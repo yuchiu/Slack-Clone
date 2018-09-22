@@ -6,8 +6,9 @@ import { Redirect } from "react-router-dom";
 import "./index.scss";
 import { validateForm } from "@/utils";
 import { authAction, errorAction } from "@/actions";
-import { NavBar, InlineError } from "@/components/global";
+import { NavBar, InlineError } from "@/components/common";
 import LoginForm from "./LoginForm";
+import { getIsUserLoggedIn, getError } from "@/reducers";
 
 class LoginPage extends React.Component {
   state = {
@@ -90,8 +91,8 @@ LoginPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  error: state.errorReducer.error
+  isUserLoggedIn: getIsUserLoggedIn(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({

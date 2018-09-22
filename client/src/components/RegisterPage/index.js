@@ -6,8 +6,9 @@ import { Redirect } from "react-router-dom";
 import "./index.scss";
 import { validateForm } from "@/utils";
 import { authAction, errorAction } from "@/actions";
-import { NavBar, InlineError } from "@/components/global";
+import { NavBar, InlineError } from "@/components/common";
 import RegisterForm from "./RegisterForm";
+import { getIsUserLoggedIn, getError } from "@/reducers";
 
 class RegisterPage extends React.Component {
   state = {
@@ -108,8 +109,8 @@ RegisterPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  error: state.errorReducer.error
+  isUserLoggedIn: getIsUserLoggedIn(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({

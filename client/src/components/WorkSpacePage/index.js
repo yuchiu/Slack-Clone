@@ -13,6 +13,12 @@ import MessagesContainer from "./MessagesContainer";
 import InputContainer from "./InputContainer";
 import RightSideBar from "./RightSideBar";
 import ErrorModal from "./ErrorModal";
+import {
+  getChannelList,
+  getTeamList,
+  getError,
+  getCurrentTeam
+} from "@/reducers";
 
 class WorkSpacePage extends React.Component {
   state = {
@@ -23,7 +29,9 @@ class WorkSpacePage extends React.Component {
   componentDidCatch(error, info) {
     console.log(error, info);
     this.setState({
-      hasError: true
+      hasError: true,
+      currentTeamParam: "",
+      currentChannelParam: ""
     });
   }
 
@@ -53,17 +61,26 @@ class WorkSpacePage extends React.Component {
 
   componentDidUpdate = () => {
     const {
-      getCurrentTeam,
-      getCurrentChannel,
+      fetchCurrentTeam,
+      fetchCurrentChannel,
       teamList,
       channelList,
       match: { params }
     } = this.props;
-
+    const { currentTeamParam, currentChannelParam } = this.state;
     /* get currentTeam based on params, if params is missing then use previous states */
-    if (teamList.length > 0 && channelList.length > 0) {
-      getCurrentTeam(params);
-      getCurrentChannel(params);
+    if (
+      currentChannelParam !== params.channelId ||
+      currentTeamParam !== params.teamId
+    ) {
+      if (teamList.length > 0 && channelList.length > 0) {
+        fetchCurrentTeam(params);
+        fetchCurrentChannel(params);
+        this.setState({
+          currentTeamParam: params.teamId,
+          currentChannelParam: params.channelId
+        });
+      }
     }
   };
 
@@ -105,10 +122,10 @@ WorkSpacePage.propTypes = {
 };
 
 const stateToProps = state => ({
-  teamList: state.teamReducer.teamList,
-  currentTeam: state.teamReducer.currentTeam,
-  channelList: state.channelReducer.channelList,
-  error: state.errorReducer.error
+  teamList: getTeamList(state),
+  currentTeam: getCurrentTeam(state),
+  channelList: getChannelList(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({
@@ -116,11 +133,11 @@ const dispatchToProps = dispatch => ({
   getTeamAssociatedList: teamId => {
     dispatch(teamAction.getTeamAssociatedList(teamId));
   },
-  getCurrentTeam: params => {
-    dispatch(teamAction.getCurrentTeam(params));
+  fetchCurrentTeam: params => {
+    dispatch(teamAction.fetchCurrentTeam(params));
   },
-  getCurrentChannel: params => {
-    dispatch(channelAction.getCurrentChannel(params));
+  fetchCurrentChannel: params => {
+    dispatch(channelAction.fetchCurrentChannel(params));
   }
 });
 

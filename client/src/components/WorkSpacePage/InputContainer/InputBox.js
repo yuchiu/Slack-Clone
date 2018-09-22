@@ -6,6 +6,11 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import { messageAction } from "@/actions";
+import {
+  getCurrentUser,
+  getCurrentTeamMembers,
+  getCurrentChannel
+} from "@/reducers";
 
 class InputBox extends React.Component {
   state = {
@@ -59,9 +64,9 @@ InputBox.propTypes = {
   placeholder: PropTypes.string
 };
 const stateToProps = state => ({
-  currentUser: state.userReducer.currentUser,
-  currentTeamMembers: state.teamReducer.currentTeamMembers,
-  currentChannel: state.channelReducer.currentChannel
+  currentUser: getCurrentUser(state),
+  currentTeamMembers: getCurrentTeamMembers(state),
+  currentChannel: getCurrentChannel(state)
 });
 
 const dispatchToProps = dispatch => ({

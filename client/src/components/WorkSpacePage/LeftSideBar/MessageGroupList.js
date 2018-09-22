@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { filterOutCurrentUsername } from "@/utils";
 import { channelAction } from "@/actions";
+import { getCurrentUser } from "@/reducers";
 
 class MessageGroupList extends React.Component {
   handleClick = channelId => {
@@ -48,7 +49,7 @@ MessageGroupList.propTypes = {
 };
 
 const stateToProps = state => ({
-  currentUser: state.userReducer.currentUser
+  currentUser: getCurrentUser(state)
 });
 
 const dispatchToProps = dispatch => ({

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Input, Header, Container } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineError } from "../global";
+import { InlineError } from "../common";
 
 class CreateTeamForm extends React.Component {
   render() {

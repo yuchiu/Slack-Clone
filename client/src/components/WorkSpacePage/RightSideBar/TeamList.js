@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
+import { getTeamList, getCurrentChannel, getError } from "@/reducers";
 
 class TeamList extends React.Component {
   handleClick = teamId => {
@@ -38,9 +39,9 @@ TeamList.propTypes = {
 };
 
 const stateToProps = state => ({
-  teamList: state.teamReducer.teamList,
-  currentChannel: state.channelReducer.currentChannel,
-  error: state.errorReducer.error
+  teamList: getTeamList(state),
+  currentChannel: getCurrentChannel(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({

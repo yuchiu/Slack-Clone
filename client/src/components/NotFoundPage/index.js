@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { NavBar } from "@/components/global";
+import { NavBar } from "@/components/common";
 import Content from "./Content";
 
 const NotFoundPage = ({

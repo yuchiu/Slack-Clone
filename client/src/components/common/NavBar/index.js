@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { authAction } from "@/actions";
 import AuthNavBar from "./AuthNavBar";
 import UnauthNavBar from "./UnauthNavBar";
+import { getIsUserLoggedIn, getCurrentUser } from "@/reducers";
 
 class NavBar extends React.Component {
   handleLogout = () => {
@@ -15,13 +16,13 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { isUserLoggedIn, username, history } = this.props;
+    const { isUserLoggedIn, currentUser, history } = this.props;
     return (
       <div className="navbar-container">
         {isUserLoggedIn && (
           <AuthNavBar
             history={history}
-            username={username}
+            username={currentUser.username}
             handleLogout={this.handleLogout}
           />
         )}
@@ -37,8 +38,8 @@ NavBar.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: state.authReducer.isUserLoggedIn,
-  username: state.userReducer.currentUser.username
+  isUserLoggedIn: getIsUserLoggedIn(state),
+  currentUser: getCurrentUser(state)
 });
 
 const dispatchToProps = dispatch => ({

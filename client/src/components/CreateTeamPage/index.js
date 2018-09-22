@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { NavBar, InlineError } from "../global";
+import { NavBar, InlineError } from "../common";
 import { validateForm } from "../../utils";
 import CreateTeamForm from "./CreateTeamForm";
+import { getError, getCurrentTeam } from "@/reducers";
 
 class CreateTeamPage extends React.Component {
   state = {
@@ -56,8 +57,8 @@ class CreateTeamPage extends React.Component {
 }
 
 const stateToProps = state => ({
-  error: state.errorReducer.error,
-  currentTeam: state.teamReducer.currentTeam
+  error: getError(state),
+  currentTeam: getCurrentTeam(state)
 });
 
 const dispatchToProps = dispatch => ({

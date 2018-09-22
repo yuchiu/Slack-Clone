@@ -5,6 +5,11 @@ import { withRouter } from "react-router-dom";
 
 import { filterOutCurrentUsername } from "@/utils";
 import "./index.scss";
+import {
+  getCurrentChannelMembers,
+  getCurrentChannel,
+  getCurrentUser
+} from "@/reducers";
 
 class MainHeader extends React.Component {
   componentDidMount() {}
@@ -50,9 +55,9 @@ class MainHeader extends React.Component {
 MainHeader.propTypes = {};
 
 const stateToProps = state => ({
-  currentChannelMembers: state.channelReducer.currentChannelMembers,
-  currentChannel: state.channelReducer.currentChannel,
-  currentUser: state.userReducer.currentUser
+  currentChannelMembers: getCurrentChannelMembers(state),
+  currentChannel: getCurrentChannel(state),
+  currentUser: getCurrentUser(state)
 });
 
 const dispatchToProps = dispatch => ({});

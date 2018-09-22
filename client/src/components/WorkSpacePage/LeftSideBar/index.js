@@ -9,12 +9,17 @@ import MessageGroupHeader from "./MessageGroupHeader";
 import MessageGroupList from "./MessageGroupList";
 import SideBarHeader from "./SideBarHeader";
 import InviteMemberSection from "./InviteMemberSection";
-import { errorAction } from "@/actions";
 import {
   AddChannelModal,
   AddMessageGroupModal,
   AddTeamMemberModal
 } from "./modals";
+import {
+  getChannelList,
+  getMessageGroupList,
+  getCurrentTeam,
+  getCurrentUser
+} from "@/reducers";
 
 class LeftSideBar extends React.Component {
   state = {
@@ -110,13 +115,12 @@ class LeftSideBar extends React.Component {
 LeftSideBar.propTypes = {
   currentTeam: PropTypes.object.isRequired
 };
-
 /* currentUser, channel, direct messages */
 const stateToProps = state => ({
-  currentUser: state.userReducer.currentUser,
-  currentTeam: state.teamReducer.currentTeam,
-  channelList: state.channelReducer.channelList,
-  messageGroupList: state.channelReducer.messageGroupList
+  currentUser: getCurrentUser(state),
+  currentTeam: getCurrentTeam(state),
+  channelList: getChannelList(state),
+  messageGroupList: getMessageGroupList(state)
 });
 
 export default connect(

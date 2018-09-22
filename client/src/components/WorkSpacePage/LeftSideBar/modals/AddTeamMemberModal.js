@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { InlineError } from "@/components/global";
+import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
+import { getCurrentTeam, getError, getCurrentTeamMembers } from "@/reducers";
 
 class AddTeamMemberModal extends React.Component {
   state = {
@@ -95,9 +96,9 @@ class AddTeamMemberModal extends React.Component {
 }
 
 const stateToProps = state => ({
-  currentTeam: state.teamReducer.currentTeam,
-  currentTeamMembers: state.teamReducer.currentTeamMembers,
-  error: state.errorReducer.error
+  currentTeam: getCurrentTeam(state),
+  currentTeamMembers: getCurrentTeamMembers(state),
+  error: getError(state)
 });
 
 const dispatchToProps = dispatch => ({

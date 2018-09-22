@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Input, Container, Header } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineError } from "@/components/global";
+import { InlineError } from "@/components/common";
 
 const RegisterForm = ({
   handleRegister,

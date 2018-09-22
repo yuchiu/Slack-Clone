@@ -24,7 +24,7 @@ export default {
       payload: teamId
     });
   },
-  getCurrentTeam: params => async dispatch => {
+  fetchCurrentTeam: params => async dispatch => {
     dispatch({
       type: constants.GET_CURRENT_TEAM,
       payload: params
