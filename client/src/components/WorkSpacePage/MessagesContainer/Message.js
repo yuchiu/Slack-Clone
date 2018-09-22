@@ -5,24 +5,6 @@ import PropTypes from "prop-types";
 import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
-  constructor(props) {
-    super(props);
-    this.renderFile = this.renderFile.bind(this);
-  }
-
-  renderFile = message => {
-    if (message.filetype.startsWith("image/")) {
-      return <ImageType url={message.url} alt="image" />;
-    }
-    if (message.filetype === "text/plain") {
-      return <TextType url={message.url} />;
-    }
-    if (message.filetype.startsWith("audio/")) {
-      return <AudioType url={message.url} filetype={message.filetype} />;
-    }
-    return null;
-  };
-
   render() {
     const { message } = this.props;
     return (
@@ -36,7 +18,15 @@ class Message extends React.Component {
           <br />
           {message.url ? (
             <React.Fragment>
-              {this.renderFile(message)}
+              {message.filetype === "image" ? (
+                <ImageType url={message.url} alt="image" />
+              ) : null}
+              {message.filetype === "text" ? (
+                <TextType url={message.url} />
+              ) : null}
+              {message.filetype === "audio" ? (
+                <AudioType url={message.url} filetype={message.filetype} />
+              ) : null}
               <br />
             </React.Fragment>
           ) : (

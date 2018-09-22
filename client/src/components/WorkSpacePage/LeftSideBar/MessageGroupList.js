@@ -14,7 +14,7 @@ class MessageGroupList extends React.Component {
   };
 
   render() {
-    const { messageGroupList, teamId, currentUser } = this.props;
+    const { messageGroupList, teamId } = this.props;
     return (
       <React.Fragment>
         {!messageGroupList
@@ -27,13 +27,7 @@ class MessageGroupList extends React.Component {
                 onClick={this.handleClick.bind(this, messageGroup.id)}
               >
                 <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-                  <Bubble />{" "}
-                  {messageGroupList
-                    ? filterOutCurrentUsername(
-                        messageGroup.name,
-                        currentUser.username
-                      )
-                    : null}
+                  <Bubble /> {messageGroup.name}
                 </li>
               </Link>
             ))}
@@ -48,10 +42,6 @@ MessageGroupList.propTypes = {
   messageGroupList: PropTypes.array.isRequired
 };
 
-const stateToProps = state => ({
-  currentUser: getCurrentUser(state)
-});
-
 const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
@@ -59,6 +49,6 @@ const dispatchToProps = dispatch => ({
 });
 
 export default connect(
-  stateToProps,
+  null,
   dispatchToProps
 )(MessageGroupList);

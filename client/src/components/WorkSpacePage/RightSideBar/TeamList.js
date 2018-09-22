@@ -15,6 +15,7 @@ class TeamList extends React.Component {
 
   render() {
     const { teamList, currentChannel } = this.props;
+    console.log(teamList);
     return (
       <React.Fragment>
         {teamList.map((team, i) => (
@@ -24,9 +25,7 @@ class TeamList extends React.Component {
             to={`/workspace/${team.id}`}
             onClick={this.handleClick.bind(this, team.id)}
           >
-            <li className="rightsidebar__list__link__item">
-              {team.name.charAt(0).toUpperCase()}
-            </li>
+            <li className="rightsidebar__list__link__item">{team.initials}</li>
           </Link>
         ))}
       </React.Fragment>

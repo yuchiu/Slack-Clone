@@ -3,30 +3,28 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import { filterOutCurrentUsername } from "@/utils";
 import "./index.scss";
 import {
   getCurrentChannelMembers,
   getCurrentChannel,
-  getCurrentUser
+  getMessageGroupName
 } from "@/reducers";
 
 class MainHeader extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { currentChannelMembers, currentUser, currentChannel } = this.props;
+    const {
+      currentChannelMembers,
+      currentChannel,
+      messageGroupName
+    } = this.props;
     return (
       <div className="main-header">
         <h1 className="main-header__title">
           {currentChannel.message_group ? (
             <React.Fragment>
-              <span>
-                {filterOutCurrentUsername(
-                  currentChannel.name,
-                  currentUser.username
-                )}
-              </span>
+              <span>{messageGroupName}</span>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -57,7 +55,7 @@ MainHeader.propTypes = {};
 const stateToProps = state => ({
   currentChannelMembers: getCurrentChannelMembers(state),
   currentChannel: getCurrentChannel(state),
-  currentUser: getCurrentUser(state)
+  messageGroupName: getMessageGroupName(state)
 });
 
 const dispatchToProps = dispatch => ({});

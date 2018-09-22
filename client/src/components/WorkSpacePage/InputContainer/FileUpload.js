@@ -33,6 +33,7 @@ class FileUpload extends React.Component {
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
+        avatarurl: currentUser.avatarurl,
         file: {
           data: file,
           name: file.name,
