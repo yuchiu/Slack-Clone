@@ -52,6 +52,7 @@ export default {
       const messageResponse = await models.Message.create({
         channelId,
         userId,
+        avatarurl,
         username,
         filetype: file.type,
         url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
