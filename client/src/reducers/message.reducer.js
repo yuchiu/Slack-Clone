@@ -1,4 +1,5 @@
 import constants from "@/constants";
+import { createSelector } from "reselect";
 
 const initialState = {
   messageList: []
@@ -34,25 +35,29 @@ export default (state = initialState, action) => {
   }
 };
 
-/* selectors */
-const getMessageList = state =>
-  state.messageReducer.messageList.map(message => {
+/* state selectors */
+const getStateMessageList = state => state.messageReducer.messageList;
+
+/* derived data selectors */
+const getMessageList = createSelector(getStateMessageList, messageList =>
+  messageList.map(message => {
     const newMessage = { ...message };
-    newMessage.image = false;
-    newMessage.text = false;
-    newMessage.audio = false;
+    newMessage.imageType = false;
+    newMessage.textType = false;
+    newMessage.audioType = false;
     if (newMessage.filetype) {
       if (newMessage.filetype.startsWith("image/")) {
-        newMessage.image = true;
+        newMessage.imageType = true;
       }
       if (message.filetype === "text/plain") {
-        newMessage.text = true;
+        newMessage.textType = true;
       }
       if (message.filetype.startsWith("audio/")) {
-        newMessage.audio = true;
+        newMessage.audioType = true;
       }
     }
     return newMessage;
-  });
+  })
+);
 
 export { getMessageList };

@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
   }
 };
 
-/* selectors */
+/* state selectors */
 const getIsUserLoggedIn = state => state.authReducer.isUserLoggedIn;
 
 export { getIsUserLoggedIn };

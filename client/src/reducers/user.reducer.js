@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
   }
 };
 
-/* selectors */
+/* state selectors */
 const getCurrentUser = state => state.userReducer.currentUser;
 
 const getUsername = state => {

@@ -18,9 +18,9 @@ class Message extends React.Component {
           <br />
           {message.url ? (
             <React.Fragment>
-              {message.image && <ImageType url={message.url} alt="image" />}
-              {message.text && <TextType url={message.url} />}
-              {message.audio && (
+              {message.imageType && <ImageType url={message.url} alt="image" />}
+              {message.textType && <TextType url={message.url} />}
+              {message.audioType && (
                 <AudioType url={message.url} filetype={message.filetype} />
               )}
               <br />

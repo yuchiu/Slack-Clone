@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 import constants from "@/constants";
 import { sessionStore } from "@/utils";
 
@@ -79,14 +81,16 @@ export default (state = initialState, action) => {
   }
 };
 
-/* selectors */
+/* state selectors */
 const getCurrentTeam = state => state.teamReducer.currentTeam;
 
 const getCurrentTeamMembers = state => state.teamReducer.currentTeamMembers;
 
-const getTeamList = state => {
-  const teamList = state.teamReducer.teamList;
-  return teamList.map(team => {
+const getStateTeamList = state => state.teamReducer.teamList;
+
+/* derived data selectors */
+const getTeamList = createSelector(getStateTeamList, teamList =>
+  teamList.map(team => {
     const newTeam = { ...team };
     newTeam.initials = team.name
       .split(" ")
@@ -94,7 +98,7 @@ const getTeamList = state => {
       .join(".")
       .slice(0, 3);
     return newTeam;
-  });
-};
+  })
+);
 
 export { getCurrentTeam, getCurrentTeamMembers, getTeamList };

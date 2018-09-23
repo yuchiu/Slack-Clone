@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 import constants from "@/constants";
 import { getUsername } from "./user.reducer";
 
@@ -97,46 +99,51 @@ const filterOutCurrentUsername = (messageGroupName, currentUsername) => {
     );
 };
 
-/* selectors */
+/* state selectors */
 const getCurrentChannel = state => state.channelReducer.currentChannel;
 
 const getCurrentChannelMembers = state =>
   state.channelReducer.currentChannelMembers;
 
-const getAllChannelList = state => state.channelReducer.channelList;
+const getStateChannelList = state => state.channelReducer.channelList;
 
-const getChannelList = state =>
-  state.channelReducer.channelList.filter(
-    channel => channel.message_group === false
-  );
+/* derived data selectors */
+const getChannelList = createSelector(getStateChannelList, channelList =>
+  channelList.filter(channel => channel.message_group === false)
+);
 
-const getMessageGroupList = state =>
-  state.channelReducer.channelList
-    .filter(channel => channel.message_group === true)
-    .map(messageGroup => {
-      const username = getUsername(state);
-      const newMessageGroup = { ...messageGroup };
-      newMessageGroup.name = filterOutCurrentUsername(
-        messageGroup.name,
-        username
-      );
-      return newMessageGroup;
-    });
+const getMessageGroupList = createSelector(
+  getStateChannelList,
+  getUsername,
+  (messageGroupList, username) =>
+    messageGroupList
+      .filter(channel => channel.message_group === true)
+      .map(messageGroup => {
+        const newMessageGroup = { ...messageGroup };
+        newMessageGroup.name = filterOutCurrentUsername(
+          messageGroup.name,
+          username
+        );
+        return newMessageGroup;
+      })
+);
 
-const getMessageGroupName = state => {
-  const currentChannel = getCurrentChannel(state);
-  const messageGroupList = getMessageGroupList(state);
-  const filteredMessageGroupName = messageGroupList
-    .filter(channel => channel.id === currentChannel.id)
-    .map(channel => channel.name);
-  const messageGroupName = filteredMessageGroupName[0];
-  return messageGroupName;
-};
+const getMessageGroupName = createSelector(
+  getMessageGroupList,
+  getCurrentChannel,
+  (messageGroupList, currentChannel) => {
+    const filteredMessageGroupName = messageGroupList
+      .filter(channel => channel.id === currentChannel.id)
+      .map(channel => channel.name);
+    const messageGroupName = filteredMessageGroupName[0];
+    return messageGroupName;
+  }
+);
 
 export {
   getCurrentChannel,
   getCurrentChannelMembers,
-  getAllChannelList,
+  getStateChannelList,
   getChannelList,
   getMessageGroupList,
   getMessageGroupName
