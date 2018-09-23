@@ -7,7 +7,11 @@ import { connect } from "react-redux";
 import "./index.scss";
 import Message from "./Message";
 import { messageAction, channelAction } from "@/actions";
-import { getMessageList, getCurrentTeam, getCurrentChannel } from "@/reducers";
+import {
+  messageSelector,
+  teamSelector,
+  channelSelector
+} from "@/reducers/selectors";
 
 class MessagesContainer extends React.Component {
   constructor(props) {
@@ -121,9 +125,9 @@ class MessagesContainer extends React.Component {
 MessagesContainer.propTypes = {};
 
 const stateToProps = state => ({
-  messageList: getMessageList(state),
-  currentTeam: getCurrentTeam(state),
-  currentChannel: getCurrentChannel(state)
+  messageList: messageSelector.getMessageList(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentChannel: channelSelector.getCurrentChannel(state)
 });
 
 const dispatchToProps = dispatch => ({

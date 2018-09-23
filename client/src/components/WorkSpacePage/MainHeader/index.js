@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 import "./index.scss";
-import {
-  getCurrentChannelMembers,
-  getCurrentChannel,
-  getMessageGroupName
-} from "@/reducers";
+import { channelSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
   componentDidMount() {}
@@ -53,9 +49,9 @@ class MainHeader extends React.Component {
 MainHeader.propTypes = {};
 
 const stateToProps = state => ({
-  currentChannelMembers: getCurrentChannelMembers(state),
-  currentChannel: getCurrentChannel(state),
-  messageGroupName: getMessageGroupName(state)
+  currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
+  currentChannel: channelSelector.getCurrentChannel(state),
+  messageGroupName: channelSelector.getMessageGroupName(state)
 });
 
 const dispatchToProps = dispatch => ({});

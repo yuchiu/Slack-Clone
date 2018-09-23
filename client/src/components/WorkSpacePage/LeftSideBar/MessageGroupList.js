@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { filterOutCurrentUsername } from "@/utils";
 import { channelAction } from "@/actions";
-import { getCurrentUser } from "@/reducers";
 
 class MessageGroupList extends React.Component {
   handleClick = channelId => {

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { authAction } from "@/actions";
 import AuthNavBar from "./AuthNavBar";
 import UnauthNavBar from "./UnauthNavBar";
-import { getIsUserLoggedIn, getCurrentUser } from "@/reducers";
+import { authSelector, userSelector } from "@/reducers/selectors";
 
 class NavBar extends React.Component {
   handleLogout = () => {
@@ -38,8 +38,8 @@ NavBar.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: getIsUserLoggedIn(state),
-  currentUser: getCurrentUser(state)
+  isUserLoggedIn: authSelector.getIsUserLoggedIn(state),
+  currentUser: userSelector.getCurrentUser(state)
 });
 
 const dispatchToProps = dispatch => ({

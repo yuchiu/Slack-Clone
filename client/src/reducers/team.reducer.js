@@ -78,3 +78,23 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+/* selectors */
+const getCurrentTeam = state => state.teamReducer.currentTeam;
+
+const getCurrentTeamMembers = state => state.teamReducer.currentTeamMembers;
+
+const getTeamList = state => {
+  const teamList = state.teamReducer.teamList;
+  return teamList.map(team => {
+    const newTeam = { ...team };
+    newTeam.initials = team.name
+      .split(" ")
+      .map(n => n[0])
+      .join(".")
+      .slice(0, 3);
+    return newTeam;
+  });
+};
+
+export { getCurrentTeam, getCurrentTeamMembers, getTeamList };

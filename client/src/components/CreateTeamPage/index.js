@@ -6,7 +6,7 @@ import { teamAction } from "@/actions";
 import { NavBar, InlineError } from "../common";
 import { validateForm } from "../../utils";
 import CreateTeamForm from "./CreateTeamForm";
-import { getError, getCurrentTeam } from "@/reducers";
+import { errorSelector, teamSelector } from "@/reducers/selectors";
 
 class CreateTeamPage extends React.Component {
   state = {
@@ -57,8 +57,8 @@ class CreateTeamPage extends React.Component {
 }
 
 const stateToProps = state => ({
-  error: getError(state),
-  currentTeam: getCurrentTeam(state)
+  error: errorSelector.getError(state),
+  currentTeam: teamSelector.getCurrentTeam(state)
 });
 
 const dispatchToProps = dispatch => ({

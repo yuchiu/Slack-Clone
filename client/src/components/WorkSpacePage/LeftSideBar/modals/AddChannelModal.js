@@ -14,11 +14,10 @@ import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
 import { channelAction } from "@/actions";
 import {
-  getCurrentTeam,
-  getCurrentUser,
-  getCurrentTeamMembers,
-  getError
-} from "@/reducers";
+  teamSelector,
+  userSelector,
+  errorSelector
+} from "@/reducers/selectors";
 
 class AddChannelModal extends React.Component {
   state = {
@@ -174,10 +173,10 @@ class AddChannelModal extends React.Component {
 }
 
 const stateToProps = state => ({
-  currentTeam: getCurrentTeam(state),
-  currentUser: getCurrentUser(state),
-  currentTeamMembers: getCurrentTeamMembers(state),
-  error: getError(state)
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentUser: userSelector.getCurrentUser(state),
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

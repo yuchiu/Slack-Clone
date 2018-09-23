@@ -33,3 +33,26 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+/* selectors */
+const getMessageList = state =>
+  state.messageReducer.messageList.map(message => {
+    const newMessage = { ...message };
+    newMessage.image = false;
+    newMessage.text = false;
+    newMessage.audio = false;
+    if (newMessage.filetype) {
+      if (newMessage.filetype.startsWith("image/")) {
+        newMessage.image = true;
+      }
+      if (message.filetype === "text/plain") {
+        newMessage.text = true;
+      }
+      if (message.filetype.startsWith("audio/")) {
+        newMessage.audio = true;
+      }
+    }
+    return newMessage;
+  });
+
+export { getMessageList };

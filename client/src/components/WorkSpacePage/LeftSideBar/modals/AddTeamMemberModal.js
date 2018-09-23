@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { teamAction } from "@/actions";
 import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
-import { getCurrentTeam, getError, getCurrentTeamMembers } from "@/reducers";
+import { teamSelector, errorSelector } from "@/reducers/selectors";
 
 class AddTeamMemberModal extends React.Component {
   state = {
@@ -96,9 +96,9 @@ class AddTeamMemberModal extends React.Component {
 }
 
 const stateToProps = state => ({
-  currentTeam: getCurrentTeam(state),
-  currentTeamMembers: getCurrentTeamMembers(state),
-  error: getError(state)
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

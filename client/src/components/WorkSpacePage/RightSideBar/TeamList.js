@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { getTeamList, getCurrentChannel, getError } from "@/reducers";
+import {
+  teamSelector,
+  channelSelector,
+  errorSelector
+} from "@/reducers/selectors";
 
 class TeamList extends React.Component {
   handleClick = teamId => {
@@ -15,7 +19,6 @@ class TeamList extends React.Component {
 
   render() {
     const { teamList, currentChannel } = this.props;
-    console.log(teamList);
     return (
       <React.Fragment>
         {teamList.map((team, i) => (
@@ -38,9 +41,9 @@ TeamList.propTypes = {
 };
 
 const stateToProps = state => ({
-  teamList: getTeamList(state),
-  currentChannel: getCurrentChannel(state),
-  error: getError(state)
+  teamList: teamSelector.getTeamList(state),
+  currentChannel: channelSelector.getCurrentChannel(state),
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

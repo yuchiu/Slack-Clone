@@ -14,11 +14,10 @@ import InputContainer from "./InputContainer";
 import RightSideBar from "./RightSideBar";
 import ErrorModal from "./ErrorModal";
 import {
-  getChannelList,
-  getTeamList,
-  getError,
-  getCurrentTeam
-} from "@/reducers";
+  teamSelector,
+  channelSelector,
+  errorSelector
+} from "@/reducers/selectors";
 
 class WorkSpacePage extends React.Component {
   state = {
@@ -122,10 +121,10 @@ WorkSpacePage.propTypes = {
 };
 
 const stateToProps = state => ({
-  teamList: getTeamList(state),
-  currentTeam: getCurrentTeam(state),
-  channelList: getChannelList(state),
-  error: getError(state)
+  teamList: teamSelector.getTeamList(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
+  channelList: channelSelector.getChannelList(state),
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

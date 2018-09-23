@@ -6,11 +6,7 @@ import { connect } from "react-redux";
 import { channelAction } from "@/actions";
 import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
-import {
-  getCurrentTeam,
-  getCurrentUser,
-  getCurrentTeamMembers
-} from "@/reducers";
+import { teamSelector, userSelector } from "@/reducers/selectors";
 
 class AddMessageGroupModal extends React.Component {
   state = {
@@ -136,9 +132,9 @@ AddMessageGroupModal.propTypes = {
 };
 
 const stateToProps = state => ({
-  currentTeam: getCurrentTeam(state),
-  currentUser: getCurrentUser(state),
-  currentTeamMembers: getCurrentTeamMembers(state)
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentUser: userSelector.getCurrentUser(state),
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
 });
 const dispatchToProps = dispatch => ({
   createChannel: channelFormInfo => {

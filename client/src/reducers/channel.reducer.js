@@ -1,4 +1,5 @@
 import constants from "@/constants";
+import { getUsername } from "./user.reducer";
 
 const initialState = {
   channelList: [],
@@ -58,4 +59,85 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
+};
+/* helper functions */
+const filterOutCurrentUsername = (messageGroupName, currentUsername) => {
+  const position = messageGroupName.indexOf(currentUsername);
+
+  if (!currentUsername || !messageGroupName) {
+    return null;
+  }
+  // if current username at the begining
+  if (position === 0)
+    return messageGroupName.substring(
+      position + currentUsername.length + 2,
+      messageGroupName.length
+    );
+
+  // if current username at the end
+  if (position + currentUsername.length === messageGroupName.length) {
+    return messageGroupName
+      .substring(0, position - 2)
+      .concat(
+        messageGroupName.substring(
+          position + currentUsername.length,
+          messageGroupName.length
+        )
+      );
+  }
+
+  // if current username at the middle
+  return messageGroupName
+    .substring(0, position - 2)
+    .concat(
+      messageGroupName.substring(
+        position + currentUsername.length,
+        messageGroupName.length
+      )
+    );
+};
+
+/* selectors */
+const getCurrentChannel = state => state.channelReducer.currentChannel;
+
+const getCurrentChannelMembers = state =>
+  state.channelReducer.currentChannelMembers;
+
+const getAllChannelList = state => state.channelReducer.channelList;
+
+const getChannelList = state =>
+  state.channelReducer.channelList.filter(
+    channel => channel.message_group === false
+  );
+
+const getMessageGroupList = state =>
+  state.channelReducer.channelList
+    .filter(channel => channel.message_group === true)
+    .map(messageGroup => {
+      const username = getUsername(state);
+      const newMessageGroup = { ...messageGroup };
+      newMessageGroup.name = filterOutCurrentUsername(
+        messageGroup.name,
+        username
+      );
+      return newMessageGroup;
+    });
+
+const getMessageGroupName = state => {
+  const currentChannel = getCurrentChannel(state);
+  const messageGroupList = getMessageGroupList(state);
+  const filteredMessageGroupName = messageGroupList
+    .filter(channel => channel.id === currentChannel.id)
+    .map(channel => channel.name);
+  const messageGroupName = filteredMessageGroupName[0];
+  return messageGroupName;
+};
+
+export {
+  getCurrentChannel,
+  getCurrentChannelMembers,
+  getAllChannelList,
+  getChannelList,
+  getMessageGroupList,
+  getMessageGroupName
 };

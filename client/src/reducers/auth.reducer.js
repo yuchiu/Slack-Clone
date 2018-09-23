@@ -29,3 +29,8 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+/* selectors */
+const getIsUserLoggedIn = state => state.authReducer.isUserLoggedIn;
+
+export { getIsUserLoggedIn };

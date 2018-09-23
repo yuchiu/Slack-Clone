@@ -7,8 +7,8 @@ import "./index.scss";
 import { validateForm } from "@/utils";
 import { authAction, errorAction } from "@/actions";
 import { NavBar, InlineError } from "@/components/common";
+import { authSelector, errorSelector } from "@/reducers/selectors";
 import RegisterForm from "./RegisterForm";
-import { getIsUserLoggedIn, getError } from "@/reducers";
 
 class RegisterPage extends React.Component {
   state = {
@@ -109,8 +109,8 @@ RegisterPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserLoggedIn: getIsUserLoggedIn(state),
-  error: getError(state)
+  isUserLoggedIn: authSelector.getIsUserLoggedIn(state),
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

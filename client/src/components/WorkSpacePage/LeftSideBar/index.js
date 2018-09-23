@@ -15,11 +15,10 @@ import {
   AddTeamMemberModal
 } from "./modals";
 import {
-  getChannelList,
-  getMessageGroupList,
-  getCurrentTeam,
-  getCurrentUser
-} from "@/reducers";
+  userSelector,
+  teamSelector,
+  channelSelector
+} from "@/reducers/selectors";
 
 class LeftSideBar extends React.Component {
   state = {
@@ -117,10 +116,10 @@ LeftSideBar.propTypes = {
 };
 /* currentUser, channel, direct messages */
 const stateToProps = state => ({
-  currentUser: getCurrentUser(state),
-  currentTeam: getCurrentTeam(state),
-  channelList: getChannelList(state),
-  messageGroupList: getMessageGroupList(state)
+  currentUser: userSelector.getCurrentUser(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
+  channelList: channelSelector.getChannelList(state),
+  messageGroupList: channelSelector.getMessageGroupList(state)
 });
 
 export default connect(

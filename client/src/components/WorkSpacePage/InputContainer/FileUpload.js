@@ -4,7 +4,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 import { messageAction, errorAction } from "@/actions";
-import { getCurrentChannel, getCurrentUser } from "@/reducers";
+import { userSelector, channelSelector } from "@/reducers/selectors";
 
 class FileUpload extends React.Component {
   constructor(props) {
@@ -61,8 +61,8 @@ class FileUpload extends React.Component {
 }
 
 const stateToProps = state => ({
-  currentUser: getCurrentUser(state),
-  currentChannel: getCurrentChannel(state)
+  currentUser: userSelector.getCurrentUser(state),
+  currentChannel: channelSelector.getCurrentChannel(state)
 });
 const dispatchToProps = dispatch => ({
   sendMessage: file => dispatch(messageAction.sendMessage(file)),
