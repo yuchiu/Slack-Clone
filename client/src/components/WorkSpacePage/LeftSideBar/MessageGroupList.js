@@ -25,7 +25,7 @@ class MessageGroupList extends React.Component {
                 onClick={this.handleClick.bind(this, messageGroup.id)}
               >
                 <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-                  <Bubble /> {messageGroup.name}
+                  {messageGroup.showStatus && <Bubble />} {messageGroup.name}
                 </li>
               </Link>
             ))}

@@ -17,7 +17,7 @@ const getCurrentChannelFromParams = (
   if (!channelIdFromParams) {
     return currentChannel;
   }
-  /* return current channel using params */
+  // return current channel using params
   const currentChannelFromParams = channelList.find(
     channel => channel.id === parseInt(channelIdFromParams, 10)
   );
@@ -109,7 +109,15 @@ const getStateChannelList = state => state.channelReducer.channelList;
 
 /* derived data selectors */
 const getChannelList = createSelector(getStateChannelList, channelList =>
-  channelList.filter(channel => channel.message_group === false)
+  channelList
+    .filter(channel => channel.message_group === false)
+    .map(channel => {
+      const newChannel = { ...channel };
+      if (newChannel.name.length > 22) {
+        newChannel.name = newChannel.name.slice(0, 21).concat("...");
+      }
+      return newChannel;
+    })
 );
 
 const getMessageGroupList = createSelector(
@@ -119,12 +127,29 @@ const getMessageGroupList = createSelector(
     messageGroupList
       .filter(channel => channel.message_group === true)
       .map(messageGroup => {
-        const newMessageGroup = { ...messageGroup };
-        newMessageGroup.name = filterOutCurrentUsername(
-          messageGroup.name,
-          username
-        );
-        return newMessageGroup;
+        if (messageGroup.name.length) {
+          // filter out current username from the group name
+          const newMessageGroup = { ...messageGroup };
+          newMessageGroup.name = filterOutCurrentUsername(
+            messageGroup.name,
+            username
+          );
+
+          // trim the extra char for long name
+          if (newMessageGroup.name.length > 22) {
+            newMessageGroup.name = newMessageGroup.name
+              .slice(0, 21)
+              .concat("...");
+          }
+
+          // hide status bubble if the group is more than 2 people
+          newMessageGroup.showStatus = false;
+          if ((newMessageGroup.name.match(/,/g) || []).length === 0) {
+            newMessageGroup.showStatus = true;
+          }
+          return newMessageGroup;
+        }
+        return messageGroup;
       })
 );
 

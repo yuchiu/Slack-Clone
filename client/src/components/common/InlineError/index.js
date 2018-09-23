@@ -6,7 +6,7 @@ import "./index.scss";
 const InlineError = ({ text }) => (
   <span className="inline-error-span">
     {"  "}
-    {text}!
+    {text}.
   </span>
 );
 

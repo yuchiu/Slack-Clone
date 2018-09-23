@@ -18,28 +18,23 @@ class MainHeader extends React.Component {
     return (
       <div className="main-header">
         <h1 className="main-header__title">
-          {currentChannel.message_group ? (
-            <React.Fragment>
-              <span>{messageGroupName}</span>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <span>
-                # {currentChannel.name}
-                {currentChannel.public ? (
-                  <span> (public) </span>
-                ) : (
-                  <span> (private) </span>
-                )}
-              </span>
-              <span className="main-header__title__span">
-                <i className="users icon main-header__title__span__icon" />{" "}
-                <span className="main-header__title__span__number">
-                  {currentChannelMembers.length}
-                </span>
-              </span>
-            </React.Fragment>
-          )}
+          {currentChannel.message_group && <span>{messageGroupName}</span>}
+          <span>
+            {!currentChannel.message_group && (
+              <span># {currentChannel.name}</span>
+            )}
+
+            {currentChannel.public &&
+              !currentChannel.message_group && <span> (public) </span>}
+            {!currentChannel.public &&
+              !currentChannel.message_group && <span> (private)</span>}
+          </span>
+          <span className="main-header__title__span">
+            <i className="users icon main-header__title__span__icon" />{" "}
+            <span className="main-header__title__span__number">
+              {currentChannelMembers.length}
+            </span>
+          </span>
         </h1>
       </div>
     );
