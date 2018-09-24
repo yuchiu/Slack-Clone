@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import http from "http";
 import socketIo from "socket.io";
+import redis from "redis";
 import cors from "cors";
 import logger from "morgan";
 import cookieParser from "cookie-parser";

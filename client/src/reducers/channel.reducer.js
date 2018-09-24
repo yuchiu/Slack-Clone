@@ -109,15 +109,7 @@ const getStateChannelList = state => state.channelReducer.channelList;
 
 /* derived data selectors */
 const getChannelList = createSelector(getStateChannelList, channelList =>
-  channelList
-    .filter(channel => channel.message_group === false)
-    .map(channel => {
-      const newChannel = { ...channel };
-      if (newChannel.name.length > 22) {
-        newChannel.name = newChannel.name.slice(0, 21).concat("...");
-      }
-      return newChannel;
-    })
+  channelList.filter(channel => channel.message_group === false)
 );
 
 const getMessageGroupList = createSelector(
@@ -136,9 +128,9 @@ const getMessageGroupList = createSelector(
           );
 
           // trim the extra char for long name
-          if (newMessageGroup.name.length > 22) {
+          if (newMessageGroup.name.length > 32) {
             newMessageGroup.name = newMessageGroup.name
-              .slice(0, 21)
+              .slice(0, 31)
               .concat("...");
           }
 

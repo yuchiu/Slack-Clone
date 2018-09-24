@@ -187,7 +187,7 @@ export default {
 
         /*  return channel's messages and channel private member list */
         return res.status(200).send({
-          messageList,
+          messageList: messageList.reverse(),
           channelMemberList: ChannelMemberList
         });
       }

@@ -80,7 +80,7 @@ class MessagesContainer extends React.Component {
 
   handleScroll = () => {
     const { allowToFetchMore } = this.state;
-    if (this.scrollerDiv.scrollTop < 50 && allowToFetchMore) {
+    if (this.scrollerDiv.scrollTop === 0 && allowToFetchMore) {
       this.setState({
         allowToFetchMore: false
       });

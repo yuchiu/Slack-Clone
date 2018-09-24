@@ -5,6 +5,9 @@ export default {
   SERVER_URL: process.env.SERVER_URL || "http://localhost",
   JWT_SECRET:
     process.env.JWT_SECRET || "ckmksadii8jrei8riwe3897547fjujrf928r32",
+  REDIS: {
+    PORT: process.env.REDIS_PORT || 6379
+  },
   DB: {
     DB_NAME: process.env.DB_NAME || "slack",
     DB_USER: process.env.DB_USER || "postgres",

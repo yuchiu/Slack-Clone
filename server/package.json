@@ -38,6 +38,7 @@
     "pg": "^7.4.3",
     "randomhex": "^0.1.5",
     "randomstring": "^1.1.5",
+    "redis": "^2.8.0",
     "sequelize": "^4.38.0",
     "socket.io": "^2.1.1"
   },
@@ -55,5 +56,46 @@
     "eslint-plugin-prettier": "^2.6.2",
     "nodemon": "^1.18.3",
     "prettier": "^1.14.0"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "stage-3"
+    ],
+    "plugins": [
+      [
+        "transform-runtime",
+        {
+          "polyfill": false,
+          "regenerator": true
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "extends": [
+      "airbnb-base",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "no-console": 0,
+      "no-unused-vars": 0,
+      "import/prefer-default-export": 0,
+      "no-underscore-dangle": 0,
+      "consistent-return": 0,
+      "linebreak-style": 0
+    }
   }
 }
