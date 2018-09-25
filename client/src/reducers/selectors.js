@@ -15,6 +15,11 @@ import {
 } from "./channel.reducer";
 import { getMessageList } from "./message.reducer";
 import { getError } from "./error.reducer";
+import { getIsSideBarOpen } from "./globalState.reducer";
+
+const globalStateSelector = {
+  getIsSideBarOpen: state => getIsSideBarOpen(state)
+};
 
 const authSelector = {
   getIsUserLoggedIn: state => getIsUserLoggedIn(state)
@@ -53,5 +58,6 @@ export {
   teamSelector,
   channelSelector,
   messageSelector,
-  errorSelector
+  errorSelector,
+  globalStateSelector
 };

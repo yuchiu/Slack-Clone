@@ -21,16 +21,18 @@ class TeamList extends React.Component {
     const { teamList, currentChannel } = this.props;
     return (
       <React.Fragment>
-        {teamList.map((team, i) => (
-          <Link
-            className="rightsidebar__list__link"
-            key={`index-${i}teamid-${team.id}`}
-            to={`/workspace/${team.id}`}
-            onClick={this.handleClick.bind(this, team.id)}
-          >
-            <li className="rightsidebar__list__link__item">{team.initials}</li>
-          </Link>
-        ))}
+        <ul className="team-list">
+          {teamList.map((team, i) => (
+            <Link
+              className="team-list__link"
+              key={`index-${i}teamid-${team.id}`}
+              to={`/workspace/${team.id}`}
+              onClick={this.handleClick.bind(this, team.id)}
+            >
+              <li className="team-list__link__item">{team.initials}</li>
+            </Link>
+          ))}
+        </ul>
       </React.Fragment>
     );
   }

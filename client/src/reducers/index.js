@@ -6,6 +6,7 @@ import errorReducer from "./error.reducer";
 import teamReducer from "./team.reducer";
 import messageReducer from "./message.reducer";
 import channelReducer from "./channel.reducer";
+import globalStateReducer from "./globalState.reducer";
 
 export default combineReducers({
   authReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   channelReducer,
   messageReducer,
   errorReducer,
+  globalStateReducer,
   userReducer
 });

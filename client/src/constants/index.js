@@ -1,4 +1,7 @@
 export default {
+  /* global state */
+  TOGGLE_SIDE_BAR: "TOGGLE_SIDE_BAR",
+
   /* users */
   AUTO_LOGIN: "AUTO_LOGIN",
   LOGIN_USER: "LOGIN_USER",

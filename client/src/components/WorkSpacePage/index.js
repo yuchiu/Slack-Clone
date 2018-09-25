@@ -11,11 +11,13 @@ import LeftSideBar from "./LeftSideBar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
 import InputContainer from "./InputContainer";
-import RightSideBar from "./RightSideBar";
+import RightStickySideBar from "./RightStickySideBar";
+import RightToggleSideBar from "./RightToggleSideBar";
 import ErrorModal from "./ErrorModal";
 import {
   teamSelector,
   channelSelector,
+  globalStateSelector,
   errorSelector
 } from "@/reducers/selectors";
 
@@ -85,7 +87,7 @@ class WorkSpacePage extends React.Component {
 
   render() {
     const { hasError, openErrorModal } = this.state;
-    const { error, clearError } = this.props;
+    const { error, clearError, isSideBarOpen } = this.props;
     return hasError ? (
       <ErrorPage />
     ) : (
@@ -94,21 +96,25 @@ class WorkSpacePage extends React.Component {
         {!this.isCurrentTeamExist() && <Redirect to="/create-team" />}
         {/* render workspace if currentTeam exist */}
         {this.isCurrentTeamExist() && (
-          <main className="workspace-page">
-            {error && !openErrorModal ? this.toggleErrorModal() : null}
-            <LeftSideBar />
-            <MainHeader />
-            <MessagesContainer />
-            <InputContainer />
-            <RightSideBar />
-            <ErrorModal
-              onClose={this.toggleErrorModal}
-              open={openErrorModal}
-              error={error}
-              clearError={clearError}
-              key="error-modal"
-            />
-          </main>
+          <RightToggleSideBar>
+            <main
+              className={`workspace-page workspace-page--sidebar-${isSideBarOpen}`}
+            >
+              {error && !openErrorModal ? this.toggleErrorModal() : null}
+              <LeftSideBar />
+              <MainHeader />
+              <MessagesContainer />
+              <InputContainer />
+              <RightStickySideBar />
+              <ErrorModal
+                onClose={this.toggleErrorModal}
+                open={openErrorModal}
+                error={error}
+                clearError={clearError}
+                key="error-modal"
+              />
+            </main>
+          </RightToggleSideBar>
         )}
       </React.Fragment>
     );
@@ -124,7 +130,8 @@ const stateToProps = state => ({
   teamList: teamSelector.getTeamList(state),
   currentTeam: teamSelector.getCurrentTeam(state),
   channelList: channelSelector.getChannelList(state),
-  error: errorSelector.getError(state)
+  error: errorSelector.getError(state),
+  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
 });
 
 const dispatchToProps = dispatch => ({
