@@ -20,7 +20,7 @@ class ChannelHeader extends React.Component {
             {currentChannelMembers.length}
             <SubHeaderDivider />
           </span>
-          <span className="">{currentChannel.description}</span>
+          <span className="">{currentChannel.brief_description}</span>
         </div>
       </div>
     );

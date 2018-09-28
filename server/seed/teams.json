@@ -1,14 +1,17 @@
 [
   {
     "name": "TEAM CAKE",
-    "description": "team for cake!!!!"
+    "brief_description": "team for cake!!!!",
+    "detail_description": "This team is created as seed data"
   },
   {
     "name": "TEAM FUNNY2",
-    "description": "FUNNY INC"
+    "brief_description": "FUNNY INC",
+    "detail_description": "This team is created as seed data"
   },
   {
     "name": "TEAM MUSICIAN",
-    "description": "Live long"
+    "brief_description": "Live long",
+    "detail_description": "This team is created as seed data"
   }
 ]

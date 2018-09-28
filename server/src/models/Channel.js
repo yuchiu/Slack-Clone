@@ -1,10 +1,6 @@
 export default (sequelize, DataTypes) => {
   const Channel = sequelize.define("channel", {
     name: DataTypes.STRING,
-    description: {
-      type: DataTypes.STRING,
-      defaultValue: ""
-    },
     public: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
@@ -13,6 +9,26 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       field: "message_group",
       defaultValue: false
+    },
+    brief_description: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 127],
+          msg: "The length cannot be longer than 128 characters"
+        }
+      }
+    },
+    detail_description: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 255],
+          msg: "The length cannot be longer than 256 characters"
+        }
+      }
     }
   });
 

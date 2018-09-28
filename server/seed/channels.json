@@ -2,25 +2,29 @@
   {
     "teamId": "1",
     "name": "general",
-    "description": "Company-wide announcements and work-based matters",
+    "brief_description": "Company-wide announcements and work-based matters",
+    "detail_description": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
     "public": true
   },
   {
     "teamId": "2",
     "name": "general",
-    "description": "Company-wide announcements and work-based matters",
+    "brief_description": "Company-wide announcements and work-based matters",
+    "detail_description": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
     "public": true
   },
   {
     "teamId": "3",
     "name": "general",
-    "description": "Company-wide announcements and work-based matters",
+    "brief_description": "Company-wide announcements and work-based matters",
+    "detail_description": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
     "public": true
   },
   {
     "teamId": "4",
     "name": "general",
-    "description": "Company-wide announcements and work-based matters",
+    "brief_description": "Company-wide announcements and work-based matters",
+    "detail_description": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
     "public": true
   }
 ]

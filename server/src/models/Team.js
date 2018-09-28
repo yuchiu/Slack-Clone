@@ -3,9 +3,25 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING
     },
-    description: {
+    brief_description: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 127],
+          msg: "The length cannot be longer than 128 characters"
+        }
+      }
+    },
+    detail_description: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 255],
+          msg: "The length cannot be longer than 256 characters"
+        }
+      }
     }
   });
 

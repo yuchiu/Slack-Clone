@@ -3,11 +3,23 @@ export default (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     avatarurl: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 1023],
+          msg: "The length cannot be longer than 1024 characters"
+        }
+      }
     },
     text: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
+      validate: {
+        len: {
+          args: [0, 9999],
+          msg: "The length cannot be longer than 10000 characters"
+        }
+      }
     },
     url: {
       type: DataTypes.STRING,

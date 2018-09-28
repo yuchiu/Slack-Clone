@@ -30,7 +30,7 @@ class SideBarHeader extends React.Component {
               <h1 className="leftsidebar__header__bottom__right__username">
                 <OnlineStatusBubble on={true} /> {currentUser.username}
               </h1>
-              Aloha World!
+              {currentUser.brief_description}
             </div>
           </div>
         </div>

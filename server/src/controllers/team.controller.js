@@ -26,7 +26,10 @@ export default {
           {
             name: "general",
             public: true,
-            description: "Company-wide announcements and work-based matters",
+            brief_description:
+              "Company-wide announcements and work-based matters",
+            detail_description:
+              "This channel is for workspace-wide communication and announcements. All members are in this channel.",
             teamId: team.id
           },
           { transaction }
