@@ -3,23 +3,13 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING
     },
-    brief_description: {
+    icon_url: {
       type: DataTypes.STRING,
       defaultValue: "",
       validate: {
         len: {
-          args: [0, 127],
-          msg: "The length cannot be longer than 128 characters"
-        }
-      }
-    },
-    detail_description: {
-      type: DataTypes.STRING,
-      defaultValue: "",
-      validate: {
-        len: {
-          args: [0, 255],
-          msg: "The length cannot be longer than 256 characters"
+          args: [0, 1023],
+          msg: "The length cannot be longer than 1024 characters"
         }
       }
     }

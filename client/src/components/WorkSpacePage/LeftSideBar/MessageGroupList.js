@@ -26,7 +26,13 @@ class MessageGroupList extends React.Component {
                 onClick={this.handleClick.bind(this, messageGroup.id)}
               >
                 <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-                  {messageGroup.showStatus && <OnlineStatusBubble on={false} />}{" "}
+                  {messageGroup.directMessage ? (
+                    <OnlineStatusBubble on={false} />
+                  ) : (
+                    <span className="leftsidebar__List__link__item__num">
+                      {messageGroup.memberNumber}
+                    </span>
+                  )}{" "}
                   {messageGroup.name}
                 </li>
               </Link>

@@ -23,6 +23,7 @@ class AddChannelModal extends React.Component {
   state = {
     clientError: {},
     members: [],
+    purpose: "",
     isChannelPrivate: true,
     channelName: ""
   };
@@ -51,16 +52,18 @@ class AddChannelModal extends React.Component {
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
       const { createChannel, currentTeam, onClose } = this.props;
-      const { channelName, isChannelPrivate, members } = this.state;
+      const { channelName, isChannelPrivate, members, purpose } = this.state;
       createChannel({
         teamId: currentTeam.id,
         channelName,
+        detail_description: purpose,
         isPublic: !isChannelPrivate,
         membersList: members
       });
       this.setState({
         clientError: {},
         members: [],
+        purpose: "",
         isChannelPrivate: true,
         channelName: ""
       });
@@ -75,7 +78,8 @@ class AddChannelModal extends React.Component {
       clientError: {},
       members: [],
       isChannelPrivate: true,
-      channelName: ""
+      channelName: "",
+      purpose: ""
     });
     onClose();
   };
@@ -89,7 +93,13 @@ class AddChannelModal extends React.Component {
 
   render() {
     const { open, currentTeamMembers, currentUser } = this.props;
-    const { channelName, isChannelPrivate, members, clientError } = this.state;
+    const {
+      channelName,
+      isChannelPrivate,
+      members,
+      purpose,
+      clientError
+    } = this.state;
 
     return (
       <Modal size="small" open={open} onClose={this.handleClose}>
@@ -121,6 +131,19 @@ class AddChannelModal extends React.Component {
                 value={!isChannelPrivate}
                 label="Public"
                 onChange={this.toggleCheckboxValue}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Purpose:</label>
+              {clientError.channelName && (
+                <InlineError text={clientError.channelName} />
+              )}
+              <Input
+                value={purpose}
+                onChange={this.handleChange}
+                name="purpose"
+                fluid
+                placeholder="purpose"
               />
             </Form.Field>
             {isChannelPrivate ? (

@@ -97,6 +97,13 @@
         &--link {
           color: $lightgrey;
         }
+        &__num {
+          padding: 0 3px;
+          font-size: 0.8em;
+          border-radius: 15%;
+          background-color: $lightgrey;
+          color: $purple;
+        }
       }
     }
   }

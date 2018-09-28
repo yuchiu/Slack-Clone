@@ -9,6 +9,7 @@ export default {
         teamId,
         channelName,
         isPublic,
+        detail_description,
         membersList,
         messageGroup
       } = req.body;
@@ -31,6 +32,7 @@ export default {
           channel = await models.Channel.create(
             {
               name: channelName,
+              detail_description,
               public: isPublic,
               teamId
             },
@@ -65,6 +67,7 @@ export default {
             {
               name: channelName,
               public: isPublic,
+              detail_description,
               messageGroup: true,
               teamId
             },

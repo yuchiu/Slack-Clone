@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { PublicOrPrivateTag } from "@/components/common";
 import { channelAction } from "@/actions";
 
 class ChannelList extends React.Component {
@@ -23,7 +24,12 @@ class ChannelList extends React.Component {
             onClick={this.handleClick.bind(this, channel.id)}
           >
             <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-              # {channel.name}
+              {channel.public ? (
+                <PublicOrPrivateTag publicChannel={true} />
+              ) : (
+                <PublicOrPrivateTag publicChannel={false} />
+              )}{" "}
+              {channel.name}
             </li>
           </Link>
         ))}

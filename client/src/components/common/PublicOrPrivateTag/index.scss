@@ -1,0 +1,17 @@
+@import "../../../assets/css/vars.scss";
+.public-tag {
+  color: $lightgrey;
+  font-size: 1em;
+  &--dark {
+    font-size: 1em;
+    color: $black;
+  }
+}
+.private-tag {
+  color: $lightgrey;
+  font-size: 0.7em;
+  &--dark {
+    font-size: 0.7em;
+    color: $black;
+  }
+}

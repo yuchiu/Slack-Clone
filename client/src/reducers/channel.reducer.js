@@ -135,10 +135,14 @@ const getMessageGroupList = createSelector(
           }
 
           // hide status bubble if the group is more than 2 people
-          newMessageGroup.showStatus = false;
+          newMessageGroup.directMessage = false;
           if ((newMessageGroup.name.match(/,/g) || []).length === 0) {
-            newMessageGroup.showStatus = true;
+            newMessageGroup.directMessage = true;
           }
+          const memberNumber = (newMessageGroup.name.match(/,/g) || []).length;
+
+          newMessageGroup.memberNumber = memberNumber + 1;
+
           return newMessageGroup;
         }
         return messageGroup;

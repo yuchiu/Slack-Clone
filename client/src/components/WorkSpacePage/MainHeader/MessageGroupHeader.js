@@ -13,8 +13,6 @@ class MessageGroupHeader extends React.Component {
       <div className="main-header__title">
         <h1 className="main-header__title__name">{messageGroupName}</h1>
         <div className="main-header__title__sub-header">
-          <OnlineStatusBubble on={false} addClass="dark" />
-          <SubHeaderDivider />
           {currentChannelMembers.length > 2 ? (
             <React.Fragment>
               <i className="far fa-user main-header__title__sub-header__icon" />
@@ -22,7 +20,11 @@ class MessageGroupHeader extends React.Component {
                 {currentChannelMembers.length}
               </span>
             </React.Fragment>
-          ) : null}
+          ) : (
+            <React.Fragment>
+              <OnlineStatusBubble on={false} addClass="dark" />
+            </React.Fragment>
+          )}
         </div>
       </div>
     );
