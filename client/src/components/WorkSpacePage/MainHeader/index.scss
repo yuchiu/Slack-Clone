@@ -29,3 +29,10 @@
     }
   }
 }
+
+.topic-edit-button {
+  color: $grey;
+  &:hover {
+    cursor: pointer;
+  }
+}

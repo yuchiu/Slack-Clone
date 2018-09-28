@@ -9,8 +9,6 @@ import MessageGroupHeader from "./MessageGroupHeader";
 import { channelSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
-  componentDidMount() {}
-
   render() {
     const {
       currentChannelMembers,

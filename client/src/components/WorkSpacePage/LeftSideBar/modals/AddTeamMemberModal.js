@@ -81,7 +81,7 @@ class AddTeamMemberModal extends React.Component {
             </Form.Field>
             <br />
             <Form.Group widths="equal">
-              <Button type="button" onClick={this.handleSubmit} fluid>
+              <Button primary type="button" onClick={this.handleSubmit} fluid>
                 Invite
               </Button>
               <Button type="button" fluid onClick={this.handleClose}>

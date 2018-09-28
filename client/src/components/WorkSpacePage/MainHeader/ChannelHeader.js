@@ -1,13 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Topic from "./Topic";
 import { PublicOrPrivateTag } from "@/components/common";
 import SubHeaderDivider from "./SubHeaderDivider";
 
 class ChannelHeader extends React.Component {
+  state = {
+    isEditOn: false
+  };
+
   componentDidMount() {}
 
+  toggleEdit = () => {
+    this.setState = {
+      isEditOn: !this.state.isEditOn
+    };
+  };
+
   render() {
+    const { isEditOn } = this.state;
     const { currentChannelMembers, currentChannel } = this.props;
     return (
       <div className="main-header__title">
@@ -26,7 +38,7 @@ class ChannelHeader extends React.Component {
             {currentChannelMembers.length}
             <SubHeaderDivider />
           </span>
-          <span className="">{currentChannel.brief_description}</span>
+          <Topic topic={currentChannel.brief_description} />
         </div>
       </div>
     );

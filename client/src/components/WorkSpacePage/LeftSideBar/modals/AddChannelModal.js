@@ -24,7 +24,7 @@ class AddChannelModal extends React.Component {
     clientError: {},
     members: [],
     purpose: "",
-    isChannelPrivate: true,
+    isChannelPrivate: false,
     channelName: ""
   };
 
@@ -32,7 +32,7 @@ class AddChannelModal extends React.Component {
     this.setState({
       clientError: {},
       members: [],
-      isChannelPrivate: true,
+      isChannelPrivate: false,
       channelName: ""
     });
   }
@@ -64,7 +64,7 @@ class AddChannelModal extends React.Component {
         clientError: {},
         members: [],
         purpose: "",
-        isChannelPrivate: true,
+        isChannelPrivate: false,
         channelName: ""
       });
       onClose();
@@ -77,7 +77,7 @@ class AddChannelModal extends React.Component {
     this.setState({
       clientError: {},
       members: [],
-      isChannelPrivate: true,
+      isChannelPrivate: false,
       channelName: "",
       purpose: ""
     });
@@ -129,15 +129,12 @@ class AddChannelModal extends React.Component {
               <Checkbox
                 toggle
                 value={!isChannelPrivate}
-                label="Public"
+                label="Private"
                 onChange={this.toggleCheckboxValue}
               />
             </Form.Field>
             <Form.Field>
               <label>Purpose:</label>
-              {clientError.channelName && (
-                <InlineError text={clientError.channelName} />
-              )}
               <Input
                 value={purpose}
                 onChange={this.handleChange}
@@ -181,7 +178,7 @@ class AddChannelModal extends React.Component {
             )}
             <br />
             <Form.Group widths="equal">
-              <Button type="button" onClick={this.handleSubmit} fluid>
+              <Button primary type="button" onClick={this.handleSubmit} fluid>
                 Create Channel
               </Button>
               <Button type="button" fluid onClick={this.handleClose}>

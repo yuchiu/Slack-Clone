@@ -23,7 +23,7 @@ class CreateTeamForm extends React.Component {
           </Form.Field>
           {clientErrors.name && <InlineError text={clientErrors.name} />}
           <br />
-          <Button type="button" onClick={handleSubmit}>
+          <Button primary type="button" onClick={handleSubmit}>
             Submit
           </Button>
         </Form>
