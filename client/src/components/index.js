@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./index.scss";
-import { AuthenticatedRoute, TokenAuthUser } from "./common";
+import TokenAuthUser from "./TokenAuthUser";
+import AuthenticatedRoute from "./AuthenticatedRoute";
 import LandingPage from "./LandingPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";

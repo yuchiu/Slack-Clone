@@ -50,6 +50,10 @@ export default (sequelize, DataTypes) => {
       avatarurl: {
         type: DataTypes.STRING,
         defaultValue: ""
+      },
+      online: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       }
     },
     {

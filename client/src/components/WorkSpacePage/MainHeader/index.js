@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 import "./index.scss";
+import ChannelHeader from "./ChannelHeader";
+import MessageGroupHeader from "./MessageGroupHeader";
 import { channelSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
@@ -17,25 +19,18 @@ class MainHeader extends React.Component {
     } = this.props;
     return (
       <div className="main-header">
-        <h1 className="main-header__title">
-          {currentChannel.message_group && <span>{messageGroupName}</span>}
-          <span>
-            {!currentChannel.message_group && (
-              <span># {currentChannel.name}</span>
-            )}
-
-            {currentChannel.public &&
-              !currentChannel.message_group && <span> (public) </span>}
-            {!currentChannel.public &&
-              !currentChannel.message_group && <span> (private)</span>}
-          </span>
-          <span className="main-header__title__span">
-            <i className="users icon main-header__title__span__icon" />{" "}
-            <span className="main-header__title__span__number">
-              {currentChannelMembers.length}
-            </span>
-          </span>
-        </h1>
+        {currentChannel.message_group && (
+          <MessageGroupHeader
+            messageGroupName={messageGroupName}
+            currentChannelMembers={currentChannelMembers}
+          />
+        )}
+        {!currentChannel.message_group && (
+          <ChannelHeader
+            currentChannel={currentChannel}
+            currentChannelMembers={currentChannelMembers}
+          />
+        )}
       </div>
     );
   }

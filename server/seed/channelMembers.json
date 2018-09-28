@@ -14,5 +14,17 @@
   {
     "channelId": "4",
     "userId": "4"
+  },
+  {
+    "channelId": "1",
+    "userId": "2"
+  },
+  {
+    "channelId": "1",
+    "userId": "3"
+  },
+  {
+    "channelId": "1",
+    "userId": "4"
   }
 ]

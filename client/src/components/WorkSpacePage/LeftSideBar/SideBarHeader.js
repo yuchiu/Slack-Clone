@@ -2,6 +2,8 @@ import React from "react";
 import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import { OnlineStatusBubble } from "@/components/common";
+
 class SideBarHeader extends React.Component {
   state = {};
 
@@ -26,7 +28,7 @@ class SideBarHeader extends React.Component {
             </div>
             <div className="leftsidebar__header__bottom__right">
               <h1 className="leftsidebar__header__bottom__right__username">
-                <Bubble /> {currentUser.username}
+                <OnlineStatusBubble on={true} /> {currentUser.username}
               </h1>
               Aloha World!
             </div>
@@ -36,7 +38,5 @@ class SideBarHeader extends React.Component {
     );
   }
 }
-const Bubble = ({ on = true }) =>
-  on ? <span className="leftsidebar__List__bubble">●</span> : "○";
 
 export default SideBarHeader;

@@ -6,13 +6,13 @@
   grid-column: 1;
   grid-row: 1/4;
   overflow-y: auto;
-  background-color: #4e3a4c;
-  color: rgba($white, 0.6);
+  background-color: $purple;
+  color: $lightgrey;
   &__invite {
     padding: 15px 0px 10px $paddingLeft;
     color: $white;
     &:hover {
-      background: #3e313c;
+      background: $darkpurple;
       cursor: pointer;
     }
     &__plus {
@@ -23,7 +23,7 @@
     &__top {
       padding: 15px 0px 10px $paddingLeft;
       &:hover {
-        background: #3e313c;
+        background: $darkpurple;
         cursor: pointer;
       }
       &__teamname {
@@ -38,7 +38,7 @@
       padding: 15px 0px 10px $paddingLeft;
       display: flex;
       &:hover {
-        background: #3e313c;
+        background: $darkpurple;
         cursor: pointer;
       }
       &__left {
@@ -50,7 +50,7 @@
       &__right {
         margin-left: 10px;
         &__username {
-          color: rgba($white, 0.6);
+          color: $lightgrey;
           font-size: 20px;
           padding: 0px;
           margin: 0px;
@@ -64,7 +64,6 @@
     list-style: none;
     padding-left: $paddingLeft;
     &__bubble {
-      color: #18b158;
       padding-right: 3px;
     }
     &__header {
@@ -93,10 +92,10 @@
         font-size: 15px;
         padding-left: 5px;
         &:hover {
-          background: #3e313c;
+          background: $darkpurple;
         }
         &--link {
-          color: rgba($white, 0.6);
+          color: $lightgrey;
         }
       }
     }

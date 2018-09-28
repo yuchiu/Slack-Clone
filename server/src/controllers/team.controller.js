@@ -26,6 +26,7 @@ export default {
           {
             name: "general",
             public: true,
+            description: "Company-wide announcements and work-based matters",
             teamId: team.id
           },
           { transaction }

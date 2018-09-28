@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { OnlineStatusBubble } from "@/components/common";
 import { channelAction } from "@/actions";
 
 class MessageGroupList extends React.Component {
@@ -25,7 +26,8 @@ class MessageGroupList extends React.Component {
                 onClick={this.handleClick.bind(this, messageGroup.id)}
               >
                 <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-                  {messageGroup.showStatus && <Bubble />} {messageGroup.name}
+                  {messageGroup.showStatus && <OnlineStatusBubble on={false} />}{" "}
+                  {messageGroup.name}
                 </li>
               </Link>
             ))}
@@ -33,8 +35,6 @@ class MessageGroupList extends React.Component {
     );
   }
 }
-const Bubble = ({ on = true }) =>
-  on ? <span className="leftsidebar__List__bubble">●</span> : "○";
 
 MessageGroupList.propTypes = {
   messageGroupList: PropTypes.array.isRequired
