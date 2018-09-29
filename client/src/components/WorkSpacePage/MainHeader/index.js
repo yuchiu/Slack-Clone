@@ -13,7 +13,8 @@ class MainHeader extends React.Component {
     const {
       currentChannelMembers,
       currentChannel,
-      messageGroupName
+      messageGroupName,
+      targetMemberList
     } = this.props;
     return (
       <div className="main-header">
@@ -21,6 +22,7 @@ class MainHeader extends React.Component {
           <MessageGroupHeader
             messageGroupName={messageGroupName}
             currentChannelMembers={currentChannelMembers}
+            targetMemberList={targetMemberList}
           />
         )}
         {!currentChannel.message_group && (
@@ -39,7 +41,8 @@ MainHeader.propTypes = {};
 const stateToProps = state => ({
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentChannel: channelSelector.getCurrentChannel(state),
-  messageGroupName: channelSelector.getMessageGroupName(state)
+  messageGroupName: channelSelector.getMessageGroupName(state),
+  targetMemberList: channelSelector.getTargetMemberList(state)
 });
 
 const dispatchToProps = dispatch => ({});

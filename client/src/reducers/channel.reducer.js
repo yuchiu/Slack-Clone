@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 import constants from "@/constants";
-import { getUsername } from "./user.reducer";
+import { getUsername, getCurrentUser } from "./user.reducer";
 
 const initialState = {
   channelList: [],
@@ -9,6 +9,7 @@ const initialState = {
   currentChannelMembers: []
 };
 
+/* helper functions */
 const getCurrentChannelFromParams = (
   channelList,
   currentChannel,
@@ -161,10 +162,18 @@ const getMessageGroupName = createSelector(
   }
 );
 
+const getTargetMemberList = createSelector(
+  getCurrentChannelMembers,
+  getCurrentUser,
+  (currentChannelMembers, currentUser) =>
+    currentChannelMembers.filter(member => member.email !== currentUser.email)
+);
+
 export {
   getCurrentChannel,
   getCurrentChannelMembers,
   getStateChannelList,
+  getTargetMemberList,
   getChannelList,
   getMessageGroupList,
   getMessageGroupName

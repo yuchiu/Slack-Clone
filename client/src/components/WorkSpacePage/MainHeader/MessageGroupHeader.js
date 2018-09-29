@@ -8,7 +8,11 @@ class MessageGroupHeader extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { currentChannelMembers, messageGroupName } = this.props;
+    const {
+      currentChannelMembers,
+      targetMemberList,
+      messageGroupName
+    } = this.props;
     return (
       <div className="main-header__title">
         <h1 className="main-header__title__name">{messageGroupName}</h1>
@@ -25,6 +29,8 @@ class MessageGroupHeader extends React.Component {
               <OnlineStatusBubble on={false} addClass="dark" />
             </React.Fragment>
           )}
+          <SubHeaderDivider />
+          {targetMemberList.map(m => `${m.email} `)}
         </div>
       </div>
     );
