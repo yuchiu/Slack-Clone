@@ -27,6 +27,7 @@ class RightStickySideBar extends React.Component {
             className="fa fa-bars fa-lg toggle_button"
             onClick={this.toggleSideBar}
           />
+          <li className="sticky-side-bar-title">Teams</li>
           <TeamList />
           <Link to="/create-team">
             <li className="team-list__link__item team-list__link__item--add-team">

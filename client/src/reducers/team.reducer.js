@@ -39,13 +39,6 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.LOGOUT_USER:
-      newState.teamList = [];
-      newState.currentTeam = {};
-      newState.currentTeamMembers = [];
-      sessionStore.removeTeamId();
-      return newState;
-
     case constants.CREATE_TEAM:
       newState.teamList = action.payload.teamList;
       newState.currentTeam = action.payload.team;
@@ -76,6 +69,10 @@ export default (state = initialState, action) => {
       newState.currentTeamMembers = action.payload.teamMemberList;
       return newState;
 
+    case constants.LOGOUT_USER:
+      sessionStore.removeTeamId();
+      return initialState;
+
     default:
       return state;
   }
@@ -95,7 +92,7 @@ const getTeamList = createSelector(getStateTeamList, teamList =>
     newTeam.initials = team.name
       .split(" ")
       .map(n => n[0])
-      .join(".")
+      .join("")
       .slice(0, 3);
     return newTeam;
   })

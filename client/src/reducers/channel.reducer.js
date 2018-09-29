@@ -59,6 +59,9 @@ export default (state = initialState, action) => {
       newState.currentChannelMembers = action.payload.channelMemberList;
       return newState;
 
+    case constants.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

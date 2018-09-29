@@ -30,6 +30,9 @@ export default (state = initialState, action) => {
       );
       return newState;
 
+    case constants.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

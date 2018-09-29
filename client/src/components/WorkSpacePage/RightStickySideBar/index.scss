@@ -17,7 +17,11 @@
     cursor: pointer;
   }
 }
-
+.sticky-side-bar-title {
+  list-style: none;
+  margin-top: 0.5em;
+  font-size: 1.5em;
+}
 .team-list {
   width: 100%;
   padding-left: 0px;

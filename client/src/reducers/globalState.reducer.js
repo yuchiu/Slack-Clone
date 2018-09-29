@@ -11,6 +11,9 @@ export default (state = initialState, action) => {
       newState.isSideBarOpen = !newState.isSideBarOpen;
       return newState;
 
+    case constants.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

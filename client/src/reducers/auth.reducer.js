@@ -21,9 +21,8 @@ export default (state = initialState, action) => {
 
     case constants.LOGOUT_USER:
       sessionStore.setUserLoggedOut();
-      newState.isUserLoggedIn = sessionStore.getLoginStatus();
       localStore.deauthenticateUser();
-      return newState;
+      return initialState;
 
     default:
       return state;

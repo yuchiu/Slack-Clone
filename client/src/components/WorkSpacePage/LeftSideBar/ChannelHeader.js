@@ -9,10 +9,6 @@ class ChannelHeader extends React.Component {
     const { isAdmin, toggleAddChannelModal } = this.props;
     return (
       <React.Fragment>
-        <span>
-          <Icon name="comment alternate" />
-          All Threads
-        </span>
         <h1 className="leftsidebar__List__header">
           <span className="leftsidebar__List__header__title">CHANNELS</span>
           {isAdmin && (

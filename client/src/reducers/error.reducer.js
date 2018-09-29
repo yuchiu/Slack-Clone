@@ -31,6 +31,9 @@ export default (state = initialState, action) => {
       newState.error = "";
       return newState;
 
+    case constants.LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

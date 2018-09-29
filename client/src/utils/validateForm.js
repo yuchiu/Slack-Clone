@@ -53,9 +53,6 @@ export default {
       clientErrors.name = "Team name can't be blank";
     } else if (data.name.length < 1 || data.name.length > 32) {
       clientErrors.name = "Length of team name have to be between 1 to 32";
-    } else if (!/^[a-z0-9]+$/i.test(data.name)) {
-      clientErrors.name =
-        "only number and characters, special characters and space are not allowed";
     }
     return clientErrors;
   },
