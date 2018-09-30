@@ -7,6 +7,9 @@ import { Menu } from "semantic-ui-react";
 import "./index.scss";
 import { globalStateAction, authAction } from "@/actions";
 import { globalStateSelector } from "@/reducers/selectors";
+import NavSection from "./NavSection";
+import SidebarHeader from "./SidebarHeader";
+import { ViewMyProfile } from "./views";
 
 class SidebarContainer extends React.Component {
   constructor(props) {
@@ -27,17 +30,13 @@ class SidebarContainer extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <i
-          className="fa fa-times fa-lg toggle_button"
-          onClick={this.toggleSideBar}
-        />
-        <nav>target | user</nav>
-        <div>content</div>
-        <div>
-          <button onClick={this.handleLogout}>logout</button>
+      <div className="sidebar-container">
+        <NavSection toggleSideBar={this.toggleSideBar} />
+        <SidebarHeader text={"My Profile"} />
+        <div className="content-section">
+          <ViewMyProfile handleLogout={this.handleLogout} />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

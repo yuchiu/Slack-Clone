@@ -7,7 +7,7 @@
   grid-row: 1/4;
   overflow-y: auto;
   background-color: $purple;
-  color: $lightgrey;
+  color: $superlightgrey;
   &__invite {
     padding: 15px 0px 10px $paddingLeft;
     color: $white;
@@ -50,7 +50,7 @@
       &__right {
         margin-left: 10px;
         &__username {
-          color: $lightgrey;
+          color: $superlightgrey;
           font-size: 20px;
           padding: 0px;
           margin: 0px;
@@ -95,13 +95,13 @@
           background: $darkpurple;
         }
         &--link {
-          color: $lightgrey;
+          color: $superlightgrey;
         }
         &__num {
           padding: 0 3px;
           font-size: 0.8em;
           border-radius: 15%;
-          background-color: $lightgrey;
+          background-color: $superlightgrey;
           color: $purple;
         }
       }

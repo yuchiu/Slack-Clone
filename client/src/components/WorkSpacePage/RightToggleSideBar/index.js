@@ -13,7 +13,10 @@ class RightToggleSideBar extends React.Component {
   render() {
     const { children, isSideBarOpen } = this.props;
     return (
-      <Sidebar.Pushable className="Sidebar-pushable" as={Segment}>
+      <Sidebar.Pushable
+        className="right-toggle-side-bar Sidebar-pushable"
+        as={Segment}
+      >
         <Sidebar
           as={Menu}
           animation="overlay"
