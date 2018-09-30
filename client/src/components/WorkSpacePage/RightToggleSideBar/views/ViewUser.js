@@ -2,18 +2,23 @@ import React from "react";
 
 class ViewUser extends React.Component {
   render() {
-    const { handleLogout } = this.props;
+    const { targetMember } = this.props;
     return (
       <React.Fragment>
-        <div className="right-sidebar-header">My Profile</div>
-        <div className="profile-img">img</div>
-        <div className="username">username</div>
-        <div className="">O</div>
-        <div className="profile-detail">detail info</div>
-        <div className="edit-profile">edit Profile</div>
-        <div className="logout">
-          <button onClick={handleLogout}>logout</button>
-        </div>
+        <React.Fragment>
+          <div className="view-pic">
+            <img alt="view-pic__img" src={targetMember.avatarurl} />
+          </div>
+          <div className="view-detail">
+            <div className="view-detail__name">{targetMember.username}</div>
+            <div className="view-detail__email">
+              {`Email: ${targetMember.email}`}
+            </div>
+            <div className="view-detail__brief-description">
+              {`feeling: ${targetMember.brief_description}`}
+            </div>{" "}
+          </div>
+        </React.Fragment>
       </React.Fragment>
     );
   }

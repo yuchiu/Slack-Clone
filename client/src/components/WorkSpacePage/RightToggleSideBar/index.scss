@@ -25,18 +25,24 @@
   grid-template-rows: 63px auto;
 }
 
-.nav-section {
+.right-side-bar-header {
   grid-row: 1;
-  font-size: 1.3em;
+  font-size: 1.1em;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  padding: 15px;
   color: $black;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   &__toggle_button {
+    color: $grey;
     &:hover {
       cursor: pointer;
     }
+  }
+  &__title {
+    font-size: 2em;
+    margin-bottom: 5px;
   }
   &__my-profile {
     &:hover {
@@ -45,7 +51,30 @@
   }
 }
 
-.content-section {
+.detail-content {
   grid-row: 2;
   height: calc(98vh - 63px);
+}
+
+.view-pic {
+  &__img {
+  }
+}
+
+.view-detail {
+  &__name {
+  }
+  &__email {
+  }
+  &__members {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__brief-description {
+  }
+  &__detail-description {
+  }
+  &__role {
+  }
 }

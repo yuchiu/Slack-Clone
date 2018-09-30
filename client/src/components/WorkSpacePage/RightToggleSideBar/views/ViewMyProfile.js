@@ -1,24 +1,27 @@
 import React from "react";
 
-class ViewMyProfile extends React.Component {
+class ViewTeam extends React.Component {
   render() {
-    const { handleLogout } = this.props;
+    const { currentUser } = this.props;
     return (
       <React.Fragment>
-        <div className="right-sidebar-header">My Profile</div>
-        <div className="profile-img">img</div>
-        <div className="username">username</div>
-        <div className="">O</div>
-        <div className="profile-detail">detail info</div>
-        <div className="edit-profile">edit Profile</div>
-        <div className="logout">
-          <button onClick={handleLogout}>logout</button>
+        <div className="view-pic">
+          <img alt="view-pic__img" src={currentUser.avatarurl} />
+        </div>
+        <div className="view-detail">
+          <div className="view-detail__name">{currentUser.username}</div>
+          <div className="view-detail__email">
+            {`Email: ${currentUser.email}`}
+          </div>
+          <div className="view-detail__brief-description">
+            {`feeling: ${currentUser.brief_description}`}
+          </div>{" "}
         </div>
       </React.Fragment>
     );
   }
 }
 
-ViewMyProfile.propTypes = {};
+ViewTeam.propTypes = {};
 
-export default ViewMyProfile;
+export default ViewTeam;

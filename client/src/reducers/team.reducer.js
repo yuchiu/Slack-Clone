@@ -93,7 +93,7 @@ const getTeamList = createSelector(getStateTeamList, teamList =>
       .split(" ")
       .map(n => n[0])
       .join("")
-      .slice(0, 3);
+      .slice(0, 2);
     return newTeam;
   })
 );

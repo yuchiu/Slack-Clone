@@ -2,18 +2,32 @@ import React from "react";
 
 class ViewChannel extends React.Component {
   render() {
-    const { handleLogout } = this.props;
+    const {
+      currentChannel,
+      currentChannelMembers,
+      switchViewToMemberList
+    } = this.props;
     return (
       <React.Fragment>
-        <div className="right-sidebar-header">My Profile</div>
-        <div className="profile-img">img</div>
-        <div className="username">username</div>
-        <div className="">O</div>
-        <div className="profile-detail">detail info</div>
-        <div className="edit-profile">edit Profile</div>
-        <div className="logout">
-          <button onClick={handleLogout}>logout</button>
-        </div>
+        <React.Fragment>
+          <div className="view-detail">
+            <div className="view-detail__name">{currentChannel.name}</div>
+
+            <div
+              className="view-detail__members"
+              onClick={switchViewToMemberList}
+            >
+              <i className="far fa-user" />
+              <span className=""> {currentChannelMembers.length}</span>
+            </div>
+            <div className="view-detail__brief-description">
+              {`Topic: ${currentChannel.brief_description}`}
+            </div>
+            <div className="view-detail__detail-description">
+              {`Purpose: ${currentChannel.detail_description}`}
+            </div>
+          </div>
+        </React.Fragment>
       </React.Fragment>
     );
   }

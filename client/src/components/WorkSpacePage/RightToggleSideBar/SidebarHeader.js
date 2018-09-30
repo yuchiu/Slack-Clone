@@ -1,17 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-class SiderbarHeader extends React.Component {
+class SidebarContainer extends React.Component {
   render() {
-    const { text } = this.props;
+    const {
+      toggleSideBar,
+      rightSideBarView,
+      switchViewToMyProfile
+    } = this.props;
     return (
       <React.Fragment>
-        <div className="header-section">{text}</div>
+        <div className="right-side-bar-header">
+          <i
+            className="fa fa-times fa-lg right-side-bar-header__toggle_button"
+            onClick={toggleSideBar}
+          />
+
+          <div className="right-side-bar-header__title">{rightSideBarView}</div>
+          <span
+            className="right-side-bar-header__my-profile"
+            onClick={switchViewToMyProfile}
+          >
+            My Profile
+            <i className="fa fa-cog" />
+          </span>
+        </div>
       </React.Fragment>
     );
   }
 }
 
-SiderbarHeader.propTypes = {};
+SidebarContainer.propTypes = {};
 
-export default SiderbarHeader;
+export default SidebarContainer;

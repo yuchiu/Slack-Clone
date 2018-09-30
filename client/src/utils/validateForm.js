@@ -54,6 +54,9 @@ export default {
     } else if (data.name.length < 1 || data.name.length > 32) {
       clientErrors.name = "Length of team name have to be between 1 to 32";
     }
+    if (data.about.length > 128) {
+      clientErrors.about = "Length of about have to be less than 128";
+    }
     return clientErrors;
   },
 

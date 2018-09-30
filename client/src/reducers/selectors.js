@@ -10,6 +10,7 @@ import {
   getCurrentChannelMembers,
   getStateChannelList,
   getChannelList,
+  getTargetMember,
   getTargetMemberList,
   getMessageGroupList,
   getMessageGroupName
@@ -45,7 +46,8 @@ const channelSelector = {
   getChannelList: state => getChannelList(state),
   getMessageGroupList: state => getMessageGroupList(state),
   getMessageGroupName: state => getMessageGroupName(state),
-  getTargetMemberList: state => getTargetMemberList(state)
+  getTargetMemberList: state => getTargetMemberList(state),
+  getTargetMember: state => getTargetMember(state)
 };
 const messageSelector = {
   getMessageList: state => getMessageList(state)

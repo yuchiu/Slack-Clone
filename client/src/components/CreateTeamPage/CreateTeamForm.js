@@ -6,7 +6,13 @@ import { InlineError } from "../common";
 
 class CreateTeamForm extends React.Component {
   render() {
-    const { handleChange, name, clientErrors, handleSubmit } = this.props;
+    const {
+      handleChange,
+      name,
+      clientErrors,
+      handleSubmit,
+      about
+    } = this.props;
 
     return (
       <Container text>
@@ -22,6 +28,16 @@ class CreateTeamForm extends React.Component {
             />
           </Form.Field>
           {clientErrors.name && <InlineError text={clientErrors.name} />}
+          <Form.Field>
+            <Input
+              name="about"
+              onChange={handleChange}
+              value={about}
+              placeholder="About the team"
+              fluid
+            />
+          </Form.Field>
+          {clientErrors.about && <InlineError text={clientErrors.about} />}
           <br />
           <Button primary type="button" onClick={handleSubmit}>
             Submit

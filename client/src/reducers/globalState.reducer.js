@@ -27,6 +27,6 @@ export default (state = initialState, action) => {
 /* state selectors */
 const getIsSideBarOpen = state => state.globalStateReducer.isSideBarOpen;
 
-const getRightSideBarView = state => state.globalStateReducer.isSideBarOpen;
+const getRightSideBarView = state => state.globalStateReducer.rightSideBarView;
 
 export { getIsSideBarOpen, getRightSideBarView };

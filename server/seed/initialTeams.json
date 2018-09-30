@@ -1,7 +1,6 @@
 [
   {
     "name": "Demo Team",
-    "brief_description": "This team is created for demo purposes",
-    "detail_description": "Demo team that new user joins initially for testing purposes."
+    "brief_description": "New users join this team for demo purposes"
   }
 ]

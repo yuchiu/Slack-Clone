@@ -12,7 +12,6 @@ import {
   teamSelector,
   userSelector
 } from "@/reducers/selectors";
-import NavSection from "./NavSection";
 import SidebarHeader from "./SidebarHeader";
 import {
   ViewMyProfile,
@@ -39,9 +38,15 @@ class SidebarContainer extends React.Component {
     history.push("/");
   };
 
+  handleSwitchRightSideBarView = selectedView => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView(selectedView);
+  };
+
   render() {
     const {
       currentChannel,
+      targetMember,
       targetMemberList,
       currentChannelMembers,
       currentTeam,
@@ -51,39 +56,52 @@ class SidebarContainer extends React.Component {
     } = this.props;
     return (
       <div className="sidebar-container">
-        <NavSection toggleSideBar={this.toggleSideBar} />
-        <SidebarHeader text={"My Profile"} />
-        <div className="content-section">
-          {rightSideBarView}
-          {rightSideBarView === "team" && (
-            <ViewTeam
-              currentUser={currentUser}
-              handleLogout={this.handleLogout}
-            />
+        <SidebarHeader
+          toggleSideBar={this.toggleSideBar}
+          rightSideBarView={rightSideBarView}
+          switchViewToMyProfile={this.handleSwitchRightSideBarView.bind(
+            this,
+            "my-profile"
           )}
+        />
+        <div className="detail-content">
           {rightSideBarView === "my-profile" && (
             <ViewMyProfile
               currentUser={currentUser}
               handleLogout={this.handleLogout}
             />
           )}
-          {rightSideBarView === "member-list" && (
-            <ViewMemberList
-              currentUser={currentUser}
-              handleLogout={this.handleLogout}
-            />
+          {rightSideBarView === "user" && (
+            <ViewUser targetMember={targetMember} />
           )}
           {rightSideBarView === "channel" && (
             <ViewChannel
-              currentUser={currentUser}
-              handleLogout={this.handleLogout}
+              currentChannel={currentChannel}
+              currentChannelMembers={currentChannelMembers}
+              switchViewToMemberList={this.handleSwitchRightSideBarView.bind(
+                this,
+                "channel-member-list"
+              )}
             />
           )}
-          {rightSideBarView === "user" && (
-            <ViewUser
-              currentUser={currentUser}
-              handleLogout={this.handleLogout}
+          {rightSideBarView === "team" && (
+            <ViewTeam
+              currentTeam={currentTeam}
+              currentTeamMembers={currentTeamMembers}
+              switchViewToMemberList={this.handleSwitchRightSideBarView.bind(
+                this,
+                "team-member-list"
+              )}
             />
+          )}
+          {rightSideBarView === "message-group-member-list" && (
+            <ViewMemberList memeberList={targetMemberList} />
+          )}
+          {rightSideBarView === "channel-member-list" && (
+            <ViewMemberList memeberList={currentChannelMembers} />
+          )}
+          {rightSideBarView === "team-member-list" && (
+            <ViewMemberList memeberList={currentTeamMembers} />
           )}
         </div>
       </div>
@@ -96,6 +114,7 @@ SidebarContainer.propTypes = {};
 const stateToProps = state => ({
   rightSideBarView: globalStateSelector.getRightSideBarView(state),
   currentChannel: channelSelector.getCurrentChannel(state),
+  targetMember: channelSelector.getTargetMember(state),
   targetMemberList: channelSelector.getTargetMemberList(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentTeam: teamSelector.getCurrentTeam(state),
@@ -105,7 +124,9 @@ const stateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
   logoutUser: () => dispatch(authAction.logoutUser()),
-  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar())
+  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar()),
+  switchRightSideBarView: selectedView =>
+    dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });
 
 export default withRouter(

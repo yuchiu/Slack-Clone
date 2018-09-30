@@ -172,11 +172,18 @@ const getTargetMemberList = createSelector(
     currentChannelMembers.filter(member => member.email !== currentUser.email)
 );
 
+const getTargetMember = createSelector(
+  getTargetMemberList,
+  targetMemberList =>
+    targetMemberList.length === 1 ? targetMemberList[0] : null
+);
+
 export {
   getCurrentChannel,
   getCurrentChannelMembers,
   getStateChannelList,
   getTargetMemberList,
+  getTargetMember,
   getChannelList,
   getMessageGroupList,
   getMessageGroupName

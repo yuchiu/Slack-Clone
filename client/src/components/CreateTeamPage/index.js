@@ -11,6 +11,7 @@ import { errorSelector, teamSelector } from "@/reducers/selectors";
 class CreateTeamPage extends React.Component {
   state = {
     name: "",
+    about: "",
     clientErrors: {}
   };
 
@@ -29,14 +30,14 @@ class CreateTeamPage extends React.Component {
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
       const { createTeam, currentTeam, history } = this.props;
-      const { name } = this.state;
-      createTeam({ name });
+      const { name, about } = this.state;
+      createTeam({ name, about });
       history.push(`/`);
     }
   };
 
   render() {
-    const { clientErrors, name } = this.state;
+    const { clientErrors, name, about } = this.state;
     const { error } = this.props;
 
     return (
@@ -46,6 +47,7 @@ class CreateTeamPage extends React.Component {
           <CreateTeamForm
             clientErrors={clientErrors}
             name={name}
+            about={about}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
           />

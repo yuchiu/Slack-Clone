@@ -3,14 +3,18 @@ import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { globalStateSelector } from "@/reducers/selectors";
 import { OnlineStatusBubble } from "@/components/common";
-import globalStateAction from "../../../actions/globalState.action";
+import { globalStateAction } from "@/actions";
 
 class SideBarHeader extends React.Component {
   state = {};
 
   handleSwitchRightSideBarView = selectedView => {
-    const { switchRightSideBarView } = this.props;
+    const { toggleSideBar, switchRightSideBarView, isSideBarOpen } = this.props;
+    if (!isSideBarOpen) {
+      toggleSideBar();
+    }
     switchRightSideBarView(selectedView);
   };
 
@@ -51,12 +55,17 @@ class SideBarHeader extends React.Component {
   }
 }
 
+const stateToProps = state => ({
+  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
+});
+
 const dispatchToProps = dispatch => ({
+  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar()),
   switchRightSideBarView: selectedView =>
     dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });
 
 export default connect(
-  null,
+  stateToProps,
   dispatchToProps
 )(SideBarHeader);

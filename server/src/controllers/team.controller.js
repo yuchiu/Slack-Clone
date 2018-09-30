@@ -6,10 +6,12 @@ export default {
       // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const teamName = req.body.name;
+      const teamAbout = req.body.about;
       const response = await models.sequelize.transaction(async transaction => {
         const teamData = await models.Team.create(
           {
-            name: teamName
+            name: teamName,
+            brief_description: teamAbout
           },
           { transaction }
         );

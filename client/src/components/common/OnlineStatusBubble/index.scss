@@ -1,11 +1,13 @@
 @import "../../../assets/css/vars.scss";
 .status-bubble-on {
+  padding-right: 3px;
   color: $bubblegreen;
   &--light {
     color: $lightbubblegreen;
   }
 }
 .status-bubble-off {
+  padding-right: 3px;
   color: $superlightgrey;
   &--dark {
     color: $darkgrey;

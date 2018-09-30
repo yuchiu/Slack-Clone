@@ -1,11 +1,14 @@
 [
   {
-    "name": "TEAM CAKE"
+    "name": "TEAM CAKE",
+    "brief_description": "team of cake kingdom"
   },
   {
-    "name": "TEAM FUNNY2"
+    "name": "TEAM FUNNY2",
+    "brief_description": "Why so serious"
   },
   {
-    "name": "TEAM MUSICIAN"
+    "name": "TEAM MUSICIAN",
+    "brief_description": "My Coolest Guitar"
   }
 ]
