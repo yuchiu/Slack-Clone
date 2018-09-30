@@ -1,17 +1,36 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+import { globalStateAction } from "@/actions";
 import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
+  handleSwitchRightSideBarView = () => {
+    const { message, switchRightSideBarView } = this.props;
+    const selectedView = "das";
+    if (message.isCurrentUser) {
+      switchRightSideBarView("my-profile");
+    } else {
+      switchRightSideBarView("user");
+    }
+  };
+
   render() {
     const { message } = this.props;
     return (
       <Comment>
-        <Comment.Avatar src={message.avatarurl} />
+        <Comment.Avatar
+          as="a"
+          className="comment-avatar"
+          src={message.avatarurl}
+          onClick={this.handleSwitchRightSideBarView}
+        />
         <Comment.Content>
-          <Comment.Author as="a">{message.username}</Comment.Author>
+          <Comment.Author as="a" onClick={this.handleSwitchRightSideBarView}>
+            {message.username}
+          </Comment.Author>
           <Comment.Metadata>
             <span>{message.created_at}</span>
           </Comment.Metadata>
@@ -35,4 +54,13 @@ class Message extends React.Component {
 }
 Message.propTypes = {};
 
-export default Message;
+const dispatchToProps = dispatch => ({
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  }
+});
+
+export default connect(
+  null,
+  dispatchToProps
+)(Message);

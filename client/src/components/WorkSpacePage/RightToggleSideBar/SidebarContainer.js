@@ -6,10 +6,21 @@ import { Menu } from "semantic-ui-react";
 
 import "./index.scss";
 import { globalStateAction, authAction } from "@/actions";
-import { globalStateSelector } from "@/reducers/selectors";
+import {
+  globalStateSelector,
+  channelSelector,
+  teamSelector,
+  userSelector
+} from "@/reducers/selectors";
 import NavSection from "./NavSection";
 import SidebarHeader from "./SidebarHeader";
-import { ViewMyProfile } from "./views";
+import {
+  ViewMyProfile,
+  ViewChannel,
+  ViewMemberList,
+  ViewTeam,
+  ViewUser
+} from "./views";
 
 class SidebarContainer extends React.Component {
   constructor(props) {
@@ -29,12 +40,51 @@ class SidebarContainer extends React.Component {
   };
 
   render() {
+    const {
+      currentChannel,
+      targetMemberList,
+      currentChannelMembers,
+      currentTeam,
+      rightSideBarView,
+      currentTeamMembers,
+      currentUser
+    } = this.props;
     return (
       <div className="sidebar-container">
         <NavSection toggleSideBar={this.toggleSideBar} />
         <SidebarHeader text={"My Profile"} />
         <div className="content-section">
-          <ViewMyProfile handleLogout={this.handleLogout} />
+          {rightSideBarView}
+          {rightSideBarView === "team" && (
+            <ViewTeam
+              currentUser={currentUser}
+              handleLogout={this.handleLogout}
+            />
+          )}
+          {rightSideBarView === "my-profile" && (
+            <ViewMyProfile
+              currentUser={currentUser}
+              handleLogout={this.handleLogout}
+            />
+          )}
+          {rightSideBarView === "member-list" && (
+            <ViewMemberList
+              currentUser={currentUser}
+              handleLogout={this.handleLogout}
+            />
+          )}
+          {rightSideBarView === "channel" && (
+            <ViewChannel
+              currentUser={currentUser}
+              handleLogout={this.handleLogout}
+            />
+          )}
+          {rightSideBarView === "user" && (
+            <ViewUser
+              currentUser={currentUser}
+              handleLogout={this.handleLogout}
+            />
+          )}
         </div>
       </div>
     );
@@ -43,7 +93,15 @@ class SidebarContainer extends React.Component {
 
 SidebarContainer.propTypes = {};
 
-const stateToProps = state => ({});
+const stateToProps = state => ({
+  rightSideBarView: globalStateSelector.getRightSideBarView(state),
+  currentChannel: channelSelector.getCurrentChannel(state),
+  targetMemberList: channelSelector.getTargetMemberList(state),
+  currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  currentUser: userSelector.getCurrentUser(state)
+});
 
 const dispatchToProps = dispatch => ({
   logoutUser: () => dispatch(authAction.logoutUser()),

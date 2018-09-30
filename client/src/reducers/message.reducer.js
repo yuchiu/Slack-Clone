@@ -1,6 +1,8 @@
 import constants from "@/constants";
 import { createSelector } from "reselect";
 
+import { getCurrentUser } from "./user.reducer";
+
 const initialState = {
   messageList: []
 };
@@ -42,25 +44,32 @@ export default (state = initialState, action) => {
 const getStateMessageList = state => state.messageReducer.messageList;
 
 /* derived data selectors */
-const getMessageList = createSelector(getStateMessageList, messageList =>
-  messageList.map(message => {
-    const newMessage = { ...message };
-    newMessage.imageType = false;
-    newMessage.textType = false;
-    newMessage.audioType = false;
-    if (newMessage.filetype) {
-      if (newMessage.filetype.startsWith("image/")) {
-        newMessage.imageType = true;
+const getMessageList = createSelector(
+  getStateMessageList,
+  getCurrentUser,
+  (messageList, currentUser) =>
+    messageList.map(message => {
+      const newMessage = { ...message };
+      newMessage.imageType = false;
+      newMessage.textType = false;
+      newMessage.audioType = false;
+      newMessage.isCurrentUser = false;
+      if (newMessage.filetype) {
+        if (newMessage.filetype.startsWith("image/")) {
+          newMessage.imageType = true;
+        }
+        if (message.filetype === "text/plain") {
+          newMessage.textType = true;
+        }
+        if (message.filetype.startsWith("audio/")) {
+          newMessage.audioType = true;
+        }
       }
-      if (message.filetype === "text/plain") {
-        newMessage.textType = true;
+      if (newMessage.userId === currentUser.id) {
+        newMessage.isCurrentUser = true;
       }
-      if (message.filetype.startsWith("audio/")) {
-        newMessage.audioType = true;
-      }
-    }
-    return newMessage;
-  })
+      return newMessage;
+    })
 );
 
 export { getMessageList };

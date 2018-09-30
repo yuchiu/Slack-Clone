@@ -4,12 +4,18 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { PublicOrPrivateTag } from "@/components/common";
-import { channelAction } from "@/actions";
+import { channelAction, globalStateAction } from "@/actions";
 
 class ChannelList extends React.Component {
   handleClick = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
+    this.handleSwitchRightSideBarView("channel");
+  };
+
+  handleSwitchRightSideBarView = selectedView => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView(selectedView);
   };
 
   render() {
@@ -41,9 +47,9 @@ ChannelList.propTypes = {
   channelList: PropTypes.array.isRequired
 };
 const dispatchToProps = dispatch => ({
-  switchChannel: channelId => {
-    dispatch(channelAction.switchChannel(channelId));
-  }
+  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
+  switchRightSideBarView: selectedView =>
+    dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });
 
 export default connect(

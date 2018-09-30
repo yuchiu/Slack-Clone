@@ -1,6 +1,7 @@
 export default {
   /* global state */
   TOGGLE_SIDE_BAR: "TOGGLE_SIDE_BAR",
+  SWITCH_RIGHT_SIDE_BAR_VIEW: "SWITCH_RIGHT_SIDE_BAR_VIEW",
 
   /* users */
   AUTO_LOGIN: "AUTO_LOGIN",

@@ -16,10 +16,11 @@ import {
 } from "./channel.reducer";
 import { getMessageList } from "./message.reducer";
 import { getError } from "./error.reducer";
-import { getIsSideBarOpen } from "./globalState.reducer";
+import { getIsSideBarOpen, getRightSideBarView } from "./globalState.reducer";
 
 const globalStateSelector = {
-  getIsSideBarOpen: state => getIsSideBarOpen(state)
+  getIsSideBarOpen: state => getIsSideBarOpen(state),
+  getRightSideBarView: state => getRightSideBarView(state)
 };
 
 const authSelector = {

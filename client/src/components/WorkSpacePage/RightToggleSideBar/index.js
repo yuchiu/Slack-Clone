@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import { Menu, Segment, Sidebar } from "semantic-ui-react";
 
 import "./index.scss";
-import { globalStateAction } from "@/actions";
 import { globalStateSelector } from "@/reducers/selectors";
 import SidebarContainer from "./SidebarContainer";
 

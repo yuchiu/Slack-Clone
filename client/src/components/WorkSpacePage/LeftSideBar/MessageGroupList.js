@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { OnlineStatusBubble } from "@/components/common";
-import { channelAction } from "@/actions";
+import { channelAction, globalStateAction } from "@/actions";
 
 class MessageGroupList extends React.Component {
   handleClick = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
+  };
+
+  handleSwitchRightSideBarView = selectedView => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView(selectedView);
   };
 
   render() {
@@ -25,16 +30,33 @@ class MessageGroupList extends React.Component {
                 to={`/workspace/${teamId}/${messageGroup.id}`}
                 onClick={this.handleClick.bind(this, messageGroup.id)}
               >
-                <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
-                  {messageGroup.directMessage ? (
+                {messageGroup.directMessage ? (
+                  <li
+                    className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
+                    onClick={this.handleSwitchRightSideBarView.bind(
+                      this,
+                      "user"
+                    )}
+                  >
                     <OnlineStatusBubble on={false} />
-                  ) : (
+                    {"  "}
+                    {messageGroup.name}
+                  </li>
+                ) : (
+                  <li
+                    className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
+                    onClick={this.handleSwitchRightSideBarView.bind(
+                      this,
+                      "member-list"
+                    )}
+                  >
                     <span className="leftsidebar__List__link__item__num">
                       {messageGroup.memberNumber}
                     </span>
-                  )}{" "}
-                  {messageGroup.name}
-                </li>
+                    {"  "}
+                    {messageGroup.name}
+                  </li>
+                )}
               </Link>
             ))}
       </React.Fragment>
@@ -47,9 +69,9 @@ MessageGroupList.propTypes = {
 };
 
 const dispatchToProps = dispatch => ({
-  switchChannel: channelId => {
-    dispatch(channelAction.switchChannel(channelId));
-  }
+  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
+  switchRightSideBarView: selectedView =>
+    dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });
 
 export default connect(

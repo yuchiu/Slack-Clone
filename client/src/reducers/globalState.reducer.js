@@ -1,7 +1,8 @@
 import constants from "../constants";
 
 const initialState = {
-  isSideBarOpen: false
+  isSideBarOpen: false,
+  rightSideBarView: "team"
 };
 
 export default (state = initialState, action) => {
@@ -9,6 +10,10 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.TOGGLE_SIDE_BAR:
       newState.isSideBarOpen = !newState.isSideBarOpen;
+      return newState;
+
+    case constants.SWITCH_RIGHT_SIDE_BAR_VIEW:
+      newState.rightSideBarView = action.payload;
       return newState;
 
     case constants.LOGOUT_USER:
@@ -22,4 +27,6 @@ export default (state = initialState, action) => {
 /* state selectors */
 const getIsSideBarOpen = state => state.globalStateReducer.isSideBarOpen;
 
-export { getIsSideBarOpen };
+const getRightSideBarView = state => state.globalStateReducer.isSideBarOpen;
+
+export { getIsSideBarOpen, getRightSideBarView };
