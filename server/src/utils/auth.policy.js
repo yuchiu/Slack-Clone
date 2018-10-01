@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-import passport from "passport";
 import models from "../models";
 
 export default {
@@ -19,7 +18,6 @@ export default {
   },
 
   // disable authorization so it is easier to test out functionality in demo
-  // user have to be admin to create public or private channel
   authorization: async (req, res, next) => {
     const { teamId } = req.body;
     const { currentUserId } = req.user.id;
@@ -27,6 +25,7 @@ export default {
       { where: { teamId, userId: currentUserId } },
       { raw: true }
     );
+    // user have to be admin to create public or private channel
     if (!member.admin) {
       return res.status(401).send({
         meta: {

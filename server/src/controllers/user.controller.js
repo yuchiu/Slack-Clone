@@ -3,7 +3,9 @@ import fse from "fs-extra";
 import Identicon from "identicon.js";
 import randomstring from "randomstring";
 import randomHex from "randomhex";
+import _ from "lodash";
 
+import { redisClient } from "../utils";
 import models from "../models";
 import config from "../config";
 
@@ -227,6 +229,25 @@ export default {
     try {
       // req.user is retreived from bearer token of auth.policy
       const userId = req.user.id;
+
+      // check if redis has the data
+      const userCache = await redisClient.getAsync(`userId:${userId}`);
+      const teamListCache = await redisClient.getAsync(`teamList:${userId}`);
+
+      if (userCache && teamListCache) {
+        const userCacheJSON = JSON.parse(userCache);
+        const teamListCacheArr = _.toArray(JSON.parse(teamListCache));
+        return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: "calling inside cache"
+          },
+          user: userSummary(userCacheJSON),
+          teamList: teamListCacheArr
+        });
+      }
+
       const user = await models.User.findOne({
         where: { id: userId },
         raw: true
@@ -240,11 +261,24 @@ export default {
           raw: true
         }
       );
+
+      // Save the responses in Redis store
+      await redisClient.setex(
+        `userId:${userId}`,
+        86400, // 60 * 60 * 24 seconds
+        JSON.stringify({ ...user })
+      );
+      await redisClient.setex(
+        `teamList:${userId}`,
+        86400, // 60 * 60 * 24 seconds
+        JSON.stringify({ ...teamList })
+      );
+
       res.status(200).send({
         meta: {
           type: "success",
           status: 200,
-          message: ""
+          message: "outside cache"
         },
         user: userSummary(user),
         teamList

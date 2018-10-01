@@ -1,6 +1,8 @@
 import fse from "fs-extra";
 import randomstring from "randomstring";
+import _ from "lodash";
 
+import { redisClient } from "../utils";
 import config from "../config";
 import models from "../models";
 
@@ -84,6 +86,23 @@ export default {
       const currentUserId = req.user.id;
       const { offset, channelId } = req.body;
 
+      // check if redis has the data
+      const messagelListCache = await redisClient.getAsync(
+        `messageList:${channelId}offset:${offset}`
+      );
+      if (messagelListCache) {
+        const messagelListCacheArr = _.toArray(JSON.parse(messagelListCache));
+
+        return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          messageList: messagelListCacheArr.reverse()
+        });
+      }
+
       const channel = await models.Channel.findOne({
         raw: true,
         where: { id: channelId }
@@ -108,6 +127,14 @@ export default {
         },
         { raw: true }
       );
+
+      // Save the responses in Redis store
+      await redisClient.setex(
+        `messageList:${channelId}offset:${offset}`,
+        86400, // 60 * 60 * 24 seconds
+        JSON.stringify({ source: "Redis Cache", ...messageList })
+      );
+
       return res.status(200).send({
         meta: {
           type: "success",

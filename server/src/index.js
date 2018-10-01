@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import http from "http";
 import socketIo from "socket.io";
-import redis from "redis";
 import cors from "cors";
 import connectRedis from "connect-redis";
 import logger from "morgan";
@@ -12,9 +11,9 @@ import helmet from "helmet";
 import compression from "compression";
 import bodyParser from "body-parser";
 
-import "./utils/passport";
 import models from "./models";
 import config from "./config";
+import { redisClient } from "./utils";
 import { routes, sockets } from "./routers";
 
 /* connect express with socket.io, wrapping app with server, then wrap server with socket.io */
@@ -23,8 +22,6 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 const RedisStore = connectRedis(session);
-
-const client = redis.createClient();
 
 /* allow cors & dev logs */
 if (process.env.NODE_ENV === "development") {
@@ -48,10 +45,10 @@ app.use(cookieParser());
 app.use(
   session({
     store: new RedisStore({
-      port: process.env.REDIS_PORT || "6380",
-      host: process.env.REDIS_HOST || "localhost",
-      client,
-      ttl: 604800 //  60 * 60 * 24 * 7 in seconds
+      port: config.REDIS.PORT,
+      host: config.REDIS.HOST,
+      client: redisClient,
+      ttl: config.REDIS.TIME_TO_LIVE
     }),
     secret: process.env.SESSION_SECRET || "secret",
     name: "session",
@@ -95,6 +92,7 @@ app.use("/assets", express.static("assets"));
 routes(app);
 sockets(io);
 
+// Print redis errors to the console
 /* listen to port */
 models.sequelize.sync().then(() => {
   server.listen(config.PORT, () => {

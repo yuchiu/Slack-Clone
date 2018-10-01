@@ -1,3 +1,6 @@
+import _ from "lodash";
+
+import { redisClient } from "../utils";
 import models from "../models";
 
 export default {
@@ -161,10 +164,32 @@ export default {
   },
   getTeamAssociatedList: async (req, res) => {
     try {
-      // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const { teamId } = req.params;
 
+      // check if redis has the data
+      const channelListCache = await redisClient.getAsync(
+        `channelList:${currentUserId}`
+      );
+      const teamMemberListCache = await redisClient.getAsync(
+        `teamMemberList:${teamId}`
+      );
+      if (channelListCache && teamMemberListCache) {
+        const channelListCacheArr = _.toArray(JSON.parse(channelListCache));
+        const teamMemberListCacheArr = _.toArray(
+          JSON.parse(teamMemberListCache)
+        );
+
+        return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          channelList: channelListCacheArr,
+          teamMemberList: teamMemberListCacheArr
+        });
+      }
       const teamMemberList = await models.sequelize.query(
         "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
         {
@@ -186,14 +211,26 @@ export default {
         }
       );
 
+      // Save the responses in Redis store
+      await redisClient.setex(
+        `channelList:${currentUserId}`,
+        86400, // 60 * 60 * 24 seconds
+        JSON.stringify({ source: "Redis Cache", ...channelList })
+      );
+      await redisClient.setex(
+        `teamMemberList:${teamId}`,
+        86400, // 60 * 60 * 24 seconds
+        JSON.stringify({ source: "Redis Cache", ...teamMemberList })
+      );
+
       res.status(200).send({
         meta: {
           type: "success",
           status: 200,
           message: ""
         },
-        teamMemberList,
-        channelList
+        channelList,
+        teamMemberList
       });
     } catch (err) {
       console.log(err);

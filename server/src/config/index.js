@@ -9,7 +9,9 @@ export default {
   JWT_SECRET:
     process.env.JWT_SECRET || "ckmksadii8jrei8riwe3897547fjujrf928r32",
   REDIS: {
-    PORT: process.env.REDIS_PORT || 6379
+    HOST: process.env.HOST || "localhost",
+    PORT: process.env.PORT || 6379,
+    TIME_TO_LIVE: 604800 //  60 * 60 * 24 * 7 in seconds
   },
   DB: {
     DB_NAME: process.env.DB_NAME || "slack",

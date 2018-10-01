@@ -7,7 +7,7 @@ import {
   messageController,
   teamController
 } from "../controllers";
-import { authPolicy } from "../policies";
+import { authPolicy } from "../utils";
 
 export default app => {
   /* api */
