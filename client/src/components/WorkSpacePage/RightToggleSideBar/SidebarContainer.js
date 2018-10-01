@@ -13,13 +13,14 @@ import {
   userSelector
 } from "@/reducers/selectors";
 import SidebarHeader from "./SidebarHeader";
+import SidebarFooter from "./SidebarFooter";
 import {
   ViewMyProfile,
   ViewChannel,
   ViewMemberList,
   ViewTeam,
   ViewUser
-} from "./views";
+} from "./sidebarContent";
 
 class SidebarContainer extends React.Component {
   constructor(props) {
@@ -46,10 +47,10 @@ class SidebarContainer extends React.Component {
   render() {
     const {
       currentChannel,
-      targetMember,
       targetMemberList,
       currentChannelMembers,
       currentTeam,
+      rightSideBarTitle,
       rightSideBarView,
       currentTeamMembers,
       currentUser
@@ -58,13 +59,13 @@ class SidebarContainer extends React.Component {
       <div className="sidebar-container">
         <SidebarHeader
           toggleSideBar={this.toggleSideBar}
-          rightSideBarView={rightSideBarView}
+          rightSideBarTitle={rightSideBarTitle}
           switchViewToMyProfile={this.handleSwitchRightSideBarView.bind(
             this,
             "my-profile"
           )}
         />
-        <div className="detail-content">
+        <div className="right-side-bar-content">
           {rightSideBarView === "my-profile" && (
             <ViewMyProfile
               currentUser={currentUser}
@@ -72,7 +73,7 @@ class SidebarContainer extends React.Component {
             />
           )}
           {rightSideBarView === "user" && (
-            <ViewUser targetMember={targetMember} />
+            <ViewUser targetMember={targetMemberList[0]} />
           )}
           {rightSideBarView === "channel" && (
             <ViewChannel
@@ -80,7 +81,7 @@ class SidebarContainer extends React.Component {
               currentChannelMembers={currentChannelMembers}
               switchViewToMemberList={this.handleSwitchRightSideBarView.bind(
                 this,
-                "channel-member-list"
+                "channel-members"
               )}
             />
           )}
@@ -90,20 +91,21 @@ class SidebarContainer extends React.Component {
               currentTeamMembers={currentTeamMembers}
               switchViewToMemberList={this.handleSwitchRightSideBarView.bind(
                 this,
-                "team-member-list"
+                "team-members"
               )}
             />
           )}
-          {rightSideBarView === "message-group-member-list" && (
+          {rightSideBarView === "message-group-members" && (
             <ViewMemberList memeberList={targetMemberList} />
           )}
-          {rightSideBarView === "channel-member-list" && (
+          {rightSideBarView === "channel-members" && (
             <ViewMemberList memeberList={currentChannelMembers} />
           )}
-          {rightSideBarView === "team-member-list" && (
+          {rightSideBarView === "team-members" && (
             <ViewMemberList memeberList={currentTeamMembers} />
           )}
         </div>
+        <SidebarFooter handleLogout={this.handleLogout} />
       </div>
     );
   }
@@ -113,8 +115,8 @@ SidebarContainer.propTypes = {};
 
 const stateToProps = state => ({
   rightSideBarView: globalStateSelector.getRightSideBarView(state),
+  rightSideBarTitle: globalStateSelector.getRightSideBarTitle(state),
   currentChannel: channelSelector.getCurrentChannel(state),
-  targetMember: channelSelector.getTargetMember(state),
   targetMemberList: channelSelector.getTargetMemberList(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentTeam: teamSelector.getCurrentTeam(state),

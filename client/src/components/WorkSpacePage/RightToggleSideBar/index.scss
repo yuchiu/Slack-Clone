@@ -1,4 +1,5 @@
 @import "../../../assets/css/vars.scss";
+/* remove base styles */
 .ui.menu .item {
   padding: 0;
 }
@@ -12,8 +13,9 @@
   padding: 0;
 }
 
+/* right toggle sidebar layout */
 .ui.sidebar {
-  width: 470px !important;
+  width: 450px !important;
 }
 
 .right-toggle-side-bar {
@@ -22,9 +24,10 @@
 
 .sidebar-container {
   display: grid;
-  grid-template-rows: 63px auto;
+  grid-template-rows: 63px auto 30px;
 }
 
+/* components */
 .right-side-bar-header {
   grid-row: 1;
   font-size: 1.1em;
@@ -41,7 +44,7 @@
     }
   }
   &__title {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-bottom: 5px;
   }
   &__my-profile {
@@ -51,30 +54,106 @@
   }
 }
 
-.detail-content {
+.right-side-bar-content {
   grid-row: 2;
-  height: calc(98vh - 63px);
+  height: calc(98vh - 93px);
+}
+
+.right-side-bar-footer {
+  grid-row: 3;
+  text-align: right;
+  padding-right: 20px;
+  height: 30px;
 }
 
 .view-pic {
+  padding: 13px;
   &__img {
+    width: 420px;
   }
 }
-
-.view-detail {
+.view-header {
+  font-size: 1.6em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin-bottom: 10px;
   &__name {
   }
-  &__email {
-  }
   &__members {
-    &:hover {
-      cursor: pointer;
+    &__icon {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &__text {
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   &__brief-description {
   }
+}
+.view-detail {
+  padding: 10px;
+  font-size: 1.1em;
+  &__details-header {
+    font-size: 1.3em;
+  }
+  &__email {
+  }
   &__detail-description {
   }
   &__role {
+  }
+}
+
+.right-side-bar-label {
+  color: $grey;
+}
+.right-side-bar-item {
+  margin-bottom: 10px;
+}
+.right-side-bar-button {
+  background-color: $white;
+  border: 1px solid $lightgrey;
+  border-radius: 3px;
+  padding: 5px 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus,
+  &:active & {
+    outline: none;
+  }
+}
+
+.member-row {
+  display: flex;
+  overflow-y: hidden;
+  border-bottom: 1px solid $lightgrey;
+  padding: 5px;
+  align-items: center;
+  &__left {
+    width: 65px;
+    height: 65px;
+    &__img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  &__right {
+    &__name {
+      font-size: 1.3em;
+      margin: 0;
+    }
+    &__email {
+      margin: 0;
+      color: $grey;
+      font-weight: 300;
+    }
+  }
+  &:hover {
+    cursor: pointer;
   }
 }

@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 import constants from "../constants";
 
 const initialState = {
@@ -29,4 +31,14 @@ const getIsSideBarOpen = state => state.globalStateReducer.isSideBarOpen;
 
 const getRightSideBarView = state => state.globalStateReducer.rightSideBarView;
 
-export { getIsSideBarOpen, getRightSideBarView };
+const getRightSideBarTitle = createSelector(
+  getRightSideBarView,
+  rightSideBarView =>
+    rightSideBarView
+      .replace(/-/g, " ")
+      .split(" ")
+      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" ")
+);
+
+export { getIsSideBarOpen, getRightSideBarView, getRightSideBarTitle };

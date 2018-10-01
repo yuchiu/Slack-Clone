@@ -5,7 +5,7 @@ class SidebarContainer extends React.Component {
   render() {
     const {
       toggleSideBar,
-      rightSideBarView,
+      rightSideBarTitle,
       switchViewToMyProfile
     } = this.props;
     return (
@@ -16,7 +16,9 @@ class SidebarContainer extends React.Component {
             onClick={toggleSideBar}
           />
 
-          <div className="right-side-bar-header__title">{rightSideBarView}</div>
+          <div className="right-side-bar-header__title">
+            {rightSideBarTitle}
+          </div>
           <span
             className="right-side-bar-header__my-profile"
             onClick={switchViewToMyProfile}

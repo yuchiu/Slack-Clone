@@ -25,7 +25,8 @@ const userSummary = user => {
     username: user.username,
     email: user.email,
     brief_description: user.brief_description,
-    avatarurl: user.avatarurl
+    avatarurl: user.avatarurl,
+    detail_description: user.detail_description
   };
   return summary;
 };

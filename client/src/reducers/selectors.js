@@ -10,18 +10,22 @@ import {
   getCurrentChannelMembers,
   getStateChannelList,
   getChannelList,
-  getTargetMember,
   getTargetMemberList,
   getMessageGroupList,
   getMessageGroupName
 } from "./channel.reducer";
 import { getMessageList } from "./message.reducer";
 import { getError } from "./error.reducer";
-import { getIsSideBarOpen, getRightSideBarView } from "./globalState.reducer";
+import {
+  getIsSideBarOpen,
+  getRightSideBarView,
+  getRightSideBarTitle
+} from "./globalState.reducer";
 
 const globalStateSelector = {
   getIsSideBarOpen: state => getIsSideBarOpen(state),
-  getRightSideBarView: state => getRightSideBarView(state)
+  getRightSideBarView: state => getRightSideBarView(state),
+  getRightSideBarTitle: state => getRightSideBarTitle(state)
 };
 
 const authSelector = {
@@ -46,8 +50,7 @@ const channelSelector = {
   getChannelList: state => getChannelList(state),
   getMessageGroupList: state => getMessageGroupList(state),
   getMessageGroupName: state => getMessageGroupName(state),
-  getTargetMemberList: state => getTargetMemberList(state),
-  getTargetMember: state => getTargetMember(state)
+  getTargetMemberList: state => getTargetMemberList(state)
 };
 const messageSelector = {
   getMessageList: state => getMessageList(state)

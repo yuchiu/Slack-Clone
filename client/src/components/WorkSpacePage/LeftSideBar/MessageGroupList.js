@@ -47,7 +47,7 @@ class MessageGroupList extends React.Component {
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
                     onClick={this.handleSwitchRightSideBarView.bind(
                       this,
-                      "message-group-member-list"
+                      "message-group-members"
                     )}
                   >
                     <span className="leftsidebar__List__link__item__num">
