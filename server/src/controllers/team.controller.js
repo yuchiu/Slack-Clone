@@ -55,13 +55,22 @@ export default {
         }
       );
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         team: response,
         teamList
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -131,13 +140,22 @@ export default {
         }
       );
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         teamMemberList,
         channelMemberList
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -169,11 +187,23 @@ export default {
       );
 
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         teamMemberList,
         channelList
       });
     } catch (err) {
       console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
     }
   }
 };

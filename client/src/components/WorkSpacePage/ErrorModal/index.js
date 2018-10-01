@@ -29,7 +29,7 @@ class PopUpModal extends React.Component {
         <Modal.Content>
           <div className="error-modal__message">{error}</div>
           <br />
-          <Button button fluid onClick={this.handleClose}>
+          <Button primary fluid onClick={this.handleClose}>
             OK
           </Button>
         </Modal.Content>

@@ -15,7 +15,7 @@ export default {
     if (data.error) {
       dispatch({
         type: constants.MESSAGE_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
     if (!data.error) {
@@ -50,7 +50,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.MESSAGE_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   }

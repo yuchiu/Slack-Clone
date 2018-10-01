@@ -26,8 +26,12 @@ export default {
 
       /* username or email is missing */
       if (!credentials.username || !credentials.email) {
-        return res.status(500).send({
-          error: "username and email are required"
+        return res.status(403).send({
+          meta: {
+            type: "error",
+            status: 403,
+            message: "username and email are required"
+          }
         });
       }
 
@@ -39,7 +43,11 @@ export default {
       /* username already registered */
       if (isUsernameRegistered) {
         return res.status(403).send({
-          error: `username: ${credentials.username} is already registered`
+          meta: {
+            type: "error",
+            status: 403,
+            message: `username: ${credentials.username} is already registered`
+          }
         });
       }
 
@@ -53,7 +61,11 @@ export default {
       /* email already registered */
       if (isEmailRegistered) {
         return res.status(403).send({
-          error: `email: ${credentials.email} is already registered`
+          meta: {
+            type: "error",
+            status: 403,
+            message: `email: ${credentials.email} is already registered`
+          }
         });
       }
       /* generate random icon for user */
@@ -107,12 +119,21 @@ export default {
 
       /* response */
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -126,7 +147,13 @@ export default {
       /* user not registered */
       if (!user) {
         return res.status(403).send({
-          error: `this account ${credentials.username} is not yet registered`
+          meta: {
+            type: "error",
+            status: 403,
+            message: `this account ${
+              credentials.username
+            } is not yet registered`
+          }
         });
       }
 
@@ -149,6 +176,11 @@ export default {
 
       if (isPasswordValid) {
         return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
           user: userSummary(user.dataValues),
           teamList
         });
@@ -161,7 +193,11 @@ export default {
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -171,14 +207,18 @@ export default {
       res.status(200).send({
         meta: {
           type: "success",
-          code: 200,
+          status: 200,
           message: ""
         }
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -201,13 +241,22 @@ export default {
         }
       );
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         user: userSummary(user),
         teamList
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   }

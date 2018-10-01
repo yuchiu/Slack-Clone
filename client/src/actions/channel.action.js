@@ -14,7 +14,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.CHANNEL_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   },
@@ -36,7 +36,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.MESSAGE_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   },

@@ -22,14 +22,6 @@ export default {
 
         /*  check if it's message group */
         if (!messageGroup) {
-          // disable authorization so it is easier to test out functionality in demo
-          // user have to be admin to create public or private channel
-          // if (!member.admin) {
-          //   return res.status(401).send({
-          //     error: "You have to be admin of the team to create channels"
-          //   });
-          // }
-
           channel = await models.Channel.create(
             {
               name: channelName,
@@ -59,7 +51,12 @@ export default {
           /* message group already exist, respond with error */
           if (data.length) {
             return res.status(403).send({
-              error: "direct message between members has already been created"
+              meta: {
+                type: "error",
+                status: 403,
+                message:
+                  "direct message between members has already been created"
+              }
             });
           }
 
@@ -134,6 +131,11 @@ export default {
       );
 
       res.status(200).send({
+        meta: {
+          type: "sucesss",
+          status: 200,
+          message: ""
+        },
         channelList,
         channel: response.channel,
         channelMemberList: response.channelMemberList
@@ -141,7 +143,11 @@ export default {
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   },
@@ -176,11 +182,15 @@ export default {
         /* return error if user is not member */
         if (!member) {
           return res.status(403).send({
-            error: "you are not member of the private channel"
+            meta: {
+              type: "error",
+              status: 403,
+              message: "you are not member of the private channel"
+            }
           });
         }
         /*  get private channel member list */
-        const ChannelMemberList = await models.sequelize.query(
+        const channelMemberList = await models.sequelize.query(
           "select * from users as u join channel_members as pcm on pcm.user_id = u.id where pcm.channel_id = ?",
           {
             replacements: [channelId],
@@ -191,8 +201,13 @@ export default {
 
         /*  return channel's messages and channel private member list */
         return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
           messageList: messageList.reverse(),
-          channelMemberList: ChannelMemberList
+          channelMemberList
         });
       }
 
@@ -206,13 +221,22 @@ export default {
         }
       );
       res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         messageList: messageList.reverse(),
         channelMemberList
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   }

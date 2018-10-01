@@ -59,10 +59,23 @@ export default {
       });
 
       const message = messageResponse.dataValues;
-      return { message };
+      return {
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        message
+      };
     } catch (err) {
       console.log(err);
-      return { error: "error occured while creating message" };
+      return {
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      };
     }
   },
   getMoreMessage: async (req, res) => {
@@ -96,12 +109,21 @@ export default {
         { raw: true }
       );
       return res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
         messageList: messageList.reverse()
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        error: "server error"
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
       });
     }
   }

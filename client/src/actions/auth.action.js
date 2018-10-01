@@ -23,7 +23,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.AUTH_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   },
@@ -40,7 +40,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.AUTH_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   },
@@ -55,7 +55,7 @@ export default {
       const { data } = err.response;
       dispatch({
         type: constants.AUTH_ERROR,
-        payload: data
+        payload: data.meta.message
       });
     }
   }
