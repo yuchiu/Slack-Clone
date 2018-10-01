@@ -45,9 +45,18 @@ export default {
     }
   },
 
-  logoutUser: () => dispatch => {
-    dispatch({
-      type: constants.LOGOUT_USER
-    });
+  logoutUser: () => async dispatch => {
+    try {
+      await authService.logoutUser();
+      dispatch({
+        type: constants.LOGOUT_USER
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.AUTH_ERROR,
+        payload: data
+      });
+    }
   }
 };

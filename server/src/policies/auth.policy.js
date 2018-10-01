@@ -4,27 +4,7 @@ import passport from "passport";
 import models from "../models";
 
 export default {
-  /* jwt auth middleware */
-  // authentication: (req, res, next) => {
-  //   passport.authenticate("jwt", (err, user) => {
-  //     if (err || !user) {
-  //       res.status(403).send({
-  //         error: "token authentication failed"
-  //       });
-  //     } else {
-  //       req.user = user;
-  //       next();
-  //     }
-  //   })(req, res, next);
-  // },
-
   authentication: (req, res, next) => {
-    console.log("---------------");
-    console.log("authentication");
-    console.log("req.session");
-    console.log(req.session);
-    console.log("req.user");
-    console.log(req.user);
     if (!req.user) {
       res.status(403).send({
         error: "session authentication failed"

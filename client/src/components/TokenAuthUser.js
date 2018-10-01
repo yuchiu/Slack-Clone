@@ -3,14 +3,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { authAction } from "@/actions";
-import { localStore } from "@/utils";
 
 class AutoAuth extends React.Component {
   componentDidMount() {
-    if (localStore.getToken()) {
-      const { autoAuth } = this.props;
-      autoAuth();
-    }
+    const { autoAuth } = this.props;
+    autoAuth();
   }
 
   render() {

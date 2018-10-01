@@ -13,7 +13,6 @@ export default app => {
   /* api */
   const apiv1 = express.Router();
   const user = express.Router();
-  const auth = express.Router();
   const channel = express.Router();
   const team = express.Router();
   const message = express.Router();
@@ -27,8 +26,9 @@ export default app => {
 
   /* user routes */
   user.get("/", authPolicy.authentication, userController.tryAutoLogin);
-  user.post("/", authPolicy.registerRule, userController.create);
-  user.post("/:username", userController.login);
+  user.get("/logouts", userController.logout);
+  user.post("/registers", authPolicy.registerRule, userController.register);
+  user.post("/logins", userController.login);
 
   /* teams routes */
   team.post("/", authPolicy.authentication, teamController.create);

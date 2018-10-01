@@ -1,5 +1,5 @@
 import constants from "@/constants";
-import { localStore, sessionStore } from "@/utils";
+import { sessionStore } from "@/utils";
 
 const initialState = {
   isUserLoggedIn: false
@@ -16,12 +16,10 @@ export default (state = initialState, action) => {
     case constants.LOGIN_USER:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
-      localStore.authenticateUser(action.payload);
       return newState;
 
     case constants.LOGOUT_USER:
       sessionStore.setUserLoggedOut();
-      localStore.deauthenticateUser();
       return initialState;
 
     default:

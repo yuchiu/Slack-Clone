@@ -4,6 +4,7 @@ import http from "http";
 import socketIo from "socket.io";
 import redis from "redis";
 import cors from "cors";
+import connectRedis from "connect-redis";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import session from "express-session";
@@ -16,12 +17,14 @@ import models from "./models";
 import config from "./config";
 import { routes, sockets } from "./routers";
 
-const RedisStore = require("connect-redis")(session);
-
 /* connect express with socket.io, wrapping app with server, then wrap server with socket.io */
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
+
+const RedisStore = connectRedis(session);
+
+const client = redis.createClient();
 
 /* allow cors & dev logs */
 if (process.env.NODE_ENV === "development") {
@@ -45,8 +48,10 @@ app.use(cookieParser());
 app.use(
   session({
     store: new RedisStore({
-      port: process.env.REDIS_PORT || "6379",
-      host: process.env.REDIS_HOST || "localhost"
+      port: process.env.REDIS_PORT || "6380",
+      host: process.env.REDIS_HOST || "localhost",
+      client,
+      ttl: 604800 //  60 * 60 * 24 * 7 in seconds
     }),
     secret: process.env.SESSION_SECRET || "secret",
     name: "session",
@@ -55,25 +60,20 @@ app.use(
     cookie: {
       httpOnly: false,
       path: "/",
-      maxAge: 1000 * 60 * 60 * 24 * 7
+      secure: false,
+      maxAge: 604800000 // 1000 * 60 * 60 * 24 * 7 in milliseconds
     }
   })
 );
 
 // check for session and expose the user’s profile fields as variables
 app.use(async (req, res, next) => {
-  console.log("---------------");
-  console.log("sessions checker");
-  console.log("req.session");
-  console.log(req.session);
   if (req.session && req.session.user) {
     const user = await models.User.findOne({
-      username: req.session.user.username
+      where: {
+        username: req.session.user.username
+      }
     });
-    console.log("---------------");
-    console.log("set req.user");
-    console.log("user.dataValues");
-    console.log(user.dataValues);
     if (user.dataValues) {
       req.user = user;
       delete req.user.password; // delete the password from the session

@@ -20,7 +20,7 @@ const userSummary = user => {
 };
 
 export default {
-  create: async (req, res) => {
+  register: async (req, res) => {
     try {
       const credentials = req.body;
 
@@ -73,15 +73,6 @@ export default {
       /* credential is validated */
       const user = await models.User.create(credentials);
 
-      req.session.user = user.dataValues;
-      console.log("---------------");
-      console.log("register");
-      console.log("req.session.user");
-      console.log(req.session.user);
-      console.log("req.session");
-      console.log(req.session);
-      req.session.save();
-
       /* auto join demo team */
       /* create new member  */
       await models.TeamMember.create({ userId: user.id, teamId: 1 });
@@ -110,6 +101,10 @@ export default {
         channelId: initialChannelId
       });
 
+      /* save session */
+      req.session.user = user.dataValues;
+      req.session.save();
+
       /* response */
       res.status(200).send({
         user: userSummary(user)
@@ -135,15 +130,6 @@ export default {
         });
       }
 
-      req.session.user = user.dataValues;
-      console.log("---------------");
-      console.log("login");
-      console.log("req.session.user");
-      console.log(req.session.user);
-      console.log("req.session");
-      console.log(req.session);
-      req.session.save();
-
       /* validate password */
       const isPasswordValid = await user.comparePassword(credentials.password);
 
@@ -156,6 +142,11 @@ export default {
           raw: true
         }
       );
+
+      /* save session */
+      req.session.user = user.dataValues;
+      req.session.save();
+
       if (isPasswordValid) {
         return res.status(200).send({
           user: userSummary(user.dataValues),
@@ -174,6 +165,24 @@ export default {
       });
     }
   },
+  logout: async (req, res) => {
+    try {
+      req.session.destroy();
+      res.status(200).send({
+        meta: {
+          type: "success",
+          code: 200,
+          message: ""
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        error: "server error"
+      });
+    }
+  },
+
   tryAutoLogin: async (req, res) => {
     try {
       // req.user is retreived from bearer token of auth.policy
@@ -191,11 +200,6 @@ export default {
           raw: true
         }
       );
-      console.log("try auto login");
-      req.session.someval = "daijdisjads";
-      console.log("req.session");
-      console.log(req.session);
-      req.session.save();
       res.status(200).send({
         user: userSummary(user),
         teamList
