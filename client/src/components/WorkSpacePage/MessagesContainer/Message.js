@@ -13,7 +13,7 @@ class Message extends React.Component {
     if (message.isCurrentUser) {
       switchRightSideBarView("my-profile");
     } else {
-      switchRightSideBarView("user");
+      switchRightSideBarView("user-profile");
     }
   };
 

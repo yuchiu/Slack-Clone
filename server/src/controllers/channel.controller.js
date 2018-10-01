@@ -22,12 +22,13 @@ export default {
 
         /*  check if it's message group */
         if (!messageGroup) {
+          // disable authorization so it is easier to test out functionality in demo
           // user have to be admin to create public or private channel
-          if (!member.admin) {
-            return res.status(403).send({
-              error: "You have to be admin of the team to create channels"
-            });
-          }
+          // if (!member.admin) {
+          //   return res.status(401).send({
+          //     error: "You have to be admin of the team to create channels"
+          //   });
+          // }
 
           channel = await models.Channel.create(
             {

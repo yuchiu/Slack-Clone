@@ -3,7 +3,6 @@ import path from "path";
 
 import {
   userController,
-  authController,
   channelController,
   messageController,
   teamController
@@ -21,21 +20,15 @@ export default app => {
 
   /* routes to api v1 routes  */
   app.use("/api/v1", apiv1);
-  apiv1.use("/auths", auth);
   apiv1.use("/users", user);
   apiv1.use("/channels", channel);
   apiv1.use("/teams", team);
   apiv1.use("/messages", message);
 
-  /* auth routes */
-  auth.get("/", authPolicy.authentication, authController.bearerTokenAuth);
-  auth.post("/", authPolicy.registerRule, authController.create);
-  auth.post("/:username", authController.login);
-
   /* user routes */
-  user.get("/:username", userController.get);
-  user.put("/:username", userController.update);
-  user.delete("/:username", userController.delete);
+  user.get("/", authPolicy.authentication, userController.tryAutoLogin);
+  user.post("/", authPolicy.registerRule, userController.create);
+  user.post("/:username", userController.login);
 
   /* teams routes */
   team.post("/", authPolicy.authentication, teamController.create);

@@ -13,6 +13,7 @@ class ViewChannel extends React.Component {
           <div className="view-header__name right-side-bar-item">
             {currentChannel.name}
           </div>
+          <br />
           <div className="view-header__members  right-side-bar-item">
             <i
               className="far fa-user view-header__members__icon"

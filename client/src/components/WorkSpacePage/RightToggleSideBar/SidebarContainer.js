@@ -72,7 +72,7 @@ class SidebarContainer extends React.Component {
               handleLogout={this.handleLogout}
             />
           )}
-          {rightSideBarView === "user" && (
+          {rightSideBarView === "user-profile" && (
             <ViewUser targetMember={targetMemberList[0]} />
           )}
           {rightSideBarView === "channel" && (
