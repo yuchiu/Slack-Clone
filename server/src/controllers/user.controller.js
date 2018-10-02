@@ -94,14 +94,6 @@ export default {
         userId: user.id,
         teamId: initialDemoTeamId
       });
-      const teamMemberList = await models.sequelize.query(
-        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
-        {
-          replacements: [initialDemoTeamId],
-          model: models.User,
-          raw: true
-        }
-      );
 
       /* find the initial channel general and add new user to the general channel */
       const initialChannel = await models.sequelize.query(
@@ -113,11 +105,6 @@ export default {
         }
       );
       const initialChannelId = initialChannel[0].id;
-
-      await models.ChannelMember.create({
-        userId: user.id,
-        channelId: initialChannelId
-      });
 
       // remove stale data from cache
       redisClient.del(`teamMemberList:${initialDemoTeamId}`, (err, reply) => {
@@ -138,6 +125,11 @@ export default {
             console.log("Does't exists");
           }
         }
+      });
+
+      await models.ChannelMember.create({
+        userId: user.id,
+        channelId: initialChannelId
       });
 
       /* save session */

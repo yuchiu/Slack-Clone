@@ -2,59 +2,59 @@ import constants from "@/constants";
 import { authService } from "./services";
 
 export default {
-  autoAuth: () => async dispatch => {
-    const response = await authService.autoAuth();
+  fetchAutoAuth: () => async dispatch => {
+    const response = await authService.fetchAutoAuth();
     const { data } = response;
     dispatch({
-      type: constants.AUTO_LOGIN,
+      type: constants.USER_AUTO_LOGIN_FETCH,
       payload: data
     });
   },
 
-  registerUser: credentials => async dispatch => {
+  fetchRegisterUser: credentials => async dispatch => {
     try {
-      const response = await authService.registerUser(credentials);
+      const response = await authService.fetchRegisterUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.LOGIN_USER,
+        type: constants.USER_LOGIN_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.AUTH_ERROR,
+        type: constants.ERROR_AUTH,
         payload: data.meta.message
       });
     }
   },
 
-  loginUser: credentials => async dispatch => {
+  fetchLoginUser: credentials => async dispatch => {
     try {
-      const response = await authService.loginUser(credentials);
+      const response = await authService.fetchLoginUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.LOGIN_USER,
+        type: constants.USER_LOGIN_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.AUTH_ERROR,
+        type: constants.ERROR_AUTH,
         payload: data.meta.message
       });
     }
   },
 
-  logoutUser: () => async dispatch => {
+  fetchLogoutUser: () => async dispatch => {
     try {
-      await authService.logoutUser();
+      await authService.fetchLogoutUser();
       dispatch({
-        type: constants.LOGOUT_USER
+        type: constants.USER_LOGOUT_FETCH
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.AUTH_ERROR,
+        type: constants.ERROR_AUTH,
         payload: data.meta.message
       });
     }

@@ -6,12 +6,12 @@ import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
   handleClick = targetUserId => {
-    const { message, switchRightSideBarView, switchTargetUser } = this.props;
+    const { message, switchRightSidebarView, switchTargetUser } = this.props;
     if (message.isCurrentUser) {
-      switchRightSideBarView("my-profile");
+      switchRightSidebarView("my-profile");
     } else {
       switchTargetUser(targetUserId);
-      switchRightSideBarView("user-profile");
+      switchRightSidebarView("user-profile");
     }
   };
 
@@ -55,9 +55,7 @@ class Message extends React.Component {
 }
 Message.propTypes = {
   message: PropTypes.object.isRequired,
-
-  switchTargetUser: PropTypes.func.isRequired,
-  switchChannel: PropTypes.func.isRequired
+  switchTargetUser: PropTypes.func.isRequired
 };
 
 export default Message;

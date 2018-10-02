@@ -8,12 +8,12 @@ class ChannelList extends React.Component {
   handleClick = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
-    this.handleSwitchRightSideBarView("channel");
+    this.handleSwitchRightSidebarView("channel");
   };
 
-  handleSwitchRightSideBarView = selectedView => {
-    const { switchRightSideBarView } = this.props;
-    switchRightSideBarView(selectedView);
+  handleSwitchRightSidebarView = selectedView => {
+    const { switchRightSidebarView } = this.props;
+    switchRightSidebarView(selectedView);
   };
 
   render() {
@@ -46,7 +46,7 @@ ChannelList.propTypes = {
   teamId: PropTypes.number,
 
   switchChannel: PropTypes.func.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 export default ChannelList;

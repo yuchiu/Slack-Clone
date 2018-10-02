@@ -7,31 +7,31 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.AUTH_ERROR:
+    case constants.ERROR_AUTH:
       newState.error = action.payload;
       return newState;
 
-    case constants.CHANNEL_ERROR:
+    case constants.ERROR_CHANNEL:
       newState.error = action.payload;
       return newState;
 
-    case constants.MESSAGE_ERROR:
+    case constants.ERROR_MESSAGE:
       newState.error = action.payload;
       return newState;
 
-    case constants.TEAM_ERROR:
+    case constants.ERROR_TEAM:
       newState.error = action.payload;
       return newState;
 
-    case constants.UPLOAD_ERROR:
+    case constants.ERROR_UPLOAD:
       newState.error = action.payload;
       return newState;
 
-    case constants.CLEAR_ERROR:
+    case constants.ERROR_ALL_CLEAR:
       newState.error = "";
       return newState;
 
-    case constants.LOGOUT_USER:
+    case constants.USER_LOGOUT_FETCH:
       return initialState;
 
     default:

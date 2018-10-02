@@ -6,12 +6,12 @@ import { Redirect } from "react-router-dom";
 import "./index.scss";
 import { sessionStore } from "@/utils";
 import { teamAction, errorAction, channelAction } from "@/actions";
-import LeftSideBar from "./LeftSideBar";
+import LeftSidebar from "./LeftSidebar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
 import InputContainer from "./InputContainer";
-import RightStickySideBar from "./RightStickySideBar";
-import RightToggleSideBar from "./RightToggleSideBar";
+import RightStickySidebar from "./RightStickySidebar";
+import RightToggleSidebar from "./RightToggleSidebar";
 import ErrorModal from "./ErrorModal";
 import {
   teamSelector,
@@ -26,12 +26,12 @@ class WorkSpacePage extends React.Component {
   };
 
   componentDidMount() {
-    const { getTeamAssociatedList } = this.props;
+    const { fetchTeamAssociatedList } = this.props;
 
     /* get channelList, messageGroupList, teamMembers when component mount */
     if (this.isCurrentTeamExist()) {
       const teamId = sessionStore.getTeamId();
-      getTeamAssociatedList(teamId);
+      fetchTeamAssociatedList(teamId);
     }
   }
 
@@ -51,8 +51,8 @@ class WorkSpacePage extends React.Component {
 
   componentDidUpdate = () => {
     const {
-      fetchCurrentTeam,
-      fetchCurrentChannel,
+      getCurrentTeam,
+      getCurrentChannel,
       teamList,
       channelList,
       match: { params }
@@ -64,8 +64,8 @@ class WorkSpacePage extends React.Component {
       currentTeamParam !== params.teamId
     ) {
       if (teamList.length > 0 && channelList.length > 0) {
-        fetchCurrentTeam(params);
-        fetchCurrentChannel(params);
+        getCurrentTeam(params);
+        getCurrentChannel(params);
         this.setState({
           currentTeamParam: params.teamId,
           currentChannelParam: params.channelId
@@ -76,32 +76,32 @@ class WorkSpacePage extends React.Component {
 
   render() {
     const { openErrorModal } = this.state;
-    const { error, clearError, isSideBarOpen } = this.props;
+    const { error, clearAllError, isSidebarOpen } = this.props;
     return (
       <React.Fragment>
         {/* redirect to create team if user is not in any team */}
         {!this.isCurrentTeamExist() && <Redirect to="/create-team" />}
         {/* render workspace if currentTeam exist */}
         {this.isCurrentTeamExist() && (
-          <RightToggleSideBar>
+          <RightToggleSidebar>
             <main
-              className={`workspace-page workspace-page--sidebar-${isSideBarOpen}`}
+              className={`workspace-page workspace-page--sidebar-${isSidebarOpen}`}
             >
               {error && !openErrorModal ? this.toggleErrorModal() : null}
-              <LeftSideBar />
+              <LeftSidebar />
               <MainHeader />
               <MessagesContainer />
               <InputContainer />
-              <RightStickySideBar />
+              <RightStickySidebar />
               <ErrorModal
                 onClose={this.toggleErrorModal}
                 open={openErrorModal}
                 error={error}
-                clearError={clearError}
+                clearAllError={clearAllError}
                 key="error-modal"
               />
             </main>
-          </RightToggleSideBar>
+          </RightToggleSidebar>
         )}
       </React.Fragment>
     );
@@ -113,12 +113,12 @@ WorkSpacePage.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   channelList: PropTypes.array.isRequired,
   error: PropTypes.string.isRequired,
-  isSideBarOpen: PropTypes.bool.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
 
-  clearError: PropTypes.func.isRequired,
-  getTeamAssociatedList: PropTypes.func.isRequired,
-  fetchCurrentTeam: PropTypes.func.isRequired,
-  fetchCurrentChannel: PropTypes.func.isRequired
+  clearAllError: PropTypes.func.isRequired,
+  fetchTeamAssociatedList: PropTypes.func.isRequired,
+  getCurrentTeam: PropTypes.func.isRequired,
+  getCurrentChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -126,21 +126,21 @@ const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
   channelList: channelSelector.getChannelList(state),
   error: errorSelector.getError(state),
-  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
 });
 
 const dispatchToProps = dispatch => ({
-  clearError: () => {
-    dispatch(errorAction.clearError());
+  clearAllError: () => {
+    dispatch(errorAction.clearAllError());
   },
-  getTeamAssociatedList: teamId => {
-    dispatch(teamAction.getTeamAssociatedList(teamId));
+  fetchTeamAssociatedList: teamId => {
+    dispatch(teamAction.fetchTeamAssociatedList(teamId));
   },
-  fetchCurrentTeam: params => {
-    dispatch(teamAction.fetchCurrentTeam(params));
+  getCurrentTeam: params => {
+    dispatch(teamAction.getCurrentTeam(params));
   },
-  fetchCurrentChannel: params => {
-    dispatch(channelAction.fetchCurrentChannel(params));
+  getCurrentChannel: params => {
+    dispatch(channelAction.getCurrentChannel(params));
   }
 });
 

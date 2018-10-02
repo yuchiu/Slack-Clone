@@ -7,14 +7,14 @@ class ViewMemberList extends React.Component {
   handleClick = targetUserId => {
     const {
       switchTargetUser,
-      switchRightSideBarView,
+      switchRightSidebarView,
       currentUser
     } = this.props;
     if (targetUserId === currentUser.id) {
-      switchRightSideBarView("my-profile");
+      switchRightSidebarView("my-profile");
     } else {
       switchTargetUser(targetUserId);
-      switchRightSideBarView("user-profile");
+      switchRightSidebarView("user-profile");
     }
   };
 
@@ -52,7 +52,7 @@ class ViewMemberList extends React.Component {
 ViewMemberList.propTypes = {
   currentUser: PropTypes.object.isRequired,
   memeberList: PropTypes.array.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired,
+  switchRightSidebarView: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired
 };
 

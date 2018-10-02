@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 class TeamList extends React.Component {
   handleClick = teamId => {
-    const { switchTeam, getTeamAssociatedList } = this.props;
+    const { switchTeam, fetchTeamAssociatedList } = this.props;
     switchTeam(teamId);
-    getTeamAssociatedList(teamId);
+    fetchTeamAssociatedList(teamId);
   };
 
   render() {
@@ -33,7 +33,7 @@ class TeamList extends React.Component {
 TeamList.propTypes = {
   teamList: PropTypes.array.isRequired,
   switchTeam: PropTypes.func.isRequired,
-  getTeamAssociatedList: PropTypes.func.isRequired
+  fetchTeamAssociatedList: PropTypes.func.isRequired
 };
 
 export default TeamList;

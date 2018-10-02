@@ -3,14 +3,14 @@ import socket from "./socket";
 import { messageAction } from "@/actions";
 
 export default {
-  sendMessage: messageData => {
+  sendSocketMessage: messageData => {
     socket.emit("sendMessage", messageData);
   },
 
-  /* dispatch messageReceived when new data is received */
-  receiveMessage: dispatch => {
+  /* dispatch dispatchReceivedMessage when new data is received */
+  receiveSocketMessage: dispatch => {
     socket.on("receiveMessage", async data => {
-      if (data) dispatch(messageAction.messageReceived(data));
+      if (data) dispatch(messageAction.dispatchReceivedMessage(data));
     });
   },
   clearSocketConnection: () => {

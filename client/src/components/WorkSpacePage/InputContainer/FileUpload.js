@@ -15,10 +15,10 @@ class FileUpload extends React.Component {
 
   handleUpload = file => {
     if (file) {
-      const { sendMessage, currentUser, currentChannel, error } = this.props;
+      const { sendSocketMessage, currentUser, currentChannel } = this.props;
       if (file.size > 1024 * 1024 * 5) {
-        const { fetchError } = this.props;
-        fetchError("file size exceed maximum upload size of 5 mb");
+        const { createUploadError } = this.props;
+        createUploadError("file size exceed maximum upload size of 5 mb");
         return;
       }
       if (
@@ -26,11 +26,13 @@ class FileUpload extends React.Component {
         !(file.type === "text/plain") &&
         !file.type.startsWith("audio/")
       ) {
-        const { fetchError } = this.props;
-        fetchError("Files upload can only be in text, image, or audio type");
+        const { createUploadError } = this.props;
+        createUploadError(
+          "Files upload can only be in text, image, or audio type"
+        );
         return;
       }
-      sendMessage({
+      sendSocketMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
@@ -64,8 +66,8 @@ class FileUpload extends React.Component {
 FileUpload.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
-  sendMessage: PropTypes.func.isRequired,
-  fetchError: PropTypes.func.isRequired
+  sendSocketMessage: PropTypes.func.isRequired,
+  createUploadError: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -73,11 +75,11 @@ const stateToProps = state => ({
   currentChannel: channelSelector.getCurrentChannel(state)
 });
 const dispatchToProps = dispatch => ({
-  sendMessage: file => {
-    dispatch(messageAction.sendMessage(file));
+  sendSocketMessage: file => {
+    dispatch(messageAction.sendSocketMessage(file));
   },
-  fetchError: text => {
-    dispatch(errorAction.fetchError(text));
+  createUploadError: text => {
+    dispatch(errorAction.createUploadError(text));
   }
 });
 

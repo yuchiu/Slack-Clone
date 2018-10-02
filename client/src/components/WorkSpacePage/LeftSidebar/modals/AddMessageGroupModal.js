@@ -50,9 +50,9 @@ class AddMessageGroupModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { createChannel, currentTeam, onClose } = this.props;
+      const { fetchCreateChannel, currentTeam, onClose } = this.props;
       const { members, channelName } = this.state;
-      createChannel({
+      fetchCreateChannel({
         teamId: currentTeam.id,
         messageGroup: true,
         isPublic: false,
@@ -134,7 +134,7 @@ AddMessageGroupModal.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentTeamMembers: PropTypes.array.isRequired,
 
-  createChannel: PropTypes.func.isRequired
+  fetchCreateChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -143,8 +143,8 @@ const stateToProps = state => ({
   currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
 });
 const dispatchToProps = dispatch => ({
-  createChannel: channelFormInfo => {
-    dispatch(channelAction.createChannel(channelFormInfo));
+  fetchCreateChannel: channelFormInfo => {
+    dispatch(channelAction.fetchCreateChannel(channelFormInfo));
   }
 });
 export default connect(

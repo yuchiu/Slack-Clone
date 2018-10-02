@@ -8,17 +8,17 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.AUTO_LOGIN:
+    case constants.USER_AUTO_LOGIN_FETCH:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return newState;
 
-    case constants.LOGIN_USER:
+    case constants.USER_LOGIN_FETCH:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return newState;
 
-    case constants.LOGOUT_USER:
+    case constants.USER_LOGOUT_FETCH:
       sessionStore.setUserLoggedOut();
       return initialState;
 

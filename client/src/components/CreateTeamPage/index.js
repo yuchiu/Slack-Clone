@@ -29,9 +29,9 @@ class CreateTeamPage extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
-      const { createTeam, history } = this.props;
+      const { fetchCreateTeam, history } = this.props;
       const { name, about } = this.state;
-      createTeam({ name, about });
+      fetchCreateTeam({ name, about });
       history.push(`/`);
     }
   };
@@ -59,7 +59,7 @@ class CreateTeamPage extends React.Component {
 }
 
 CreateTeamPage.propTypes = {
-  createTeam: PropTypes.func.isRequired,
+  fetchCreateTeam: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   error: PropTypes.string.isRequired
 };
@@ -69,8 +69,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  createTeam: teamFormInfo => {
-    dispatch(teamAction.createTeam(teamFormInfo));
+  fetchCreateTeam: teamFormInfo => {
+    dispatch(teamAction.fetchCreateTeam(teamFormInfo));
   }
 });
 export default connect(

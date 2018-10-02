@@ -11,6 +11,18 @@ export default {
     try {
       const { channelId, userId, text, username, avatarurl, file } = data;
 
+      console.log("created message ");
+      // remove stale data from cache
+      redisClient.del(`messageList:${channelId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`messageList:${channelId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
       /* check if it is upload or message */
       if (!file) {
         const messageResponse = await models.Message.create({
@@ -58,16 +70,6 @@ export default {
         username,
         filetype: file.type,
         url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
-      });
-      // remove stale data from cache
-      redisClient.del(`messageList:${channelId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`messageList:${channelId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
       });
 
       const message = messageResponse.dataValues;

@@ -16,16 +16,16 @@ import {
 import { getMessageList } from "./message.reducer";
 import { getError } from "./error.reducer";
 import {
-  getIsSideBarOpen,
-  getRightSideBarView,
+  getIsSidebarOpen,
+  getRightSidebarView,
   getTargetUser,
-  getRightSideBarTitle
+  getRightSidebarTitle
 } from "./globalState.reducer";
 
 const globalStateSelector = {
-  getIsSideBarOpen: state => getIsSideBarOpen(state),
-  getRightSideBarView: state => getRightSideBarView(state),
-  getRightSideBarTitle: state => getRightSideBarTitle(state),
+  getIsSidebarOpen: state => getIsSidebarOpen(state),
+  getRightSidebarView: state => getRightSidebarView(state),
+  getRightSidebarTitle: state => getRightSidebarTitle(state),
   getTargetUser: state => getTargetUser(state)
 };
 

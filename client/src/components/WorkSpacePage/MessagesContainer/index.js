@@ -26,8 +26,8 @@ class MessagesContainer extends React.Component {
   }
 
   componentDidMount() {
-    const { receiveMessage, messageList } = this.props;
-    receiveMessage();
+    const { receiveSocketMessage, messageList } = this.props;
+    receiveSocketMessage();
     this.setState({
       currentMessageList: messageList.length
     });
@@ -36,13 +36,13 @@ class MessagesContainer extends React.Component {
 
   componentDidUpdate() {
     const {
-      getChannelAssociatedList,
+      fetchGetChannelAssociatedList,
       currentChannel,
       currentTeam
     } = this.props;
     /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
     if (this.isCurrentDataFetched() && !this.state.isMessageFetched) {
-      getChannelAssociatedList(currentChannel.id);
+      fetchGetChannelAssociatedList(currentChannel.id);
       this.setState({ isMessageFetched: true });
     }
 
@@ -106,14 +106,14 @@ class MessagesContainer extends React.Component {
   render() {
     const {
       messageList,
-      isSideBarOpen,
+      isSidebarOpen,
 
-      switchRightSideBarView,
+      switchRightSidebarView,
       switchTargetUser
     } = this.props;
     return (
       <div
-        className={`messages-container messages-container--sidebar-${isSideBarOpen}`}
+        className={`messages-container messages-container--sidebar-${isSidebarOpen}`}
         ref={scrollerDiv => {
           this.scrollerDiv = scrollerDiv;
         }}
@@ -123,7 +123,7 @@ class MessagesContainer extends React.Component {
           {messageList.map((message, i) => (
             <Message
               key={`${message.id}-${i}`}
-              switchRightSideBarView={switchRightSideBarView}
+              switchRightSidebarView={switchRightSidebarView}
               message={message}
               switchTargetUser={switchTargetUser}
             />
@@ -138,12 +138,12 @@ MessagesContainer.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   messageList: PropTypes.array.isRequired,
 
-  getChannelAssociatedList: PropTypes.func.isRequired,
+  fetchGetChannelAssociatedList: PropTypes.func.isRequired,
   fetchMoreMessage: PropTypes.func.isRequired,
   clearSocketConnection: PropTypes.func.isRequired,
-  receiveMessage: PropTypes.func.isRequired,
+  receiveSocketMessage: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -153,8 +153,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  getChannelAssociatedList: channelId => {
-    dispatch(channelAction.getChannelAssociatedList(channelId));
+  fetchGetChannelAssociatedList: channelId => {
+    dispatch(channelAction.fetchGetChannelAssociatedList(channelId));
   },
   fetchMoreMessage: currentMessageData => {
     dispatch(messageAction.fetchMoreMessage(currentMessageData));
@@ -162,14 +162,14 @@ const dispatchToProps = dispatch => ({
   clearSocketConnection: () => {
     dispatch(messageAction.clearSocketConnection());
   },
-  receiveMessage: () => {
-    dispatch(messageAction.receiveMessage());
+  receiveSocketMessage: () => {
+    dispatch(messageAction.receiveSocketMessage());
   },
   switchTargetUser: targetUserId => {
     dispatch(globalStateAction.switchTargetUser(targetUserId));
   },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  switchRightSidebarView: selectedView => {
+    dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }
 });
 

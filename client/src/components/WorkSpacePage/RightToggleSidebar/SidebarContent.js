@@ -16,12 +16,12 @@ import {
   ViewMemberList,
   ViewTeam,
   ViewUser
-} from "./sidebarContent";
+} from "./contentView";
 
 class SidebarContainer extends React.Component {
-  toggleSideBar = () => {
-    const { toggleSideBar } = this.props;
-    toggleSideBar();
+  toggleRightSidebar = () => {
+    const { toggleRightSidebar } = this.props;
+    toggleRightSidebar();
   };
 
   render() {
@@ -31,70 +31,70 @@ class SidebarContainer extends React.Component {
       messageGroupMemberList,
       currentChannelMembers,
       currentTeam,
-      rightSideBarView,
+      rightSidebarView,
       currentTeamMembers,
       currentUser,
       targetUser,
       messageGroupList,
 
       /* actions */
-      createChannel,
+      fetchCreateChannel,
       switchChannel,
       switchTargetUser,
-      switchRightSideBarView
+      switchRightSidebarView
     } = this.props;
     return (
-      <div className="right-side-bar-content">
-        {rightSideBarView === "my-profile" && (
+      <div className="right-sidebar-content">
+        {rightSidebarView === "my-profile" && (
           <ViewMyProfile currentUser={currentUser} />
         )}
-        {rightSideBarView === "user-profile" && (
+        {rightSidebarView === "user-profile" && (
           <ViewUser
             targetUser={targetUser}
             switchChannel={switchChannel}
             currentUser={currentUser}
             messageGroupList={messageGroupList}
             currentTeam={currentTeam}
-            createChannel={createChannel}
+            fetchCreateChannel={fetchCreateChannel}
           />
         )}
 
-        {rightSideBarView === "channel" && (
+        {rightSidebarView === "channel" && (
           <ViewChannel
             currentChannel={currentChannel}
             currentChannelMembers={currentChannelMembers}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         )}
-        {rightSideBarView === "team" && (
+        {rightSidebarView === "team" && (
           <ViewTeam
             currentTeam={currentTeam}
             currentTeamMembers={currentTeamMembers}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         )}
-        {rightSideBarView === "message-group-members" && (
+        {rightSidebarView === "message-group-members" && (
           <ViewMemberList
             memeberList={messageGroupMemberList}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         )}
-        {rightSideBarView === "channel-members" && (
+        {rightSidebarView === "channel-members" && (
           <ViewMemberList
             memeberList={currentChannelMembers}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         )}
-        {rightSideBarView === "team-members" && (
+        {rightSidebarView === "team-members" && (
           <ViewMemberList
             memeberList={currentTeamMembers}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         )}
       </div>
@@ -103,7 +103,7 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
-  rightSideBarView: PropTypes.string.isRequired,
+  rightSidebarView: PropTypes.string.isRequired,
   targetUser: PropTypes.object,
   currentChannel: PropTypes.object.isRequired,
   messageGroupMemberList: PropTypes.array,
@@ -113,15 +113,15 @@ SidebarContainer.propTypes = {
   currentTeamMembers: PropTypes.array.isRequired,
   currentUser: PropTypes.object.isRequired,
 
-  switchRightSideBarView: PropTypes.func.isRequired,
+  switchRightSidebarView: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired,
   switchChannel: PropTypes.func.isRequired,
-  createChannel: PropTypes.func.isRequired
+  fetchCreateChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
   /* global state */
-  rightSideBarView: globalStateSelector.getRightSideBarView(state),
+  rightSidebarView: globalStateSelector.getRightSidebarView(state),
   targetUser: globalStateSelector.getTargetUser(state),
 
   /* channel selector */
@@ -139,8 +139,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  switchRightSidebarView: selectedView => {
+    dispatch(globalStateAction.switchRightSidebarView(selectedView));
   },
   switchTargetUser: targetUserId => {
     dispatch(globalStateAction.switchTargetUser(targetUserId));
@@ -148,8 +148,8 @@ const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
   },
-  createChannel: channelFormInfo => {
-    dispatch(channelAction.createChannel(channelFormInfo));
+  fetchCreateChannel: channelFormInfo => {
+    dispatch(channelAction.fetchCreateChannel(channelFormInfo));
   }
 });
 

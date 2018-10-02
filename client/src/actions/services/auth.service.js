@@ -1,20 +1,20 @@
 import { APIV1 } from "./API";
 
 export default {
-  autoAuth: async () => {
+  fetchAutoAuth: async () => {
     const response = await APIV1().get(`/users`);
     return response;
   },
-  registerUser: async credentials => {
+  fetchRegisterUser: async credentials => {
     const response = await APIV1().post(`/users/registers`, credentials);
     return response;
   },
 
-  loginUser: async credentials => {
+  fetchLoginUser: async credentials => {
     const response = await APIV1().post(`/users/logins`, credentials);
     return response;
   },
-  logoutUser: async () => {
+  fetchLogoutUser: async () => {
     const response = await APIV1().get(`/users/logouts`);
     return response;
   }

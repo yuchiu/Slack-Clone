@@ -41,7 +41,7 @@ export default app => {
   team.get(
     "/:teamId",
     authPolicy.authentication,
-    teamController.getTeamAssociatedList
+    teamController.fetchTeamAssociatedList
   );
 
   /* channels routes */

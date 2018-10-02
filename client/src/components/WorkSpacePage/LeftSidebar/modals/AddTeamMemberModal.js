@@ -32,9 +32,9 @@ class AddTeamMemberModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { addTeamMember, currentTeam, onClose } = this.props;
+      const { fetchAddTeamMember, currentTeam, onClose } = this.props;
       const { username } = this.state;
-      addTeamMember({ teamId: currentTeam.id, targetUsername: username });
+      fetchAddTeamMember({ teamId: currentTeam.id, targetUsername: username });
       this.setState({
         clientError: {},
         username: ""
@@ -102,7 +102,7 @@ AddTeamMemberModal.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   currentTeamMembers: PropTypes.array.isRequired,
 
-  addTeamMember: PropTypes.func.isRequired
+  fetchAddTeamMember: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -111,8 +111,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  addTeamMember: addMemberInfo => {
-    dispatch(teamAction.addTeamMember(addMemberInfo));
+  fetchAddTeamMember: addMemberInfo => {
+    dispatch(teamAction.fetchAddTeamMember(addMemberInfo));
   }
 });
 

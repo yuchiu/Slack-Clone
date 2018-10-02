@@ -6,8 +6,8 @@ import { authAction } from "@/actions";
 
 class TryAutoAuth extends React.Component {
   componentDidMount() {
-    const { autoAuth } = this.props;
-    autoAuth();
+    const { fetchAutoAuth } = this.props;
+    fetchAutoAuth();
   }
 
   render() {
@@ -16,12 +16,12 @@ class TryAutoAuth extends React.Component {
 }
 
 TryAutoAuth.propTypes = {
-  autoAuth: PropTypes.func.isRequired
+  fetchAutoAuth: PropTypes.func.isRequired
 };
 
 const dispatchToProps = dispatch => ({
-  autoAuth: () => {
-    dispatch(authAction.autoAuth());
+  fetchAutoAuth: () => {
+    dispatch(authAction.fetchAutoAuth());
   }
 });
 

@@ -22,8 +22,8 @@ class RegisterPage extends React.Component {
   };
 
   componentWillUnmount() {
-    const { clearError } = this.props;
-    clearError();
+    const { clearAllError } = this.props;
+    clearAllError();
     this.setState({
       credentials: {
         username: "",
@@ -71,8 +71,8 @@ class RegisterPage extends React.Component {
       this.setState({ clientErrors });
 
       if (Object.keys(clientErrors).length === 0) {
-        const { registerUser } = this.props;
-        registerUser({ username, email, password });
+        const { fetchRegisterUser } = this.props;
+        fetchRegisterUser({ username, email, password });
       }
     }
   };
@@ -102,7 +102,7 @@ class RegisterPage extends React.Component {
 }
 
 RegisterPage.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+  fetchRegisterUser: PropTypes.func.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   error: PropTypes.string
@@ -114,9 +114,9 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  clearError: () => dispatch(errorAction.clearError()),
-  registerUser: credential => {
-    dispatch(authAction.registerUser(credential));
+  clearAllError: () => dispatch(errorAction.clearAllError()),
+  fetchRegisterUser: credential => {
+    dispatch(authAction.fetchRegisterUser(credential));
   }
 });
 export default connect(

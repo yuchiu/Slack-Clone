@@ -5,25 +5,38 @@ import { Link } from "react-router-dom";
 import { OnlineStatusBubble } from "@/components/common";
 
 class MessageGroupList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      messageGroupMemberListUpdated: false
+    };
+  }
+
   handleSwitchChannel = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
   };
 
-  handleSwitchRightSideBarView = () => {
-    const { switchRightSideBarView } = this.props;
-    switchRightSideBarView("message-group-members");
+  handleSwitchRightSidebarView = () => {
+    const { switchRightSidebarView } = this.props;
+    switchRightSidebarView("message-group-members");
   };
 
   handleSwitchTargetUserAndView = () => {
-    const { switchRightSideBarView } = this.props;
-    switchRightSideBarView("user-profile");
+    const { switchRightSidebarView } = this.props;
+    switchRightSidebarView("user-profile");
   };
 
   componentDidUpdate() {
     // switch target user when channel changed
     const { switchTargetUser, messageGroupMemberList } = this.props;
-    if (messageGroupMemberList[0]) {
+    if (
+      messageGroupMemberList[0] &&
+      !this.state.messageGroupMemberListUpdated
+    ) {
+      this.setState({
+        messageGroupMemberListUpdated: true
+      });
       switchTargetUser(messageGroupMemberList[0].id);
     }
   }
@@ -53,7 +66,7 @@ class MessageGroupList extends React.Component {
                 ) : (
                   <li
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
-                    onClick={this.handleSwitchRightSideBarView}
+                    onClick={this.handleSwitchRightSidebarView}
                   >
                     <span className="leftsidebar__List__link__item__num">
                       {messageGroup.memberNumber}
@@ -76,7 +89,7 @@ MessageGroupList.propTypes = {
 
   switchTargetUser: PropTypes.func.isRequired,
   switchChannel: PropTypes.func.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 export default MessageGroupList;

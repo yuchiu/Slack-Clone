@@ -1,20 +1,20 @@
 import constants from "../constants";
 
 export default {
-  toggleSideBar: () => dispatch => {
+  toggleRightSidebar: () => dispatch => {
     dispatch({
-      type: constants.TOGGLE_SIDE_BAR
+      type: constants.RIGHT_SIDEBAR_TOGGLE
     });
   },
-  switchRightSideBarView: selectedView => dispatch => {
+  switchRightSidebarView: selectedView => dispatch => {
     dispatch({
-      type: constants.SWITCH_RIGHT_SIDE_BAR_VIEW,
+      type: constants.RIGHT_SIDEBAR_VIEW_SWITCH,
       payload: selectedView
     });
   },
   switchTargetUser: targetUserId => dispatch => {
     dispatch({
-      type: constants.SWITCH_TARGET_USER,
+      type: constants.TARGET_USER_SWITCH,
       payload: targetUserId
     });
   }

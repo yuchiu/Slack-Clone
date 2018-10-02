@@ -28,26 +28,26 @@ const getCurrentChannelFromParams = (
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.GET_TEAM_ASSOCIATED_LIST:
+    case constants.TEAM_ASSOCIATED_LIST_FETCH:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channelList[0];
 
       return newState;
 
-    case constants.CREATE_CHANNEL:
+    case constants.CHANNEL_CREATE_FETCH:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channel;
       newState.currentChannelMembers = action.payload.channelMemberList;
 
       return newState;
 
-    case constants.SWITCH_CHANNEL:
+    case constants.CHANNEL_SWITCH:
       newState.currentChannel = state.channelList.find(
         channel => channel.id === action.payload
       );
       return newState;
 
-    case constants.GET_CURRENT_CHANNEL:
+    case constants.CHANNEL_CURRENT_GET:
       newState.currentChannel = getCurrentChannelFromParams(
         state.channelList,
         state.currentChannel,
@@ -55,11 +55,11 @@ export default (state = initialState, action) => {
       );
       return newState;
 
-    case constants.GET_CHANNEL_ASSOCIATED_LIST:
+    case constants.CHANNEL_ASSOCIATED_LIST_FETCH:
       newState.currentChannelMembers = action.payload.channelMemberList;
       return newState;
 
-    case constants.LOGOUT_USER:
+    case constants.USER_LOGOUT_FETCH:
       return initialState;
 
     default:

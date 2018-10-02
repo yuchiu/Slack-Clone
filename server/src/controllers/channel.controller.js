@@ -15,10 +15,18 @@ export default {
         membersList,
         messageGroup
       } = req.body;
-      const member = await models.TeamMember.findOne(
-        { where: { teamId, userId: currentUserId } },
-        { raw: true }
-      );
+
+      // remove stale data from cache
+      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`channelList:${{ currentUserId }} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
       const response = await models.sequelize.transaction(async transaction => {
         let channel;
 
@@ -131,17 +139,6 @@ export default {
           raw: true
         }
       );
-
-      // remove stale data from cache
-      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`channelList:${{ currentUserId }} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
 
       res.status(200).send({
         meta: {

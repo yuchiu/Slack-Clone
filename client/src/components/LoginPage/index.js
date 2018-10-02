@@ -20,8 +20,8 @@ class LoginPage extends React.Component {
   };
 
   componentWillUnmount() {
-    const { clearError } = this.props;
-    clearError();
+    const { clearAllError } = this.props;
+    clearAllError();
     this.setState({
       credentials: {
         username: "",
@@ -53,8 +53,8 @@ class LoginPage extends React.Component {
     const clientErrors = validateForm.login(credentials);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
-      const { loginUser } = this.props;
-      loginUser(credentials);
+      const { fetchLoginUser } = this.props;
+      fetchLoginUser(credentials);
     }
   };
 
@@ -85,7 +85,7 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
+  fetchLoginUser: PropTypes.func.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string
 };
@@ -96,9 +96,9 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  clearError: () => dispatch(errorAction.clearError()),
-  loginUser: credential => {
-    dispatch(authAction.loginUser(credential));
+  clearAllError: () => dispatch(errorAction.clearAllError()),
+  fetchLoginUser: credential => {
+    dispatch(authAction.fetchLoginUser(credential));
   }
 });
 

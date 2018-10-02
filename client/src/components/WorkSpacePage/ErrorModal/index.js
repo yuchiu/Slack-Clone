@@ -10,9 +10,9 @@ class PopUpModal extends React.Component {
   };
 
   handleClose = e => {
-    const { onClose, clearError } = this.props;
+    const { onClose, clearAllError } = this.props;
     e.preventDefault();
-    clearError();
+    clearAllError();
     onClose();
   };
 
@@ -41,7 +41,7 @@ PopUpModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  clearError: PropTypes.func.isRequired
+  clearAllError: PropTypes.func.isRequired
 };
 
 export default PopUpModal;

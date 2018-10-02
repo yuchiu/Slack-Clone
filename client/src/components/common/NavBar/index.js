@@ -10,8 +10,8 @@ import { authSelector, userSelector } from "@/reducers/selectors";
 
 class NavBar extends React.Component {
   handleLogout = () => {
-    const { logoutUser, history } = this.props;
-    logoutUser();
+    const { fetchLogoutUser, history } = this.props;
+    fetchLogoutUser();
     history.push("/");
   };
 
@@ -43,8 +43,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  logoutUser: () => {
-    dispatch(authAction.logoutUser());
+  fetchLogoutUser: () => {
+    dispatch(authAction.fetchLogoutUser());
   }
 });
 

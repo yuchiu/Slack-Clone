@@ -10,12 +10,16 @@ import { globalStateAction } from "@/actions";
 import { channelSelector, globalStateSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
-  handleSwitchRightSideBarView = selectedView => {
-    const { toggleSideBar, switchRightSideBarView, isSideBarOpen } = this.props;
-    if (!isSideBarOpen) {
-      toggleSideBar();
+  handleSwitchRightSidebarView = selectedView => {
+    const {
+      toggleRightSidebar,
+      switchRightSidebarView,
+      isSidebarOpen
+    } = this.props;
+    if (!isSidebarOpen) {
+      toggleRightSidebar();
     }
-    switchRightSideBarView(selectedView);
+    switchRightSidebarView(selectedView);
   };
 
   render() {
@@ -32,7 +36,7 @@ class MainHeader extends React.Component {
             messageGroupName={messageGroupName}
             currentChannelMembers={currentChannelMembers}
             messageGroupMemberList={messageGroupMemberList}
-            handleSwitchRightSideBarView={this.handleSwitchRightSideBarView.bind(
+            handleSwitchRightSidebarView={this.handleSwitchRightSidebarView.bind(
               this,
               "message-group-members"
             )}
@@ -42,7 +46,7 @@ class MainHeader extends React.Component {
           <ChannelHeader
             currentChannel={currentChannel}
             currentChannelMembers={currentChannelMembers}
-            handleSwitchRightSideBarView={this.handleSwitchRightSideBarView.bind(
+            handleSwitchRightSidebarView={this.handleSwitchRightSidebarView.bind(
               this,
               "channel-members"
             )}
@@ -54,18 +58,18 @@ class MainHeader extends React.Component {
 }
 
 MainHeader.propTypes = {
-  isSideBarOpen: PropTypes.bool.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
   currentChannelMembers: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   messageGroupName: PropTypes.string,
   messageGroupMemberList: PropTypes.array.isRequired,
 
-  toggleSideBar: PropTypes.func.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  toggleRightSidebar: PropTypes.func.isRequired,
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
-  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state),
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentChannel: channelSelector.getCurrentChannel(state),
   messageGroupName: channelSelector.getMessageGroupName(state),
@@ -73,11 +77,11 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  toggleSideBar: () => {
-    dispatch(globalStateAction.toggleSideBar());
+  toggleRightSidebar: () => {
+    dispatch(globalStateAction.toggleRightSidebar());
   },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  switchRightSidebarView: selectedView => {
+    dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }
 });
 

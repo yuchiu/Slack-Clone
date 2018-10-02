@@ -7,16 +7,16 @@ import { authAction } from "@/actions";
 
 class SidebarFooter extends React.Component {
   handleClick = () => {
-    const { history, logoutUser } = this.props;
-    logoutUser();
+    const { history, fetchLogoutUser } = this.props;
+    fetchLogoutUser();
     history.push("/");
   };
 
   render() {
     return (
-      <div className="right-side-bar-footer">
+      <div className="right-sidebar-footer">
         <button
-          className="right-side-bar-button right-side-bar-item"
+          className="right-sidebar-button right-sidebar-item"
           onClick={this.handleClick}
         >
           Log Out
@@ -29,12 +29,12 @@ class SidebarFooter extends React.Component {
 SidebarFooter.propTypes = {
   history: PropTypes.object.isRequired,
 
-  logoutUser: PropTypes.func.isRequired
+  fetchLogoutUser: PropTypes.func.isRequired
 };
 
 const dispatchToProps = dispatch => ({
-  logoutUser: () => {
-    dispatch(authAction.logoutUser());
+  fetchLogoutUser: () => {
+    dispatch(authAction.fetchLogoutUser());
   }
 });
 

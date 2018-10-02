@@ -4,30 +4,30 @@ import { getCurrentTeamMembers } from "./team.reducer";
 import constants from "../constants";
 
 const initialState = {
-  isSideBarOpen: false,
-  rightSideBarView: "team",
+  isSidebarOpen: false,
+  rightSidebarView: "team",
   targetUserId: null
 };
 
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.TOGGLE_SIDE_BAR:
-      newState.isSideBarOpen = !newState.isSideBarOpen;
+    case constants.RIGHT_SIDEBAR_TOGGLE:
+      newState.isSidebarOpen = !newState.isSidebarOpen;
       return newState;
 
-    case constants.SWITCH_RIGHT_SIDE_BAR_VIEW:
+    case constants.RIGHT_SIDEBAR_VIEW_SWITCH:
       if (action.payload !== "user-profile") {
         newState.targetUserId = null;
       }
-      newState.rightSideBarView = action.payload;
+      newState.rightSidebarView = action.payload;
       return newState;
 
-    case constants.SWITCH_TARGET_USER:
+    case constants.TARGET_USER_SWITCH:
       newState.targetUserId = action.payload;
       return newState;
 
-    case constants.LOGOUT_USER:
+    case constants.USER_LOGOUT_FETCH:
       return initialState;
 
     default:
@@ -36,16 +36,16 @@ export default (state = initialState, action) => {
 };
 
 /* state selectors */
-const getIsSideBarOpen = state => state.globalStateReducer.isSideBarOpen;
+const getIsSidebarOpen = state => state.globalStateReducer.isSidebarOpen;
 
-const getRightSideBarView = state => state.globalStateReducer.rightSideBarView;
+const getRightSidebarView = state => state.globalStateReducer.rightSidebarView;
 
 const getTargetUserId = state => state.globalStateReducer.targetUserId;
 
-const getRightSideBarTitle = createSelector(
-  getRightSideBarView,
-  rightSideBarView =>
-    rightSideBarView
+const getRightSidebarTitle = createSelector(
+  getRightSidebarView,
+  rightSidebarView =>
+    rightSidebarView
       .replace(/-/g, " ")
       .split(" ")
       .map(s => s.charAt(0).toUpperCase() + s.substring(1))
@@ -64,8 +64,8 @@ const getTargetUser = createSelector(
 );
 
 export {
-  getIsSideBarOpen,
-  getRightSideBarView,
-  getRightSideBarTitle,
+  getIsSidebarOpen,
+  getRightSidebarView,
+  getRightSidebarTitle,
   getTargetUser
 };

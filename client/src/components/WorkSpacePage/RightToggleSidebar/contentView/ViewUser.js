@@ -11,7 +11,7 @@ class ViewUser extends React.Component {
       targetUser,
       messageGroupList,
       currentTeam,
-      createChannel
+      fetchCreateChannel
     } = this.props;
 
     let isDirectMessageFound = false;
@@ -21,18 +21,17 @@ class ViewUser extends React.Component {
       /* if direct message is found, switch to that channel */
       if (messageGroup.name === targetUser.username) {
         switchChannel(messageGroup.id);
+        isDirectMessageFound = true;
       }
-      isDirectMessageFound = true;
       return messageGroup;
     });
-
     /* direct message not found, start direct message with target user */
     if (!isDirectMessageFound) {
       // convert target user into array to match API's membersList variable
       const targetUserArr = [];
       targetUserArr.push(targetUser.id);
 
-      createChannel({
+      fetchCreateChannel({
         teamId: currentTeam.id,
         messageGroup: true,
         isPublic: false,
@@ -55,19 +54,19 @@ class ViewUser extends React.Component {
             />
           </div>
           <div className="view-header">
-            <span className="view-header__name  right-side-bar-item">
+            <span className="view-header__name  right-sidebar-item">
               {targetUser.username}
               <OnlineStatusBubble on={true} />
             </span>
             <br />
             <br />
-            <div className="view-header__brief-description  right-side-bar-item">
-              <span className="right-side-bar-label">feeling: </span>
+            <div className="view-header__brief-description  right-sidebar-item">
+              <span className="right-sidebar-label">feeling: </span>
               {`${targetUser.brief_description}`}
             </div>
             <br />
             <button
-              className="right-side-bar-button right-side-bar-item"
+              className="right-sidebar-button right-sidebar-item"
               onClick={this.handleClick}
             >
               Direct Message
@@ -75,13 +74,13 @@ class ViewUser extends React.Component {
           </div>
 
           <div className="view-detail">
-            <div className="view-detail__email  right-side-bar-item">
-              <span className="right-side-bar-label ">Email: </span>
+            <div className="view-detail__email  right-sidebar-item">
+              <span className="right-sidebar-label ">Email: </span>
               {`${targetUser.email}`}
             </div>
             <br />
-            <div className="view-header__detail-description  right-side-bar-item">
-              <span className="right-side-bar-label">
+            <div className="view-header__detail-description  right-sidebar-item">
+              <span className="right-sidebar-label">
                 About {targetUser.username}:{" "}
               </span>
               {`${targetUser.detail_description}`}
@@ -96,11 +95,11 @@ class ViewUser extends React.Component {
 
 ViewUser.propTypes = {
   currentTeam: PropTypes.object.isRequired,
-  targetUser: PropTypes.object.isRequired,
+  targetUser: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   messageGroupList: PropTypes.array.isRequired,
   switchChannel: PropTypes.func.isRequired,
-  createChannel: PropTypes.func.isRequired
+  fetchCreateChannel: PropTypes.func.isRequired
 };
 
 export default ViewUser;

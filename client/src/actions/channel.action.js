@@ -2,47 +2,49 @@ import constants from "@/constants";
 import { channelService } from "./services";
 
 export default {
-  createChannel: channelFormInfo => async dispatch => {
+  fetchCreateChannel: channelFormInfo => async dispatch => {
     try {
-      const response = await channelService.createChannel(channelFormInfo);
+      const response = await channelService.fetchCreateChannel(channelFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.CREATE_CHANNEL,
+        type: constants.CHANNEL_CREATE_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.CHANNEL_ERROR,
+        type: constants.ERROR_CHANNEL,
         payload: data.meta.message
       });
     }
   },
   switchChannel: channelId => async dispatch => {
     dispatch({
-      type: constants.SWITCH_CHANNEL,
+      type: constants.CHANNEL_SWITCH,
       payload: channelId
     });
   },
-  getChannelAssociatedList: channelId => async dispatch => {
+  fetchGetChannelAssociatedList: channelId => async dispatch => {
     try {
-      const response = await channelService.getChannelAssociatedList(channelId);
+      const response = await channelService.fetchGetChannelAssociatedList(
+        channelId
+      );
       const { data } = response;
       dispatch({
-        type: constants.GET_CHANNEL_ASSOCIATED_LIST,
+        type: constants.CHANNEL_ASSOCIATED_LIST_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.MESSAGE_ERROR,
+        type: constants.ERROR_MESSAGE,
         payload: data.meta.message
       });
     }
   },
-  fetchCurrentChannel: params => async dispatch => {
+  getCurrentChannel: params => async dispatch => {
     dispatch({
-      type: constants.GET_CURRENT_CHANNEL,
+      type: constants.CHANNEL_CURRENT_GET,
       payload: params
     });
   }

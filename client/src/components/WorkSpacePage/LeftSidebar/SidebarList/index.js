@@ -23,7 +23,7 @@ class SidebarList extends React.Component {
 
       switchTargetUser,
       switchChannel,
-      switchRightSideBarView
+      switchRightSidebarView
     } = this.props;
     return (
       <React.Fragment>
@@ -34,7 +34,7 @@ class SidebarList extends React.Component {
           />
           <ChannelList
             switchChannel={switchChannel}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
             teamId={currentTeam.id}
             channelList={channelList}
           />
@@ -49,14 +49,26 @@ class SidebarList extends React.Component {
             switchTargetUser={switchTargetUser}
             switchChannel={switchChannel}
             messageGroupMemberList={messageGroupMemberList}
-            switchRightSideBarView={switchRightSideBarView}
+            switchRightSidebarView={switchRightSidebarView}
           />
         </ul>
       </React.Fragment>
     );
   }
 }
-SidebarList.propTypes = {};
+SidebarList.propTypes = {
+  toggleAddMessageGroupModal: PropTypes.func.isRequired,
+  toggleAddChannelModal: PropTypes.func.isRequired,
+
+  currentTeam: PropTypes.object.isRequired,
+  messageGroupMemberList: PropTypes.array.isRequired,
+  channelList: PropTypes.array.isRequired,
+  messageGroupList: PropTypes.array.isRequired,
+
+  switchTargetUser: PropTypes.func.isRequired,
+  switchChannel: PropTypes.func.isRequired,
+  switchRightSidebarView: PropTypes.func.isRequired
+};
 
 /* currentUser, channel, direct messages */
 const stateToProps = state => ({
@@ -73,8 +85,8 @@ const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
   },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  switchRightSidebarView: selectedView => {
+    dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }
 });
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./index.scss";
 import SidebarList from "./SidebarList";
-import SideBarHeader from "./SideBarHeader";
+import SidebarHeader from "./SidebarHeader";
 import InviteMemberSection from "./InviteMemberSection";
 import {
   AddChannelModal,
@@ -10,7 +10,7 @@ import {
   AddTeamMemberModal
 } from "./modals";
 
-class LeftSideBar extends React.Component {
+class LeftSidebar extends React.Component {
   state = {
     openAddChannelModal: false,
     openAddTeamMemberModal: false,
@@ -51,7 +51,7 @@ class LeftSideBar extends React.Component {
     return (
       <React.Fragment>
         <section className="leftsidebar">
-          <SideBarHeader />
+          <SidebarHeader />
           <SidebarList
             toggleAddMessageGroupModal={this.toggleAddMessageGroupModal}
             toggleAddChannelModal={this.toggleAddChannelModal}
@@ -80,4 +80,4 @@ class LeftSideBar extends React.Component {
   }
 }
 
-export default LeftSideBar;
+export default LeftSidebar;

@@ -1,5 +1,4 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -11,15 +10,19 @@ import {
 import { OnlineStatusBubble } from "@/components/common";
 import { globalStateAction } from "@/actions";
 
-class SideBarHeader extends React.Component {
+class SidebarHeader extends React.Component {
   state = {};
 
-  handleSwitchRightSideBarView = selectedView => {
-    const { toggleSideBar, switchRightSideBarView, isSideBarOpen } = this.props;
-    if (!isSideBarOpen) {
-      toggleSideBar();
+  handleSwitchRightSidebarView = selectedView => {
+    const {
+      toggleRightSidebar,
+      switchRightSidebarView,
+      isSidebarOpen
+    } = this.props;
+    if (!isSidebarOpen) {
+      toggleRightSidebar();
     }
-    switchRightSideBarView(selectedView);
+    switchRightSidebarView(selectedView);
   };
 
   render() {
@@ -29,7 +32,7 @@ class SideBarHeader extends React.Component {
         <div className="leftsidebar__header">
           <div
             className="leftsidebar__header__top"
-            onClick={this.handleSwitchRightSideBarView.bind(this, "team")}
+            onClick={this.handleSwitchRightSidebarView.bind(this, "team")}
           >
             <h1 className="leftsidebar__header__top__teamname">
               {currentTeam.name}
@@ -37,7 +40,7 @@ class SideBarHeader extends React.Component {
           </div>
           <div
             className="leftsidebar__header__bottom"
-            onClick={this.handleSwitchRightSideBarView.bind(this, "my-profile")}
+            onClick={this.handleSwitchRightSidebarView.bind(this, "my-profile")}
           >
             <div className="leftsidebar__header__bottom__left">
               <img
@@ -59,31 +62,31 @@ class SideBarHeader extends React.Component {
   }
 }
 
-SideBarHeader.propTypes = {
+SidebarHeader.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired,
-  isSideBarOpen: PropTypes.bool.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
 
-  toggleSideBar: PropTypes.func.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  toggleRightSidebar: PropTypes.func.isRequired,
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
   currentUser: userSelector.getCurrentUser(state),
   currentTeam: teamSelector.getCurrentTeam(state),
-  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
 });
 
 const dispatchToProps = dispatch => ({
-  toggleSideBar: () => {
-    dispatch(globalStateAction.toggleSideBar());
+  toggleRightSidebar: () => {
+    dispatch(globalStateAction.toggleRightSidebar());
   },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  switchRightSidebarView: selectedView => {
+    dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }
 });
 
 export default connect(
   stateToProps,
   dispatchToProps
-)(SideBarHeader);
+)(SidebarHeader);

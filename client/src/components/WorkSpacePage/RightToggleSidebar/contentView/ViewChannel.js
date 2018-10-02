@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 class ViewChannel extends React.Component {
   handleClick = () => {
-    const { switchRightSideBarView } = this.props;
-    switchRightSideBarView("channel-members");
+    const { switchRightSidebarView } = this.props;
+    switchRightSidebarView("channel-members");
   };
 
   render() {
@@ -12,11 +12,11 @@ class ViewChannel extends React.Component {
     return (
       <React.Fragment>
         <div className="view-header">
-          <div className="view-header__name right-side-bar-item">
+          <div className="view-header__name right-sidebar-item">
             {currentChannel.name}
           </div>
           <br />
-          <div className="view-header__members  right-side-bar-item">
+          <div className="view-header__members  right-sidebar-item">
             <i
               className="far fa-user view-header__members__icon"
               onClick={this.handleClick}
@@ -31,19 +31,19 @@ class ViewChannel extends React.Component {
           </div>
         </div>
         <div className="view-detail ">
-          <div className="view-detail__details-header  right-side-bar-item">
+          <div className="view-detail__details-header  right-sidebar-item">
             Channel Details
           </div>
-          <div className="view-detail__brief-description  right-side-bar-item">
-            <span className="right-side-bar-label">Topic: </span>
+          <div className="view-detail__brief-description  right-sidebar-item">
+            <span className="right-sidebar-label">Topic: </span>
             {`${currentChannel.brief_description}`}
           </div>
-          <div className="view-detail__detail-description  right-side-bar-item">
-            <span className="right-side-bar-label">Purpose: </span>
+          <div className="view-detail__detail-description  right-sidebar-item">
+            <span className="right-sidebar-label">Purpose: </span>
             {`${currentChannel.detail_description}`}
           </div>
-          <div className="view-detail__created-at  right-side-bar-item">
-            <span className="right-side-bar-label">Created At: </span>
+          <div className="view-detail__created-at  right-sidebar-item">
+            <span className="right-sidebar-label">Created At: </span>
             {`${currentChannel.created_at}`}
           </div>
         </div>
@@ -55,7 +55,7 @@ class ViewChannel extends React.Component {
 ViewChannel.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   currentChannelMembers: PropTypes.array.isRequired,
-  switchRightSideBarView: PropTypes.func.isRequired
+  switchRightSidebarView: PropTypes.func.isRequired
 };
 
 export default ViewChannel;

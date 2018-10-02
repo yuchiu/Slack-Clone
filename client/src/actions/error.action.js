@@ -1,14 +1,14 @@
 import constants from "@/constants";
 
 export default {
-  clearError: () => dispatch => {
+  clearAllError: () => dispatch => {
     dispatch({
-      type: constants.CLEAR_ERROR
+      type: constants.ERROR_ALL_CLEAR
     });
   },
-  fetchError: text => dispatch => {
+  createUploadError: text => dispatch => {
     dispatch({
-      type: constants.UPLOAD_ERROR,
+      type: constants.ERROR_UPLOAD,
       payload: text
     });
   }

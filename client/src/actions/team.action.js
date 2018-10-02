@@ -2,62 +2,62 @@ import constants from "@/constants";
 import { teamService } from "./services";
 
 export default {
-  createTeam: teamFormInfo => async dispatch => {
+  fetchCreateTeam: teamFormInfo => async dispatch => {
     try {
-      const response = await teamService.createTeam(teamFormInfo);
+      const response = await teamService.fetchCreateTeam(teamFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.CREATE_TEAM,
+        type: constants.TEAM_CREATE_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.TEAM_ERROR,
+        type: constants.ERROR_TEAM,
         payload: data.meta.message
       });
     }
   },
   switchTeam: teamId => async dispatch => {
     dispatch({
-      type: constants.SWITCH_TEAM,
+      type: constants.TEAM_SWITCH,
       payload: teamId
     });
   },
-  fetchCurrentTeam: params => async dispatch => {
+  getCurrentTeam: params => async dispatch => {
     dispatch({
-      type: constants.GET_CURRENT_TEAM,
+      type: constants.TEAM_CURRENT_GET,
       payload: params
     });
   },
-  addTeamMember: addMemberInfo => async dispatch => {
+  fetchAddTeamMember: addMemberInfo => async dispatch => {
     try {
-      const response = await teamService.addTeamMember(addMemberInfo);
+      const response = await teamService.fetchAddTeamMember(addMemberInfo);
       const { data } = response;
       dispatch({
-        type: constants.ADD_TEAM_MEMBER,
+        type: constants.TEAM_MEMBER_ADD_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.TEAM_ERROR,
+        type: constants.ERROR_TEAM,
         payload: data.meta.message
       });
     }
   },
-  getTeamAssociatedList: teamId => async dispatch => {
+  fetchTeamAssociatedList: teamId => async dispatch => {
     try {
-      const response = await teamService.getTeamAssociatedList(teamId);
+      const response = await teamService.fetchTeamAssociatedList(teamId);
       const { data } = response;
       dispatch({
-        type: constants.GET_TEAM_ASSOCIATED_LIST,
+        type: constants.TEAM_ASSOCIATED_LIST_FETCH,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.TEAM_ERROR,
+        type: constants.ERROR_TEAM,
         payload: data.meta.message
       });
     }

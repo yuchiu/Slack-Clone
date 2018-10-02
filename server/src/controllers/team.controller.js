@@ -9,6 +9,18 @@ export default {
       const currentUserId = req.user.id;
       const teamName = req.body.name;
       const teamAbout = req.body.about;
+
+      // remove stale data from cache
+      redisClient.del(`teamList:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`teamList:${currentUserId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
       const response = await models.sequelize.transaction(async transaction => {
         const teamData = await models.Team.create(
           {
@@ -57,17 +69,6 @@ export default {
         }
       );
 
-      // remove stale data from cache
-      redisClient.del(`teamList:${currentUserId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`teamList:${currentUserId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
-
       res.status(200).send({
         meta: {
           type: "success",
@@ -93,27 +94,6 @@ export default {
       const { teamId } = req.body;
       const { targetUsername } = req.body;
 
-      const userToAdd = await models.User.findOne(
-        { where: { username: targetUsername } },
-        { raw: true }
-      );
-      if (!userToAdd) {
-        return res.status(403).send({
-          error: "user does not exist"
-        });
-      }
-
-      /* create new member  */
-      await models.TeamMember.create({ userId: userToAdd.id, teamId });
-      const teamMemberList = await models.sequelize.query(
-        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
-        {
-          replacements: [teamId],
-          model: models.User,
-          raw: true
-        }
-      );
-
       /* find the initial channel general and add new user to the general channel */
       const initialChannel = await models.sequelize.query(
         "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
@@ -125,20 +105,15 @@ export default {
       );
       const initialChannelId = initialChannel[0].id;
 
-      await models.ChannelMember.create({
-        userId: userToAdd.id,
-        channelId: initialChannelId
-      });
-
-      /*  return team and channel member list */
-      const channelMemberList = await models.sequelize.query(
-        "select * from users as u join channel_members as cm on cm.user_id = u.id where cm.channel_id = ?",
-        {
-          replacements: [initialChannelId],
-          model: models.User,
-          raw: true
-        }
+      const userToAdd = await models.User.findOne(
+        { where: { username: targetUsername } },
+        { raw: true }
       );
+      if (!userToAdd) {
+        return res.status(403).send({
+          error: "user does not exist"
+        });
+      }
 
       // remove stale data from cache
       redisClient.del(`teamMemberList:${teamId}`, (err, reply) => {
@@ -161,6 +136,32 @@ export default {
         }
       });
 
+      /* create new member  */
+      await models.TeamMember.create({ userId: userToAdd.id, teamId });
+      const teamMemberList = await models.sequelize.query(
+        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+        {
+          replacements: [teamId],
+          model: models.User,
+          raw: true
+        }
+      );
+
+      await models.ChannelMember.create({
+        userId: userToAdd.id,
+        channelId: initialChannelId
+      });
+
+      /*  return team and channel member list */
+      const channelMemberList = await models.sequelize.query(
+        "select * from users as u join channel_members as cm on cm.user_id = u.id where cm.channel_id = ?",
+        {
+          replacements: [initialChannelId],
+          model: models.User,
+          raw: true
+        }
+      );
+
       res.status(200).send({
         meta: {
           type: "success",
@@ -181,7 +182,7 @@ export default {
       });
     }
   },
-  getTeamAssociatedList: async (req, res) => {
+  fetchTeamAssociatedList: async (req, res) => {
     try {
       const currentUserId = req.user.id;
       const { teamId } = req.params;

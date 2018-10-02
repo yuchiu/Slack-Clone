@@ -7,12 +7,12 @@ import "./index.scss";
 import { globalStateSelector } from "@/reducers/selectors";
 import SidebarContainer from "./SidebarContainer";
 
-class RightToggleSideBar extends React.Component {
+class RightToggleSidebar extends React.Component {
   render() {
-    const { children, isSideBarOpen } = this.props;
+    const { children, isSidebarOpen } = this.props;
     return (
       <Sidebar.Pushable
-        className="right-toggle-side-bar Sidebar-pushable"
+        className="right-toggle-sidebar Sidebar-pushable"
         as={Segment}
       >
         <Sidebar
@@ -20,7 +20,7 @@ class RightToggleSideBar extends React.Component {
           animation="overlay"
           direction="right"
           vertical
-          visible={isSideBarOpen}
+          visible={isSidebarOpen}
         >
           <SidebarContainer />
         </Sidebar>
@@ -35,15 +35,15 @@ class RightToggleSideBar extends React.Component {
   }
 }
 
-RightToggleSideBar.propTypes = {
-  isSideBarOpen: PropTypes.bool.isRequired
+RightToggleSidebar.propTypes = {
+  isSidebarOpen: PropTypes.bool.isRequired
 };
 
 const stateToProps = state => ({
-  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
 });
 
 export default connect(
   stateToProps,
   null
-)(RightToggleSideBar);
+)(RightToggleSidebar);

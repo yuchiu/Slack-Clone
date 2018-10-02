@@ -8,31 +8,31 @@ import { globalStateAction, teamAction } from "@/actions";
 import { teamSelector } from "@/reducers/selectors";
 import TeamList from "./TeamList";
 
-class RightStickySideBar extends React.Component {
+class RightStickySidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleSideBar = this.toggleSideBar.bind(this);
+    this.toggleRightSidebar = this.toggleRightSidebar.bind(this);
   }
 
-  toggleSideBar = () => {
-    const { toggleSideBar } = this.props;
-    toggleSideBar();
+  toggleRightSidebar = () => {
+    const { toggleRightSidebar } = this.props;
+    toggleRightSidebar();
   };
 
   render() {
-    const { teamList, switchTeam, getTeamAssociatedList } = this.props;
+    const { teamList, switchTeam, fetchTeamAssociatedList } = this.props;
     return (
       <React.Fragment>
         <div className="right-sticky-sidebar">
           <i
             className="fa fa-bars fa-lg toggle_button"
-            onClick={this.toggleSideBar}
+            onClick={this.toggleRightSidebar}
           />
-          <li className="sticky-side-bar-title">Teams</li>
+          <li className="sticky-sidebar-title">Teams</li>
           <TeamList
             teamList={teamList}
             switchTeam={switchTeam}
-            getTeamAssociatedList={getTeamAssociatedList}
+            fetchTeamAssociatedList={fetchTeamAssociatedList}
           />
           <Link to="/create-team">
             <li className="team-list__link__item team-list__link__item--add-team">
@@ -45,12 +45,12 @@ class RightStickySideBar extends React.Component {
   }
 }
 
-RightStickySideBar.propTypes = {
+RightStickySidebar.propTypes = {
   teamList: PropTypes.array.isRequired,
 
-  toggleSideBar: PropTypes.func.isRequired,
+  toggleRightSidebar: PropTypes.func.isRequired,
   switchTeam: PropTypes.func.isRequired,
-  getTeamAssociatedList: PropTypes.func.isRequired
+  fetchTeamAssociatedList: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -58,18 +58,18 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  toggleSideBar: () => {
-    dispatch(globalStateAction.toggleSideBar());
+  toggleRightSidebar: () => {
+    dispatch(globalStateAction.toggleRightSidebar());
   },
   switchTeam: teamId => {
     dispatch(teamAction.switchTeam(teamId));
   },
-  getTeamAssociatedList: teamId => {
-    dispatch(teamAction.getTeamAssociatedList(teamId));
+  fetchTeamAssociatedList: teamId => {
+    dispatch(teamAction.fetchTeamAssociatedList(teamId));
   }
 });
 
 export default connect(
   stateToProps,
   dispatchToProps
-)(RightStickySideBar);
+)(RightStickySidebar);
