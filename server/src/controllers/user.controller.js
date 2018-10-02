@@ -89,11 +89,15 @@ export default {
 
       /* auto join demo team */
       /* create new member  */
-      await models.TeamMember.create({ userId: user.id, teamId: 1 });
+      const initialDemoTeamId = 1;
+      await models.TeamMember.create({
+        userId: user.id,
+        teamId: initialDemoTeamId
+      });
       const teamMemberList = await models.sequelize.query(
         "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
         {
-          replacements: [1],
+          replacements: [initialDemoTeamId],
           model: models.User,
           raw: true
         }
@@ -113,6 +117,27 @@ export default {
       await models.ChannelMember.create({
         userId: user.id,
         channelId: initialChannelId
+      });
+
+      // remove stale data from cache
+      redisClient.del(`teamMemberList:${initialDemoTeamId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`teamMemberList:${initialDemoTeamId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
+      redisClient.del(`channelMemberList:${initialChannelId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`channelMemberList:${initialChannelId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
       });
 
       /* save session */
@@ -227,7 +252,6 @@ export default {
 
   tryAutoLogin: async (req, res) => {
     try {
-      // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
 
       // check if redis has the data

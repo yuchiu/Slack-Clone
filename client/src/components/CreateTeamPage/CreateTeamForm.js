@@ -47,4 +47,12 @@ class CreateTeamForm extends React.Component {
     );
   }
 }
+CreateTeamForm.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  clientErrors: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  about: PropTypes.string.isRequired
+};
+
 export default CreateTeamForm;

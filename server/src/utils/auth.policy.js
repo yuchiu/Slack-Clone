@@ -20,7 +20,7 @@ export default {
   // disable authorization so it is easier to test out functionality in demo
   authorization: async (req, res, next) => {
     const { teamId } = req.body;
-    const { currentUserId } = req.user.id;
+    const currentUserId = req.user.id;
     const member = await models.TeamMember.findOne(
       { where: { teamId, userId: currentUserId } },
       { raw: true }
@@ -35,6 +35,7 @@ export default {
         }
       });
     }
+    next();
   },
 
   registerRule: (req, res, next) => {

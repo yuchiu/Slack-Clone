@@ -60,11 +60,13 @@ export default {
         url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
       });
       // remove stale data from cache
-      redisClient.del(`messageList:${channelId}`, (err, result) => {
-        if (result === 1) {
-          console.log(`Deleted messageList:${channelId}`);
-        } else {
-          console.log("Cannot delete");
+      redisClient.del(`messageList:${channelId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`messageList:${channelId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
         }
       });
 
@@ -90,7 +92,6 @@ export default {
   },
   getMoreMessage: async (req, res) => {
     try {
-      /*  req.user is retreived from bearer token of auth.policy */
       const currentUserId = req.user.id;
       const { offset, channelId } = req.body;
 

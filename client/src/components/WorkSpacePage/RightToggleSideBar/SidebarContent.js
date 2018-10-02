@@ -28,7 +28,7 @@ class SidebarContainer extends React.Component {
     const {
       /* states */
       currentChannel,
-      targetMemberList,
+      messageGroupMemberList,
       currentChannelMembers,
       currentTeam,
       rightSideBarView,
@@ -75,7 +75,7 @@ class SidebarContainer extends React.Component {
         )}
         {rightSideBarView === "message-group-members" && (
           <ViewMemberList
-            memeberList={targetMemberList}
+            memeberList={messageGroupMemberList}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
             switchRightSideBarView={switchRightSideBarView}
@@ -106,7 +106,7 @@ SidebarContainer.propTypes = {
   rightSideBarView: PropTypes.string.isRequired,
   targetUser: PropTypes.object,
   currentChannel: PropTypes.object.isRequired,
-  targetMemberList: PropTypes.array,
+  messageGroupMemberList: PropTypes.array,
   currentChannelMembers: PropTypes.array.isRequired,
   messageGroupList: PropTypes.array.isRequired,
   currentTeam: PropTypes.object.isRequired,
@@ -126,7 +126,7 @@ const stateToProps = state => ({
 
   /* channel selector */
   currentChannel: channelSelector.getCurrentChannel(state),
-  targetMemberList: channelSelector.getTargetMemberList(state),
+  messageGroupMemberList: channelSelector.getMessageGroupMemberList(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   messageGroupList: channelSelector.getMessageGroupList(state),
 

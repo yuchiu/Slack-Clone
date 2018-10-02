@@ -165,7 +165,7 @@ const getMessageGroupName = createSelector(
   }
 );
 
-const getTargetMemberList = createSelector(
+const getMessageGroupMemberList = createSelector(
   getCurrentChannelMembers,
   getCurrentUser,
   (currentChannelMembers, currentUser) =>
@@ -175,7 +175,7 @@ const getTargetMemberList = createSelector(
 export {
   getCurrentChannel,
   getCurrentChannelMembers,
-  getTargetMemberList,
+  getMessageGroupMemberList,
   getChannelList,
   getMessageGroupList,
   getMessageGroupName

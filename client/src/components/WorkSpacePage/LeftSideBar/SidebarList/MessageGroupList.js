@@ -22,9 +22,9 @@ class MessageGroupList extends React.Component {
 
   componentDidUpdate() {
     // switch target user when channel changed
-    const { switchTargetUser, targetMemberList } = this.props;
-    if (targetMemberList[0]) {
-      switchTargetUser(targetMemberList[0].id);
+    const { switchTargetUser, messageGroupMemberList } = this.props;
+    if (messageGroupMemberList[0]) {
+      switchTargetUser(messageGroupMemberList[0].id);
     }
   }
 
@@ -72,7 +72,7 @@ class MessageGroupList extends React.Component {
 MessageGroupList.propTypes = {
   teamId: PropTypes.number,
   messageGroupList: PropTypes.array.isRequired,
-  targetMemberList: PropTypes.array.isRequired,
+  messageGroupMemberList: PropTypes.array.isRequired,
 
   switchTargetUser: PropTypes.func.isRequired,
   switchChannel: PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ class MessageGroupHeader extends React.Component {
   render() {
     const {
       currentChannelMembers,
-      targetMemberList,
+      messageGroupMemberList,
       handleSwitchRightSideBarView,
       messageGroupName
     } = this.props;
@@ -38,7 +38,7 @@ class MessageGroupHeader extends React.Component {
             </React.Fragment>
           )}
           <SubHeaderDivider />
-          {targetMemberList.map(m => `${m.email} `)}
+          {messageGroupMemberList.map(m => `${m.email} `)}
         </div>
       </div>
     );
@@ -48,7 +48,7 @@ class MessageGroupHeader extends React.Component {
 MessageGroupHeader.propTypes = {
   currentChannelMembers: PropTypes.array.isRequired,
   messageGroupName: PropTypes.string,
-  targetMemberList: PropTypes.array.isRequired,
+  messageGroupMemberList: PropTypes.array.isRequired,
   handleSwitchRightSideBarView: PropTypes.func.isRequired
 };
 

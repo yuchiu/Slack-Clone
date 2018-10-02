@@ -35,6 +35,7 @@ export default app => {
   team.post(
     "/members",
     authPolicy.authentication,
+    authPolicy.authorization,
     teamController.addTeamMember
   );
   team.get(

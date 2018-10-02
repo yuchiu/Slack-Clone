@@ -23,7 +23,7 @@ class MainHeader extends React.Component {
       currentChannelMembers,
       currentChannel,
       messageGroupName,
-      targetMemberList
+      messageGroupMemberList
     } = this.props;
     return (
       <div className="main-header">
@@ -31,7 +31,7 @@ class MainHeader extends React.Component {
           <MessageGroupHeader
             messageGroupName={messageGroupName}
             currentChannelMembers={currentChannelMembers}
-            targetMemberList={targetMemberList}
+            messageGroupMemberList={messageGroupMemberList}
             handleSwitchRightSideBarView={this.handleSwitchRightSideBarView.bind(
               this,
               "message-group-members"
@@ -58,7 +58,7 @@ MainHeader.propTypes = {
   currentChannelMembers: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   messageGroupName: PropTypes.string,
-  targetMemberList: PropTypes.array.isRequired,
+  messageGroupMemberList: PropTypes.array.isRequired,
 
   toggleSideBar: PropTypes.func.isRequired,
   switchRightSideBarView: PropTypes.func.isRequired
@@ -69,7 +69,7 @@ const stateToProps = state => ({
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentChannel: channelSelector.getCurrentChannel(state),
   messageGroupName: channelSelector.getMessageGroupName(state),
-  targetMemberList: channelSelector.getTargetMemberList(state)
+  messageGroupMemberList: channelSelector.getMessageGroupMemberList(state)
 });
 
 const dispatchToProps = dispatch => ({

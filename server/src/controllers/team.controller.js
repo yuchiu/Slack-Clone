@@ -6,7 +6,6 @@ import models from "../models";
 export default {
   create: async (req, res) => {
     try {
-      // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const teamName = req.body.name;
       const teamAbout = req.body.about;
@@ -59,11 +58,13 @@ export default {
       );
 
       // remove stale data from cache
-      redisClient.del(`teamList:${currentUserId}`, (err, result) => {
-        if (result === 1) {
-          console.log(`Deleted teamList:${currentUserId}`);
-        } else {
-          console.log("Cannot delete");
+      redisClient.del(`teamList:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`teamList:${currentUserId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
         }
       });
 
@@ -89,27 +90,13 @@ export default {
   },
   addTeamMember: async (req, res) => {
     try {
-      // req.user is retreived from bearer token of auth.policy
-      const currentUserId = req.user.id;
       const { teamId } = req.body;
       const { targetUsername } = req.body;
-      const memberPromise = models.TeamMember.findOne(
-        { where: { teamId, userId: currentUserId } },
-        { raw: true }
-      );
-      const userToAddPromise = models.User.findOne(
+
+      const userToAdd = await models.User.findOne(
         { where: { username: targetUsername } },
         { raw: true }
       );
-      const [member, userToAdd] = await Promise.all([
-        memberPromise,
-        userToAddPromise
-      ]);
-      if (!member.admin) {
-        return res.status(403).send({
-          error: "you are can not add members to the team"
-        });
-      }
       if (!userToAdd) {
         return res.status(403).send({
           error: "user does not exist"
@@ -154,23 +141,25 @@ export default {
       );
 
       // remove stale data from cache
-      redisClient.del(`teamMemberList:${teamId}`, (err, result) => {
-        if (result === 1) {
-          console.log(`Deleted teamMemberList:${teamId}`);
-        } else {
-          console.log("Cannot delete");
-        }
-      });
-      redisClient.del(
-        `channelMemberList:${initialChannelId}`,
-        (err, result) => {
-          if (result === 1) {
-            console.log(`Deleted channelMemberList:${initialChannelId}`);
+      redisClient.del(`teamMemberList:${teamId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`teamMemberList:${teamId} is deleted`);
           } else {
-            console.log("Cannot delete");
+            console.log("Does't exists");
           }
         }
-      );
+      });
+
+      redisClient.del(`channelMemberList:${initialChannelId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`channelMemberList:${initialChannelId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
 
       res.status(200).send({
         meta: {

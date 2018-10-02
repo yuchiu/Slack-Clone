@@ -19,7 +19,7 @@ class SidebarList extends React.Component {
       currentTeam,
       messageGroupList,
       channelList,
-      targetMemberList,
+      messageGroupMemberList,
 
       switchTargetUser,
       switchChannel,
@@ -48,7 +48,7 @@ class SidebarList extends React.Component {
             messageGroupList={messageGroupList}
             switchTargetUser={switchTargetUser}
             switchChannel={switchChannel}
-            targetMemberList={targetMemberList}
+            messageGroupMemberList={messageGroupMemberList}
             switchRightSideBarView={switchRightSideBarView}
           />
         </ul>
@@ -61,7 +61,7 @@ SidebarList.propTypes = {};
 /* currentUser, channel, direct messages */
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
-  targetMemberList: channelSelector.getTargetMemberList(state),
+  messageGroupMemberList: channelSelector.getMessageGroupMemberList(state),
   channelList: channelSelector.getChannelList(state),
   messageGroupList: channelSelector.getMessageGroupList(state)
 });

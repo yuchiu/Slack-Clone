@@ -6,7 +6,6 @@ import models from "../models";
 export default {
   create: async (req, res) => {
     try {
-      // req.user is retreived from bearer token of auth.policy
       const currentUserId = req.user.id;
       const {
         teamId,
@@ -134,11 +133,13 @@ export default {
       );
 
       // remove stale data from cache
-      redisClient.del(`channelList:${currentUserId}`, (err, result) => {
-        if (result === 1) {
-          console.log(`Deleted channelList:${currentUserId}`);
-        } else {
-          console.log("Cannot delete");
+      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`channelList:${{ currentUserId }} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
         }
       });
 
@@ -165,7 +166,6 @@ export default {
   },
   getChannelAssociatedList: async (req, res) => {
     try {
-      /*  req.user is retreived from bearer token of auth.policy */
       const currentUserId = req.user.id;
       const { channelId } = req.params;
 
