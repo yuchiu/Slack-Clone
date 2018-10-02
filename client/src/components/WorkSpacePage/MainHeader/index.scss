@@ -23,8 +23,14 @@
       font-weight: 300;
       color: $darkgrey;
       &__icon {
+        &:hover {
+          cursor: pointer;
+        }
       }
       &__number {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

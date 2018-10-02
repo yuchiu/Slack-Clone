@@ -5,6 +5,7 @@
 }
 
 .ui.segment.pushable {
+  overflow-y: hidden;
   padding: 0;
   margin: 0;
 }
@@ -24,7 +25,8 @@
 
 .sidebar-container {
   display: grid;
-  grid-template-rows: 63px auto 30px;
+  overflow: hidden;
+  grid-template-rows: 63px auto 40px;
 }
 
 /* components */
@@ -56,15 +58,19 @@
 
 .right-side-bar-content {
   grid-row: 2;
-  height: calc(98vh - 93px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 110px);
 }
 
 .right-side-bar-footer {
-  background: $white;
   grid-row: 3;
-  text-align: right;
-  padding-right: 20px;
-  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 5px;
+  height: 40px;
 }
 
 .view-pic {
@@ -99,6 +105,7 @@
 .view-detail {
   padding: 10px;
   font-size: 1.1em;
+  overflow-y: auto;
   &__details-header {
     font-size: 1.3em;
   }

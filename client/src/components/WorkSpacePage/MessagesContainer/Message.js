@@ -7,12 +7,12 @@ import { globalStateAction } from "@/actions";
 import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
-  handleSwitchRightSideBarView = () => {
-    const { message, switchRightSideBarView } = this.props;
-    const selectedView = "das";
+  handleClick = targetUserId => {
+    const { message, switchRightSideBarView, switchTargetUser } = this.props;
     if (message.isCurrentUser) {
       switchRightSideBarView("my-profile");
     } else {
+      switchTargetUser(targetUserId);
       switchRightSideBarView("user-profile");
     }
   };
@@ -25,10 +25,13 @@ class Message extends React.Component {
           as="a"
           className="comment-avatar"
           src={message.avatarurl}
-          onClick={this.handleSwitchRightSideBarView}
+          onClick={this.handleClick.bind(this, message.userId)}
         />
         <Comment.Content>
-          <Comment.Author as="a" onClick={this.handleSwitchRightSideBarView}>
+          <Comment.Author
+            as="a"
+            onClick={this.handleClick.bind(this, message.userId)}
+          >
             {message.username}
           </Comment.Author>
           <Comment.Metadata>
@@ -55,6 +58,8 @@ class Message extends React.Component {
 Message.propTypes = {};
 
 const dispatchToProps = dispatch => ({
+  switchTargetUser: targetUserId =>
+    dispatch(globalStateAction.switchTargetUser(targetUserId)),
   switchRightSideBarView: selectedView => {
     dispatch(globalStateAction.switchRightSideBarView(selectedView));
   }

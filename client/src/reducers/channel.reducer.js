@@ -175,7 +175,6 @@ const getTargetMemberList = createSelector(
 export {
   getCurrentChannel,
   getCurrentChannelMembers,
-  getStateChannelList,
   getTargetMemberList,
   getChannelList,
   getMessageGroupList,

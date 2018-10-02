@@ -140,7 +140,7 @@ export default {
       await redisClient.setex(
         `messageList:${channelId}offset:${offset}`,
         86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ source: "Redis Cache", ...messageList })
+        JSON.stringify({ ...messageList })
       );
 
       return res.status(200).send({

@@ -245,12 +245,12 @@ export default {
       await redisClient.setex(
         `channelList:${currentUserId}`,
         86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ source: "Redis Cache", ...channelList })
+        JSON.stringify({ ...channelList })
       );
       await redisClient.setex(
         `teamMemberList:${teamId}`,
         86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ source: "Redis Cache", ...teamMemberList })
+        JSON.stringify({ ...teamMemberList })
       );
 
       res.status(200).send({

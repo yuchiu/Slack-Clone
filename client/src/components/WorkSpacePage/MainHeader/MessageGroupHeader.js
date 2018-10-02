@@ -11,6 +11,7 @@ class MessageGroupHeader extends React.Component {
     const {
       currentChannelMembers,
       targetMemberList,
+      handleSwitchRightSideBarView,
       messageGroupName
     } = this.props;
     return (
@@ -19,8 +20,15 @@ class MessageGroupHeader extends React.Component {
         <div className="main-header__title__sub-header">
           {currentChannelMembers.length > 2 ? (
             <React.Fragment>
-              <i className="far fa-user main-header__title__sub-header__icon" />
-              <span className="main-header__title__sub-header__number">
+              <i
+                className="far fa-user main-header__title__sub-header__icon"
+                onClick={handleSwitchRightSideBarView}
+              />
+              <span
+                className="main-header__title__sub-header__number"
+                onClick={handleSwitchRightSideBarView}
+              >
+                {" "}
                 {currentChannelMembers.length}
               </span>
             </React.Fragment>

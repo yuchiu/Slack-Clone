@@ -262,13 +262,13 @@ export default {
       await redisClient.setex(
         `messageList:${channelId}`,
         86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ source: "Redis Cache", ...messageList })
+        JSON.stringify({ ...messageList })
       );
       // Save the responses in Redis store
       await redisClient.setex(
         `channelMemberList:${channelId}`,
         86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ source: "Redis Cache", ...channelMemberList })
+        JSON.stringify({ ...channelMemberList })
       );
 
       res.status(200).send({

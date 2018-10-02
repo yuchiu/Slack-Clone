@@ -1,12 +1,19 @@
 import Promise from "bluebird";
-import models from "../src/models";
+import redis from "redis";
 
+import models from "../src/models";
 import users from "./users.json";
 import teams from "./teams.json";
 import initialTeams from "./initialTeams.json";
 import teamMembers from "./teamMembers.json";
 import channels from "./channels.json";
 import channelMembers from "./channelMembers.json";
+
+const redisClient = Promise.promisifyAll(redis.createClient());
+
+redisClient.flushdb((err, succeeded) => {
+  console.log("✔ purge caches store in redis");
+});
 
 models.sequelize.sync({ force: true }).then(async () => {
   await Promise.all(users.map(user => models.User.create(user)));

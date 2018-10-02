@@ -1,10 +1,57 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
+import { channelAction } from "@/actions";
 import { OnlineStatusBubble } from "@/components/common";
+import {
+  globalStateSelector,
+  channelSelector,
+  userSelector,
+  teamSelector
+} from "@/reducers/selectors";
 
 class ViewUser extends React.Component {
+  handleClick = () => {
+    const {
+      switchChannel,
+      currentUser,
+      targetUser,
+      messageGroupList,
+      currentTeam,
+      createChannel
+    } = this.props;
+
+    let isDirectMessageFound = false;
+
+    /* check if direct message between target user and current user exist */
+    messageGroupList.map(messageGroup => {
+      /* if direct message is found, switch to that channel */
+      if (messageGroup.name === targetUser.username) {
+        switchChannel(messageGroup.id);
+      }
+      isDirectMessageFound = true;
+      return messageGroup;
+    });
+
+    /* direct message not found, start direct message with target user */
+    if (!isDirectMessageFound) {
+      // convert target user into array to match API's membersList variable
+      const targetUserArr = [];
+      targetUserArr.push(targetUser.id);
+
+      createChannel({
+        teamId: currentTeam.id,
+        messageGroup: true,
+        isPublic: false,
+        channelName: `${currentUser.username}, ${targetUser.username}`,
+        membersList: targetUserArr
+      });
+    }
+  };
+
   render() {
-    const { targetMember } = this.props;
+    const { targetUser } = this.props;
     return (
       <React.Fragment>
         <React.Fragment>
@@ -12,37 +59,40 @@ class ViewUser extends React.Component {
             <img
               alt="profile-pig"
               className="view-pic__img"
-              src={targetMember.avatarurl}
+              src={targetUser.avatarurl}
             />
           </div>
           <div className="view-header">
             <span className="view-header__name  right-side-bar-item">
-              {targetMember.username}
+              {targetUser.username}
               <OnlineStatusBubble on={true} />
             </span>
             <br />
             <br />
             <div className="view-header__brief-description  right-side-bar-item">
               <span className="right-side-bar-label">feeling: </span>
-              {`${targetMember.brief_description}`}
+              {`${targetUser.brief_description}`}
             </div>
             <br />
-            <button className="right-side-bar-button right-side-bar-item ">
-              message
+            <button
+              className="right-side-bar-button right-side-bar-item"
+              onClick={this.handleClick}
+            >
+              Direct Message
             </button>
           </div>
 
           <div className="view-detail">
             <div className="view-detail__email  right-side-bar-item">
               <span className="right-side-bar-label ">Email: </span>
-              {`${targetMember.email}`}
+              {`${targetUser.email}`}
             </div>
             <br />
             <div className="view-header__detail-description  right-side-bar-item">
               <span className="right-side-bar-label">
-                About: {targetMember.username}
+                About {targetUser.username}:{" "}
               </span>
-              {`${targetMember.detail_description}`}
+              {`${targetUser.detail_description}`}
             </div>
             <br />
           </div>
@@ -54,4 +104,23 @@ class ViewUser extends React.Component {
 
 ViewUser.propTypes = {};
 
-export default ViewUser;
+const stateToProps = state => ({
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  currentUser: userSelector.getCurrentUser(state),
+  messageGroupList: channelSelector.getMessageGroupList(state),
+  targetUser: globalStateSelector.getTargetUser(state)
+});
+
+const dispatchToProps = dispatch => ({
+  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
+  createChannel: channelFormInfo =>
+    dispatch(channelAction.createChannel(channelFormInfo))
+});
+
+export default withRouter(
+  connect(
+    stateToProps,
+    dispatchToProps
+  )(ViewUser)
+);

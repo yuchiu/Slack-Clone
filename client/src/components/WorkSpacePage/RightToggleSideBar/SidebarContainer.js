@@ -53,6 +53,7 @@ class SidebarContainer extends React.Component {
       rightSideBarTitle,
       rightSideBarView,
       currentTeamMembers,
+      switchTargetUser,
       currentUser
     } = this.props;
     return (
@@ -72,9 +73,8 @@ class SidebarContainer extends React.Component {
               handleLogout={this.handleLogout}
             />
           )}
-          {rightSideBarView === "user-profile" && (
-            <ViewUser targetMember={targetMemberList[0]} />
-          )}
+          {rightSideBarView === "user-profile" && <ViewUser />}
+
           {rightSideBarView === "channel" && (
             <ViewChannel
               currentChannel={currentChannel}
@@ -96,13 +96,49 @@ class SidebarContainer extends React.Component {
             />
           )}
           {rightSideBarView === "message-group-members" && (
-            <ViewMemberList memeberList={targetMemberList} />
+            <ViewMemberList
+              currentUser={currentUser}
+              memeberList={targetMemberList}
+              switchTargetUser={switchTargetUser}
+              switchViewToUserProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "user-profile"
+              )}
+              switchViewToMyProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "my-profile"
+              )}
+            />
           )}
           {rightSideBarView === "channel-members" && (
-            <ViewMemberList memeberList={currentChannelMembers} />
+            <ViewMemberList
+              currentUser={currentUser}
+              memeberList={currentChannelMembers}
+              switchTargetUser={switchTargetUser}
+              switchViewToUserProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "user-profile"
+              )}
+              switchViewToMyProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "my-profile"
+              )}
+            />
           )}
           {rightSideBarView === "team-members" && (
-            <ViewMemberList memeberList={currentTeamMembers} />
+            <ViewMemberList
+              currentUser={currentUser}
+              memeberList={currentTeamMembers}
+              switchTargetUser={switchTargetUser}
+              switchViewToUserProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "user-profile"
+              )}
+              switchViewToMyProfile={this.handleSwitchRightSideBarView.bind(
+                this,
+                "my-profile"
+              )}
+            />
           )}
         </div>
         <SidebarFooter handleLogout={this.handleLogout} />
@@ -114,19 +150,28 @@ class SidebarContainer extends React.Component {
 SidebarContainer.propTypes = {};
 
 const stateToProps = state => ({
+  /* global state */
   rightSideBarView: globalStateSelector.getRightSideBarView(state),
   rightSideBarTitle: globalStateSelector.getRightSideBarTitle(state),
+
+  /* channel selector */
   currentChannel: channelSelector.getCurrentChannel(state),
   targetMemberList: channelSelector.getTargetMemberList(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
+
+  /* team selector */
   currentTeam: teamSelector.getCurrentTeam(state),
   currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+
+  /* user selector */
   currentUser: userSelector.getCurrentUser(state)
 });
 
 const dispatchToProps = dispatch => ({
   logoutUser: () => dispatch(authAction.logoutUser()),
   toggleSideBar: () => dispatch(globalStateAction.toggleSideBar()),
+  switchTargetUser: targetUserId =>
+    dispatch(globalStateAction.switchTargetUser(targetUserId)),
   switchRightSideBarView: selectedView =>
     dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });

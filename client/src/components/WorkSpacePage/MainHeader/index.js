@@ -6,9 +6,18 @@ import { withRouter } from "react-router-dom";
 import "./index.scss";
 import ChannelHeader from "./ChannelHeader";
 import MessageGroupHeader from "./MessageGroupHeader";
-import { channelSelector } from "@/reducers/selectors";
+import { globalStateAction } from "@/actions";
+import { channelSelector, globalStateSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
+  handleSwitchRightSideBarView = selectedView => {
+    const { toggleSideBar, switchRightSideBarView, isSideBarOpen } = this.props;
+    if (!isSideBarOpen) {
+      toggleSideBar();
+    }
+    switchRightSideBarView(selectedView);
+  };
+
   render() {
     const {
       currentChannelMembers,
@@ -23,12 +32,20 @@ class MainHeader extends React.Component {
             messageGroupName={messageGroupName}
             currentChannelMembers={currentChannelMembers}
             targetMemberList={targetMemberList}
+            handleSwitchRightSideBarView={this.handleSwitchRightSideBarView.bind(
+              this,
+              "message-group-members"
+            )}
           />
         )}
         {!currentChannel.message_group && (
           <ChannelHeader
             currentChannel={currentChannel}
             currentChannelMembers={currentChannelMembers}
+            handleSwitchRightSideBarView={this.handleSwitchRightSideBarView.bind(
+              this,
+              "channel-members"
+            )}
           />
         )}
       </div>
@@ -39,13 +56,18 @@ class MainHeader extends React.Component {
 MainHeader.propTypes = {};
 
 const stateToProps = state => ({
+  isSideBarOpen: globalStateSelector.getIsSideBarOpen(state),
   currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
   currentChannel: channelSelector.getCurrentChannel(state),
   messageGroupName: channelSelector.getMessageGroupName(state),
   targetMemberList: channelSelector.getTargetMemberList(state)
 });
 
-const dispatchToProps = dispatch => ({});
+const dispatchToProps = dispatch => ({
+  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar()),
+  switchRightSideBarView: selectedView =>
+    dispatch(globalStateAction.switchRightSideBarView(selectedView))
+});
 
 export default withRouter(
   connect(

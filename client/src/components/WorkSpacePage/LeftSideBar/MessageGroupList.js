@@ -4,18 +4,32 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { OnlineStatusBubble } from "@/components/common";
+import { channelSelector } from "@/reducers/selectors";
 import { channelAction, globalStateAction } from "@/actions";
 
 class MessageGroupList extends React.Component {
-  handleClick = channelId => {
+  handleSwitchChannel = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
   };
 
-  handleSwitchRightSideBarView = selectedView => {
+  handleSwitchRightSideBarView = () => {
     const { switchRightSideBarView } = this.props;
-    switchRightSideBarView(selectedView);
+    switchRightSideBarView("message-group-members");
   };
+
+  handleSwitchTargetUserAndView = () => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView("user-profile");
+  };
+
+  componentDidUpdate() {
+    // switch target user when channel changed
+    const { switchTargetUser, targetMemberList } = this.props;
+    if (targetMemberList[0]) {
+      switchTargetUser(targetMemberList[0].id);
+    }
+  }
 
   render() {
     const { messageGroupList, teamId } = this.props;
@@ -28,15 +42,12 @@ class MessageGroupList extends React.Component {
                 className="leftsidebar__List__link"
                 key={`index-${i}-channelid-${messageGroup.id}`}
                 to={`/workspace/${teamId}/${messageGroup.id}`}
-                onClick={this.handleClick.bind(this, messageGroup.id)}
+                onClick={this.handleSwitchChannel.bind(this, messageGroup.id)}
               >
                 {messageGroup.directMessage ? (
                   <li
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
-                    onClick={this.handleSwitchRightSideBarView.bind(
-                      this,
-                      "user-profile"
-                    )}
+                    onClick={this.handleSwitchTargetUserAndView}
                   >
                     <OnlineStatusBubble on={false} />
                     {"  "}
@@ -45,10 +56,7 @@ class MessageGroupList extends React.Component {
                 ) : (
                   <li
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
-                    onClick={this.handleSwitchRightSideBarView.bind(
-                      this,
-                      "message-group-members"
-                    )}
+                    onClick={this.handleSwitchRightSideBarView}
                   >
                     <span className="leftsidebar__List__link__item__num">
                       {messageGroup.memberNumber}
@@ -68,13 +76,19 @@ MessageGroupList.propTypes = {
   messageGroupList: PropTypes.array.isRequired
 };
 
+const stateToProps = state => ({
+  targetMemberList: channelSelector.getTargetMemberList(state)
+});
+
 const dispatchToProps = dispatch => ({
+  switchTargetUser: targetUserId =>
+    dispatch(globalStateAction.switchTargetUser(targetUserId)),
   switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
   switchRightSideBarView: selectedView =>
     dispatch(globalStateAction.switchRightSideBarView(selectedView))
 });
 
 export default connect(
-  null,
+  stateToProps,
   dispatchToProps
 )(MessageGroupList);

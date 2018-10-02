@@ -8,7 +8,6 @@ import {
 import {
   getCurrentChannel,
   getCurrentChannelMembers,
-  getStateChannelList,
   getChannelList,
   getTargetMemberList,
   getMessageGroupList,
@@ -19,13 +18,15 @@ import { getError } from "./error.reducer";
 import {
   getIsSideBarOpen,
   getRightSideBarView,
+  getTargetUser,
   getRightSideBarTitle
 } from "./globalState.reducer";
 
 const globalStateSelector = {
   getIsSideBarOpen: state => getIsSideBarOpen(state),
   getRightSideBarView: state => getRightSideBarView(state),
-  getRightSideBarTitle: state => getRightSideBarTitle(state)
+  getRightSideBarTitle: state => getRightSideBarTitle(state),
+  getTargetUser: state => getTargetUser(state)
 };
 
 const authSelector = {
@@ -46,7 +47,6 @@ const teamSelector = {
 const channelSelector = {
   getCurrentChannel: state => getCurrentChannel(state),
   getCurrentChannelMembers: state => getCurrentChannelMembers(state),
-  getStateChannelList: state => getStateChannelList(state),
   getChannelList: state => getChannelList(state),
   getMessageGroupList: state => getMessageGroupList(state),
   getMessageGroupName: state => getMessageGroupName(state),
