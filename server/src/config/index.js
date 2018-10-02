@@ -11,7 +11,7 @@ export default {
   REDIS: {
     HOST: process.env.HOST || "localhost",
     PORT: process.env.PORT || 6379,
-    TIME_TO_LIVE: 604800 //  60 * 60 * 24 * 7 in seconds
+    TIME_TO_LIVE: 36000 //  60 * 60 in seconds
   },
   DB: {
     DB_NAME: process.env.DB_NAME || "slack",

@@ -228,11 +228,13 @@ export default {
   tryAutoLogin: async (req, res) => {
     try {
       // req.user is retreived from bearer token of auth.policy
-      const userId = req.user.id;
+      const currentUserId = req.user.id;
 
       // check if redis has the data
-      const userCache = await redisClient.getAsync(`userId:${userId}`);
-      const teamListCache = await redisClient.getAsync(`teamList:${userId}`);
+      const userCache = await redisClient.getAsync(`userId:${currentUserId}`);
+      const teamListCache = await redisClient.getAsync(
+        `teamList:${currentUserId}`
+      );
 
       if (userCache && teamListCache) {
         const userCacheJSON = JSON.parse(userCache);
@@ -249,7 +251,7 @@ export default {
       }
 
       const user = await models.User.findOne({
-        where: { id: userId },
+        where: { id: currentUserId },
         raw: true
       });
       /* get user's teams */
@@ -264,12 +266,12 @@ export default {
 
       // Save the responses in Redis store
       await redisClient.setex(
-        `userId:${userId}`,
+        `userId:${currentUserId}`,
         86400, // 60 * 60 * 24 seconds
         JSON.stringify({ ...user })
       );
       await redisClient.setex(
-        `teamList:${userId}`,
+        `teamList:${currentUserId}`,
         86400, // 60 * 60 * 24 seconds
         JSON.stringify({ ...teamList })
       );

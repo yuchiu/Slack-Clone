@@ -133,6 +133,15 @@ export default {
         }
       );
 
+      // remove stale data from cache
+      redisClient.del(`channelList:${currentUserId}`, (err, result) => {
+        if (result === 1) {
+          console.log(`Deleted channelList:${currentUserId}`);
+        } else {
+          console.log("Cannot delete");
+        }
+      });
+
       res.status(200).send({
         meta: {
           type: "sucesss",

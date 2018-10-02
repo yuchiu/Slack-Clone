@@ -57,6 +57,16 @@ export default {
           raw: true
         }
       );
+
+      // remove stale data from cache
+      redisClient.del(`teamList:${currentUserId}`, (err, result) => {
+        if (result === 1) {
+          console.log(`Deleted teamList:${currentUserId}`);
+        } else {
+          console.log("Cannot delete");
+        }
+      });
+
       res.status(200).send({
         meta: {
           type: "success",
@@ -142,6 +152,26 @@ export default {
           raw: true
         }
       );
+
+      // remove stale data from cache
+      redisClient.del(`teamMemberList:${teamId}`, (err, result) => {
+        if (result === 1) {
+          console.log(`Deleted teamMemberList:${teamId}`);
+        } else {
+          console.log("Cannot delete");
+        }
+      });
+      redisClient.del(
+        `channelMemberList:${initialChannelId}`,
+        (err, result) => {
+          if (result === 1) {
+            console.log(`Deleted channelMemberList:${initialChannelId}`);
+          } else {
+            console.log("Cannot delete");
+          }
+        }
+      );
+
       res.status(200).send({
         meta: {
           type: "success",

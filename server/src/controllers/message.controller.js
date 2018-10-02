@@ -59,6 +59,14 @@ export default {
         filetype: file.type,
         url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
       });
+      // remove stale data from cache
+      redisClient.del(`messageList:${channelId}`, (err, result) => {
+        if (result === 1) {
+          console.log(`Deleted messageList:${channelId}`);
+        } else {
+          console.log("Cannot delete");
+        }
+      });
 
       const message = messageResponse.dataValues;
       return {
