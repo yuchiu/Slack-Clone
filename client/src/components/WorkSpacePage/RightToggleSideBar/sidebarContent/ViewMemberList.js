@@ -1,19 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { OnlineStatusBubble } from "@/components/common";
 
 class ViewMemberList extends React.Component {
   handleClick = targetUserId => {
     const {
       switchTargetUser,
-      switchViewToUserProfile,
-      currentUser,
-      switchViewToMyProfile
+      switchRightSideBarView,
+      currentUser
     } = this.props;
     if (targetUserId === currentUser.id) {
-      switchViewToMyProfile();
+      switchRightSideBarView("my-profile");
     } else {
       switchTargetUser(targetUserId);
-      switchViewToUserProfile();
+      switchRightSideBarView("user-profile");
     }
   };
 

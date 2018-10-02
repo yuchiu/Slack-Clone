@@ -60,9 +60,12 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar()),
-  switchRightSideBarView: selectedView =>
-    dispatch(globalStateAction.switchRightSideBarView(selectedView))
+  toggleSideBar: () => {
+    dispatch(globalStateAction.toggleSideBar());
+  },
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  }
 });
 
 export default connect(

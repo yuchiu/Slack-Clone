@@ -45,7 +45,9 @@ RightStickySideBar.propTypes = {};
 const stateToProps = state => ({});
 
 const dispatchToProps = dispatch => ({
-  toggleSideBar: () => dispatch(globalStateAction.toggleSideBar())
+  toggleSideBar: () => {
+    dispatch(globalStateAction.toggleSideBar());
+  }
 });
 export default connect(
   stateToProps,

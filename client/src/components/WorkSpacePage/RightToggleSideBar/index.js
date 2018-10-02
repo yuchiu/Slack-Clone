@@ -41,8 +41,7 @@ const stateToProps = state => ({
   isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
 });
 
-const dispatchToProps = dispatch => ({});
 export default connect(
   stateToProps,
-  dispatchToProps
+  null
 )(RightToggleSideBar);

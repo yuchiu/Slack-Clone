@@ -1,19 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-class SidebarContainer extends React.Component {
+import { globalStateAction } from "@/actions";
+import { globalStateSelector } from "@/reducers/selectors";
+
+class SidebarHeader extends React.Component {
+  handleClick = () => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView("my-profile");
+  };
+
+  handleToogle = () => {
+    const { toggleSideBar } = this.props;
+    toggleSideBar();
+  };
+
   render() {
-    const {
-      toggleSideBar,
-      rightSideBarTitle,
-      switchViewToMyProfile
-    } = this.props;
+    const { rightSideBarTitle } = this.props;
     return (
       <React.Fragment>
         <div className="right-side-bar-header">
           <i
             className="fa fa-times fa-lg right-side-bar-header__toggle_button"
-            onClick={toggleSideBar}
+            onClick={this.handleToogle}
           />
 
           <div className="right-side-bar-header__title">
@@ -21,7 +31,7 @@ class SidebarContainer extends React.Component {
           </div>
           <span
             className="right-side-bar-header__my-profile"
-            onClick={switchViewToMyProfile}
+            onClick={this.handleClick}
           >
             My Profile
             <i className="fa fa-cog" />
@@ -32,6 +42,23 @@ class SidebarContainer extends React.Component {
   }
 }
 
-SidebarContainer.propTypes = {};
+SidebarHeader.propTypes = {};
 
-export default SidebarContainer;
+const stateToProps = state => ({
+  /* global state */
+  rightSideBarTitle: globalStateSelector.getRightSideBarTitle(state)
+});
+
+const dispatchToProps = dispatch => ({
+  toggleSideBar: () => {
+    dispatch(globalStateAction.toggleSideBar());
+  },
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  }
+});
+
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(SidebarHeader);

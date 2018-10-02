@@ -1,12 +1,13 @@
 import React from "react";
 
 class ViewTeam extends React.Component {
+  handleClick = () => {
+    const { switchRightSideBarView } = this.props;
+    switchRightSideBarView("channel-members");
+  };
+
   render() {
-    const {
-      currentTeam,
-      currentTeamMembers,
-      switchViewToMemberList
-    } = this.props;
+    const { currentTeam, currentTeamMembers } = this.props;
     return (
       <React.Fragment>
         <div className="view-header">
@@ -17,11 +18,11 @@ class ViewTeam extends React.Component {
           <div className="view-header__members  right-side-bar-item">
             <i
               className="far fa-user view-header__members__icon"
-              onClick={switchViewToMemberList}
+              onClick={this.handleClick}
             />
             <span
               className="view-header__members__text"
-              onClick={switchViewToMemberList}
+              onClick={this.handleClick}
             >
               {" "}
               {currentTeamMembers.length} Members

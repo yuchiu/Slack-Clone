@@ -6,7 +6,6 @@ import { Redirect } from "react-router-dom";
 import "./index.scss";
 import { sessionStore } from "@/utils";
 import { teamAction, errorAction, channelAction } from "@/actions";
-import ErrorPage from "@/components/ErrorPage";
 import LeftSideBar from "./LeftSideBar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
@@ -23,18 +22,8 @@ import {
 
 class WorkSpacePage extends React.Component {
   state = {
-    hasError: false,
     openErrorModal: false
   };
-
-  componentDidCatch(error, info) {
-    console.log(error, info);
-    this.setState({
-      hasError: true,
-      currentTeamParam: "",
-      currentChannelParam: ""
-    });
-  }
 
   componentDidMount() {
     const { getTeamAssociatedList } = this.props;
@@ -86,11 +75,9 @@ class WorkSpacePage extends React.Component {
   };
 
   render() {
-    const { hasError, openErrorModal } = this.state;
+    const { openErrorModal } = this.state;
     const { error, clearError, isSideBarOpen } = this.props;
-    return hasError ? (
-      <ErrorPage />
-    ) : (
+    return (
       <React.Fragment>
         {/* redirect to create team if user is not in any team */}
         {!this.isCurrentTeamExist() && <Redirect to="/create-team" />}

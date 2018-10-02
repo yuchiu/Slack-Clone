@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { authAction } from "@/actions";
 
-class AutoAuth extends React.Component {
+class TryAutoAuth extends React.Component {
   componentDidMount() {
     const { autoAuth } = this.props;
     autoAuth();
@@ -15,7 +15,7 @@ class AutoAuth extends React.Component {
   }
 }
 
-AutoAuth.propTypes = {
+TryAutoAuth.propTypes = {
   autoAuth: PropTypes.func.isRequired
 };
 
@@ -28,4 +28,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   null,
   dispatchToProps
-)(AutoAuth);
+)(TryAutoAuth);

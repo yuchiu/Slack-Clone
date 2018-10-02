@@ -70,7 +70,9 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  sendMessage: messageData => dispatch(messageAction.sendMessage(messageData))
+  sendMessage: messageData => {
+    dispatch(messageAction.sendMessage(messageData));
+  }
 });
 
 export default withRouter(

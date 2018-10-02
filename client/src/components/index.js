@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./index.scss";
-import TokenAuthUser from "./TokenAuthUser";
+import TryAutoAuth from "./TryAutoAuth";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import LandingPage from "./LandingPage";
 import RegisterPage from "./RegisterPage";
@@ -32,7 +32,7 @@ class Router extends React.Component {
       <BrowserRouter>
         <React.Fragment>
           {/* try to log in user automatically if token exist in local storage */}
-          <TokenAuthUser />
+          <TryAutoAuth />
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LoginPage} />

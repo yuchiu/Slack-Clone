@@ -58,8 +58,9 @@ class Message extends React.Component {
 Message.propTypes = {};
 
 const dispatchToProps = dispatch => ({
-  switchTargetUser: targetUserId =>
-    dispatch(globalStateAction.switchTargetUser(targetUserId)),
+  switchTargetUser: targetUserId => {
+    dispatch(globalStateAction.switchTargetUser(targetUserId));
+  },
   switchRightSideBarView: selectedView => {
     dispatch(globalStateAction.switchRightSideBarView(selectedView));
   }

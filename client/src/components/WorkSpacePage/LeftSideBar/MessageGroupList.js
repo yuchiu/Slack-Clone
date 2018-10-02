@@ -81,11 +81,15 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  switchTargetUser: targetUserId =>
-    dispatch(globalStateAction.switchTargetUser(targetUserId)),
-  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
-  switchRightSideBarView: selectedView =>
-    dispatch(globalStateAction.switchRightSideBarView(selectedView))
+  switchTargetUser: targetUserId => {
+    dispatch(globalStateAction.switchTargetUser(targetUserId));
+  },
+  switchChannel: channelId => {
+    dispatch(channelAction.switchChannel(channelId));
+  },
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  }
 });
 
 export default connect(

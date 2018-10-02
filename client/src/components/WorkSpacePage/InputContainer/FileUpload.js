@@ -65,8 +65,12 @@ const stateToProps = state => ({
   currentChannel: channelSelector.getCurrentChannel(state)
 });
 const dispatchToProps = dispatch => ({
-  sendMessage: file => dispatch(messageAction.sendMessage(file)),
-  fetchError: text => dispatch(errorAction.fetchError(text))
+  sendMessage: file => {
+    dispatch(messageAction.sendMessage(file));
+  },
+  fetchError: text => {
+    dispatch(errorAction.fetchError(text));
+  }
 });
 
 export default connect(

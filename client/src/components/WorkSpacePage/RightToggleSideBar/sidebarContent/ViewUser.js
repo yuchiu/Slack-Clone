@@ -1,15 +1,7 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import { channelAction } from "@/actions";
 import { OnlineStatusBubble } from "@/components/common";
-import {
-  globalStateSelector,
-  channelSelector,
-  userSelector,
-  teamSelector
-} from "@/reducers/selectors";
 
 class ViewUser extends React.Component {
   handleClick = () => {
@@ -104,23 +96,4 @@ class ViewUser extends React.Component {
 
 ViewUser.propTypes = {};
 
-const stateToProps = state => ({
-  currentTeam: teamSelector.getCurrentTeam(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
-  currentUser: userSelector.getCurrentUser(state),
-  messageGroupList: channelSelector.getMessageGroupList(state),
-  targetUser: globalStateSelector.getTargetUser(state)
-});
-
-const dispatchToProps = dispatch => ({
-  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
-  createChannel: channelFormInfo =>
-    dispatch(channelAction.createChannel(channelFormInfo))
-});
-
-export default withRouter(
-  connect(
-    stateToProps,
-    dispatchToProps
-  )(ViewUser)
-);
+export default ViewUser;

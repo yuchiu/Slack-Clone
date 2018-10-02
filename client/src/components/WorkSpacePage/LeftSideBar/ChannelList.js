@@ -47,9 +47,12 @@ ChannelList.propTypes = {
   channelList: PropTypes.array.isRequired
 };
 const dispatchToProps = dispatch => ({
-  switchChannel: channelId => dispatch(channelAction.switchChannel(channelId)),
-  switchRightSideBarView: selectedView =>
-    dispatch(globalStateAction.switchRightSideBarView(selectedView))
+  switchChannel: channelId => {
+    dispatch(channelAction.switchChannel(channelId));
+  },
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
+  }
 });
 
 export default connect(
