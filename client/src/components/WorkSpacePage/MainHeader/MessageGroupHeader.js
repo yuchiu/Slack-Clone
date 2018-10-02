@@ -45,6 +45,11 @@ class MessageGroupHeader extends React.Component {
   }
 }
 
-MessageGroupHeader.propTypes = {};
+MessageGroupHeader.propTypes = {
+  currentChannelMembers: PropTypes.array.isRequired,
+  messageGroupName: PropTypes.string,
+  targetMemberList: PropTypes.array.isRequired,
+  handleSwitchRightSideBarView: PropTypes.func.isRequired
+};
 
 export default MessageGroupHeader;

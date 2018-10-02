@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import { OnlineStatusBubble } from "@/components/common";
-import { channelSelector } from "@/reducers/selectors";
-import { channelAction, globalStateAction } from "@/actions";
 
 class MessageGroupList extends React.Component {
   handleSwitchChannel = channelId => {
@@ -73,26 +70,13 @@ class MessageGroupList extends React.Component {
 }
 
 MessageGroupList.propTypes = {
-  messageGroupList: PropTypes.array.isRequired
+  teamId: PropTypes.number,
+  messageGroupList: PropTypes.array.isRequired,
+  targetMemberList: PropTypes.array.isRequired,
+
+  switchTargetUser: PropTypes.func.isRequired,
+  switchChannel: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({
-  targetMemberList: channelSelector.getTargetMemberList(state)
-});
-
-const dispatchToProps = dispatch => ({
-  switchTargetUser: targetUserId => {
-    dispatch(globalStateAction.switchTargetUser(targetUserId));
-  },
-  switchChannel: channelId => {
-    dispatch(channelAction.switchChannel(channelId));
-  },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
-  }
-});
-
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(MessageGroupList);
+export default MessageGroupList;

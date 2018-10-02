@@ -128,7 +128,13 @@ class AddMessageGroupModal extends React.Component {
 
 AddMessageGroupModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+
+  currentTeam: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  currentTeamMembers: PropTypes.array.isRequired,
+
+  createChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({

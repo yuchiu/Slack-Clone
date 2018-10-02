@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class ViewTeam extends React.Component {
   handleClick = () => {
@@ -57,6 +58,10 @@ class ViewTeam extends React.Component {
   }
 }
 
-ViewTeam.propTypes = {};
+ViewTeam.propTypes = {
+  currentTeam: PropTypes.object.isRequired,
+  currentTeamMembers: PropTypes.array.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
 
 export default ViewTeam;

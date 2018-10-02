@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -103,7 +102,22 @@ class SidebarContainer extends React.Component {
   }
 }
 
-SidebarContainer.propTypes = {};
+SidebarContainer.propTypes = {
+  rightSideBarView: PropTypes.string.isRequired,
+  targetUser: PropTypes.object,
+  currentChannel: PropTypes.object.isRequired,
+  targetMemberList: PropTypes.array,
+  currentChannelMembers: PropTypes.array.isRequired,
+  messageGroupList: PropTypes.array.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  currentTeamMembers: PropTypes.array.isRequired,
+  currentUser: PropTypes.object.isRequired,
+
+  switchRightSideBarView: PropTypes.func.isRequired,
+  switchTargetUser: PropTypes.func.isRequired,
+  switchChannel: PropTypes.func.isRequired,
+  createChannel: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   /* global state */
@@ -139,9 +153,7 @@ const dispatchToProps = dispatch => ({
   }
 });
 
-export default withRouter(
-  connect(
-    stateToProps,
-    dispatchToProps
-  )(SidebarContainer)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(SidebarContainer);

@@ -1,12 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 import "./index.scss";
-import ChannelHeader from "./ChannelHeader";
-import ChannelList from "./ChannelList";
-import MessageGroupHeader from "./MessageGroupHeader";
-import MessageGroupList from "./MessageGroupList";
+import SidebarList from "./SidebarList";
 import SideBarHeader from "./SideBarHeader";
 import InviteMemberSection from "./InviteMemberSection";
 import {
@@ -14,11 +9,6 @@ import {
   AddMessageGroupModal,
   AddTeamMemberModal
 } from "./modals";
-import {
-  userSelector,
-  teamSelector,
-  channelSelector
-} from "@/reducers/selectors";
 
 class LeftSideBar extends React.Component {
   state = {
@@ -58,51 +48,29 @@ class LeftSideBar extends React.Component {
       openAddChannelModal,
       openAddMessageGroupModal
     } = this.state;
-    const {
-      currentUser,
-      currentTeam,
-      messageGroupList,
-      channelList
-    } = this.props;
     return (
       <React.Fragment>
         <section className="leftsidebar">
-          <SideBarHeader currentUser={currentUser} currentTeam={currentTeam} />
-          <ul className="leftsidebar__List">
-            <ChannelHeader
-              isAdmin={currentTeam.admin}
-              toggleAddChannelModal={this.toggleAddChannelModal}
-            />
-            <ChannelList teamId={currentTeam.id} channelList={channelList} />
-          </ul>
-          <ul className="leftsidebar__List">
-            <MessageGroupHeader
-              toggleAddMessageGroupModal={this.toggleAddMessageGroupModal}
-            />
-            <MessageGroupList
-              teamId={currentTeam.id}
-              messageGroupList={messageGroupList}
-            />
-          </ul>
+          <SideBarHeader />
+          <SidebarList
+            toggleAddMessageGroupModal={this.toggleAddMessageGroupModal}
+            toggleAddChannelModal={this.toggleAddChannelModal}
+          />
           <InviteMemberSection
-            isAdmin={currentTeam.admin}
             toggleAddTeamMemberModal={this.toggleAddTeamMemberModal}
           />
         </section>
         <AddChannelModal
-          teamId={currentTeam.id}
           onClose={this.toggleAddChannelModal}
           open={openAddChannelModal}
           key="add-channel-modal"
         />
         <AddMessageGroupModal
-          teamId={currentTeam.id}
           onClose={this.toggleAddMessageGroupModal}
           open={openAddMessageGroupModal}
           key="add-message-group-modal"
         />
         <AddTeamMemberModal
-          teamId={currentTeam.id}
           onClose={this.toggleAddTeamMemberModal}
           open={openAddTeamMemberModal}
           key="add-team-member-modal"
@@ -111,18 +79,5 @@ class LeftSideBar extends React.Component {
     );
   }
 }
-LeftSideBar.propTypes = {
-  currentTeam: PropTypes.object.isRequired
-};
-/* currentUser, channel, direct messages */
-const stateToProps = state => ({
-  currentUser: userSelector.getCurrentUser(state),
-  currentTeam: teamSelector.getCurrentTeam(state),
-  channelList: channelSelector.getChannelList(state),
-  messageGroupList: channelSelector.getMessageGroupList(state)
-});
 
-export default connect(
-  stateToProps,
-  null
-)(LeftSideBar);
+export default LeftSideBar;

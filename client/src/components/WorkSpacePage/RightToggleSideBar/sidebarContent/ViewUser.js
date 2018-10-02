@@ -94,6 +94,13 @@ class ViewUser extends React.Component {
   }
 }
 
-ViewUser.propTypes = {};
+ViewUser.propTypes = {
+  currentTeam: PropTypes.object.isRequired,
+  targetUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  messageGroupList: PropTypes.array.isRequired,
+  switchChannel: PropTypes.func.isRequired,
+  createChannel: PropTypes.func.isRequired
+};
 
 export default ViewUser;

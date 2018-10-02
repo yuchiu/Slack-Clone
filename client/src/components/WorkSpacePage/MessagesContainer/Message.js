@@ -1,9 +1,7 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-import { globalStateAction } from "@/actions";
 import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.Component {
@@ -55,18 +53,11 @@ class Message extends React.Component {
     );
   }
 }
-Message.propTypes = {};
+Message.propTypes = {
+  message: PropTypes.object.isRequired,
 
-const dispatchToProps = dispatch => ({
-  switchTargetUser: targetUserId => {
-    dispatch(globalStateAction.switchTargetUser(targetUserId));
-  },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
-  }
-});
+  switchTargetUser: PropTypes.func.isRequired,
+  switchChannel: PropTypes.func.isRequired
+};
 
-export default connect(
-  null,
-  dispatchToProps
-)(Message);
+export default Message;

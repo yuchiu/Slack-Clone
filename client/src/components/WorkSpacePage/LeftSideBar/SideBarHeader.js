@@ -3,7 +3,11 @@ import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { globalStateSelector } from "@/reducers/selectors";
+import {
+  globalStateSelector,
+  teamSelector,
+  userSelector
+} from "@/reducers/selectors";
 import { OnlineStatusBubble } from "@/components/common";
 import { globalStateAction } from "@/actions";
 
@@ -55,7 +59,18 @@ class SideBarHeader extends React.Component {
   }
 }
 
+SideBarHeader.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  isSideBarOpen: PropTypes.bool.isRequired,
+
+  toggleSideBar: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
+
 const stateToProps = state => ({
+  currentUser: userSelector.getCurrentUser(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
   isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)
 });
 

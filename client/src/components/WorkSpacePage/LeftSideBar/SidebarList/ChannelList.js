@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 import { PublicOrPrivateTag } from "@/components/common";
-import { channelAction, globalStateAction } from "@/actions";
 
 class ChannelList extends React.Component {
   handleClick = channelId => {
@@ -44,18 +42,11 @@ class ChannelList extends React.Component {
   }
 }
 ChannelList.propTypes = {
-  channelList: PropTypes.array.isRequired
-};
-const dispatchToProps = dispatch => ({
-  switchChannel: channelId => {
-    dispatch(channelAction.switchChannel(channelId));
-  },
-  switchRightSideBarView: selectedView => {
-    dispatch(globalStateAction.switchRightSideBarView(selectedView));
-  }
-});
+  channelList: PropTypes.array.isRequired,
+  teamId: PropTypes.number,
 
-export default connect(
-  null,
-  dispatchToProps
-)(ChannelList);
+  switchChannel: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
+
+export default ChannelList;

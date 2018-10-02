@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { teamAction } from "@/actions";
 import { InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
-import { teamSelector, errorSelector } from "@/reducers/selectors";
+import { teamSelector } from "@/reducers/selectors";
 
 class AddTeamMemberModal extends React.Component {
   state = {
@@ -95,10 +95,19 @@ class AddTeamMemberModal extends React.Component {
   }
 }
 
+AddTeamMemberModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+
+  currentTeam: PropTypes.object.isRequired,
+  currentTeamMembers: PropTypes.array.isRequired,
+
+  addTeamMember: PropTypes.func.isRequired
+};
+
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
-  error: errorSelector.getError(state)
+  currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
 });
 
 const dispatchToProps = dispatch => ({
@@ -106,11 +115,6 @@ const dispatchToProps = dispatch => ({
     dispatch(teamAction.addTeamMember(addMemberInfo));
   }
 });
-AddTeamMemberModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  addTeamMember: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired
-};
 
 export default connect(
   stateToProps,

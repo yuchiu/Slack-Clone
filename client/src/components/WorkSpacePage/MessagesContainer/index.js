@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import "./index.scss";
 import Message from "./Message";
-import { messageAction, channelAction } from "@/actions";
+import { messageAction, globalStateAction, channelAction } from "@/actions";
 import {
   messageSelector,
   teamSelector,
@@ -104,7 +104,13 @@ class MessagesContainer extends React.Component {
   };
 
   render() {
-    const { messageList, isSideBarOpen } = this.props;
+    const {
+      messageList,
+      isSideBarOpen,
+
+      switchRightSideBarView,
+      switchTargetUser
+    } = this.props;
     return (
       <div
         className={`messages-container messages-container--sidebar-${isSideBarOpen}`}
@@ -115,14 +121,30 @@ class MessagesContainer extends React.Component {
         {" "}
         <Comment.Group>
           {messageList.map((message, i) => (
-            <Message key={`${message.id}-${i}`} message={message} />
+            <Message
+              key={`${message.id}-${i}`}
+              switchRightSideBarView={switchRightSideBarView}
+              message={message}
+              switchTargetUser={switchTargetUser}
+            />
           ))}
         </Comment.Group>
       </div>
     );
   }
 }
-MessagesContainer.propTypes = {};
+MessagesContainer.propTypes = {
+  currentChannel: PropTypes.object.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  messageList: PropTypes.array.isRequired,
+
+  getChannelAssociatedList: PropTypes.func.isRequired,
+  fetchMoreMessage: PropTypes.func.isRequired,
+  clearSocketConnection: PropTypes.func.isRequired,
+  receiveMessage: PropTypes.func.isRequired,
+  switchTargetUser: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   messageList: messageSelector.getMessageList(state),
@@ -142,6 +164,12 @@ const dispatchToProps = dispatch => ({
   },
   receiveMessage: () => {
     dispatch(messageAction.receiveMessage());
+  },
+  switchTargetUser: targetUserId => {
+    dispatch(globalStateAction.switchTargetUser(targetUserId));
+  },
+  switchRightSideBarView: selectedView => {
+    dispatch(globalStateAction.switchRightSideBarView(selectedView));
   }
 });
 

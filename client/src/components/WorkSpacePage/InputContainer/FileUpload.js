@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import { Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -59,6 +60,13 @@ class FileUpload extends React.Component {
     );
   }
 }
+
+FileUpload.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  currentChannel: PropTypes.object.isRequired,
+  sendMessage: PropTypes.func.isRequired,
+  fetchError: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   currentUser: userSelector.getCurrentUser(state),

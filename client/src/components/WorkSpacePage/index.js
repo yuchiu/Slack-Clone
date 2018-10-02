@@ -109,8 +109,16 @@ class WorkSpacePage extends React.Component {
 }
 
 WorkSpacePage.propTypes = {
-  params: PropTypes.object,
-  match: PropTypes.object
+  teamList: PropTypes.array.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  channelList: PropTypes.array.isRequired,
+  error: PropTypes.string.isRequired,
+  isSideBarOpen: PropTypes.bool.isRequired,
+
+  clearError: PropTypes.func.isRequired,
+  getTeamAssociatedList: PropTypes.func.isRequired,
+  fetchCurrentTeam: PropTypes.func.isRequired,
+  fetchCurrentChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -122,7 +130,9 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  clearError: () => dispatch(errorAction.clearError()),
+  clearError: () => {
+    dispatch(errorAction.clearError());
+  },
   getTeamAssociatedList: teamId => {
     dispatch(teamAction.getTeamAssociatedList(teamId));
   },

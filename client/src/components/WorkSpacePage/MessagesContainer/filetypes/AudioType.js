@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Icon } from "semantic-ui-react";
 
 class AudioType extends React.Component {
@@ -18,5 +19,10 @@ class AudioType extends React.Component {
     );
   }
 }
+
+AudioType.propTypes = {
+  url: PropTypes.string.isRequired,
+  filetype: PropTypes.string.isRequired
+};
 
 export default AudioType;

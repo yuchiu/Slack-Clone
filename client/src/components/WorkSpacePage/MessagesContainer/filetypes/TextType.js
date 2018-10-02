@@ -1,7 +1,8 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
-export default class RenderText extends React.Component {
+class RenderText extends React.Component {
   state = {
     text: "",
     showMore: false
@@ -68,3 +69,9 @@ export default class RenderText extends React.Component {
     );
   }
 }
+
+RenderText.propTypes = {
+  url: PropTypes.string.isRequired
+};
+
+export default RenderText;

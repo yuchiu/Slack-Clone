@@ -27,6 +27,8 @@ class UnauthNavBar extends React.Component {
   }
 }
 
-UnauthNavBar.propTypes = {};
+UnauthNavBar.propTypes = {
+  history: PropTypes.object.isRequired
+};
 
 export default UnauthNavBar;

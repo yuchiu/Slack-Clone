@@ -6,7 +6,7 @@ import { teamAction } from "@/actions";
 import { NavBar, InlineError } from "../common";
 import { validateForm } from "../../utils";
 import CreateTeamForm from "./CreateTeamForm";
-import { errorSelector, teamSelector } from "@/reducers/selectors";
+import { errorSelector } from "@/reducers/selectors";
 
 class CreateTeamPage extends React.Component {
   state = {
@@ -29,7 +29,7 @@ class CreateTeamPage extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientErrors).length === 0) {
-      const { createTeam, currentTeam, history } = this.props;
+      const { createTeam, history } = this.props;
       const { name, about } = this.state;
       createTeam({ name, about });
       history.push(`/`);
@@ -58,9 +58,14 @@ class CreateTeamPage extends React.Component {
   }
 }
 
+CreateTeamPage.propTypes = {
+  createTeam: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  error: PropTypes.string.isRequired
+};
+
 const stateToProps = state => ({
-  error: errorSelector.getError(state),
-  currentTeam: teamSelector.getCurrentTeam(state)
+  error: errorSelector.getError(state)
 });
 
 const dispatchToProps = dispatch => ({

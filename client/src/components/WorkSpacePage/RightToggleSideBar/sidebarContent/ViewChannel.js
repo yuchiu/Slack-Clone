@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class ViewChannel extends React.Component {
   handleClick = () => {
@@ -51,6 +52,10 @@ class ViewChannel extends React.Component {
   }
 }
 
-ViewChannel.propTypes = {};
+ViewChannel.propTypes = {
+  currentChannel: PropTypes.object.isRequired,
+  currentChannelMembers: PropTypes.array.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
 
 export default ViewChannel;

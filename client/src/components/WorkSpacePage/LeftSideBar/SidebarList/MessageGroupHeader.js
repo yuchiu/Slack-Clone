@@ -21,6 +21,8 @@ class MessageGroupHeader extends React.Component {
     );
   }
 }
-MessageGroupHeader.propTypes = {};
+MessageGroupHeader.propTypes = {
+  toggleAddMessageGroupModal: PropTypes.func.isRequired
+};
 
 export default MessageGroupHeader;

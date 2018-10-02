@@ -98,6 +98,8 @@ class ChannelHeader extends React.Component {
   }
 }
 
-ChannelHeader.propTypes = {};
+ChannelHeader.propTypes = {
+  topic: PropTypes.string
+};
 
 export default ChannelHeader;

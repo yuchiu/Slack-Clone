@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -25,7 +26,11 @@ class SidebarFooter extends React.Component {
   }
 }
 
-SidebarFooter.propTypes = {};
+SidebarFooter.propTypes = {
+  history: PropTypes.object.isRequired,
+
+  logoutUser: PropTypes.func.isRequired
+};
 
 const dispatchToProps = dispatch => ({
   logoutUser: () => {

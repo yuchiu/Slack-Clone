@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { OnlineStatusBubble } from "@/components/common";
 
 class ViewMyProfile extends React.Component {
   render() {
-    const { currentUser, handleLogout } = this.props;
+    const { currentUser } = this.props;
     return (
       <React.Fragment>
         <div className="view-pic">
@@ -48,6 +49,8 @@ class ViewMyProfile extends React.Component {
   }
 }
 
-ViewMyProfile.propTypes = {};
+ViewMyProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired
+};
 
 export default ViewMyProfile;

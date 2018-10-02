@@ -53,7 +53,16 @@ class MainHeader extends React.Component {
   }
 }
 
-MainHeader.propTypes = {};
+MainHeader.propTypes = {
+  isSideBarOpen: PropTypes.bool.isRequired,
+  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannel: PropTypes.object.isRequired,
+  messageGroupName: PropTypes.string,
+  targetMemberList: PropTypes.array.isRequired,
+
+  toggleSideBar: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   isSideBarOpen: globalStateSelector.getIsSideBarOpen(state),

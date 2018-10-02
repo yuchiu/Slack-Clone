@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
 
 import "./index.scss";
-import { globalStateAction } from "@/actions";
+import { globalStateAction, teamAction } from "@/actions";
+import { teamSelector } from "@/reducers/selectors";
 import TeamList from "./TeamList";
 
 class RightStickySideBar extends React.Component {
@@ -20,6 +20,7 @@ class RightStickySideBar extends React.Component {
   };
 
   render() {
+    const { teamList, switchTeam, getTeamAssociatedList } = this.props;
     return (
       <React.Fragment>
         <div className="right-sticky-sidebar">
@@ -28,7 +29,11 @@ class RightStickySideBar extends React.Component {
             onClick={this.toggleSideBar}
           />
           <li className="sticky-side-bar-title">Teams</li>
-          <TeamList />
+          <TeamList
+            teamList={teamList}
+            switchTeam={switchTeam}
+            getTeamAssociatedList={getTeamAssociatedList}
+          />
           <Link to="/create-team">
             <li className="team-list__link__item team-list__link__item--add-team">
               +
@@ -40,15 +45,30 @@ class RightStickySideBar extends React.Component {
   }
 }
 
-RightStickySideBar.propTypes = {};
+RightStickySideBar.propTypes = {
+  teamList: PropTypes.array.isRequired,
 
-const stateToProps = state => ({});
+  toggleSideBar: PropTypes.func.isRequired,
+  switchTeam: PropTypes.func.isRequired,
+  getTeamAssociatedList: PropTypes.func.isRequired
+};
+
+const stateToProps = state => ({
+  teamList: teamSelector.getTeamList(state)
+});
 
 const dispatchToProps = dispatch => ({
   toggleSideBar: () => {
     dispatch(globalStateAction.toggleSideBar());
+  },
+  switchTeam: teamId => {
+    dispatch(teamAction.switchTeam(teamId));
+  },
+  getTeamAssociatedList: teamId => {
+    dispatch(teamAction.getTeamAssociatedList(teamId));
   }
 });
+
 export default connect(
   stateToProps,
   dispatchToProps

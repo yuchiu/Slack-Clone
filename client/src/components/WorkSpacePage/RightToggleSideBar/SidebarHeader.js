@@ -42,7 +42,12 @@ class SidebarHeader extends React.Component {
   }
 }
 
-SidebarHeader.propTypes = {};
+SidebarHeader.propTypes = {
+  rightSideBarTitle: PropTypes.string.isRequired,
+
+  toggleSideBar: PropTypes.func.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   /* global state */

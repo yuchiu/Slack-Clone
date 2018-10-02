@@ -49,6 +49,11 @@ class ViewMemberList extends React.Component {
   }
 }
 
-ViewMemberList.propTypes = {};
+ViewMemberList.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  memeberList: PropTypes.array.isRequired,
+  switchRightSideBarView: PropTypes.func.isRequired,
+  switchTargetUser: PropTypes.func.isRequired
+};
 
 export default ViewMemberList;

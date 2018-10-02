@@ -35,7 +35,9 @@ class RightToggleSideBar extends React.Component {
   }
 }
 
-RightToggleSideBar.propTypes = {};
+RightToggleSideBar.propTypes = {
+  isSideBarOpen: PropTypes.bool.isRequired
+};
 
 const stateToProps = state => ({
   isSideBarOpen: globalStateSelector.getIsSideBarOpen(state)

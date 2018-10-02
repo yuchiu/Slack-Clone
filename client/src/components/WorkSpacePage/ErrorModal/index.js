@@ -37,5 +37,11 @@ class PopUpModal extends React.Component {
     );
   }
 }
+PopUpModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  clearError: PropTypes.func.isRequired
+};
 
 export default PopUpModal;

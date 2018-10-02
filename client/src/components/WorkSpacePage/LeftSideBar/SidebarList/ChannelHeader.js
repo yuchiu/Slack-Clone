@@ -21,6 +21,9 @@ class ChannelHeader extends React.Component {
     );
   }
 }
-ChannelHeader.propTypes = {};
+ChannelHeader.propTypes = {
+  isAdmin: PropTypes.bool,
+  toggleAddChannelModal: PropTypes.func.isRequired
+};
 
 export default ChannelHeader;

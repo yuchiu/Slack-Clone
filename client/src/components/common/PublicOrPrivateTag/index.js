@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const OnlineStatusBubble = ({ publicChannel, addClass }) =>
+const PublicOrPrivateTag = ({ publicChannel, addClass }) =>
   publicChannel ? (
     <span className={`public-tag public-tag--${addClass}`}>#</span>
   ) : (
@@ -11,4 +12,9 @@ const OnlineStatusBubble = ({ publicChannel, addClass }) =>
     </span>
   );
 
-export default OnlineStatusBubble;
+PublicOrPrivateTag.propTypes = {
+  publicChannel: PropTypes.bool.isRequired,
+  addClass: PropTypes.string
+};
+
+export default PublicOrPrivateTag;

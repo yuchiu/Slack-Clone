@@ -1,15 +1,17 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { teamSelector } from "@/reducers/selectors";
 
 class InviteMemberSection extends React.Component {
   state = {};
 
   render() {
-    const { isAdmin, toggleAddTeamMemberModal } = this.props;
+    const { currentTeam, toggleAddTeamMemberModal } = this.props;
     return (
       <React.Fragment>
-        {isAdmin && (
+        {currentTeam.admin && (
           <div
             className="leftsidebar__invite"
             onClick={toggleAddTeamMemberModal}
@@ -21,6 +23,18 @@ class InviteMemberSection extends React.Component {
     );
   }
 }
-InviteMemberSection.propTypes = {};
+InviteMemberSection.propTypes = {
+  toggleAddTeamMemberModal: PropTypes.func.isRequired,
 
-export default InviteMemberSection;
+  currentTeam: PropTypes.object.isRequired
+};
+
+/* currentUser, channel, direct messages */
+const stateToProps = state => ({
+  currentTeam: teamSelector.getCurrentTeam(state)
+});
+
+export default connect(
+  stateToProps,
+  null
+)(InviteMemberSection);

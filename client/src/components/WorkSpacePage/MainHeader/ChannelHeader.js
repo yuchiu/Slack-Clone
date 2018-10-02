@@ -55,6 +55,10 @@ class ChannelHeader extends React.Component {
   }
 }
 
-ChannelHeader.propTypes = {};
+ChannelHeader.propTypes = {
+  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannel: PropTypes.object.isRequired,
+  handleSwitchRightSideBarView: PropTypes.func.isRequired
+};
 
 export default ChannelHeader;

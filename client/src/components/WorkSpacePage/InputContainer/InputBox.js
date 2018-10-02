@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Input } from "semantic-ui-react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./index.scss";
@@ -61,8 +60,13 @@ class InputBox extends React.Component {
 }
 
 InputBox.propTypes = {
-  placeholder: PropTypes.string
+  currentUser: PropTypes.object.isRequired,
+  currentTeamMembers: PropTypes.array.isRequired,
+  currentChannel: PropTypes.object.isRequired,
+
+  sendMessage: PropTypes.func.isRequired
 };
+
 const stateToProps = state => ({
   currentUser: userSelector.getCurrentUser(state),
   currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
@@ -75,9 +79,7 @@ const dispatchToProps = dispatch => ({
   }
 });
 
-export default withRouter(
-  connect(
-    stateToProps,
-    dispatchToProps
-  )(InputBox)
-);
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(InputBox);

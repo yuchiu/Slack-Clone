@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Icon } from "semantic-ui-react";
 
 class ImageType extends React.Component {
@@ -16,5 +17,9 @@ class ImageType extends React.Component {
     );
   }
 }
+
+ImageType.propTypes = {
+  url: PropTypes.string.isRequired
+};
 
 export default ImageType;

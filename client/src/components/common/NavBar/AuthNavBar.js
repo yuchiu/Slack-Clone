@@ -36,6 +36,7 @@ class AuthNavBar extends React.Component {
 }
 AuthNavBar.propTypes = {
   username: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
   handleLogout: PropTypes.func.isRequired
 };
 
