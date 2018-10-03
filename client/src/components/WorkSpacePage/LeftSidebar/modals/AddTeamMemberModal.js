@@ -32,9 +32,12 @@ class AddTeamMemberModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { fetchAddTeamMember, currentTeam, onClose } = this.props;
+      const { emitSocketAddTeamMember, currentTeam, onClose } = this.props;
       const { username } = this.state;
-      fetchAddTeamMember({ teamId: currentTeam.id, targetUsername: username });
+      emitSocketAddTeamMember({
+        teamId: currentTeam.id,
+        targetUsername: username
+      });
       this.setState({
         clientError: {},
         username: ""
@@ -102,7 +105,7 @@ AddTeamMemberModal.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   currentTeamMembers: PropTypes.array.isRequired,
 
-  fetchAddTeamMember: PropTypes.func.isRequired
+  emitSocketAddTeamMember: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -110,10 +113,9 @@ const stateToProps = state => ({
   currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
 });
 
-const dispatchToProps = dispatch => ({
-  fetchAddTeamMember: addMemberInfo => {
-    dispatch(teamAction.fetchAddTeamMember(addMemberInfo));
-  }
+const dispatchToProps = () => ({
+  emitSocketAddTeamMember: addMemberInfo =>
+    teamAction.emitSocketAddTeamMember(addMemberInfo)
 });
 
 export default connect(

@@ -1,4 +1,5 @@
 import constants from "../constants";
+import { globalStateService } from "./services";
 
 export default {
   toggleRightSidebar: () => dispatch => {
@@ -21,6 +22,12 @@ export default {
     dispatch({
       type: constants.TARGET_USER_SWITCH,
       payload: targetUserId
+    });
+  },
+  clearSocketConnection: () => dispatch => {
+    globalStateService.clearSocketConnection();
+    dispatch({
+      type: constants.SOCKET_CONNECTION_CLEAR
     });
   }
 };

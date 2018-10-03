@@ -35,12 +35,25 @@ export default {
 
         const message = messageResponse.dataValues;
 
-        return { message };
+        return {
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          message
+        };
       }
 
       /* validate files */
       if (file.size > 1024 * 1024 * 5) {
-        return { error: "file exceed maximum size of 5 mbs" };
+        return {
+          meta: {
+            type: "error",
+            status: 403,
+            message: "file exceed maximum size of 5 mbs"
+          }
+        };
       }
       if (
         !file.type.startsWith("image/") &&
@@ -48,7 +61,11 @@ export default {
         !file.type.startsWith("audio/")
       ) {
         return {
-          error: "Files upload can only be in text, image, or audio type"
+          meta: {
+            type: "error",
+            status: 403,
+            message: "Files upload can only be in text, image, or audio type"
+          }
         };
       }
 

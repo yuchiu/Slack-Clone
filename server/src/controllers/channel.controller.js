@@ -17,10 +17,10 @@ export default {
       } = req.body;
 
       // remove stale data from cache
-      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
+      redisClient.del(`channelList:${teamId}`, (err, reply) => {
         if (!err) {
           if (reply === 1) {
-            console.log(`channelList:${currentUserId} is deleted`);
+            console.log(`channelList:${teamId} is deleted`);
           } else {
             console.log("Does't exists");
           }
@@ -161,6 +161,7 @@ export default {
       });
     }
   },
+
   getChannelAssociatedList: async (req, res) => {
     try {
       const currentUserId = req.user.id;
@@ -304,10 +305,10 @@ export default {
       updatedChannelData = _.pickBy(updatedChannelData, _.identity);
 
       // remove stale data from cache
-      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
+      redisClient.del(`channelList:${teamId}`, (err, reply) => {
         if (!err) {
           if (reply === 1) {
-            console.log(`channelList:${{ currentUserId }} is deleted`);
+            console.log(`channelList:${{ teamId }} is deleted`);
           } else {
             console.log("Does't exists");
           }

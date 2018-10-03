@@ -65,7 +65,7 @@ export default (state = initialState, action) => {
       newState.currentTeamMembers = action.payload.teamMemberList;
       return newState;
 
-    case constants.TEAM_MEMBER_ADD_FETCH:
+    case constants.TEAM_NEW_MEMBER_RECEIVE_SOCKET:
       newState.currentTeamMembers = action.payload.teamMemberList;
       return newState;
 

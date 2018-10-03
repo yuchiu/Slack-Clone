@@ -33,12 +33,6 @@ export default app => {
 
   /* teams routes */
   team.post("/", authPolicy.authentication, teamController.create);
-  team.post(
-    "/members",
-    authPolicy.authentication,
-    authPolicy.authorization,
-    teamController.addTeamMember
-  );
   team.get(
     "/:teamId",
     authPolicy.authentication,
@@ -46,8 +40,8 @@ export default app => {
   );
 
   /* channels routes */
-  channel.put("/", authPolicy.authentication, channelController.updateChannel);
   channel.post("/", authPolicy.authentication, channelController.create);
+  channel.put("/", authPolicy.authentication, channelController.updateChannel);
   channel.get(
     "/:channelId",
     authPolicy.authentication,

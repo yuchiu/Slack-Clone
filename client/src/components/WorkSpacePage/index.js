@@ -5,7 +5,12 @@ import { Redirect } from "react-router-dom";
 
 import "./index.scss";
 import { sessionStore } from "@/utils";
-import { teamAction, errorAction, channelAction } from "@/actions";
+import {
+  teamAction,
+  errorAction,
+  channelAction,
+  globalStateAction
+} from "@/actions";
 import LeftSidebar from "./LeftSidebar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
@@ -26,8 +31,8 @@ class WorkSpacePage extends React.Component {
   };
 
   componentDidMount() {
-    const { fetchTeamAssociatedList } = this.props;
-
+    const { fetchTeamAssociatedList, receiveSocketNewTeamMember } = this.props;
+    receiveSocketNewTeamMember();
     /* get channelList, messageGroupList, teamMembers when component mount */
     if (this.isCurrentTeamExist()) {
       const teamId = sessionStore.getTeamId();
@@ -74,6 +79,11 @@ class WorkSpacePage extends React.Component {
     }
   };
 
+  componentWillUnmount() {
+    const { clearSocketConnection } = this.props;
+    clearSocketConnection();
+  }
+
   render() {
     const { openErrorModal } = this.state;
     const { error, clearAllError, isSidebarOpen } = this.props;
@@ -115,6 +125,7 @@ WorkSpacePage.propTypes = {
   error: PropTypes.string.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
 
+  clearSocketConnection: PropTypes.func.isRequired,
   clearAllError: PropTypes.func.isRequired,
   fetchTeamAssociatedList: PropTypes.func.isRequired,
   getCurrentTeam: PropTypes.func.isRequired,
@@ -139,8 +150,16 @@ const dispatchToProps = dispatch => ({
   getCurrentTeam: params => {
     dispatch(teamAction.getCurrentTeam(params));
   },
+
+  clearSocketConnection: () => {
+    dispatch(globalStateAction.clearSocketConnection());
+  },
+
   getCurrentChannel: params => {
     dispatch(channelAction.getCurrentChannel(params));
+  },
+  receiveSocketNewTeamMember: () => {
+    dispatch(teamAction.receiveSocketNewTeamMember());
   }
 });
 

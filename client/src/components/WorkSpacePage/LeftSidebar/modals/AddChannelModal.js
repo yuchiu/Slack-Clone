@@ -47,10 +47,16 @@ class AddChannelModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { fetchCreateChannel, currentTeam, onClose } = this.props;
+      const {
+        fetchCreateChannel,
+        currentTeam,
+        onClose,
+        currentUser
+      } = this.props;
       const { channelName, isChannelPrivate, members, purpose } = this.state;
       fetchCreateChannel({
         teamId: currentTeam.id,
+        currentUserId: currentUser.id,
         channelName,
         detail_description: purpose,
         isPublic: !isChannelPrivate,
@@ -205,8 +211,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  fetchCreateChannel: channelFormInfo => {
-    dispatch(channelAction.fetchCreateChannel(channelFormInfo));
+  fetchCreateChannel: channelFormData => {
+    dispatch(channelAction.fetchCreateChannel(channelFormData));
   }
 });
 export default connect(

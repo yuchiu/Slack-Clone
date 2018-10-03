@@ -24,11 +24,11 @@ class InputBox extends React.Component {
     });
   };
 
-  sendSocketMessage = () => {
+  emitSocketMessage = () => {
     const { text } = this.state;
     if (text) {
-      const { sendSocketMessage, currentUser, currentChannel } = this.props;
-      sendSocketMessage({
+      const { emitSocketMessage, currentUser, currentChannel } = this.props;
+      emitSocketMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
@@ -52,7 +52,7 @@ class InputBox extends React.Component {
         placeholder={`# ${currentChannel.name}`}
         onChange={this.handleChange}
         onKeyDown={e => {
-          if (e.keyCode === ENTER_KEY) this.sendSocketMessage();
+          if (e.keyCode === ENTER_KEY) this.emitSocketMessage();
         }}
       />
     );
@@ -64,7 +64,7 @@ InputBox.propTypes = {
   currentTeamMembers: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
 
-  sendSocketMessage: PropTypes.func.isRequired
+  emitSocketMessage: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -74,8 +74,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  sendSocketMessage: messageData => {
-    dispatch(messageAction.sendSocketMessage(messageData));
+  emitSocketMessage: messageData => {
+    dispatch(messageAction.emitSocketMessage(messageData));
   }
 });
 

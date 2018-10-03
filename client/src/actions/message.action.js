@@ -2,8 +2,8 @@ import constants from "@/constants";
 import { messageService } from "./services";
 
 export default {
-  sendSocketMessage: messageData => () => {
-    messageService.sendSocketMessage(messageData);
+  emitSocketMessage: messageData => () => {
+    messageService.emitSocketMessage(messageData);
   },
 
   /* pass in dispatch, let socket.io dispatch dispatchReceivedMessage when data is received */
@@ -12,13 +12,8 @@ export default {
   },
 
   dispatchReceivedMessage: data => (dispatch, getState) => {
-    if (data.error) {
-      dispatch({
-        type: constants.ERROR_MESSAGE,
-        payload: data.meta.message
-      });
-    }
-    if (!data.error) {
+    console.log(data);
+    if (data.meta.type === "success") {
       const { currentChannel } = getState().channelReducer;
       const newData = { ...data };
       newData.currentChannel = currentChannel;
@@ -26,14 +21,12 @@ export default {
         type: constants.MESSAGE_RECEIVE_SOCKET,
         payload: newData
       });
+    } else {
+      dispatch({
+        type: constants.ERROR_MESSAGE,
+        payload: data.meta.message
+      });
     }
-  },
-
-  clearSocketConnection: () => dispatch => {
-    messageService.clearSocketConnection();
-    dispatch({
-      type: constants.SOCKET_CONNECTION_CLEAR
-    });
   },
 
   fetchMoreMessage: currentMessageData => async dispatch => {

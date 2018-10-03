@@ -15,7 +15,7 @@ class FileUpload extends React.Component {
 
   handleUpload = file => {
     if (file) {
-      const { sendSocketMessage, currentUser, currentChannel } = this.props;
+      const { emitSocketMessage, currentUser, currentChannel } = this.props;
       if (file.size > 1024 * 1024 * 5) {
         const { createUploadError } = this.props;
         createUploadError("file size exceed maximum upload size of 5 mb");
@@ -32,7 +32,7 @@ class FileUpload extends React.Component {
         );
         return;
       }
-      sendSocketMessage({
+      emitSocketMessage({
         channelId: currentChannel.id,
         userId: currentUser.id,
         username: currentUser.username,
@@ -66,7 +66,7 @@ class FileUpload extends React.Component {
 FileUpload.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
-  sendSocketMessage: PropTypes.func.isRequired,
+  emitSocketMessage: PropTypes.func.isRequired,
   createUploadError: PropTypes.func.isRequired
 };
 
@@ -75,8 +75,8 @@ const stateToProps = state => ({
   currentChannel: channelSelector.getCurrentChannel(state)
 });
 const dispatchToProps = dispatch => ({
-  sendSocketMessage: file => {
-    dispatch(messageAction.sendSocketMessage(file));
+  emitSocketMessage: file => {
+    dispatch(messageAction.emitSocketMessage(file));
   },
   createUploadError: text => {
     dispatch(errorAction.createUploadError(text));

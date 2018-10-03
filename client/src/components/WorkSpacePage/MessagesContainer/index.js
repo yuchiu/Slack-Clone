@@ -62,11 +62,6 @@ class MessagesContainer extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    const { clearSocketConnection } = this.props;
-    clearSocketConnection();
-  }
-
   isCurrentDataFetched = () => {
     const { currentChannel, currentTeam } = this.props;
     if (
@@ -140,7 +135,6 @@ MessagesContainer.propTypes = {
 
   fetchGetChannelAssociatedList: PropTypes.func.isRequired,
   fetchMoreMessage: PropTypes.func.isRequired,
-  clearSocketConnection: PropTypes.func.isRequired,
   receiveSocketMessage: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
@@ -158,9 +152,6 @@ const dispatchToProps = dispatch => ({
   },
   fetchMoreMessage: currentMessageData => {
     dispatch(messageAction.fetchMoreMessage(currentMessageData));
-  },
-  clearSocketConnection: () => {
-    dispatch(messageAction.clearSocketConnection());
   },
   receiveSocketMessage: () => {
     dispatch(messageAction.receiveSocketMessage());

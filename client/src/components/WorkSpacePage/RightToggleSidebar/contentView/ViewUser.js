@@ -34,6 +34,7 @@ class ViewUser extends React.Component {
       fetchCreateChannel({
         teamId: currentTeam.id,
         messageGroup: true,
+        currentUserId: currentUser.id,
         isPublic: false,
         channelName: `${currentUser.username}, ${targetUser.username}`,
         membersList: targetUserArr

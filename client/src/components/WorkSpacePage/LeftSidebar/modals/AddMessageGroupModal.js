@@ -50,12 +50,18 @@ class AddMessageGroupModal extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
-      const { fetchCreateChannel, currentTeam, onClose } = this.props;
+      const {
+        fetchCreateChannel,
+        currentTeam,
+        onClose,
+        currentUser
+      } = this.props;
       const { members, channelName } = this.state;
       fetchCreateChannel({
         teamId: currentTeam.id,
         messageGroup: true,
         isPublic: false,
+        currentUserId: currentUser.id,
         channelName,
         membersList: members
       });

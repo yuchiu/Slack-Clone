@@ -21,6 +21,7 @@ class SidebarList extends React.Component {
       channelList,
       messageGroupMemberList,
 
+      receiveSocketNewChannel,
       switchTargetUser,
       switchChannel,
       switchRightSidebarView
@@ -85,6 +86,7 @@ const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
   },
+
   switchRightSidebarView: selectedView => {
     dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }

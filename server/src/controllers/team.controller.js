@@ -89,10 +89,9 @@ export default {
       });
     }
   },
-  addTeamMember: async (req, res) => {
+  addTeamMember: async teamData => {
     try {
-      const { teamId } = req.body;
-      const { targetUsername } = req.body;
+      const { targetUsername, teamId } = teamData;
 
       /* find the initial channel general and add new user to the general channel */
       const initialChannel = await models.sequelize.query(
@@ -110,9 +109,13 @@ export default {
         { raw: true }
       );
       if (!userToAdd) {
-        return res.status(403).send({
-          error: "user does not exist"
-        });
+        return {
+          meta: {
+            type: "error",
+            status: 403,
+            message: "user does not exist"
+          }
+        };
       }
 
       // remove stale data from cache
@@ -162,7 +165,7 @@ export default {
         }
       );
 
-      res.status(200).send({
+      return {
         meta: {
           type: "success",
           status: 200,
@@ -170,16 +173,16 @@ export default {
         },
         teamMemberList,
         channelMemberList
-      });
+      };
     } catch (err) {
       console.log(err);
-      res.status(500).send({
+      return {
         meta: {
           type: "error",
           status: 500,
           message: "server error"
         }
-      });
+      };
     }
   },
   fetchTeamAssociatedList: async (req, res) => {
@@ -189,7 +192,7 @@ export default {
 
       // check if redis has the data
       const channelListCache = await redisClient.getAsync(
-        `channelList:${currentUserId}`
+        `channelList:${teamId}`
       );
       const teamMemberListCache = await redisClient.getAsync(
         `teamMemberList:${teamId}`
@@ -233,7 +236,7 @@ export default {
 
       // Save the responses in Redis store
       await redisClient.setex(
-        `channelList:${currentUserId}`,
+        `channelList:${teamId}`,
         86400, // 60 * 60 * 24 seconds
         JSON.stringify({ ...channelList })
       );
