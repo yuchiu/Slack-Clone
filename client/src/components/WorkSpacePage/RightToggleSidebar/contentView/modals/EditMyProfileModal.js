@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import { userAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
 import { InlineError } from "@/components/common";
 
@@ -41,8 +42,15 @@ class EditMyProfileModal extends React.Component {
   handleClose = e => {
     e.preventDefault();
     this.setState({
-      text: "",
-      isModalOpen: false
+      password: "",
+      newPassword: "",
+      confirmPassword: "",
+      feeling: "",
+      about: "",
+      imgFile: {},
+      clientError: {},
+      isModalOpen: false,
+      isEditPasswordOn: false
     });
     this.toggleModalOpen();
   };
@@ -55,11 +63,24 @@ class EditMyProfileModal extends React.Component {
   };
 
   handleSave = () => {
-    const { text } = this.state;
-    console.log(`edit success: ${text}`);
+    const { password, newPassword, feeling, about } = this.state;
+    const { fetchEditUser } = this.props;
+    fetchEditUser({
+      brief_description: feeling,
+      detail_description: about,
+      password,
+      newPassword
+    });
     this.setState({
-      text: "",
-      isModalOpen: false
+      password: "",
+      newPassword: "",
+      confirmPassword: "",
+      feeling: "",
+      about: "",
+      imgFile: {},
+      clientError: {},
+      isModalOpen: false,
+      isEditPasswordOn: false
     });
   };
 
@@ -229,7 +250,11 @@ const stateToProps = state => ({
   currentUser: userSelector.getCurrentUser(state)
 });
 
-const dispatchToProps = dispatch => ({});
+const dispatchToProps = dispatch => ({
+  fetchEditUser: editUserData => {
+    dispatch(userAction.fetchEditUser(editUserData));
+  }
+});
 
 export default connect(
   stateToProps,

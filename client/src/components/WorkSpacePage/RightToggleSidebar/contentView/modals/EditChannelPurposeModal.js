@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import { teamSelector, channelSelector } from "@/reducers/selectors";
+import { channelAction } from "@/actions";
+
 class EditChannelPurposeModal extends React.Component {
   state = {
     text: "",
@@ -35,10 +38,15 @@ class EditChannelPurposeModal extends React.Component {
 
   handleSave = () => {
     const { text } = this.state;
-    console.log(`edit success: ${text}`);
+    const { fetchEditChannel, currentTeam, currentChannel } = this.props;
+    fetchEditChannel({
+      detail_description: text,
+      channelId: currentChannel.id,
+      teamId: currentTeam.id
+    });
     this.setState({
-      text: "",
-      isModalOpen: false
+      isModalOpen: false,
+      text: ""
     });
   };
 
@@ -108,12 +116,24 @@ class EditChannelPurposeModal extends React.Component {
 }
 
 EditChannelPurposeModal.propTypes = {
-  purpose: PropTypes.string
+  purpose: PropTypes.string,
+
+  currentTeam: PropTypes.object.isRequired,
+  currentChannel: PropTypes.object.isRequired,
+
+  fetchEditChannel: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({});
+const stateToProps = state => ({
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentChannel: channelSelector.getCurrentChannel(state)
+});
 
-const dispatchToProps = dispatch => ({});
+const dispatchToProps = dispatch => ({
+  fetchEditChannel: editChannelData => {
+    dispatch(channelAction.fetchEditChannel(editChannelData));
+  }
+});
 
 export default connect(
   stateToProps,

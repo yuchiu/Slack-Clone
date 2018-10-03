@@ -20,7 +20,7 @@ export default {
       redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
         if (!err) {
           if (reply === 1) {
-            console.log(`channelList:${{ currentUserId }} is deleted`);
+            console.log(`channelList:${currentUserId} is deleted`);
           } else {
             console.log("Does't exists");
           }
@@ -276,6 +276,82 @@ export default {
         },
         messageList: messageList.reverse(),
         channelMemberList
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
+
+  updateChannel: async (req, res) => {
+    try {
+      const currentUserId = req.user.id;
+      const {
+        teamId,
+        channelId,
+        brief_description,
+        detail_description
+      } = req.body;
+
+      // remove empty field
+      let updatedChannelData = { brief_description, detail_description };
+      updatedChannelData = _.pickBy(updatedChannelData, _.identity);
+
+      // remove stale data from cache
+      redisClient.del(`channelList:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`channelList:${{ currentUserId }} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
+      /* update the channel */
+      await models.Channel.update(
+        {
+          ...updatedChannelData
+        },
+        {
+          where: {
+            id: channelId
+          }
+        }
+      );
+
+      const updatedChannel = await models.Channel.findOne({
+        where: {
+          id: channelId
+        }
+      });
+
+      const channelList = await models.sequelize.query(
+        `
+          select distinct on (id) *
+          from channels as c left outer join channel_members as pcm
+          on c.id = pcm.channel_id
+          where c.team_id = :teamId and (c.public = true or pcm.user_id = :userId);`,
+        {
+          replacements: { teamId, userId: currentUserId },
+          model: models.Channel,
+          raw: true
+        }
+      );
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        channelList,
+        channel: updatedChannel.dataValues
       });
     } catch (err) {
       console.log(err);

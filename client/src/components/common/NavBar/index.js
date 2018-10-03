@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { authAction } from "@/actions";
+import { userAction } from "@/actions";
 import AuthNavBar from "./AuthNavBar";
 import UnauthNavBar from "./UnauthNavBar";
 import { authSelector, userSelector } from "@/reducers/selectors";
@@ -44,7 +44,7 @@ const stateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
   fetchLogoutUser: () => {
-    dispatch(authAction.fetchLogoutUser());
+    dispatch(userAction.fetchLogoutUser());
   }
 });
 

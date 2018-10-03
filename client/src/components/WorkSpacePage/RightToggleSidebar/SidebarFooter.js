@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { authAction } from "@/actions";
+import { userAction } from "@/actions";
 
 class SidebarFooter extends React.Component {
   handleClick = () => {
@@ -34,7 +34,7 @@ SidebarFooter.propTypes = {
 
 const dispatchToProps = dispatch => ({
   fetchLogoutUser: () => {
-    dispatch(authAction.fetchLogoutUser());
+    dispatch(userAction.fetchLogoutUser());
   }
 });
 

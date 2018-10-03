@@ -1,9 +1,9 @@
 import constants from "@/constants";
-import { authService } from "./services";
+import { userService } from "./services";
 
 export default {
   fetchAutoAuth: () => async dispatch => {
-    const response = await authService.fetchAutoAuth();
+    const response = await userService.fetchAutoAuth();
     const { data } = response;
     dispatch({
       type: constants.USER_AUTO_LOGIN_FETCH,
@@ -11,9 +11,26 @@ export default {
     });
   },
 
+  fetchEditUser: editUserdata => async dispatch => {
+    try {
+      const response = await userService.fetchEditUser(editUserdata);
+      const { data } = response;
+      dispatch({
+        type: constants.USER_EDIT_FETCH,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.ERROR_AUTH,
+        payload: data.meta.message
+      });
+    }
+  },
+
   fetchRegisterUser: credentials => async dispatch => {
     try {
-      const response = await authService.fetchRegisterUser(credentials);
+      const response = await userService.fetchRegisterUser(credentials);
       const { data } = response;
       dispatch({
         type: constants.USER_LOGIN_FETCH,
@@ -30,7 +47,7 @@ export default {
 
   fetchLoginUser: credentials => async dispatch => {
     try {
-      const response = await authService.fetchLoginUser(credentials);
+      const response = await userService.fetchLoginUser(credentials);
       const { data } = response;
       dispatch({
         type: constants.USER_LOGIN_FETCH,
@@ -47,7 +64,7 @@ export default {
 
   fetchLogoutUser: () => async dispatch => {
     try {
-      await authService.fetchLogoutUser();
+      await userService.fetchLogoutUser();
       dispatch({
         type: constants.USER_LOGOUT_FETCH
       });

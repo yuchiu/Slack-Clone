@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import "./index.scss";
 import { validateForm } from "@/utils";
-import { authAction, errorAction } from "@/actions";
+import { userAction, errorAction } from "@/actions";
 import { NavBar, InlineError } from "@/components/common";
 import LoginForm from "./LoginForm";
 import { authSelector, errorSelector } from "@/reducers/selectors";
@@ -98,7 +98,7 @@ const stateToProps = state => ({
 const dispatchToProps = dispatch => ({
   clearAllError: () => dispatch(errorAction.clearAllError()),
   fetchLoginUser: credential => {
-    dispatch(authAction.fetchLoginUser(credential));
+    dispatch(userAction.fetchLoginUser(credential));
   }
 });
 

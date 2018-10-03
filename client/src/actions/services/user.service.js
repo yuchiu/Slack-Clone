@@ -5,6 +5,10 @@ export default {
     const response = await APIV1().get(`/users`);
     return response;
   },
+  fetchEditUser: async editUserdata => {
+    const response = await APIV1().put(`/users`, editUserdata);
+    return response;
+  },
   fetchRegisterUser: async credentials => {
     const response = await APIV1().post(`/users/registers`, credentials);
     return response;

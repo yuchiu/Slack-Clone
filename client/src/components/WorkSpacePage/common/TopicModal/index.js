@@ -4,8 +4,12 @@ import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import "./index.scss";
-import { globalStateAction } from "@/actions";
-import { globalStateSelector } from "@/reducers/selectors";
+import { globalStateAction, channelAction } from "@/actions";
+import {
+  globalStateSelector,
+  channelSelector,
+  teamSelector
+} from "@/reducers/selectors";
 
 class TopicModal extends React.Component {
   state = {
@@ -32,9 +36,17 @@ class TopicModal extends React.Component {
     });
   };
 
-  handleEdit = () => {
+  handleSave = () => {
     const { text } = this.state;
-    console.log(`edit success: ${text}`);
+    const { fetchEditChannel, currentChannel, currentTeam } = this.props;
+
+    console.log(currentChannel);
+
+    fetchEditChannel({
+      brief_description: text,
+      teamId: currentTeam.id,
+      channelId: currentChannel.id
+    });
     this.setState({
       text: ""
     });
@@ -67,7 +79,7 @@ class TopicModal extends React.Component {
                   )}
                 </Form.Field>
                 <Form.Group widths="equal">
-                  <Button type="button" primary onClick={this.handleEdit} fluid>
+                  <Button type="button" primary onClick={this.handleSave} fluid>
                     Set Topic
                   </Button>
                   <Button type="button" fluid onClick={this.handleClose}>
@@ -106,17 +118,25 @@ TopicModal.propTypes = {
   topic: PropTypes.string,
 
   isEditModalOpen: PropTypes.bool.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  currentChannel: PropTypes.object.isRequired,
 
+  fetchEditChannel: PropTypes.func.isRequired,
   toggleEditModal: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
-  isEditModalOpen: globalStateSelector.getIsEditModalOpen(state)
+  isEditModalOpen: globalStateSelector.getIsEditModalOpen(state),
+  currentTeam: teamSelector.getCurrentTeam(state),
+  currentChannel: channelSelector.getCurrentChannel(state)
 });
 
 const dispatchToProps = dispatch => ({
   toggleEditModal: () => {
     dispatch(globalStateAction.toggleEditModal());
+  },
+  fetchEditChannel: editChannelData => {
+    dispatch(channelAction.fetchEditChannel(editChannelData));
   }
 });
 

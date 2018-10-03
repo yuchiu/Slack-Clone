@@ -259,7 +259,7 @@ export default {
           meta: {
             type: "success",
             status: 200,
-            message: "calling inside cache"
+            message: ""
           },
           user: userSummary(userCacheJSON),
           teamList: teamListCacheArr
@@ -296,10 +296,93 @@ export default {
         meta: {
           type: "success",
           status: 200,
-          message: "outside cache"
+          message: ""
         },
         user: userSummary(user),
         teamList
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+      const currentUserId = req.user.id;
+      const {
+        brief_description,
+        detail_description,
+        password,
+        newPassword
+      } = req.body;
+
+      if (newPassword) {
+        const user = await models.User.findOne({
+          where: { id: currentUserId }
+        });
+
+        /* validate password */
+        const isPasswordValid = await user.comparePassword(password);
+
+        if (!isPasswordValid) {
+          res.status(500).send({
+            meta: {
+              type: "error",
+              status: 403,
+              message: "invalid password"
+            }
+          });
+        }
+      }
+      // remove stale data from cache
+      redisClient.del(`userId:${currentUserId}`, (err, reply) => {
+        if (!err) {
+          if (reply === 1) {
+            console.log(`userId:${currentUserId} is deleted`);
+          } else {
+            console.log("Does't exists");
+          }
+        }
+      });
+
+      // remove empty field
+      let updatedUserData = {
+        brief_description,
+        detail_description,
+        password: newPassword
+      };
+      updatedUserData = _.pickBy(updatedUserData, _.identity);
+
+      /* conditions are validated, update the user */
+      await models.User.update(
+        {
+          ...updatedUserData
+        },
+        {
+          where: {
+            id: currentUserId
+          }
+        }
+      );
+      const updatedUser = await models.User.findOne({
+        where: {
+          id: currentUserId
+        }
+      });
+
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        updatedUser
       });
     } catch (err) {
       console.log(err);

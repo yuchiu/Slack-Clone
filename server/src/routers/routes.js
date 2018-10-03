@@ -26,6 +26,7 @@ export default app => {
 
   /* user routes */
   user.get("/", authPolicy.authentication, userController.tryAutoLogin);
+  user.put("/", authPolicy.authentication, userController.updateUser);
   user.get("/logouts", userController.logout);
   user.post("/registers", authPolicy.registerRule, userController.register);
   user.post("/logins", userController.login);
@@ -45,21 +46,18 @@ export default app => {
   );
 
   /* channels routes */
+  channel.put("/", authPolicy.authentication, channelController.updateChannel);
   channel.post("/", authPolicy.authentication, channelController.create);
   channel.get(
     "/:channelId",
     authPolicy.authentication,
     channelController.getChannelAssociatedList
   );
+
   /* messages routes */
   message.post(
     "/",
     authPolicy.authentication,
     messageController.getMoreMessage
   );
-
-  // message.get(
-  //   "/message-groups/:userId",
-  //   console.log("get message group's message")
-  // );
 };

@@ -9,5 +9,10 @@ export default {
   fetchCreateChannel: async channelFormInfo => {
     const response = await APIV1().post(`/channels`, channelFormInfo);
     return response;
+  },
+
+  fetchEditChannel: async editChannelData => {
+    const response = await APIV1().put(`/channels`, editChannelData);
+    return response;
   }
 };

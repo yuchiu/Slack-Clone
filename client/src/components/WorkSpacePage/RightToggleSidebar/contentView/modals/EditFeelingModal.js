@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import { userAction } from "@/actions";
+
 class EditFeelingModal extends React.Component {
   state = {
     text: "",
@@ -35,7 +37,8 @@ class EditFeelingModal extends React.Component {
 
   handleSave = () => {
     const { text } = this.state;
-    console.log(`edit success: ${text}`);
+    const { fetchEditUser } = this.props;
+    fetchEditUser({ brief_description: text });
     this.setState({
       text: "",
       isModalOpen: false
@@ -115,7 +118,11 @@ EditFeelingModal.propTypes = {
 
 const stateToProps = state => ({});
 
-const dispatchToProps = dispatch => ({});
+const dispatchToProps = dispatch => ({
+  fetchEditUser: editUserData => {
+    dispatch(userAction.fetchEditUser(editUserData));
+  }
+});
 
 export default connect(
   stateToProps,

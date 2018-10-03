@@ -37,7 +37,23 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_MESSAGE,
+        type: constants.ERROR_CHANNEL,
+        payload: data.meta.message
+      });
+    }
+  },
+  fetchEditChannel: editChannelData => async dispatch => {
+    try {
+      const response = await channelService.fetchEditChannel(editChannelData);
+      const { data } = response;
+      dispatch({
+        type: constants.CHANNEL_EDIT_FETCH,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.ERROR_CHANNEL,
         payload: data.meta.message
       });
     }
