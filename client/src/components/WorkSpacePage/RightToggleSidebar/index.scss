@@ -166,3 +166,17 @@
     cursor: pointer;
   }
 }
+
+.toggle-edit-button {
+  color: $lightgrey;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.edit-password-toggle {
+  color: $darkgrey;
+  &:hover {
+    cursor: pointer;
+  }
+}

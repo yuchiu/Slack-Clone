@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { OnlineStatusBubble } from "@/components/common";
+import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
+import { EditMyProfileModal, EditFeelingModal } from "./modals";
 
 class ViewMyProfile extends React.Component {
   render() {
@@ -26,11 +27,9 @@ class ViewMyProfile extends React.Component {
           <br />
           <div className="view-header__brief-description  right-sidebar-item">
             <span className="right-sidebar-label">feeling: </span>
-            {`${currentUser.brief_description}`}
+            <EditFeelingModal feeling={currentUser.brief_description} />
           </div>
-          <button className="right-sidebar-button right-sidebar-item">
-            Edit Profile
-          </button>
+          <EditMyProfileModal />
         </div>
         <div className="view-detail">
           <div className="view-detail__email  right-sidebar-item">

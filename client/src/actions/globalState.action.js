@@ -12,6 +12,11 @@ export default {
       payload: selectedView
     });
   },
+  toggleEditModal: () => dispatch => {
+    dispatch({
+      type: constants.EDIT_MODAL_TOGGLE
+    });
+  },
   switchTargetUser: targetUserId => dispatch => {
     dispatch({
       type: constants.TARGET_USER_SWITCH,

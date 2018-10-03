@@ -58,7 +58,6 @@ class MainHeader extends React.Component {
 }
 
 MainHeader.propTypes = {
-  isSidebarOpen: PropTypes.bool.isRequired,
   currentChannelMembers: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   messageGroupName: PropTypes.string,

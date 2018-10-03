@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { TopicModal } from "@/components/WorkSpacePage/common";
+import { EditChannelPurposeModal } from "./modals";
+
 class ViewChannel extends React.Component {
   handleClick = () => {
     const { switchRightSidebarView } = this.props;
@@ -36,11 +39,13 @@ class ViewChannel extends React.Component {
           </div>
           <div className="view-detail__brief-description  right-sidebar-item">
             <span className="right-sidebar-label">Topic: </span>
-            {`${currentChannel.brief_description}`}
+            <TopicModal topic={currentChannel.brief_description} />
           </div>
           <div className="view-detail__detail-description  right-sidebar-item">
             <span className="right-sidebar-label">Purpose: </span>
-            {`${currentChannel.detail_description}`}
+            <EditChannelPurposeModal
+              purpose={currentChannel.detail_description}
+            />
           </div>
           <div className="view-detail__created-at  right-sidebar-item">
             <span className="right-sidebar-label">Created At: </span>

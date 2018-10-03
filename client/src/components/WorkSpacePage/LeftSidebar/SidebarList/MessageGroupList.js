@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import { OnlineStatusBubble } from "@/components/common";
+import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
 class MessageGroupList extends React.Component {
   constructor() {

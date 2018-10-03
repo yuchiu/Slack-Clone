@@ -1,29 +1,26 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { PublicOrPrivateTag } from "@/components/common";
-import SubHeaderDivider from "./SubHeaderDivider";
+import "./index.scss";
+import { globalStateAction } from "@/actions";
+import { globalStateSelector } from "@/reducers/selectors";
 
-class ChannelHeader extends React.Component {
+class TopicModal extends React.Component {
   state = {
-    text: "",
-    isEditOn: false
+    text: ""
   };
 
-  componentDidMount() {}
-
   toggleEdit = () => {
-    this.setState({
-      isEditOn: !this.state.isEditOn
-    });
+    const { toggleEditModal } = this.props;
+    toggleEditModal();
   };
 
   handleClose = e => {
     e.preventDefault();
     this.setState({
-      text: "",
-      isEditOn: false
+      text: ""
     });
     this.toggleEdit();
   };
@@ -39,28 +36,35 @@ class ChannelHeader extends React.Component {
     const { text } = this.state;
     console.log(`edit success: ${text}`);
     this.setState({
-      text: "",
-      isEditOn: false
+      text: ""
     });
   };
 
   render() {
-    const { text, isEditOn } = this.state;
-    const { topic } = this.props;
+    const { text } = this.state;
+    const { topic, isEditModalOpen } = this.props;
     return (
       <React.Fragment>
-        {isEditOn && (
-          <Modal size="small" open={isEditOn} onClose={this.toggleEdit}>
+        {isEditModalOpen && (
+          <Modal size="small" open={isEditModalOpen} onClose={this.toggleEdit}>
             <Modal.Content>
               <Form>
                 <Form.Field>
-                  <Input
-                    value={text}
-                    onChange={this.handleChange}
-                    name="text"
-                    fluid
-                    placeholder="Add a topic"
-                  />
+                  {topic ? (
+                    <Form.TextArea
+                      value={text}
+                      onChange={this.handleChange}
+                      name="text"
+                      placeholder={`${topic}`}
+                    />
+                  ) : (
+                    <Form.TextArea
+                      value={text}
+                      onChange={this.handleChange}
+                      name="text"
+                      placeholder="Add a topic"
+                    />
+                  )}
                 </Form.Field>
                 <Form.Group widths="equal">
                   <Button type="button" primary onClick={this.handleEdit} fluid>
@@ -74,7 +78,7 @@ class ChannelHeader extends React.Component {
             </Modal.Content>
           </Modal>
         )}
-        {!isEditOn &&
+        {!isEditModalOpen &&
           topic && (
             <React.Fragment>
               <span className="">
@@ -86,7 +90,7 @@ class ChannelHeader extends React.Component {
               </span>
             </React.Fragment>
           )}
-        {!isEditOn &&
+        {!isEditModalOpen &&
           !topic && (
             <span className="topic-edit-button" onClick={this.toggleEdit}>
               <i className="fas fa-pencil-alt" />
@@ -98,8 +102,25 @@ class ChannelHeader extends React.Component {
   }
 }
 
-ChannelHeader.propTypes = {
-  topic: PropTypes.string
+TopicModal.propTypes = {
+  topic: PropTypes.string,
+
+  isEditModalOpen: PropTypes.bool.isRequired,
+
+  toggleEditModal: PropTypes.func.isRequired
 };
 
-export default ChannelHeader;
+const stateToProps = state => ({
+  isEditModalOpen: globalStateSelector.getIsEditModalOpen(state)
+});
+
+const dispatchToProps = dispatch => ({
+  toggleEditModal: () => {
+    dispatch(globalStateAction.toggleEditModal());
+  }
+});
+
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(TopicModal);

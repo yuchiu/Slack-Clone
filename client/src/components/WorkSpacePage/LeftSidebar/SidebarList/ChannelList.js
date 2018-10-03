@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import { PublicOrPrivateTag } from "@/components/common";
+import { PublicOrPrivateTag } from "@/components/WorkSpacePage/common";
 
 class ChannelList extends React.Component {
   handleClick = channelId => {

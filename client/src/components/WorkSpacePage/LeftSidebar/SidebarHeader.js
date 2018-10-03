@@ -7,7 +7,7 @@ import {
   teamSelector,
   userSelector
 } from "@/reducers/selectors";
-import { OnlineStatusBubble } from "@/components/common";
+import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 import { globalStateAction } from "@/actions";
 
 class SidebarHeader extends React.Component {

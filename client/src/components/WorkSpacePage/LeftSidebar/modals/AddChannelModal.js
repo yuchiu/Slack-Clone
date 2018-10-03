@@ -131,11 +131,10 @@ class AddChannelModal extends React.Component {
             </Form.Field>
             <Form.Field>
               <label>Purpose:</label>
-              <Input
+              <Form.TextArea
                 value={purpose}
                 onChange={this.handleChange}
                 name="purpose"
-                fluid
                 placeholder="purpose"
               />
             </Form.Field>

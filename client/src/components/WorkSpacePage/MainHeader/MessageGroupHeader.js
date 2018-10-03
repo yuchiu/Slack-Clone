@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { OnlineStatusBubble } from "@/components/common";
+import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 import SubHeaderDivider from "./SubHeaderDivider";
 
 class MessageGroupHeader extends React.Component {
