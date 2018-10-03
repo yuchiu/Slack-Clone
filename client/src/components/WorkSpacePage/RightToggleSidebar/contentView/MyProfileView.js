@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 import { EditMyProfileModal, EditFeelingModal } from "./modals";
 
-class ViewMyProfile extends React.Component {
+class MyProfileView extends React.Component {
   render() {
     const { currentUser } = this.props;
     return (
@@ -48,8 +48,8 @@ class ViewMyProfile extends React.Component {
   }
 }
 
-ViewMyProfile.propTypes = {
+MyProfileView.propTypes = {
   currentUser: PropTypes.object.isRequired
 };
 
-export default ViewMyProfile;
+export default MyProfileView;

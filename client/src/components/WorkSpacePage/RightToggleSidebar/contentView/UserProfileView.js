@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
-class ViewUser extends React.Component {
+class UserProfileView extends React.Component {
   handleClick = () => {
     const {
       switchChannel,
@@ -96,7 +96,7 @@ class ViewUser extends React.Component {
   }
 }
 
-ViewUser.propTypes = {
+UserProfileView.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   targetUser: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
@@ -105,4 +105,4 @@ ViewUser.propTypes = {
   fetchCreateChannel: PropTypes.func.isRequired
 };
 
-export default ViewUser;
+export default UserProfileView;

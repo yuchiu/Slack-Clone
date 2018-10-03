@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
-class ViewMemberList extends React.Component {
+class MemberListView extends React.Component {
   handleClick = targetUserId => {
     const {
       switchTargetUser,
@@ -49,11 +49,11 @@ class ViewMemberList extends React.Component {
   }
 }
 
-ViewMemberList.propTypes = {
+MemberListView.propTypes = {
   currentUser: PropTypes.object.isRequired,
   memeberList: PropTypes.array.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired
 };
 
-export default ViewMemberList;
+export default MemberListView;

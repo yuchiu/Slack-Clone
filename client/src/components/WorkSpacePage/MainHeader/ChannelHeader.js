@@ -12,7 +12,7 @@ class ChannelHeader extends React.Component {
     const {
       currentChannelMembers,
       currentChannel,
-      handleSwitchRightSidebarView
+      switchToMemberListView
     } = this.props;
     return (
       <div className="main-header__title">
@@ -27,11 +27,11 @@ class ChannelHeader extends React.Component {
         <div className="main-header__title__sub-header">
           <i
             className="far fa-user main-header__title__sub-header__icon"
-            onClick={handleSwitchRightSidebarView}
+            onClick={switchToMemberListView}
           />
           <span
             className="main-header__title__sub-header__number"
-            onClick={handleSwitchRightSidebarView}
+            onClick={switchToMemberListView}
           >
             {" "}
             {currentChannelMembers.length}
@@ -47,7 +47,7 @@ class ChannelHeader extends React.Component {
 ChannelHeader.propTypes = {
   currentChannelMembers: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
-  handleSwitchRightSidebarView: PropTypes.func.isRequired
+  switchToMemberListView: PropTypes.func.isRequired
 };
 
 export default ChannelHeader;

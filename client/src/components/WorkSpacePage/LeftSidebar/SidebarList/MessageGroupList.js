@@ -5,24 +5,17 @@ import { Link } from "react-router-dom";
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
 class MessageGroupList extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      messageGroupMemberListUpdated: false
-    };
-  }
-
   handleSwitchChannel = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
   };
 
-  handleSwitchRightSidebarView = () => {
+  switchRightMessageGroupView = () => {
     const { switchRightSidebarView } = this.props;
     switchRightSidebarView("message-group-members");
   };
 
-  handleSwitchTargetUserAndView = () => {
+  switchTargetUserView = () => {
     const { switchRightSidebarView } = this.props;
     switchRightSidebarView("user-profile");
   };
@@ -30,13 +23,7 @@ class MessageGroupList extends React.Component {
   componentDidUpdate() {
     // switch target user when channel changed
     const { switchTargetUser, messageGroupMemberList } = this.props;
-    if (
-      messageGroupMemberList[0] &&
-      !this.state.messageGroupMemberListUpdated
-    ) {
-      this.setState({
-        messageGroupMemberListUpdated: true
-      });
+    if (messageGroupMemberList[0]) {
       switchTargetUser(messageGroupMemberList[0].id);
     }
   }
@@ -57,7 +44,7 @@ class MessageGroupList extends React.Component {
                 {messageGroup.directMessage ? (
                   <li
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
-                    onClick={this.handleSwitchTargetUserAndView}
+                    onClick={this.switchTargetUserView}
                   >
                     <OnlineStatusBubble on={false} />
                     {"  "}
@@ -66,7 +53,7 @@ class MessageGroupList extends React.Component {
                 ) : (
                   <li
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
-                    onClick={this.handleSwitchRightSidebarView}
+                    onClick={this.switchRightMessageGroupView}
                   >
                     <span className="leftsidebar__List__link__item__num">
                       {messageGroup.memberNumber}

@@ -11,22 +11,25 @@ class MessageGroupHeader extends React.Component {
     const {
       currentChannelMembers,
       messageGroupMemberList,
-      handleSwitchRightSidebarView,
+      switchToMemberListView,
+      switchToUserView,
       messageGroupName
     } = this.props;
     return (
       <div className="main-header__title">
-        <h1 className="main-header__title__name">{messageGroupName}</h1>
+        <h1 className="main-header__title__name" onClick={switchToUserView}>
+          {messageGroupName}
+        </h1>
         <div className="main-header__title__sub-header">
           {currentChannelMembers.length > 2 ? (
             <React.Fragment>
               <i
                 className="far fa-user main-header__title__sub-header__icon"
-                onClick={handleSwitchRightSidebarView}
+                onClick={switchToMemberListView}
               />
               <span
                 className="main-header__title__sub-header__number"
-                onClick={handleSwitchRightSidebarView}
+                onClick={switchToMemberListView}
               >
                 {" "}
                 {currentChannelMembers.length}
@@ -48,8 +51,9 @@ class MessageGroupHeader extends React.Component {
 MessageGroupHeader.propTypes = {
   currentChannelMembers: PropTypes.array.isRequired,
   messageGroupName: PropTypes.string,
+  switchToUserView: PropTypes.func.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,
-  handleSwitchRightSidebarView: PropTypes.func.isRequired
+  switchToMemberListView: PropTypes.func.isRequired
 };
 
 export default MessageGroupHeader;

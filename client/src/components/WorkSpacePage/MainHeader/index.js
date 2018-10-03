@@ -10,7 +10,7 @@ import { globalStateAction } from "@/actions";
 import { channelSelector, globalStateSelector } from "@/reducers/selectors";
 
 class MainHeader extends React.Component {
-  handleSwitchRightSidebarView = selectedView => {
+  switchToMemberListView = selectedView => {
     const {
       toggleRightSidebar,
       switchRightSidebarView,
@@ -20,6 +20,18 @@ class MainHeader extends React.Component {
       toggleRightSidebar();
     }
     switchRightSidebarView(selectedView);
+  };
+
+  switchToUserView = () => {
+    const {
+      toggleRightSidebar,
+      switchRightSidebarView,
+      isSidebarOpen
+    } = this.props;
+    if (!isSidebarOpen) {
+      toggleRightSidebar();
+    }
+    switchRightSidebarView("user-profile");
   };
 
   render() {
@@ -35,8 +47,9 @@ class MainHeader extends React.Component {
           <MessageGroupHeader
             messageGroupName={messageGroupName}
             currentChannelMembers={currentChannelMembers}
+            switchToUserView={this.switchToUserView}
             messageGroupMemberList={messageGroupMemberList}
-            handleSwitchRightSidebarView={this.handleSwitchRightSidebarView.bind(
+            switchToMemberListView={this.switchToMemberListView.bind(
               this,
               "message-group-members"
             )}
@@ -46,7 +59,7 @@ class MainHeader extends React.Component {
           <ChannelHeader
             currentChannel={currentChannel}
             currentChannelMembers={currentChannelMembers}
-            handleSwitchRightSidebarView={this.handleSwitchRightSidebarView.bind(
+            switchToMemberListView={this.switchToMemberListView.bind(
               this,
               "channel-members"
             )}

@@ -11,11 +11,11 @@ import {
   userSelector
 } from "@/reducers/selectors";
 import {
-  ViewMyProfile,
-  ViewChannel,
-  ViewMemberList,
-  ViewTeam,
-  ViewUser
+  MyProfileView,
+  ChannelDetailView,
+  MemberListView,
+  TeamDetailView,
+  UserProfileView
 } from "./contentView";
 
 class SidebarContainer extends React.Component {
@@ -46,10 +46,10 @@ class SidebarContainer extends React.Component {
     return (
       <div className="right-sidebar-content">
         {rightSidebarView === "my-profile" && (
-          <ViewMyProfile currentUser={currentUser} />
+          <MyProfileView currentUser={currentUser} />
         )}
         {rightSidebarView === "user-profile" && (
-          <ViewUser
+          <UserProfileView
             targetUser={targetUser}
             switchChannel={switchChannel}
             currentUser={currentUser}
@@ -60,21 +60,21 @@ class SidebarContainer extends React.Component {
         )}
 
         {rightSidebarView === "channel" && (
-          <ViewChannel
+          <ChannelDetailView
             currentChannel={currentChannel}
             currentChannelMembers={currentChannelMembers}
             switchRightSidebarView={switchRightSidebarView}
           />
         )}
         {rightSidebarView === "team" && (
-          <ViewTeam
+          <TeamDetailView
             currentTeam={currentTeam}
             currentTeamMembers={currentTeamMembers}
             switchRightSidebarView={switchRightSidebarView}
           />
         )}
         {rightSidebarView === "message-group-members" && (
-          <ViewMemberList
+          <MemberListView
             memeberList={messageGroupMemberList}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
@@ -82,7 +82,7 @@ class SidebarContainer extends React.Component {
           />
         )}
         {rightSidebarView === "channel-members" && (
-          <ViewMemberList
+          <MemberListView
             memeberList={currentChannelMembers}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
@@ -90,7 +90,7 @@ class SidebarContainer extends React.Component {
           />
         )}
         {rightSidebarView === "team-members" && (
-          <ViewMemberList
+          <MemberListView
             memeberList={currentTeamMembers}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}

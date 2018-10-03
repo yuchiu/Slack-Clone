@@ -1,7 +1,13 @@
-import ViewMyProfile from "./ViewMyProfile";
-import ViewChannel from "./ViewChannel";
-import ViewMemberList from "./ViewMemberList";
-import ViewTeam from "./ViewTeam";
-import ViewUser from "./ViewUser";
+import MyProfileView from "./MyProfileView";
+import ChannelDetailView from "./ChannelDetailView";
+import MemberListView from "./MemberListView";
+import TeamDetailView from "./TeamDetailView";
+import UserProfileView from "./UserProfileView";
 
-export { ViewMyProfile, ViewChannel, ViewMemberList, ViewTeam, ViewUser };
+export {
+  MyProfileView,
+  ChannelDetailView,
+  MemberListView,
+  TeamDetailView,
+  UserProfileView
+};

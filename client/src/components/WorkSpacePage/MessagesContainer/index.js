@@ -87,12 +87,14 @@ class MessagesContainer extends React.Component {
       });
       setTimeout(() => {
         this.loadmore();
+      }, 500);
+      setTimeout(() => {
         this.scrollerDiv.scrollTop =
           this.scrollerDiv.scrollHeight / scrollerDivRepositionRatio;
         this.setState({
           scrollerDivRepositionRatio: 2 * scrollerDivRepositionRatio
         });
-      }, 500);
+      }, 600);
       setTimeout(() => {
         this.setState({
           allowToFetchMore: true

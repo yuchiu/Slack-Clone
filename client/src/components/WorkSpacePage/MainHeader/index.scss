@@ -16,6 +16,9 @@
   &__title {
     &__name {
       margin: 0;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__sub-header {
       padding: 0 5px 5px 0;

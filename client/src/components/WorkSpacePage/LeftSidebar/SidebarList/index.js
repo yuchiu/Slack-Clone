@@ -85,7 +85,6 @@ const dispatchToProps = dispatch => ({
   switchChannel: channelId => {
     dispatch(channelAction.switchChannel(channelId));
   },
-
   switchRightSidebarView: selectedView => {
     dispatch(globalStateAction.switchRightSidebarView(selectedView));
   }
