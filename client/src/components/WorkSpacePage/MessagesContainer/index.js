@@ -21,6 +21,7 @@ class MessagesContainer extends React.Component {
       currentTeamParams: 0,
       allowToFetchMore: true,
       currentMessageLength: 0,
+      scrollerDivRepositionRatio: 2,
       currentChannelParams: 0
     };
   }
@@ -74,13 +75,23 @@ class MessagesContainer extends React.Component {
   };
 
   handleScroll = () => {
-    const { allowToFetchMore } = this.state;
-    if (this.scrollerDiv.scrollTop === 0 && allowToFetchMore) {
+    const { hasMoreMessage } = this.props;
+    const { allowToFetchMore, scrollerDivRepositionRatio } = this.state;
+    if (
+      this.scrollerDiv.scrollTop === 0 &&
+      allowToFetchMore &&
+      hasMoreMessage
+    ) {
       this.setState({
         allowToFetchMore: false
       });
       setTimeout(() => {
         this.loadmore();
+        this.scrollerDiv.scrollTop =
+          this.scrollerDiv.scrollHeight / scrollerDivRepositionRatio;
+        this.setState({
+          scrollerDivRepositionRatio: 2 * scrollerDivRepositionRatio
+        });
       }, 500);
       setTimeout(() => {
         this.setState({
@@ -142,6 +153,7 @@ MessagesContainer.propTypes = {
 
 const stateToProps = state => ({
   messageList: messageSelector.getMessageList(state),
+  hasMoreMessage: messageSelector.getHasMoreMessage(state),
   currentTeam: teamSelector.getCurrentTeam(state),
   currentChannel: channelSelector.getCurrentChannel(state)
 });

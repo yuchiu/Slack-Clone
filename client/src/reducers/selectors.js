@@ -13,7 +13,7 @@ import {
   getMessageGroupList,
   getMessageGroupName
 } from "./channel.reducer";
-import { getMessageList } from "./message.reducer";
+import { getMessageList, getHasMoreMessage } from "./message.reducer";
 import { getError } from "./error.reducer";
 import {
   getIsSidebarOpen,
@@ -55,7 +55,8 @@ const channelSelector = {
   getMessageGroupMemberList: state => getMessageGroupMemberList(state)
 };
 const messageSelector = {
-  getMessageList: state => getMessageList(state)
+  getMessageList: state => getMessageList(state),
+  getHasMoreMessage: state => getHasMoreMessage(state)
 };
 
 const errorSelector = {

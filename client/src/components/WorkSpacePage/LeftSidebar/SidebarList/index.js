@@ -21,7 +21,6 @@ class SidebarList extends React.Component {
       channelList,
       messageGroupMemberList,
 
-      receiveSocketNewChannel,
       switchTargetUser,
       switchChannel,
       switchRightSidebarView

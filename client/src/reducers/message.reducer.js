@@ -4,7 +4,8 @@ import { createSelector } from "reselect";
 import { getCurrentUser } from "./user.reducer";
 
 const initialState = {
-  messageList: []
+  messageList: [],
+  hasMoreMessage: true
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +13,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.CHANNEL_ASSOCIATED_LIST_FETCH:
       newState.messageList = action.payload.messageList;
+
       return newState;
 
     case constants.MESSAGE_RECEIVE_SOCKET:
@@ -30,6 +32,9 @@ export default (state = initialState, action) => {
       newState.messageList = action.payload.messageList.concat(
         state.messageList
       );
+      if (action.payload.messageList.length < 30) {
+        newState.hasMoreMessage = false;
+      }
       return newState;
 
     case constants.USER_LOGOUT_FETCH:
@@ -42,6 +47,8 @@ export default (state = initialState, action) => {
 
 /* state selectors */
 const getStateMessageList = state => state.messageReducer.messageList;
+
+const getHasMoreMessage = state => state.messageReducer.hasMoreMessage;
 
 /* derived data selectors */
 const getMessageList = createSelector(
@@ -72,4 +79,4 @@ const getMessageList = createSelector(
     })
 );
 
-export { getMessageList };
+export { getMessageList, getHasMoreMessage };
