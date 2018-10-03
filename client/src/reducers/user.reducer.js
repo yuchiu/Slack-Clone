@@ -15,6 +15,10 @@ export default (state = initialState, action) => {
       newState.currentUser = action.payload.user;
       return newState;
 
+    case constants.USER_EDIT_FETCH:
+      newState.currentUser = action.payload.user;
+      return newState;
+
     case constants.USER_LOGOUT_FETCH:
       return initialState;
 

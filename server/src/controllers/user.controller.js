@@ -382,7 +382,7 @@ export default {
           status: 200,
           message: ""
         },
-        updatedUser
+        user: updatedUser
       });
     } catch (err) {
       console.log(err);

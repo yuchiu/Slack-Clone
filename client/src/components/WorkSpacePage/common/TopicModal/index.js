@@ -16,7 +16,7 @@ class TopicModal extends React.Component {
     text: ""
   };
 
-  toggleEdit = () => {
+  toggleEditModal = () => {
     const { toggleEditModal } = this.props;
     toggleEditModal();
   };
@@ -26,7 +26,7 @@ class TopicModal extends React.Component {
     this.setState({
       text: ""
     });
-    this.toggleEdit();
+    this.toggleEditModal();
   };
 
   handleChange = e => {
@@ -40,8 +40,6 @@ class TopicModal extends React.Component {
     const { text } = this.state;
     const { fetchEditChannel, currentChannel, currentTeam } = this.props;
 
-    console.log(currentChannel);
-
     fetchEditChannel({
       brief_description: text,
       teamId: currentTeam.id,
@@ -50,6 +48,7 @@ class TopicModal extends React.Component {
     this.setState({
       text: ""
     });
+    this.toggleEditModal();
   };
 
   render() {
@@ -58,7 +57,11 @@ class TopicModal extends React.Component {
     return (
       <React.Fragment>
         {isEditModalOpen && (
-          <Modal size="small" open={isEditModalOpen} onClose={this.toggleEdit}>
+          <Modal
+            size="small"
+            open={isEditModalOpen}
+            onClose={this.toggleEditModal}
+          >
             <Modal.Content>
               <Form>
                 <Form.Field>
@@ -95,7 +98,10 @@ class TopicModal extends React.Component {
             <React.Fragment>
               <span className="">
                 {topic}{" "}
-                <span onClick={this.toggleEdit} className="topic-edit-button">
+                <span
+                  onClick={this.toggleEditModal}
+                  className="topic-edit-button"
+                >
                   <i className="fas fa-pencil-alt" />
                   edit
                 </span>
@@ -104,7 +110,7 @@ class TopicModal extends React.Component {
           )}
         {!isEditModalOpen &&
           !topic && (
-            <span className="topic-edit-button" onClick={this.toggleEdit}>
+            <span className="topic-edit-button" onClick={this.toggleEditModal}>
               <i className="fas fa-pencil-alt" />
               add a topic
             </span>

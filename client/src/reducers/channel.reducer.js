@@ -41,6 +41,12 @@ export default (state = initialState, action) => {
 
       return newState;
 
+    case constants.CHANNEL_EDIT_FETCH:
+      newState.channelList = action.payload.channelList;
+      newState.currentChannel = action.payload.channel;
+
+      return newState;
+
     case constants.CHANNEL_SWITCH:
       newState.currentChannel = state.channelList.find(
         channel => channel.id === action.payload
