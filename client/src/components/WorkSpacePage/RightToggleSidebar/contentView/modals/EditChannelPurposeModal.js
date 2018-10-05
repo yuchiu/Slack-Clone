@@ -1,18 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Modal } from "semantic-ui-react";
+import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { InlineError } from "@/components/common";
 
+import { validateForm } from "@/utils";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import { channelAction } from "@/actions";
 
 class EditChannelPurposeModal extends React.Component {
   state = {
     text: "",
+    clientError: {},
     isModalOpen: false
   };
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    this.setState({
+      clientError: {},
+      text: ""
+    });
+  }
 
   toggleModalOpen = () => {
     this.setState({
@@ -39,19 +47,25 @@ class EditChannelPurposeModal extends React.Component {
   handleSave = () => {
     const { text } = this.state;
     const { fetchEditChannel, currentTeam, currentChannel } = this.props;
-    fetchEditChannel({
-      detail_description: text,
-      channelId: currentChannel.id,
-      teamId: currentTeam.id
-    });
-    this.setState({
-      isModalOpen: false,
-      text: ""
-    });
+    const clientError = validateForm.editPurpose(this.state);
+    this.setState({ clientError });
+
+    // proceed to send data to server if there's no error
+    if (Object.keys(clientError).length === 0) {
+      fetchEditChannel({
+        detail_description: text,
+        channelId: currentChannel.id,
+        teamId: currentTeam.id
+      });
+      this.setState({
+        isModalOpen: false,
+        text: ""
+      });
+    }
   };
 
   render() {
-    const { text, isModalOpen } = this.state;
+    const { text, isModalOpen, clientError } = this.state;
     const { purpose } = this.props;
     return (
       <React.Fragment>
@@ -74,6 +88,11 @@ class EditChannelPurposeModal extends React.Component {
                       name="text"
                       placeholder="Add a purpose"
                     />
+                  )}
+                  {clientError.text ? (
+                    <InlineError text={clientError.text} />
+                  ) : (
+                    <span className="inline-hint">max characters: 256</span>
                   )}
                 </Form.Field>
                 <Form.Group widths="equal">

@@ -10,7 +10,7 @@ class MessageGroupHeader extends React.Component {
     return (
       <h1 className="leftsidebar__List__header">
         <span className="leftsidebar__List__header__title  leftsidebar__List__header__title--closer">
-          DIRECT MESSAGES
+          Direct Messages
         </span>
         <Icon
           className="leftsidebar__List__header__icon"

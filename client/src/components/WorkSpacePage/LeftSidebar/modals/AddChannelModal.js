@@ -116,9 +116,6 @@ class AddChannelModal extends React.Component {
           <Form>
             <Form.Field>
               <label>Channel name:</label>
-              {clientError.channelName && (
-                <InlineError text={clientError.channelName} />
-              )}
               <Input
                 value={channelName}
                 onChange={this.handleChange}
@@ -126,6 +123,9 @@ class AddChannelModal extends React.Component {
                 fluid
                 placeholder="# random channel"
               />
+              {clientError.channelName && (
+                <InlineError text={clientError.channelName} />
+              )}
             </Form.Field>
             <Form.Field>
               <Checkbox
@@ -143,6 +143,9 @@ class AddChannelModal extends React.Component {
                 name="purpose"
                 placeholder="purpose"
               />
+              {clientError.purpose && (
+                <InlineError text={clientError.purpose} />
+              )}
             </Form.Field>
             {isChannelPrivate ? (
               <Form.Field>

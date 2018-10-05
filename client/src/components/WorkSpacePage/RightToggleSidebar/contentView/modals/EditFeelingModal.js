@@ -2,16 +2,24 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { InlineError } from "@/components/common";
 
 import { userAction } from "@/actions";
+import { validateForm } from "@/utils";
 
 class EditFeelingModal extends React.Component {
   state = {
+    clientError: {},
     text: "",
     isModalOpen: false
   };
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    this.setState({
+      clientError: {},
+      text: ""
+    });
+  }
 
   toggleModalOpen = () => {
     this.setState({
@@ -38,15 +46,21 @@ class EditFeelingModal extends React.Component {
   handleSave = () => {
     const { text } = this.state;
     const { fetchEditUser } = this.props;
-    fetchEditUser({ brief_description: text });
-    this.setState({
-      text: "",
-      isModalOpen: false
-    });
+    const clientError = validateForm.editFeeling(this.state);
+    this.setState({ clientError });
+
+    // proceed to send data to server if there's no error
+    if (Object.keys(clientError).length === 0) {
+      fetchEditUser({ brief_description: text });
+      this.setState({
+        text: "",
+        isModalOpen: false
+      });
+    }
   };
 
   render() {
-    const { text, isModalOpen } = this.state;
+    const { text, isModalOpen, clientError } = this.state;
     const { feeling } = this.props;
     return (
       <React.Fragment>
@@ -71,6 +85,11 @@ class EditFeelingModal extends React.Component {
                       fluid
                       placeholder="how you feeling"
                     />
+                  )}
+                  {clientError.text ? (
+                    <InlineError text={clientError.text} />
+                  ) : (
+                    <span className="inline-hint">max characters: 32</span>
                   )}
                 </Form.Field>
                 <Form.Group widths="equal">

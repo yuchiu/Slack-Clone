@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Modal } from "semantic-ui-react";
+import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { InlineError } from "@/components/common";
 
 import "./index.scss";
+import { validateForm } from "@/utils";
 import { globalStateAction, channelAction } from "@/actions";
 import {
   globalStateSelector,
@@ -13,8 +15,16 @@ import {
 
 class TopicModal extends React.Component {
   state = {
+    clientError: {},
     text: ""
   };
+
+  componentWillUnmount() {
+    this.setState({
+      clientError: {},
+      text: ""
+    });
+  }
 
   toggleEditModal = () => {
     const { toggleEditModal } = this.props;
@@ -39,20 +49,25 @@ class TopicModal extends React.Component {
   handleSave = () => {
     const { text } = this.state;
     const { fetchEditChannel, currentChannel, currentTeam } = this.props;
+    const clientError = validateForm.editTopic(this.state);
+    this.setState({ clientError });
 
-    fetchEditChannel({
-      brief_description: text,
-      teamId: currentTeam.id,
-      channelId: currentChannel.id
-    });
-    this.setState({
-      text: ""
-    });
-    this.toggleEditModal();
+    // proceed to send data to server if there's no error
+    if (Object.keys(clientError).length === 0) {
+      fetchEditChannel({
+        brief_description: text,
+        teamId: currentTeam.id,
+        channelId: currentChannel.id
+      });
+      this.setState({
+        text: ""
+      });
+      this.toggleEditModal();
+    }
   };
 
   render() {
-    const { text } = this.state;
+    const { text, clientError } = this.state;
     const { topic, isEditModalOpen } = this.props;
     return (
       <React.Fragment>
@@ -80,7 +95,13 @@ class TopicModal extends React.Component {
                       placeholder="Add a topic"
                     />
                   )}
+                  {clientError.text ? (
+                    <InlineError text={clientError.text} />
+                  ) : (
+                    <span className="inline-hint">max characters: 128</span>
+                  )}
                 </Form.Field>
+
                 <Form.Group widths="equal">
                   <Button type="button" primary onClick={this.handleSave} fluid>
                     Set Topic

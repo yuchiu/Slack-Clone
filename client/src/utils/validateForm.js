@@ -5,15 +5,18 @@ export default {
     const clientErrors = {};
     if (!data.username) {
       clientErrors.username = "Username can't be blank";
-    } else if (data.username.length < 4 || data.username.length > 32) {
+    }
+    if (data.username.length < 4 || data.username.length > 32) {
       clientErrors.username = "Length of user name have to be between 4 to 32";
-    } else if (!/^[a-z0-9]+$/i.test(data.username)) {
+    }
+    if (!/^[a-z0-9]+$/i.test(data.username)) {
       clientErrors.username =
         "only number and characters, special characters and space are not allowed";
     }
     if (!data.password) {
       clientErrors.password = "Password can't be blank";
-    } else if (data.password.length < 4 || data.password.length > 32) {
+    }
+    if (data.password.length < 4 || data.password.length > 32) {
       clientErrors.password = "Length of user name have to be between 4 to 32";
     }
     return clientErrors;
@@ -23,26 +26,31 @@ export default {
     const clientErrors = {};
     if (!data.username) {
       clientErrors.username = "Username can't be blank";
-    } else if (data.username.length < 4 || data.username.length > 32) {
+    }
+    if (data.username.length < 4 || data.username.length > 32) {
       clientErrors.username = "Length of user name have to be between 4 to 32";
-    } else if (!/^[a-z0-9]+$/i.test(data.username)) {
+    }
+    if (!/^[a-z0-9]+$/i.test(data.username)) {
       clientErrors.username =
         "only number and characters, special characters and space are not allowed";
     }
     if (!data.password) {
       clientErrors.password = "Password can't be blank";
-    } else if (data.password.length < 4 || data.password.length > 32) {
+    }
+    if (data.password.length < 4 || data.password.length > 32) {
       clientErrors.password = "Length of password have to be between 4 to 32";
     }
     if (!data.confirmPassword) {
       clientErrors.confirmPassword = "Confirm password can't be blank";
-    } else if (data.password !== data.confirmPassword) {
+    }
+    if (data.password !== data.confirmPassword) {
       clientErrors.confirmPassword =
         "Password and confirm password have to be the same";
     }
     if (!data.email) {
       clientErrors.email = "Email can't be blank";
-    } else if (!Validator.isEmail(data.email)) {
+    }
+    if (!Validator.isEmail(data.email)) {
       clientErrors.email = "Invalid email";
     }
     return clientErrors;
@@ -51,7 +59,8 @@ export default {
     const clientErrors = {};
     if (!data.name) {
       clientErrors.name = "Team name can't be blank";
-    } else if (data.name.length < 1 || data.name.length > 32) {
+    }
+    if (data.name.length < 1 || data.name.length > 32) {
       clientErrors.name = "Length of team name have to be between 1 to 32";
     }
     if (data.about.length > 128) {
@@ -64,12 +73,17 @@ export default {
     const clientErrors = {};
     if (!data.channelName) {
       clientErrors.channelName = "Channel name can't be blank";
-    } else if (data.channelName.length < 1 || data.channelName.length > 32) {
+    }
+    if (data.channelName.length < 1 || data.channelName.length > 32) {
       clientErrors.channelName =
         "Length of channel name have to be between 1 to 32";
-    } else if (!/^[a-z0-9]+$/i.test(data.channelName)) {
+    }
+    if (!/^[a-z0-9]+$/i.test(data.channelName)) {
       clientErrors.channelName =
         "only number and characters, special characters and space are not allowed";
+    }
+    if (data.purpose.length > 256) {
+      clientErrors.purpose = "Length of purpose can not exceed 256 characters";
     }
     if (data.isChannelPrivate) {
       if (data.members.length < 1) {
@@ -90,11 +104,14 @@ export default {
     };
     if (!data.username) {
       clientErrors.username = "Username can't be blank";
-    } else if (data.username.length < 1 || data.username.length > 32) {
+    }
+    if (data.username.length < 1 || data.username.length > 32) {
       clientErrors.username = "Length of username have to be between 1 to 32";
-    } else if (isMember(data.username, currentTeamMembers)) {
+    }
+    if (isMember(data.username, currentTeamMembers)) {
       clientErrors.username = `${data.username} is already member of the team`;
-    } else if (!/^[a-z0-9]+$/i.test(data.username)) {
+    }
+    if (!/^[a-z0-9]+$/i.test(data.username)) {
       clientErrors.username =
         "only number and characters, special characters and space are not allowed";
     }
@@ -105,6 +122,53 @@ export default {
     const clientErrors = {};
     if (data.members.length < 1) {
       clientErrors.members = "At least one member have to be selected";
+    }
+    return clientErrors;
+  },
+  editTopic: data => {
+    const clientErrors = {};
+    if (data.text.length > 128) {
+      clientErrors.text = "Length of topic can not exceed 128 characters";
+    }
+    return clientErrors;
+  },
+  editPurpose: data => {
+    const clientErrors = {};
+    if (data.text.length > 256) {
+      clientErrors.text = "Length of purpose can not exceed 256 characters";
+    }
+    return clientErrors;
+  },
+  editFeeling: data => {
+    const clientErrors = {};
+    if (data.text.length > 32) {
+      clientErrors.text = "Length of feeling can not exceed 32 characters";
+    }
+    return clientErrors;
+  },
+  editProfile: data => {
+    const clientErrors = {};
+    if (data.feeling.length > 32) {
+      clientErrors.feeling = "Length of feeling can not exceed 32 characters";
+    }
+    if (data.about.length > 256) {
+      clientErrors.feeling = "Length of about can not exceed 256 characters";
+    }
+    if (data.password) {
+      if (data.password.length < 4 || data.password.length > 32) {
+        clientErrors.password = "Length of password have to be between 4 to 32";
+      }
+      if (data.newPassword.length < 4 || data.newPassword.length > 32) {
+        clientErrors.newPassword =
+          "Length of password have to be between 4 to 32";
+      }
+      if (!data.confirmPassword) {
+        clientErrors.confirmPassword = "Confirm password can't be blank";
+      }
+      if (data.password !== data.confirmPassword) {
+        clientErrors.confirmPassword =
+          "Password and confirm password have to be the same";
+      }
     }
     return clientErrors;
   }

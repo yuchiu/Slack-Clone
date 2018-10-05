@@ -10,7 +10,7 @@ class ChannelHeader extends React.Component {
     return (
       <React.Fragment>
         <h1 className="leftsidebar__List__header">
-          <span className="leftsidebar__List__header__title">CHANNELS</span>
+          <span className="leftsidebar__List__header__title">Channels</span>
           <Icon
             className="leftsidebar__List__header__icon"
             onClick={toggleAddChannelModal}

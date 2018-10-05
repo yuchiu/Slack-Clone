@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import { validateForm } from "@/utils";
 import { userAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
 import { InlineError } from "@/components/common";
@@ -20,7 +21,19 @@ class EditMyProfileModal extends React.Component {
     isEditPasswordOn: false
   };
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    this.setState({
+      password: "",
+      newPassword: "",
+      confirmPassword: "",
+      feeling: "",
+      about: "",
+      imgFile: {},
+      clientError: {},
+      isModalOpen: false,
+      isEditPasswordOn: false
+    });
+  }
 
   toggleModalOpen = () => {
     const { isModalOpen } = this.state;
@@ -32,6 +45,7 @@ class EditMyProfileModal extends React.Component {
   toggleEditPassword = () => {
     const { isEditPasswordOn } = this.state;
     this.setState({
+      clientError: {},
       password: "",
       newPassword: "",
       confirmPassword: "",
@@ -40,7 +54,6 @@ class EditMyProfileModal extends React.Component {
   };
 
   handleClose = e => {
-    e.preventDefault();
     this.setState({
       password: "",
       newPassword: "",
@@ -65,23 +78,19 @@ class EditMyProfileModal extends React.Component {
   handleSave = () => {
     const { password, newPassword, feeling, about } = this.state;
     const { fetchEditUser } = this.props;
-    fetchEditUser({
-      brief_description: feeling,
-      detail_description: about,
-      password,
-      newPassword
-    });
-    this.setState({
-      password: "",
-      newPassword: "",
-      confirmPassword: "",
-      feeling: "",
-      about: "",
-      imgFile: {},
-      clientError: {},
-      isModalOpen: false,
-      isEditPasswordOn: false
-    });
+    const clientError = validateForm.editProfile(this.state);
+    this.setState({ clientError });
+
+    // proceed to send data to server if there's no error
+    if (Object.keys(clientError).length === 0) {
+      fetchEditUser({
+        brief_description: feeling,
+        detail_description: about,
+        password,
+        newPassword
+      });
+      this.handleClose();
+    }
   };
 
   render() {
@@ -108,9 +117,6 @@ class EditMyProfileModal extends React.Component {
               <Form>
                 <Form.Field>
                   <label>Feeling:</label>
-                  {clientError.feeling && (
-                    <InlineError text={clientError.feeling} />
-                  )}
                   {currentUser.brief_description ? (
                     <Input
                       value={feeling}
@@ -128,13 +134,12 @@ class EditMyProfileModal extends React.Component {
                       placeholder="how you feeling"
                     />
                   )}
+                  {clientError.feeling && (
+                    <InlineError text={clientError.feeling} />
+                  )}
                 </Form.Field>
                 <Form.Field>
                   <label>About You:</label>
-                  {clientError.about && (
-                    <InlineError text={clientError.about} />
-                  )}
-
                   {currentUser.detail_description ? (
                     <Form.TextArea
                       value={about}
@@ -149,6 +154,9 @@ class EditMyProfileModal extends React.Component {
                       name="about"
                       placeholder="about yourself"
                     />
+                  )}
+                  {clientError.about && (
+                    <InlineError text={clientError.about} />
                   )}
                 </Form.Field>
 
@@ -175,9 +183,6 @@ class EditMyProfileModal extends React.Component {
                     <br />
                     <Form.Field>
                       <label>Password:</label>
-                      {clientError.password && (
-                        <InlineError text={clientError.password} />
-                      )}
                       <Input
                         value={password}
                         onChange={this.handleChange}
@@ -185,13 +190,13 @@ class EditMyProfileModal extends React.Component {
                         fluid
                         placeholder={`password`}
                       />
+                      {clientError.password && (
+                        <InlineError text={clientError.password} />
+                      )}
                     </Form.Field>
 
                     <Form.Field>
                       <label>New Password:</label>
-                      {clientError.newPassword && (
-                        <InlineError text={clientError.newPassword} />
-                      )}
                       <Input
                         value={newPassword}
                         onChange={this.handleChange}
@@ -199,12 +204,12 @@ class EditMyProfileModal extends React.Component {
                         fluid
                         placeholder="new password"
                       />
+                      {clientError.newPassword && (
+                        <InlineError text={clientError.newPassword} />
+                      )}
                     </Form.Field>
                     <Form.Field>
                       <label>Confirm New Password:</label>
-                      {clientError.confirmPassword && (
-                        <InlineError text={clientError.confirmPassword} />
-                      )}
                       <Input
                         value={confirmPassword}
                         onChange={this.handleChange}
@@ -212,6 +217,9 @@ class EditMyProfileModal extends React.Component {
                         fluid
                         placeholder="confirm new password"
                       />
+                      {clientError.confirmPassword && (
+                        <InlineError text={clientError.confirmPassword} />
+                      )}
                     </Form.Field>
                   </React.Fragment>
                 )}

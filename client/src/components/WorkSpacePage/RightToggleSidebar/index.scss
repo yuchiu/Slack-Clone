@@ -61,6 +61,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100vh - 110px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .right-sidebar-footer {
@@ -179,4 +180,8 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.inline-hint {
+  color: $lightgrey;
 }
