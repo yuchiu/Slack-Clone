@@ -125,38 +125,43 @@ const getChannelList = createSelector(getStateChannelList, channelList =>
 const getMessageGroupList = createSelector(
   getStateChannelList,
   getUsername,
-  (messageGroupList, username) =>
-    messageGroupList
-      .filter(channel => channel.message_group === true)
-      .map(messageGroup => {
-        if (messageGroup.name.length) {
-          // filter out current username from the group name
-          const newMessageGroup = { ...messageGroup };
-          newMessageGroup.name = filterOutCurrentUsername(
-            messageGroup.name,
-            username
-          );
+  (messageGroupList, username) => {
+    if (messageGroupList.length > 0) {
+      return messageGroupList
+        .filter(channel => channel.message_group === true)
+        .map(messageGroup => {
+          if (messageGroup.name.length) {
+            // filter out current username from the group name
+            const newMessageGroup = { ...messageGroup };
+            newMessageGroup.name = filterOutCurrentUsername(
+              messageGroup.name,
+              username
+            );
 
-          // trim the extra char for long name
-          if (newMessageGroup.name.length > 32) {
-            newMessageGroup.name = newMessageGroup.name
-              .slice(0, 31)
-              .concat("...");
+            // trim the extra char for long name
+            if (newMessageGroup.name.length > 32) {
+              newMessageGroup.name = newMessageGroup.name
+                .slice(0, 31)
+                .concat("...");
+            }
+
+            // hide status bubble if the group is more than 2 people
+            newMessageGroup.directMessage = false;
+            if ((newMessageGroup.name.match(/,/g) || []).length === 0) {
+              newMessageGroup.directMessage = true;
+            }
+            const memberNumber = (newMessageGroup.name.match(/,/g) || [])
+              .length;
+
+            newMessageGroup.memberNumber = memberNumber + 1;
+
+            return newMessageGroup;
           }
-
-          // hide status bubble if the group is more than 2 people
-          newMessageGroup.directMessage = false;
-          if ((newMessageGroup.name.match(/,/g) || []).length === 0) {
-            newMessageGroup.directMessage = true;
-          }
-          const memberNumber = (newMessageGroup.name.match(/,/g) || []).length;
-
-          newMessageGroup.memberNumber = memberNumber + 1;
-
-          return newMessageGroup;
-        }
-        return messageGroup;
-      })
+          return messageGroup;
+        });
+    }
+    return [];
+  }
 );
 
 const getMessageGroupName = createSelector(

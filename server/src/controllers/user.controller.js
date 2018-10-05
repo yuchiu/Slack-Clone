@@ -1,11 +1,10 @@
-import jwt from "jsonwebtoken";
 import fse from "fs-extra";
 import Identicon from "identicon.js";
 import randomstring from "randomstring";
 import randomHex from "randomhex";
 import _ from "lodash";
 
-import { redisClient } from "../utils";
+import { redisCache } from "./common";
 import models from "../models";
 import config from "../config";
 
@@ -81,7 +80,7 @@ export default {
       await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
 
       credentials.avatarurl = `${config.SERVER_URL}:${
-        config.PORT
+        config.SERVER_PORT
       }/assets/${avatarName}`;
 
       /* credential is validated */
@@ -107,25 +106,8 @@ export default {
       const initialChannelId = initialChannel[0].id;
 
       // remove stale data from cache
-      redisClient.del(`teamMemberList:${initialDemoTeamId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`teamMemberList:${initialDemoTeamId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
-
-      redisClient.del(`channelMemberList:${initialChannelId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`channelMemberList:${initialChannelId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`teamMemberList:${initialDemoTeamId}`);
+      redisCache.delete(`channelMemberList:${initialChannelId}`);
 
       await models.ChannelMember.create({
         userId: user.id,
@@ -247,10 +229,8 @@ export default {
       const currentUserId = req.user.id;
 
       // check if redis has the data
-      const userCache = await redisClient.getAsync(`userId:${currentUserId}`);
-      const teamListCache = await redisClient.getAsync(
-        `teamList:${currentUserId}`
-      );
+      const userCache = await redisCache.get(`userId:${currentUserId}`);
+      const teamListCache = await redisCache.get(`teamList:${currentUserId}`);
 
       if (userCache && teamListCache) {
         const userCacheJSON = JSON.parse(userCache);
@@ -281,16 +261,8 @@ export default {
       );
 
       // Save the responses in Redis store
-      await redisClient.setex(
-        `userId:${currentUserId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...user })
-      );
-      await redisClient.setex(
-        `teamList:${currentUserId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...teamList })
-      );
+      redisCache.set(`userId:${currentUserId}`, user);
+      redisCache.set(`teamList:${currentUserId}`, teamList);
 
       res.status(200).send({
         meta: {
@@ -341,15 +313,7 @@ export default {
         }
       }
       // remove stale data from cache
-      redisClient.del(`userId:${currentUserId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`userId:${currentUserId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`userId:${currentUserId}`);
 
       // remove empty field
       let updatedUserData = {

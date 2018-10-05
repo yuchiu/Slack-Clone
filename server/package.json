@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
     "build": "babel src -d build",
-    "serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/index.js",
+    "serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost SERVER_PORT=3030 node build/index.js",
     "seed": "babel-node seed/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

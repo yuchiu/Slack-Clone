@@ -15,13 +15,13 @@ services:
     networks:
       - webnet
     environment:
-      DB_HOST: pg_db
-      DB_PASS: postgres
-      DB_USER: postgres
-      DB_NAME: slack
+      PSQL_HOST: pg_db
+      PSQL_PASS: postgres
+      PSQL_USER: postgres
+      PSQL_NAME: slack
       NODE_ENV: production
       SERVER_URL: http://localhost
-      PORT: 3030
+      SERVER_PORT: 3030
     volumes:
       - ./assets:/app/assets
     depends_on:

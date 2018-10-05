@@ -2,9 +2,9 @@ import fse from "fs-extra";
 import randomstring from "randomstring";
 import _ from "lodash";
 
-import { redisClient } from "../utils";
 import config from "../config";
 import models from "../models";
+import { redisCache } from "./common";
 
 export default {
   createMessage: async data => {
@@ -13,15 +13,7 @@ export default {
 
       console.log("created message ");
       // remove stale data from cache
-      redisClient.del(`messageList:${channelId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`messageList:${channelId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`messageList:${channelId}`);
 
       /* check if it is upload or message */
       if (!file) {
@@ -86,7 +78,9 @@ export default {
         avatarurl,
         username,
         filetype: file.type,
-        url: `${config.SERVER_URL}:${config.PORT}/assets/${randomFileName}`
+        url: `${config.SERVER_URL}:${
+          config.SERVER_PORT
+        }/assets/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;
@@ -115,9 +109,10 @@ export default {
       const { offset, channelId } = req.body;
 
       // check if redis has the data
-      const messagelListCache = await redisClient.getAsync(
+      const messagelListCache = await redisCache.get(
         `messageList:${channelId}offset:${offset}`
       );
+
       if (messagelListCache) {
         const messagelListCacheArr = _.toArray(JSON.parse(messagelListCache));
 
@@ -157,11 +152,7 @@ export default {
       );
 
       // Save the responses in Redis store
-      await redisClient.setex(
-        `messageList:${channelId}offset:${offset}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...messageList })
-      );
+      redisCache.set(`messageList:${channelId}offset:${offset}`, messageList);
 
       return res.status(200).send({
         meta: {

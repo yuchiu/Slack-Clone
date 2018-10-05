@@ -7,7 +7,11 @@ import {
   messageController,
   teamController
 } from "../controllers";
-import { authPolicy } from "../utils";
+import {
+  authenticationPolicy,
+  authorizationPolicy,
+  registerPolicy
+} from "../middlewares";
 
 export default app => {
   /* api */
@@ -25,33 +29,29 @@ export default app => {
   apiv1.use("/messages", message);
 
   /* user routes */
-  user.get("/", authPolicy.authentication, userController.tryAutoLogin);
-  user.put("/", authPolicy.authentication, userController.updateUser);
+  user.get("/", authenticationPolicy, userController.tryAutoLogin);
+  user.put("/", authenticationPolicy, userController.updateUser);
   user.get("/logouts", userController.logout);
-  user.post("/registers", authPolicy.registerRule, userController.register);
+  user.post("/registers", registerPolicy, userController.register);
   user.post("/logins", userController.login);
 
   /* teams routes */
-  team.post("/", authPolicy.authentication, teamController.create);
+  team.post("/", authenticationPolicy, teamController.create);
   team.get(
     "/:teamId",
-    authPolicy.authentication,
+    authenticationPolicy,
     teamController.fetchTeamAssociatedList
   );
 
   /* channels routes */
-  channel.post("/", authPolicy.authentication, channelController.create);
-  channel.put("/", authPolicy.authentication, channelController.updateChannel);
+  channel.post("/", authenticationPolicy, channelController.create);
+  channel.put("/", authenticationPolicy, channelController.updateChannel);
   channel.get(
     "/:channelId",
-    authPolicy.authentication,
+    authenticationPolicy,
     channelController.getChannelAssociatedList
   );
 
   /* messages routes */
-  message.post(
-    "/",
-    authPolicy.authentication,
-    messageController.getMoreMessage
-  );
+  message.post("/", authenticationPolicy, messageController.getMoreMessage);
 };

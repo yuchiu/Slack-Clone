@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { redisClient } from "../utils";
+import { redisCache } from "./common";
 import models from "../models";
 
 export default {
@@ -17,15 +17,7 @@ export default {
       } = req.body;
 
       // remove stale data from cache
-      redisClient.del(`channelList:${teamId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`channelList:${teamId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`channelList:${teamId}`);
 
       const response = await models.sequelize.transaction(async transaction => {
         let channel;
@@ -168,12 +160,13 @@ export default {
       const { channelId } = req.params;
 
       // check if redis has the data
-      const messagelListCache = await redisClient.getAsync(
+      const messagelListCache = await redisCache.get(
         `messageList:${channelId}`
       );
-      const channelMemberListCache = await redisClient.getAsync(
+      const channelMemberListCache = await redisCache.get(
         `channelMemberList:${channelId}`
       );
+
       if (messagelListCache && channelMemberListCache) {
         const messagelListCacheArr = _.toArray(JSON.parse(messagelListCache));
 
@@ -257,17 +250,8 @@ export default {
       );
 
       // Save the responses in Redis store
-      await redisClient.setex(
-        `messageList:${channelId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...messageList })
-      );
-      // Save the responses in Redis store
-      await redisClient.setex(
-        `channelMemberList:${channelId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...channelMemberList })
-      );
+      redisCache.set(`messageList:${channelId}`, messageList);
+      redisCache.set(`channelMemberList:${channelId}`, channelMemberList);
 
       res.status(200).send({
         meta: {
@@ -305,15 +289,7 @@ export default {
       updatedChannelData = _.pickBy(updatedChannelData, _.identity);
 
       // remove stale data from cache
-      redisClient.del(`channelList:${teamId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`channelList:${{ teamId }} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`channelList:${teamId}`);
 
       /* update the channel */
       await models.Channel.update(

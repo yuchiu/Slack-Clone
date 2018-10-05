@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { redisClient } from "../utils";
+import { redisCache } from "./common";
 import models from "../models";
 
 export default {
@@ -11,15 +11,7 @@ export default {
       const teamAbout = req.body.about;
 
       // remove stale data from cache
-      redisClient.del(`teamList:${currentUserId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`teamList:${currentUserId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`teamList:${currentUserId}`);
 
       const response = await models.sequelize.transaction(async transaction => {
         const teamData = await models.Team.create(
@@ -119,25 +111,9 @@ export default {
       }
 
       // remove stale data from cache
-      redisClient.del(`teamMemberList:${teamId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`teamMemberList:${teamId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
 
-      redisClient.del(`channelMemberList:${initialChannelId}`, (err, reply) => {
-        if (!err) {
-          if (reply === 1) {
-            console.log(`channelMemberList:${initialChannelId} is deleted`);
-          } else {
-            console.log("Does't exists");
-          }
-        }
-      });
+      redisCache.delete(`teamMemberList:${teamId}`);
+      redisCache.delete(`channelMemberList:${initialChannelId}`);
 
       /* create new member  */
       await models.TeamMember.create({ userId: userToAdd.id, teamId });
@@ -191,12 +167,11 @@ export default {
       const { teamId } = req.params;
 
       // check if redis has the data
-      const channelListCache = await redisClient.getAsync(
-        `channelList:${teamId}`
-      );
-      const teamMemberListCache = await redisClient.getAsync(
+      const channelListCache = await redisCache.get(`channelList:${teamId}`);
+      const teamMemberListCache = await redisCache.get(
         `teamMemberList:${teamId}`
       );
+
       if (channelListCache && teamMemberListCache) {
         const channelListCacheArr = _.toArray(JSON.parse(channelListCache));
         const teamMemberListCacheArr = _.toArray(
@@ -235,16 +210,8 @@ export default {
       );
 
       // Save the responses in Redis store
-      await redisClient.setex(
-        `channelList:${teamId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...channelList })
-      );
-      await redisClient.setex(
-        `teamMemberList:${teamId}`,
-        86400, // 60 * 60 * 24 seconds
-        JSON.stringify({ ...teamMemberList })
-      );
+      redisCache.set(`channelList:${teamId}`, channelList);
+      redisCache.set(`teamMemberList:${teamId}`, teamMemberList);
 
       res.status(200).send({
         meta: {

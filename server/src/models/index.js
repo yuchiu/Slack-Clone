@@ -2,13 +2,23 @@ import Sequelize from "sequelize";
 import config from "../config";
 
 const sequelize = new Sequelize(
-  config.DB.DB_NAME,
-  config.DB.DB_USER,
-  config.DB.DB_PASS,
-  config.DB.OPTIONS
+  config.PSQL_NAME,
+  config.PSQL_USER,
+  config.PSQL_PASS,
+  {
+    dialect: "postgres",
+    operatorsAliases: Sequelize.Op,
+    logging: false,
+    host: process.env.PSQL_HOST || "localhost",
+    define: {
+      underscored: true
+    }
+  }
 );
 
 const models = {
+  sequelize,
+  Sequelize,
   User: sequelize.import("./User"),
   Channel: sequelize.import("./Channel"),
   Team: sequelize.import("./Team"),
@@ -22,8 +32,5 @@ Object.keys(models).forEach(modelName => {
     models[modelName].associate(models);
   }
 });
-
-models.sequelize = sequelize;
-models.Sequelize = Sequelize;
 
 export default models;
