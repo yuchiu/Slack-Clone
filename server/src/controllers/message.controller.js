@@ -6,12 +6,31 @@ import config from "../config";
 import models from "../models";
 import { redisCache } from "./common";
 
+const validateUploadFiles = data => {
+  if (data.size > 1024 * 1024 * 5) {
+    return { size: false };
+  }
+  if (
+    !data.type.startsWith("image/") &&
+    !data.type === "text/plain" &&
+    !data.type.startsWith("audio/")
+  ) {
+    return { type: false };
+  }
+  return { size: true, type: true };
+};
+
+const generateFileName = data => {
+  const fileExtension = data.name.replace(/^.*\./, "");
+  const randomFileName = randomstring.generate().concat(`.${fileExtension}`);
+  return randomFileName;
+};
+
 export default {
   createMessage: async data => {
     try {
       const { channelId, userId, text, username, avatarurl, file } = data;
 
-      console.log("created message ");
       // remove stale data from cache
       redisCache.delete(`messageList:${channelId}`);
 
@@ -36,9 +55,8 @@ export default {
           message
         };
       }
-
-      /* validate files */
-      if (file.size > 1024 * 1024 * 5) {
+      const isFileValid = validateUploadFiles(file);
+      if (!isFileValid.size) {
         return {
           meta: {
             type: "error",
@@ -47,11 +65,7 @@ export default {
           }
         };
       }
-      if (
-        !file.type.startsWith("image/") &&
-        !file.type === "text/plain" &&
-        !file.type.startsWith("audio/")
-      ) {
+      if (!isFileValid.type) {
         return {
           meta: {
             type: "error",
@@ -62,14 +76,11 @@ export default {
       }
 
       /* generate random name */
-      const fileExtension = file.name.replace(/^.*\./, "");
-      const randomFileName = randomstring
-        .generate()
-        .concat(`.${fileExtension}`);
+      const randomFileName = generateFileName(file);
+
       const filePath = `./assets/${randomFileName}`;
 
       /* write file and create message */
-
       await fse.outputFile(filePath, file.data);
 
       const messageResponse = await models.Message.create({
@@ -137,7 +148,13 @@ export default {
           where: { channelId, userId: currentUserId }
         });
         if (!member) {
-          throw new Error("Not Authorized");
+          res.status(403).send({
+            meta: {
+              type: "error",
+              status: 500,
+              message: "Not Authorized"
+            }
+          });
         }
       }
 

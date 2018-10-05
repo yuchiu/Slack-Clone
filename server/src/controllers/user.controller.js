@@ -20,6 +20,25 @@ const userSummary = user => {
   return summary;
 };
 
+const generateAvatar = async data => {
+  /* generate random icon for user */
+  const avatarData = new Identicon(randomHex(16), 420).toString();
+  const avatarString = `data:image/png;base64,${avatarData}`;
+  const avatarImage = avatarString.split(";base64,").pop();
+
+  const avatarName = randomstring.generate().concat(".png");
+  const filePath = `./assets/${avatarName}`;
+
+  await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
+
+  const newData = { ...data };
+  newData.avatarurl = `${config.SERVER_URL}:${
+    config.SERVER_PORT
+  }/assets/${avatarName}`;
+
+  return newData;
+};
+
 export default {
   register: async (req, res) => {
     try {
@@ -69,50 +88,59 @@ export default {
           }
         });
       }
-      /* generate random icon for user */
-      const avatarData = new Identicon(randomHex(16), 420).toString();
-      const avatarString = `data:image/png;base64,${avatarData}`;
-      const avatarImage = avatarString.split(";base64,").pop();
 
-      const avatarName = randomstring.generate().concat(".png");
-      const filePath = `./assets/${avatarName}`;
+      /* create new member & auto join default team and channel */
+      const createUserResponse = await models.sequelize.transaction(
+        async transaction => {
+          await generateAvatar(credentials);
+          const user = await models.User.create(credentials, { transaction });
 
-      await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
+          const initialDemoTeamId = 1;
+          await models.TeamMember.create(
+            {
+              userId: user.id,
+              teamId: initialDemoTeamId
+            },
+            { transaction }
+          );
 
-      credentials.avatarurl = `${config.SERVER_URL}:${
-        config.SERVER_PORT
-      }/assets/${avatarName}`;
+          /* find the initial channel general and add new user to the general channel */
+          const initialChannel = await models.sequelize.query(
+            "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+            {
+              transaction,
+              replacements: [1],
+              model: models.Channel,
+              raw: true
+            }
+          );
+          const initialChannelId = initialChannel[0].id;
 
-      /* credential is validated */
-      const user = await models.User.create(credentials);
+          await models.ChannelMember.create(
+            {
+              userId: user.id,
+              channelId: initialChannelId
+            },
+            { transaction }
+          );
+          return { user, initialChannelId, initialDemoTeamId };
+        }
+      );
+      const { initialChannelId, initialDemoTeamId, user } = createUserResponse;
 
-      /* auto join demo team */
-      /* create new member  */
-      const initialDemoTeamId = 1;
-      await models.TeamMember.create({
-        userId: user.id,
-        teamId: initialDemoTeamId
-      });
-
-      /* find the initial channel general and add new user to the general channel */
-      const initialChannel = await models.sequelize.query(
-        "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+      /* get user's teams */
+      const teamList = await models.sequelize.query(
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
         {
-          replacements: [1],
-          model: models.Channel,
+          replacements: [user.id],
+          model: models.Team,
           raw: true
         }
       );
-      const initialChannelId = initialChannel[0].id;
 
       // remove stale data from cache
       redisCache.delete(`teamMemberList:${initialDemoTeamId}`);
       redisCache.delete(`channelMemberList:${initialChannelId}`);
-
-      await models.ChannelMember.create({
-        userId: user.id,
-        channelId: initialChannelId
-      });
 
       /* save session */
       req.session.user = user.dataValues;
@@ -125,7 +153,8 @@ export default {
           status: 200,
           message: ""
         },
-        user: userSummary(user)
+        user: userSummary(user),
+        teamList
       });
     } catch (err) {
       console.log(err);

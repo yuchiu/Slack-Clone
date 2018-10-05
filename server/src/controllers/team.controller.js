@@ -13,44 +13,48 @@ export default {
       // remove stale data from cache
       redisCache.delete(`teamList:${currentUserId}`);
 
-      const response = await models.sequelize.transaction(async transaction => {
-        const teamData = await models.Team.create(
-          {
-            name: teamName,
-            brief_description: teamAbout
-          },
-          { transaction }
-        );
-        const team = teamData.dataValues;
-        await models.TeamMember.create(
-          {
-            teamId: team.id,
-            userId: currentUserId,
-            admin: true
-          },
-          { transaction }
-        );
-        const channel = await models.Channel.create(
-          {
-            name: "general",
-            public: true,
-            brief_description:
-              "Company-wide announcements and work-based matters",
-            detail_description:
-              "This channel is for workspace-wide communication and announcements. All members are in this channel.",
-            teamId: team.id
-          },
-          { transaction }
-        );
-        await models.ChannelMember.create(
-          {
-            userId: currentUserId,
-            channelId: channel.dataValues.id
-          },
-          { transaction }
-        );
-        return team;
-      });
+      const createTeamResponse = await models.sequelize.transaction(
+        async transaction => {
+          const teamData = await models.Team.create(
+            {
+              name: teamName,
+              brief_description: teamAbout
+            },
+            { transaction }
+          );
+          const team = teamData.dataValues;
+          await models.TeamMember.create(
+            {
+              teamId: team.id,
+              userId: currentUserId,
+              admin: true
+            },
+            { transaction }
+          );
+          const channel = await models.Channel.create(
+            {
+              name: "general",
+              public: true,
+              brief_description:
+                "Company-wide announcements and work-based matters",
+              detail_description:
+                "This channel is for workspace-wide communication and announcements. All members are in this channel.",
+              teamId: team.id
+            },
+            { transaction }
+          );
+          await models.ChannelMember.create(
+            {
+              userId: currentUserId,
+              channelId: channel.dataValues.id
+            },
+            { transaction }
+          );
+          return team;
+        }
+      );
+
+      const { team } = createTeamResponse;
       /* get user's teams */
       const teamList = await models.sequelize.query(
         "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
@@ -67,7 +71,7 @@ export default {
           status: 200,
           message: ""
         },
-        team: response,
+        team,
         teamList
       });
     } catch (err) {
@@ -116,7 +120,22 @@ export default {
       redisCache.delete(`channelMemberList:${initialChannelId}`);
 
       /* create new member  */
-      await models.TeamMember.create({ userId: userToAdd.id, teamId });
+      await models.sequelize.transaction(async transaction => {
+        await models.TeamMember.create(
+          { userId: userToAdd.id, teamId },
+          { transaction }
+        );
+
+        await models.ChannelMember.create(
+          {
+            userId: userToAdd.id,
+            channelId: initialChannelId
+          },
+          { transaction }
+        );
+      });
+
+      /*  get team and channel member list */
       const teamMemberList = await models.sequelize.query(
         "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
         {
@@ -125,13 +144,6 @@ export default {
           raw: true
         }
       );
-
-      await models.ChannelMember.create({
-        userId: userToAdd.id,
-        channelId: initialChannelId
-      });
-
-      /*  return team and channel member list */
       const channelMemberList = await models.sequelize.query(
         "select * from users as u join channel_members as cm on cm.user_id = u.id where cm.channel_id = ?",
         {

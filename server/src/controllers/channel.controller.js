@@ -19,26 +19,27 @@ export default {
       // remove stale data from cache
       redisCache.delete(`channelList:${teamId}`);
 
-      const response = await models.sequelize.transaction(async transaction => {
-        let channel;
+      const createChannelResponse = await models.sequelize.transaction(
+        async transaction => {
+          let channel;
 
-        /*  check if it's message group */
-        if (!messageGroup) {
-          channel = await models.Channel.create(
-            {
-              name: channelName,
-              detail_description,
-              public: isPublic,
-              teamId
-            },
-            { transaction }
-          );
-        }
-        if (messageGroup) {
-          /* check if message group already created between requested members */
-          const allMembers = [...membersList, currentUserId];
-          const [data, result] = await models.sequelize.query(
-            `
+          /*  check if it's message group */
+          if (!messageGroup) {
+            channel = await models.Channel.create(
+              {
+                name: channelName,
+                detail_description,
+                public: isPublic,
+                teamId
+              },
+              { transaction }
+            );
+          }
+          if (messageGroup) {
+            /* check if message group already created between requested members */
+            const allMembers = [...membersList, currentUserId];
+            const [data, result] = await models.sequelize.query(
+              `
           select c.id, c.name
           from channels as c, channel_members cm
           where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
@@ -47,77 +48,79 @@ export default {
             ","
           )}] and count(cm.user_id) = ${allMembers.length};
           `,
-            { raw: true }
-          );
+              { raw: true }
+            );
 
-          /* message group already exist, respond with error */
-          if (data.length) {
-            return res.status(403).send({
-              meta: {
-                type: "error",
-                status: 403,
-                message:
-                  "direct message between members has already been created"
-              }
-            });
+            /* message group already exist, respond with error */
+            if (data.length) {
+              return res.status(403).send({
+                meta: {
+                  type: "error",
+                  status: 403,
+                  message:
+                    "direct message between members has already been created"
+                }
+              });
+            }
+
+            /* conditions are validated, create the message group */
+            channel = await models.Channel.create(
+              {
+                name: channelName,
+                public: isPublic,
+                detail_description,
+                messageGroup: true,
+                teamId
+              },
+              { transaction }
+            );
           }
 
-          /* conditions are validated, create the message group */
-          channel = await models.Channel.create(
-            {
-              name: channelName,
-              public: isPublic,
-              detail_description,
-              messageGroup: true,
-              teamId
-            },
-            { transaction }
-          );
-        }
+          /*  check if it's private channel */
+          if (!isPublic) {
+            /*  filter out private channel members */
+            const members = membersList.filter(
+              memberId => memberId !== currentUserId
+            );
+            members.push(currentUserId);
+            const ChannelMembers = members.map(memberId => ({
+              userId: memberId,
+              channelId: channel.dataValues.id
+            }));
+            /* create channel member relation for private member */
+            await models.ChannelMember.bulkCreate(ChannelMembers, {
+              transaction
+            });
 
-        /*  check if it's private channel */
-        if (!isPublic) {
-          /*  filter out private channel members */
-          const members = membersList.filter(
-            memberId => memberId !== currentUserId
+            /*  return channel created and private channel members */
+            return { channel, channelMemberList: ChannelMembers };
+          }
+
+          /* create channel member relation for public member */
+          const teamMemberList = await models.sequelize.query(
+            "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+            {
+              replacements: [teamId],
+              model: models.User,
+              raw: true
+            }
           );
-          members.push(currentUserId);
-          const ChannelMembers = members.map(memberId => ({
-            userId: memberId,
+          const channelMemberIdList = teamMemberList.map(m => ({
+            userId: m.id,
             channelId: channel.dataValues.id
           }));
-          /* create channel member relation for private member */
-          await models.ChannelMember.bulkCreate(ChannelMembers, {
+          await models.ChannelMember.bulkCreate(channelMemberIdList, {
             transaction
           });
 
-          /*  return channel created and private channel members */
-          return { channel, channelMemberList: ChannelMembers };
+          /* return channel created and public channel members */
+          return {
+            channel: channel.dataValues,
+            channelMemberList: teamMemberList
+          };
         }
-
-        /* create channel member relation for public member */
-        const teamMemberList = await models.sequelize.query(
-          "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
-          {
-            replacements: [teamId],
-            model: models.User,
-            raw: true
-          }
-        );
-        const channelMemberIdList = teamMemberList.map(m => ({
-          userId: m.id,
-          channelId: channel.dataValues.id
-        }));
-        await models.ChannelMember.bulkCreate(channelMemberIdList, {
-          transaction
-        });
-
-        /* return channel created and public channel members */
-        return {
-          channel: channel.dataValues,
-          channelMemberList: teamMemberList
-        };
-      });
+      );
+      const { channel, channelMemberList } = createChannelResponse;
 
       const channelList = await models.sequelize.query(
         `
@@ -138,9 +141,9 @@ export default {
           status: 200,
           message: ""
         },
-        channelList,
-        channel: response.channel,
-        channelMemberList: response.channelMemberList
+        channel,
+        channelMemberList,
+        channelList
       });
     } catch (err) {
       console.log(err);

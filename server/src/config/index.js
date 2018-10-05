@@ -3,9 +3,7 @@ export default {
   SERVER_URL: process.env.SERVER_URL || "http://localhost",
 
   SESSION_NAME: process.env.SESSION_NAME || "session",
-  SESSION_SECRET:
-    process.env.SESSION_SECRET ||
-    "dsadsadsadsadsasdadsadsasda323114334rfscadsasac",
+  SESSION_SECRET: process.env.SESSION_SECRET || "dsadsadsasecretscadsasac",
 
   REDIS_HOST: process.env.HOST || "localhost",
   REDIS_PORT: process.env.SERVER_PORT || 6379,
