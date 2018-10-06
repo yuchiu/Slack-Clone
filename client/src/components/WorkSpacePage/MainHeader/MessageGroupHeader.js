@@ -9,7 +9,7 @@ class MessageGroupHeader extends React.Component {
 
   render() {
     const {
-      currentChannelMembers,
+      currentChannelMemberList,
       messageGroupMemberList,
       switchToMemberListView,
       switchToUserView,
@@ -21,7 +21,7 @@ class MessageGroupHeader extends React.Component {
           {messageGroupName}
         </h1>
         <div className="main-header__title__sub-header">
-          {currentChannelMembers.length > 2 ? (
+          {currentChannelMemberList.length > 2 ? (
             <React.Fragment>
               <i
                 className="far fa-user main-header__title__sub-header__icon"
@@ -32,7 +32,7 @@ class MessageGroupHeader extends React.Component {
                 onClick={switchToMemberListView}
               >
                 {" "}
-                {currentChannelMembers.length}
+                {currentChannelMemberList.length}
               </span>
             </React.Fragment>
           ) : (
@@ -49,7 +49,7 @@ class MessageGroupHeader extends React.Component {
 }
 
 MessageGroupHeader.propTypes = {
-  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
   messageGroupName: PropTypes.string,
   switchToUserView: PropTypes.func.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,

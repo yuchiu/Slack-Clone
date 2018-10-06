@@ -1,5 +1,4 @@
-import { APIV1 } from "./API";
-import socket from "./socket";
+import { apiV1, socket } from "./API";
 import { messageAction } from "@/actions";
 
 export default {
@@ -15,7 +14,14 @@ export default {
   },
 
   fetchMoreMessage: async currentMessageData => {
-    const response = await APIV1().post(`/messages`, currentMessageData);
+    const response = await apiV1().get(
+      `/messages/${currentMessageData.channelId}`,
+      {
+        params: {
+          offset: currentMessageData.offset
+        }
+      }
+    );
     return response;
   }
 };

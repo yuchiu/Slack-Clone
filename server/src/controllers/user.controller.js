@@ -40,7 +40,60 @@ const generateAvatar = async data => {
 };
 
 export default {
-  register: async (req, res) => {
+  getUser: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const user = await models.user.findOne(
+        {
+          where: {
+            id: userId
+          }
+        },
+        { raw: true }
+      );
+      res.status(200).send({
+        meta: {
+          type: "sucesss",
+          status: 200,
+          message: ""
+        },
+        user
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
+  getAllUsers: async (req, res) => {
+    try {
+      const userList = await models.User.findAll({ raw: true });
+      res.status(200).send({
+        meta: {
+          type: "sucess",
+          status: 200,
+          message: ""
+        },
+        userList: userList.dataValues
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
+
+  createUser: async (req, res) => {
     try {
       const credentials = req.body;
 
@@ -256,7 +309,6 @@ export default {
   tryAutoLogin: async (req, res) => {
     try {
       const currentUserId = req.user.id;
-
       // check if redis has the data
       const userCache = await redisCache.get(`userId:${currentUserId}`);
       const teamListCache = await redisCache.get(`teamList:${currentUserId}`);

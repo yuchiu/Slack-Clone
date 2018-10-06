@@ -94,7 +94,7 @@ class AddChannelModal extends React.Component {
   };
 
   render() {
-    const { open, currentTeamMembers, currentUser } = this.props;
+    const { open, currentTeamMemberList, currentUser } = this.props;
     const {
       channelName,
       isChannelPrivate,
@@ -160,7 +160,7 @@ class AddChannelModal extends React.Component {
                   search
                   selection
                   value={members}
-                  options={currentTeamMembers
+                  options={currentTeamMemberList
                     .filter(member => member.id !== currentUser.id)
                     .map(member => ({
                       key: member.id,
@@ -177,7 +177,7 @@ class AddChannelModal extends React.Component {
             ) : (
               <div style={{ fontSize: "20px" }}>
                 <i className="users icon " />{" "}
-                <span className="">{currentTeamMembers.length} members</span>
+                <span className="">{currentTeamMemberList.length} members</span>
               </div>
             )}
             <br />
@@ -202,7 +202,7 @@ AddChannelModal.propTypes = {
 
   currentTeam: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
 
   fetchCreateChannel: PropTypes.func.isRequired
 };
@@ -210,7 +210,7 @@ AddChannelModal.propTypes = {
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
   currentUser: userSelector.getCurrentUser(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
+  currentTeamMemberList: teamSelector.getCurrentTeamMemberList(state)
 });
 
 const dispatchToProps = dispatch => ({

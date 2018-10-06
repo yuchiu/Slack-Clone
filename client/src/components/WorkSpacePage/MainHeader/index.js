@@ -36,7 +36,7 @@ class MainHeader extends React.Component {
 
   render() {
     const {
-      currentChannelMembers,
+      currentChannelMemberList,
       currentChannel,
       messageGroupName,
       messageGroupMemberList
@@ -46,7 +46,7 @@ class MainHeader extends React.Component {
         {currentChannel.message_group && (
           <MessageGroupHeader
             messageGroupName={messageGroupName}
-            currentChannelMembers={currentChannelMembers}
+            currentChannelMemberList={currentChannelMemberList}
             switchToUserView={this.switchToUserView}
             messageGroupMemberList={messageGroupMemberList}
             switchToMemberListView={this.switchToMemberListView.bind(
@@ -58,7 +58,7 @@ class MainHeader extends React.Component {
         {!currentChannel.message_group && (
           <ChannelHeader
             currentChannel={currentChannel}
-            currentChannelMembers={currentChannelMembers}
+            currentChannelMemberList={currentChannelMemberList}
             switchToMemberListView={this.switchToMemberListView.bind(
               this,
               "channel-members"
@@ -71,7 +71,7 @@ class MainHeader extends React.Component {
 }
 
 MainHeader.propTypes = {
-  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   messageGroupName: PropTypes.string,
   messageGroupMemberList: PropTypes.array.isRequired,
@@ -82,7 +82,7 @@ MainHeader.propTypes = {
 
 const stateToProps = state => ({
   isSidebarOpen: globalStateSelector.getIsSidebarOpen(state),
-  currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
+  currentChannelMemberList: channelSelector.getCurrentChannelMemberList(state),
   currentChannel: channelSelector.getCurrentChannel(state),
   messageGroupName: channelSelector.getMessageGroupName(state),
   messageGroupMemberList: channelSelector.getMessageGroupMemberList(state)

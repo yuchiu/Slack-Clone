@@ -10,7 +10,7 @@ import SubHeaderDivider from "./SubHeaderDivider";
 class ChannelHeader extends React.Component {
   render() {
     const {
-      currentChannelMembers,
+      currentChannelMemberList,
       currentChannel,
       switchToMemberListView
     } = this.props;
@@ -34,7 +34,7 @@ class ChannelHeader extends React.Component {
             onClick={switchToMemberListView}
           >
             {" "}
-            {currentChannelMembers.length}
+            {currentChannelMemberList.length}
             <SubHeaderDivider />
           </span>
           <TopicModal topic={currentChannel.brief_description} />
@@ -45,7 +45,7 @@ class ChannelHeader extends React.Component {
 }
 
 ChannelHeader.propTypes = {
-  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   switchToMemberListView: PropTypes.func.isRequired
 };

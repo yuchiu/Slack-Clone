@@ -2,12 +2,12 @@ import { getIsUserLoggedIn } from "./auth.reducer";
 import { getCurrentUser, getUsername } from "./user.reducer";
 import {
   getCurrentTeam,
-  getCurrentTeamMembers,
+  getCurrentTeamMemberList,
   getTeamList
 } from "./team.reducer";
 import {
   getCurrentChannel,
-  getCurrentChannelMembers,
+  getCurrentChannelMemberList,
   getChannelList,
   getMessageGroupMemberList,
   getMessageGroupList,
@@ -42,13 +42,13 @@ const userSelector = {
 
 const teamSelector = {
   getCurrentTeam: state => getCurrentTeam(state),
-  getCurrentTeamMembers: state => getCurrentTeamMembers(state),
+  getCurrentTeamMemberList: state => getCurrentTeamMemberList(state),
   getTeamList: state => getTeamList(state)
 };
 
 const channelSelector = {
   getCurrentChannel: state => getCurrentChannel(state),
-  getCurrentChannelMembers: state => getCurrentChannelMembers(state),
+  getCurrentChannelMemberList: state => getCurrentChannelMemberList(state),
   getChannelList: state => getChannelList(state),
   getMessageGroupList: state => getMessageGroupList(state),
   getMessageGroupName: state => getMessageGroupName(state),

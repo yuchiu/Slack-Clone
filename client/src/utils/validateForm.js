@@ -93,7 +93,7 @@ export default {
     return clientErrors;
   },
 
-  inviteToTeam: (data, currentTeamMembers) => {
+  inviteToTeam: (data, currentTeamMemberList) => {
     const clientErrors = {};
     const isMember = (formUsername, teamMembers) => {
       const findMember = teamMembers.filter(
@@ -108,7 +108,7 @@ export default {
     if (data.username.length < 1 || data.username.length > 32) {
       clientErrors.username = "Length of username have to be between 1 to 32";
     }
-    if (isMember(data.username, currentTeamMembers)) {
+    if (isMember(data.username, currentTeamMemberList)) {
       clientErrors.username = `${data.username} is already member of the team`;
     }
     if (!/^[a-z0-9]+$/i.test(data.username)) {

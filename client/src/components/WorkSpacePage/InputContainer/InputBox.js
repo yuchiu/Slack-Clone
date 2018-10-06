@@ -61,7 +61,7 @@ class InputBox extends React.Component {
 
 InputBox.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
 
   emitSocketMessage: PropTypes.func.isRequired
@@ -69,7 +69,7 @@ InputBox.propTypes = {
 
 const stateToProps = state => ({
   currentUser: userSelector.getCurrentUser(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  currentTeamMemberList: teamSelector.getCurrentTeamMemberList(state),
   currentChannel: channelSelector.getCurrentChannel(state)
 });
 

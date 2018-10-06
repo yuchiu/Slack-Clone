@@ -24,14 +24,14 @@ class AddMessageGroupModal extends React.Component {
 
   handleChange = (e, { value }) => {
     e.persist();
-    const { currentTeamMembers, currentUser } = this.props;
+    const { currentTeamMemberList, currentUser } = this.props;
     let memberNameList = currentUser.username;
     if (value.length > 0) {
       for (let i = 0; i < value.length; i++) {
-        for (let j = 0; j < currentTeamMembers.length; j++) {
-          if (value[i] === currentTeamMembers[j].id) {
+        for (let j = 0; j < currentTeamMemberList.length; j++) {
+          if (value[i] === currentTeamMemberList[j].id) {
             memberNameList = memberNameList.concat(
-              `, ${currentTeamMembers[j].username}`
+              `, ${currentTeamMemberList[j].username}`
             );
           }
         }
@@ -86,7 +86,7 @@ class AddMessageGroupModal extends React.Component {
   };
 
   render() {
-    const { open, currentUser, currentTeamMembers } = this.props;
+    const { open, currentUser, currentTeamMemberList } = this.props;
     const { members, clientError } = this.state;
 
     return (
@@ -103,7 +103,7 @@ class AddMessageGroupModal extends React.Component {
                 search
                 selection
                 value={members}
-                options={currentTeamMembers
+                options={currentTeamMemberList
                   .filter(member => member.id !== currentUser.id)
                   .map(member => ({
                     key: member.id,
@@ -138,7 +138,7 @@ AddMessageGroupModal.propTypes = {
 
   currentTeam: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
 
   fetchCreateChannel: PropTypes.func.isRequired
 };
@@ -146,7 +146,7 @@ AddMessageGroupModal.propTypes = {
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
   currentUser: userSelector.getCurrentUser(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
+  currentTeamMemberList: teamSelector.getCurrentTeamMemberList(state)
 });
 const dispatchToProps = dispatch => ({
   fetchCreateChannel: channelFormInfo => {

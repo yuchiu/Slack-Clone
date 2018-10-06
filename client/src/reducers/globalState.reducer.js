@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { getCurrentTeamMembers } from "./team.reducer";
+import { getCurrentTeamMemberList } from "./team.reducer";
 import constants from "../constants";
 
 const initialState = {
@@ -60,10 +60,10 @@ const getRightSidebarTitle = createSelector(
 );
 
 const getTargetUser = createSelector(
-  getCurrentTeamMembers,
+  getCurrentTeamMemberList,
   getTargetUserId,
-  (currentTeamMembers, targetUserId) => {
-    const targetUser = currentTeamMembers.filter(
+  (currentTeamMemberList, targetUserId) => {
+    const targetUser = currentTeamMemberList.filter(
       teamMember => teamMember.id === targetUserId
     );
     return targetUser[0];

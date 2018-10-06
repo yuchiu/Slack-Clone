@@ -8,7 +8,7 @@ class TeamDetailView extends React.Component {
   };
 
   render() {
-    const { currentTeam, currentTeamMembers } = this.props;
+    const { currentTeam, currentTeamMemberList } = this.props;
     return (
       <React.Fragment>
         <div className="view-header">
@@ -26,7 +26,7 @@ class TeamDetailView extends React.Component {
               onClick={this.handleClick}
             >
               {" "}
-              {currentTeamMembers.length} Members
+              {currentTeamMemberList.length} Members
             </span>
           </div>
         </div>
@@ -60,7 +60,7 @@ class TeamDetailView extends React.Component {
 
 TeamDetailView.propTypes = {
   currentTeam: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
 };
 

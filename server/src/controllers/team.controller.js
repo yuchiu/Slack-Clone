@@ -4,7 +4,30 @@ import { redisCache } from "./common";
 import models from "../models";
 
 export default {
-  create: async (req, res) => {
+  getAllTeam: async (req, res) => {
+    try {
+      const allTeam = models.Team.findAll({ raw: true });
+
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        allTeam
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
+  createTeam: async (req, res) => {
     try {
       const currentUserId = req.user.id;
       const teamName = req.body.name;
@@ -173,7 +196,7 @@ export default {
       };
     }
   },
-  fetchTeamAssociatedList: async (req, res) => {
+  getTeamData: async (req, res) => {
     try {
       const currentUserId = req.user.id;
       const { teamId } = req.params;

@@ -1,14 +1,13 @@
-import { APIV1 } from "./API";
-import socket from "./socket";
+import { apiV1, socket } from "./API";
 import { teamAction } from "@/actions";
 
 export default {
   fetchCreateTeam: async teamFormInfo => {
-    const response = await APIV1().post(`/teams`, teamFormInfo);
+    const response = await apiV1().post(`/teams`, teamFormInfo);
     return response;
   },
   fetchTeamAssociatedList: async teamId => {
-    const response = await APIV1().get(`/teams/${teamId}`);
+    const response = await apiV1().get(`/teams/${teamId}`);
     return response;
   },
 

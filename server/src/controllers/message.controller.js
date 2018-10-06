@@ -27,6 +27,27 @@ const generateFileName = data => {
 };
 
 export default {
+  getAllMessage: async (req, res) => {
+    try {
+      const allMessage = models.Message.findAll({ raw: true });
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        allMessage
+      });
+    } catch (err) {
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
   createMessage: async data => {
     try {
       const { channelId, userId, text, username, avatarurl, file } = data;
@@ -114,10 +135,11 @@ export default {
       };
     }
   },
-  getMoreMessage: async (req, res) => {
+  getMessage: async (req, res) => {
     try {
       const currentUserId = req.user.id;
-      const { offset, channelId } = req.body;
+      const { channelId } = req.params;
+      const { offset } = req.query;
 
       // check if redis has the data
       const messagelListCache = await redisCache.get(

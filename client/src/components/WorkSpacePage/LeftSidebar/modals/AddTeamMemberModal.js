@@ -23,10 +23,10 @@ class AddTeamMemberModal extends React.Component {
 
   handleSubmit = async () => {
     // validate user's login info on client side
-    const { currentTeamMembers } = this.props;
+    const { currentTeamMemberList } = this.props;
     const clientError = validateForm.inviteToTeam(
       this.state,
-      currentTeamMembers
+      currentTeamMemberList
     );
     this.setState({ clientError });
 
@@ -103,14 +103,14 @@ AddTeamMemberModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 
   currentTeam: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
 
   emitSocketAddTeamMember: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state)
+  currentTeamMemberList: teamSelector.getCurrentTeamMemberList(state)
 });
 
 const dispatchToProps = () => ({

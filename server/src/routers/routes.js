@@ -28,29 +28,34 @@ export default app => {
   apiv1.use("/messages", message);
 
   /* user routes */
-  user.get("/", authenticationPolicy, userController.tryAutoLogin);
-  user.put("/", authenticationPolicy, userController.updateUser);
-  user.get("/logouts", userController.logout);
-  user.post("/registers", registerPolicy, userController.register);
+  user.get("/auths", authenticationPolicy, userController.tryAutoLogin);
+  user.get("/", authenticationPolicy, userController.getUser);
+  user.get("/:userId", authenticationPolicy, userController.getAllUsers);
+  user.put("/:userId", authenticationPolicy, userController.updateUser);
+  user.post("/registers", registerPolicy, userController.createUser);
   user.post("/logins", userController.login);
+  user.get("/logouts", userController.logout);
 
   /* teams routes */
-  team.post("/", authenticationPolicy, teamController.create);
-  team.get(
-    "/:teamId",
-    authenticationPolicy,
-    teamController.fetchTeamAssociatedList
-  );
+  team.get("/", authenticationPolicy, teamController.getAllTeam);
+  team.get("/:teamId", authenticationPolicy, teamController.getTeamData);
+  team.post("/", authenticationPolicy, teamController.createTeam);
 
   /* channels routes */
-  channel.post("/", authenticationPolicy, channelController.create);
-  channel.put("/", authenticationPolicy, channelController.updateChannel);
+  channel.get(authenticationPolicy, channelController.getAllChannel);
   channel.get(
     "/:channelId",
     authenticationPolicy,
-    channelController.getChannelAssociatedList
+    channelController.getChannelData
   );
+  channel.post("/", authenticationPolicy, channelController.createChannel);
+  channel.put("/", authenticationPolicy, channelController.updateChannel);
 
   /* messages routes */
-  message.post("/", authenticationPolicy, messageController.getMoreMessage);
+  message.get(authenticationPolicy, messageController.getAllMessage);
+  message.get(
+    "/:channelId",
+    authenticationPolicy,
+    messageController.getMessage
+  );
 };

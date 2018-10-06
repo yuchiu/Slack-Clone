@@ -29,10 +29,10 @@ class SidebarContainer extends React.Component {
       /* states */
       currentChannel,
       messageGroupMemberList,
-      currentChannelMembers,
+      currentChannelMemberList,
       currentTeam,
       rightSidebarView,
-      currentTeamMembers,
+      currentTeamMemberList,
       currentUser,
       targetUser,
       messageGroupList,
@@ -62,14 +62,14 @@ class SidebarContainer extends React.Component {
         {rightSidebarView === "channel" && (
           <ChannelDetailView
             currentChannel={currentChannel}
-            currentChannelMembers={currentChannelMembers}
+            currentChannelMemberList={currentChannelMemberList}
             switchRightSidebarView={switchRightSidebarView}
           />
         )}
         {rightSidebarView === "team" && (
           <TeamDetailView
             currentTeam={currentTeam}
-            currentTeamMembers={currentTeamMembers}
+            currentTeamMemberList={currentTeamMemberList}
             switchRightSidebarView={switchRightSidebarView}
           />
         )}
@@ -83,7 +83,7 @@ class SidebarContainer extends React.Component {
         )}
         {rightSidebarView === "channel-members" && (
           <MemberListView
-            memeberList={currentChannelMembers}
+            memeberList={currentChannelMemberList}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
             switchRightSidebarView={switchRightSidebarView}
@@ -91,7 +91,7 @@ class SidebarContainer extends React.Component {
         )}
         {rightSidebarView === "team-members" && (
           <MemberListView
-            memeberList={currentTeamMembers}
+            memeberList={currentTeamMemberList}
             switchTargetUser={switchTargetUser}
             currentUser={currentUser}
             switchRightSidebarView={switchRightSidebarView}
@@ -107,10 +107,10 @@ SidebarContainer.propTypes = {
   targetUser: PropTypes.object,
   currentChannel: PropTypes.object.isRequired,
   messageGroupMemberList: PropTypes.array,
-  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
   messageGroupList: PropTypes.array.isRequired,
   currentTeam: PropTypes.object.isRequired,
-  currentTeamMembers: PropTypes.array.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
   currentUser: PropTypes.object.isRequired,
 
   switchRightSidebarView: PropTypes.func.isRequired,
@@ -127,12 +127,12 @@ const stateToProps = state => ({
   /* channel selector */
   currentChannel: channelSelector.getCurrentChannel(state),
   messageGroupMemberList: channelSelector.getMessageGroupMemberList(state),
-  currentChannelMembers: channelSelector.getCurrentChannelMembers(state),
+  currentChannelMemberList: channelSelector.getCurrentChannelMemberList(state),
   messageGroupList: channelSelector.getMessageGroupList(state),
 
   /* team selector */
   currentTeam: teamSelector.getCurrentTeam(state),
-  currentTeamMembers: teamSelector.getCurrentTeamMembers(state),
+  currentTeamMemberList: teamSelector.getCurrentTeamMemberList(state),
 
   /* user selector */
   currentUser: userSelector.getCurrentUser(state)

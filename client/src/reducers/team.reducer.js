@@ -6,7 +6,7 @@ import { sessionStore } from "@/utils";
 const initialState = {
   teamList: [],
   currentTeam: {},
-  currentTeamMembers: []
+  currentTeamMemberList: []
 };
 const getCurrentTeamFromParams = (teamList, currentTeam, teamIdFromParams) => {
   /* return default current team if params is empty */
@@ -62,11 +62,11 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.TEAM_ASSOCIATED_LIST_FETCH:
-      newState.currentTeamMembers = action.payload.teamMemberList;
+      newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
     case constants.TEAM_NEW_MEMBER_RECEIVE_SOCKET:
-      newState.currentTeamMembers = action.payload.teamMemberList;
+      newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
     case constants.USER_LOGOUT_FETCH:
@@ -81,7 +81,8 @@ export default (state = initialState, action) => {
 /* state selectors */
 const getCurrentTeam = state => state.teamReducer.currentTeam;
 
-const getCurrentTeamMembers = state => state.teamReducer.currentTeamMembers;
+const getCurrentTeamMemberList = state =>
+  state.teamReducer.currentTeamMemberList;
 
 const getStateTeamList = state => state.teamReducer.teamList;
 
@@ -98,4 +99,4 @@ const getTeamList = createSelector(getStateTeamList, teamList =>
   })
 );
 
-export { getCurrentTeam, getCurrentTeamMembers, getTeamList };
+export { getCurrentTeam, getCurrentTeamMemberList, getTeamList };

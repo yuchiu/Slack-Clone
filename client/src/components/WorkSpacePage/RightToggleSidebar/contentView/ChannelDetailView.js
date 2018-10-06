@@ -11,7 +11,7 @@ class ChannelDetailView extends React.Component {
   };
 
   render() {
-    const { currentChannel, currentChannelMembers } = this.props;
+    const { currentChannel, currentChannelMemberList } = this.props;
     return (
       <React.Fragment>
         <div className="view-header">
@@ -29,7 +29,7 @@ class ChannelDetailView extends React.Component {
               onClick={this.handleClick}
             >
               {" "}
-              {currentChannelMembers.length} Members
+              {currentChannelMemberList.length} Members
             </span>
           </div>
         </div>
@@ -59,7 +59,7 @@ class ChannelDetailView extends React.Component {
 
 ChannelDetailView.propTypes = {
   currentChannel: PropTypes.object.isRequired,
-  currentChannelMembers: PropTypes.array.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
