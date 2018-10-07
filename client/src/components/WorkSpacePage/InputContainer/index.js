@@ -5,7 +5,7 @@ import "./index.scss";
 import FileUpload from "./FileUpload";
 import InputBox from "./InputBox";
 
-class InputContainer extends React.Component {
+class InputContainer extends React.PureComponent {
   render() {
     return (
       <div className="input-container">

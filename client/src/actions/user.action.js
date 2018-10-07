@@ -6,7 +6,7 @@ export default {
     const response = await userService.fetchAutoAuth();
     const { data } = response;
     dispatch({
-      type: constants.USER_AUTO_LOGIN_FETCH,
+      type: constants.USER_FETCH_AUTO_LOGIN,
       payload: data
     });
   },
@@ -16,7 +16,7 @@ export default {
       const response = await userService.fetchEditUser(editUserdata);
       const { data } = response;
       dispatch({
-        type: constants.USER_EDIT_FETCH,
+        type: constants.USER_FETCH_EDIT,
         payload: data
       });
     } catch (err) {
@@ -33,7 +33,7 @@ export default {
       const response = await userService.fetchRegisterUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_LOGIN_FETCH,
+        type: constants.USER_FETCH_LOGIN,
         payload: data
       });
     } catch (err) {
@@ -50,7 +50,7 @@ export default {
       const response = await userService.fetchLoginUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_LOGIN_FETCH,
+        type: constants.USER_FETCH_LOGIN,
         payload: data
       });
     } catch (err) {
@@ -66,7 +66,7 @@ export default {
     try {
       await userService.fetchLogoutUser();
       dispatch({
-        type: constants.USER_LOGOUT_FETCH
+        type: constants.USER_FETCH_LOGOUT
       });
     } catch (err) {
       const { data } = err.response;

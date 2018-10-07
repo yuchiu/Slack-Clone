@@ -13,7 +13,7 @@ import {
   teamSelector
 } from "@/reducers/selectors";
 
-class TopicModal extends React.Component {
+class TopicModal extends React.PureComponent {
   state = {
     clientError: {},
     text: ""

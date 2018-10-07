@@ -9,7 +9,7 @@ import MessageGroupHeader from "./MessageGroupHeader";
 import { globalStateAction } from "@/actions";
 import { channelSelector, globalStateSelector } from "@/reducers/selectors";
 
-class MainHeader extends React.Component {
+class MainHeader extends React.PureComponent {
   switchToMemberListView = selectedView => {
     const {
       toggleRightSidebar,

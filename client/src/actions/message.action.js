@@ -18,7 +18,7 @@ export default {
       const newData = { ...data };
       newData.currentChannel = currentChannel;
       dispatch({
-        type: constants.MESSAGE_RECEIVE_SOCKET,
+        type: constants.MESSAGE_SOCKET_RECEIVE,
         payload: newData
       });
     } else {
@@ -36,7 +36,7 @@ export default {
       );
       const { data } = response;
       dispatch({
-        type: constants.MESSAGE_MORE_FETCH,
+        type: constants.MESSAGE_FETCH_MORE,
         payload: data
       });
     } catch (err) {

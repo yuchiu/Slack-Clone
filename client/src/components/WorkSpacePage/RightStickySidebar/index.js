@@ -8,7 +8,7 @@ import { globalStateAction, teamAction } from "@/actions";
 import { teamSelector } from "@/reducers/selectors";
 import TeamList from "./TeamList";
 
-class RightStickySidebar extends React.Component {
+class RightStickySidebar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.toggleRightSidebar = this.toggleRightSidebar.bind(this);

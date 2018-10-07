@@ -7,7 +7,7 @@ export default {
       const response = await channelService.fetchCreateChannel(channelFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_CREATE_FETCH,
+        type: constants.CHANNEL_FETCH_CREATE,
         payload: data
       });
     } catch (err) {
@@ -31,7 +31,7 @@ export default {
       );
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_ASSOCIATED_LIST_FETCH,
+        type: constants.CHANNEL_FETCH_ASSOCIATED_LIST,
         payload: data
       });
     } catch (err) {
@@ -47,7 +47,7 @@ export default {
       const response = await channelService.fetchEditChannel(editChannelData);
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_EDIT_FETCH,
+        type: constants.CHANNEL_FETCH_EDIT,
         payload: data
       });
     } catch (err) {
@@ -60,7 +60,7 @@ export default {
   },
   getCurrentChannel: params => async dispatch => {
     dispatch({
-      type: constants.CHANNEL_CURRENT_GET,
+      type: constants.CHANNEL_GET_CURRENT,
       payload: params
     });
   }

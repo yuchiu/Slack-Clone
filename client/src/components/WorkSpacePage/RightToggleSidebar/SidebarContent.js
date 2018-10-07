@@ -18,7 +18,7 @@ import {
   UserProfileView
 } from "./contentView";
 
-class SidebarContainer extends React.Component {
+class SidebarContainer extends React.PureComponent {
   toggleRightSidebar = () => {
     const { toggleRightSidebar } = this.props;
     toggleRightSidebar();

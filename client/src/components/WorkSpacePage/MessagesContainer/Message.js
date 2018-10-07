@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { TextType, ImageType, AudioType } from "./filetypes";
 
-class Message extends React.Component {
+class Message extends React.PureComponent {
   handleClick = targetUserId => {
     const { message, switchRightSidebarView, switchTargetUser } = this.props;
     if (message.isCurrentUser) {

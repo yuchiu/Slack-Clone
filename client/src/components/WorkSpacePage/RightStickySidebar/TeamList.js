@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-class TeamList extends React.Component {
+class TeamList extends React.PureComponent {
   handleClick = teamId => {
     const { switchTeam, fetchTeamAssociatedList } = this.props;
     switchTeam(teamId);

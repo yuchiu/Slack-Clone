@@ -11,12 +11,12 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.CHANNEL_ASSOCIATED_LIST_FETCH:
+    case constants.CHANNEL_FETCH_ASSOCIATED_LIST:
       newState.messageList = action.payload.messageList;
 
       return newState;
 
-    case constants.MESSAGE_RECEIVE_SOCKET:
+    case constants.MESSAGE_SOCKET_RECEIVE:
       if (
         action.payload.message.channelId === action.payload.currentChannel.id
       ) {
@@ -24,11 +24,11 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.SOCKET_CONNECTION_CLEAR:
+    case constants.GLOBAL_SOCKET_CONNECTION_CLEAR:
       newState.messageList = [];
       return newState;
 
-    case constants.MESSAGE_MORE_FETCH:
+    case constants.MESSAGE_FETCH_MORE:
       newState.messageList = action.payload.messageList.concat(
         state.messageList
       );
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.USER_LOGOUT_FETCH:
+    case constants.USER_FETCH_LOGOUT:
       return initialState;
 
     default:

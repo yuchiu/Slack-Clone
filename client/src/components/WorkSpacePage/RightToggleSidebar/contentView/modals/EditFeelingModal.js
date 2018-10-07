@@ -7,7 +7,7 @@ import { InlineError } from "@/components/common";
 import { userAction } from "@/actions";
 import { validateForm } from "@/utils";
 
-class EditFeelingModal extends React.Component {
+class EditFeelingModal extends React.PureComponent {
   state = {
     clientError: {},
     text: "",

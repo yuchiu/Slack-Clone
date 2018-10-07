@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
-class MessageGroupList extends React.Component {
+class MessageGroupList extends React.PureComponent {
   handleSwitchChannel = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);

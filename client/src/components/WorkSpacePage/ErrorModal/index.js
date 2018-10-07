@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-class PopUpModal extends React.Component {
+class PopUpModal extends React.PureComponent {
   state = {
     displayError: false
   };

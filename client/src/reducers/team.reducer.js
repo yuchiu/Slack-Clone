@@ -23,7 +23,7 @@ const getCurrentTeamFromParams = (teamList, currentTeam, teamIdFromParams) => {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.USER_AUTO_LOGIN_FETCH:
+    case constants.USER_FETCH_AUTO_LOGIN:
       if (action.payload.teamList && action.payload.teamList.length > 0) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.USER_LOGIN_FETCH:
+    case constants.USER_FETCH_LOGIN:
       if (action.payload.teamList && action.payload.teamList.length > 0) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.TEAM_CREATE_FETCH:
+    case constants.TEAM_FETCH_CREATE:
       newState.teamList = action.payload.teamList;
       newState.currentTeam = action.payload.team;
       sessionStore.setTeamId(newState.currentTeam.id);
@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
-    case constants.TEAM_CURRENT_GET:
+    case constants.TEAM_GET_CURRENT:
       newState.currentTeam = getCurrentTeamFromParams(
         state.teamList,
         state.currentTeam,
@@ -61,15 +61,15 @@ export default (state = initialState, action) => {
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
-    case constants.TEAM_ASSOCIATED_LIST_FETCH:
+    case constants.TEAM_FETCH_ASSOCIATED_LIST:
       newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
-    case constants.TEAM_NEW_MEMBER_RECEIVE_SOCKET:
+    case constants.TEAM_SOCKET_RECEIVE_NEW_MEMBER:
       newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
-    case constants.USER_LOGOUT_FETCH:
+    case constants.USER_FETCH_LOGOUT:
       sessionStore.removeTeamId();
       return initialState;
 

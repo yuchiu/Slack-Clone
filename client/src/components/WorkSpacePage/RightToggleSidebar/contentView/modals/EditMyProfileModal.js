@@ -8,7 +8,7 @@ import { userAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
 import { InlineError } from "@/components/common";
 
-class EditMyProfileModal extends React.Component {
+class EditMyProfileModal extends React.PureComponent {
   state = {
     password: "",
     newPassword: "",

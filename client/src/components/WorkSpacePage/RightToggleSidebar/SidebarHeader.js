@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { globalStateAction } from "@/actions";
 import { globalStateSelector } from "@/reducers/selectors";
 
-class SidebarHeader extends React.Component {
+class SidebarHeader extends React.PureComponent {
   handleClick = () => {
     const { switchRightSidebarView } = this.props;
     switchRightSidebarView("my-profile");

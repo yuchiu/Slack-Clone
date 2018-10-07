@@ -8,7 +8,7 @@ import { validateForm } from "@/utils";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import { channelAction } from "@/actions";
 
-class EditChannelPurposeModal extends React.Component {
+class EditChannelPurposeModal extends React.PureComponent {
   state = {
     text: "",
     clientError: {},

@@ -10,7 +10,7 @@ import {
   AddTeamMemberModal
 } from "./modals";
 
-class LeftSidebar extends React.Component {
+class LeftSidebar extends React.PureComponent {
   state = {
     openAddChannelModal: false,
     openAddTeamMemberModal: false,

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { userAction } from "@/actions";
 
-class SidebarFooter extends React.Component {
+class SidebarFooter extends React.PureComponent {
   handleClick = () => {
     const { history, fetchLogoutUser } = this.props;
     fetchLogoutUser();

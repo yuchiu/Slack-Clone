@@ -10,7 +10,7 @@ import { channelAction, globalStateAction } from "@/actions";
 
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 
-class SidebarList extends React.Component {
+class SidebarList extends React.PureComponent {
   render() {
     const {
       toggleAddMessageGroupModal,

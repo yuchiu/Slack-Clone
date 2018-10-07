@@ -7,19 +7,19 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.USER_AUTO_LOGIN_FETCH:
+    case constants.USER_FETCH_AUTO_LOGIN:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_LOGIN_FETCH:
+    case constants.USER_FETCH_LOGIN:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_EDIT_FETCH:
+    case constants.USER_FETCH_EDIT:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_LOGOUT_FETCH:
+    case constants.USER_FETCH_LOGOUT:
       return initialState;
 
     default:

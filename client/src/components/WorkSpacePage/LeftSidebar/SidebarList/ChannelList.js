@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { PublicOrPrivateTag } from "@/components/WorkSpacePage/common";
 
-class ChannelList extends React.Component {
+class ChannelList extends React.PureComponent {
   handleClick = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);

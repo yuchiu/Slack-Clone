@@ -28,20 +28,20 @@ const getCurrentChannelFromParams = (
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.TEAM_ASSOCIATED_LIST_FETCH:
+    case constants.TEAM_FETCH_ASSOCIATED_LIST:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channelList[0];
 
       return newState;
 
-    case constants.CHANNEL_CREATE_FETCH:
+    case constants.CHANNEL_FETCH_CREATE:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channel;
       newState.currentChannelMemberList = action.payload.channelMemberList;
 
       return newState;
 
-    case constants.CHANNEL_EDIT_FETCH:
+    case constants.CHANNEL_FETCH_EDIT:
       newState.channelList = action.payload.channelList;
       newState.currentChannel = action.payload.channel;
 
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
       );
       return newState;
 
-    case constants.CHANNEL_CURRENT_GET:
+    case constants.CHANNEL_GET_CURRENT:
       newState.currentChannel = getCurrentChannelFromParams(
         state.channelList,
         state.currentChannel,
@@ -61,11 +61,11 @@ export default (state = initialState, action) => {
       );
       return newState;
 
-    case constants.CHANNEL_ASSOCIATED_LIST_FETCH:
+    case constants.CHANNEL_FETCH_ASSOCIATED_LIST:
       newState.currentChannelMemberList = action.payload.channelMemberList;
       return newState;
 
-    case constants.USER_LOGOUT_FETCH:
+    case constants.USER_FETCH_LOGOUT:
       return initialState;
 
     default:
@@ -76,7 +76,7 @@ export default (state = initialState, action) => {
 
 const trimExtraChar = data => {
   if (data.length > 32) {
-    data.slice(0, 31).concat("...");
+    data.slice(0, 28).concat("...");
     return data;
   }
   return data;
@@ -145,7 +145,7 @@ const getMessageGroupList = createSelector(
     messageGroupList
       .filter(channel => channel.message_group === true)
       .map(messageGroup => {
-        if (messageGroup.name.length) {
+        if (messageGroup.name) {
           // filter out current username from the group name
           const newMessageGroup = { ...messageGroup };
           newMessageGroup.name = filterOutCurrentUsername(

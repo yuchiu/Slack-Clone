@@ -48,7 +48,7 @@ class FileUpload extends React.Component {
   };
 
   render() {
-    const { disableClick, cssClass, children } = this.props;
+    const { disableClick, cssClass } = this.props;
     return (
       <Dropzone
         className={`ignore ${cssClass}`}

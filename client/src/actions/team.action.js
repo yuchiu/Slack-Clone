@@ -7,7 +7,7 @@ export default {
       const response = await teamService.fetchCreateTeam(teamFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.TEAM_CREATE_FETCH,
+        type: constants.TEAM_FETCH_CREATE,
         payload: data
       });
     } catch (err) {
@@ -27,7 +27,7 @@ export default {
   },
   getCurrentTeam: params => async dispatch => {
     dispatch({
-      type: constants.TEAM_CURRENT_GET,
+      type: constants.TEAM_GET_CURRENT,
       payload: params
     });
   },
@@ -37,7 +37,7 @@ export default {
       const response = await teamService.fetchTeamAssociatedList(teamId);
       const { data } = response;
       dispatch({
-        type: constants.TEAM_ASSOCIATED_LIST_FETCH,
+        type: constants.TEAM_FETCH_ASSOCIATED_LIST,
         payload: data
       });
     } catch (err) {
@@ -60,7 +60,7 @@ export default {
   dispatchReceivedTeamMemberl: data => dispatch => {
     if (data.meta.type === "success") {
       dispatch({
-        type: constants.TEAM_NEW_MEMBER_RECEIVE_SOCKET,
+        type: constants.TEAM_SOCKET_RECEIVE_NEW_MEMBER,
         payload: data
       });
     } else {
