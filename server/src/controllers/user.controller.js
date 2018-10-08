@@ -44,9 +44,12 @@ const saveBase64Img = async avatarBase64Img => {
 };
 
 const removePreviousImg = avatarurl => {
-  fse.remove(avatarurl, err => {
+  const urlBeginIndex = avatarurl.indexOf("/assets/");
+  const localUrl = avatarurl.slice(urlBeginIndex);
+
+  fse.remove(`.${localUrl}`, err => {
     if (err) throw err;
-    console.log(`${avatarurl} was deleted`);
+    console.log(`${localUrl} was deleted`);
   });
 };
 
@@ -424,6 +427,17 @@ export default {
           { raw: true }
         );
         removePreviousImg(user.avatarurl);
+        await models.sequelize.query(
+          `UPDATE messages 
+          SET avatarurl=:newurl 
+          WHERE messages.user_id=:userId
+          RETURNING *`,
+          {
+            replacements: { userId: currentUserId, newurl: avatarurl },
+            model: models.Channel,
+            raw: true
+          }
+        );
       }
       // remove stale data from cache
       redisCache.delete(`userId:${currentUserId}`);
