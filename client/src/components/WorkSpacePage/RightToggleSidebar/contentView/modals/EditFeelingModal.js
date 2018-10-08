@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import { InlineError } from "@/components/common";
 
+import { InlineError, InlineHint } from "@/components/common";
 import { userAction } from "@/actions";
 import { validateForm } from "@/utils";
 
@@ -89,7 +89,7 @@ class EditFeelingModal extends React.PureComponent {
                   {clientError.text ? (
                     <InlineError text={clientError.text} />
                   ) : (
-                    <span className="inline-hint">max characters: 32</span>
+                    <InlineHint text={"max characters: 32"} />
                   )}
                 </Form.Field>
                 <Form.Group widths="equal">

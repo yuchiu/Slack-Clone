@@ -9,7 +9,7 @@ import "./EditMyProfileModal.scss";
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
-import { InlineError } from "@/components/common";
+import { InlineError, InlineHint } from "@/components/common";
 
 class EditMyProfileModal extends React.PureComponent {
   state = {
@@ -204,20 +204,27 @@ class EditMyProfileModal extends React.PureComponent {
                     {changeAvatar ? (
                       <React.Fragment>
                         {!isImgUploaded ? (
-                          <Dropzone
-                            className="modal-avatar__dropzone-section"
-                            onDrop={this.uploadeFile.bind(this)}
-                          >
-                            <img
-                              src={currentUser.avatarurl}
-                              className="modal-avatar__dropzone-section__img"
-                              alt="user-profile-pic"
+                          <React.Fragment>
+                            <Dropzone
+                              className="modal-avatar__dropzone-section"
+                              onDrop={this.uploadeFile.bind(this)}
+                            >
+                              <img
+                                src={currentUser.avatarurl}
+                                className="modal-avatar__dropzone-section__img"
+                                alt="user-profile-pic"
+                              />
+                              <p className="modal-avatar__dropzone-section__hint">
+                                Click or Drag <br />
+                                to upload image.
+                              </p>
+                            </Dropzone>
+                            <InlineHint
+                              text={
+                                "Avatar image resolution are 400 x 400 pixels"
+                              }
                             />
-                            <p className="modal-avatar__dropzone-section__hint">
-                              Click or Drag <br />
-                              to upload image.
-                            </p>
-                          </Dropzone>
+                          </React.Fragment>
                         ) : (
                           <div className="modal-avatar__editor">
                             <AvatarEditor

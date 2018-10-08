@@ -171,7 +171,6 @@ export default {
         },
         { raw: true }
       );
-      console.log(messageList);
 
       return res.status(200).send({
         meta: {

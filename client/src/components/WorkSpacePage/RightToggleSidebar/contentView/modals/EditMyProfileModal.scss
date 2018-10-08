@@ -15,7 +15,6 @@
 }
 
 .modal-avatar {
-  display: flex;
   margin-top: 10px;
   height: 420px;
   &__img {
@@ -44,7 +43,7 @@
       text-align: center;
       margin: auto;
       margin-top: 150px;
-      text-shadow: 0px 1px 5px $superlightgrey;
+      text-shadow: 0px 1px 5px $darkgrey;
     }
   }
   &__editor {

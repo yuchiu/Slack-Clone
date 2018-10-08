@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import { InlineError } from "@/components/common";
 
 import "./index.scss";
+import { InlineHint, InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
 import { globalStateAction, channelAction } from "@/actions";
 import {
@@ -98,7 +98,7 @@ class TopicModal extends React.PureComponent {
                   {clientError.text ? (
                     <InlineError text={clientError.text} />
                   ) : (
-                    <span className="inline-hint">max characters: 128</span>
+                    <InlineHint text={"max characters: 128"} />
                   )}
                 </Form.Field>
 

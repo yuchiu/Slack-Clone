@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import { InlineError } from "@/components/common";
 
+import { InlineHint, InlineError } from "@/components/common";
 import { validateForm } from "@/utils";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import { channelAction } from "@/actions";
@@ -92,7 +92,7 @@ class EditChannelPurposeModal extends React.PureComponent {
                   {clientError.text ? (
                     <InlineError text={clientError.text} />
                   ) : (
-                    <span className="inline-hint">max characters: 256</span>
+                    <InlineHint text={"max characters: 256"} />
                   )}
                 </Form.Field>
                 <Form.Group widths="equal">

@@ -21,6 +21,7 @@
   }
   &__header {
     &__top {
+      user-select: none;
       padding: 15px 0px 10px $paddingLeft;
       &:hover {
         background: $darkpurple;
@@ -34,6 +35,7 @@
         margin-bottom: 5px;
       }
     }
+    user-select: none;
     &__bottom {
       padding: 15px 0px 10px $paddingLeft;
       display: flex;
