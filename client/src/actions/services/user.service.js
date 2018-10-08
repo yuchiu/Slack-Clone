@@ -2,7 +2,10 @@ import { apiV1 } from "./API";
 
 export default {
   fetchEditUser: async editUserdata => {
-    const response = await apiV1().put(`/users`, editUserdata);
+    const response = await apiV1().put(
+      `/users/${editUserdata.currentUserId}`,
+      editUserdata
+    );
     return response;
   },
   fetchAutoAuth: async () => {

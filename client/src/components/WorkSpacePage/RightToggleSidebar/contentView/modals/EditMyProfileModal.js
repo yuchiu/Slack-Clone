@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import Dropzone from "react-dropzone";
+import AvatarEditor from "react-avatar-editor";
 
+import "./EditMyProfileModal.scss";
 import { validateForm } from "@/utils";
 import { userAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
@@ -16,12 +19,20 @@ class EditMyProfileModal extends React.PureComponent {
     feeling: "",
     about: "",
     imgFile: {},
+
     clientError: {},
     isModalOpen: false,
-    isEditPasswordOn: false
+    isEditPasswordOn: false,
+    changeAvatar: false,
+    imgScale: 1.67,
+    isImgUploaded: false
   };
 
   componentWillUnmount() {
+    this.resetState();
+  }
+
+  resetState = () => {
     this.setState({
       password: "",
       newPassword: "",
@@ -29,11 +40,15 @@ class EditMyProfileModal extends React.PureComponent {
       feeling: "",
       about: "",
       imgFile: {},
+
       clientError: {},
       isModalOpen: false,
-      isEditPasswordOn: false
+      isEditPasswordOn: false,
+      changeAvatar: false,
+      imgScale: 1.67,
+      isImgUploaded: false
     });
-  }
+  };
 
   toggleModalOpen = () => {
     const { isModalOpen } = this.state;
@@ -54,17 +69,7 @@ class EditMyProfileModal extends React.PureComponent {
   };
 
   handleClose = e => {
-    this.setState({
-      password: "",
-      newPassword: "",
-      confirmPassword: "",
-      feeling: "",
-      about: "",
-      imgFile: {},
-      clientError: {},
-      isModalOpen: false,
-      isEditPasswordOn: false
-    });
+    this.resetState();
     this.toggleModalOpen();
   };
 
@@ -75,14 +80,32 @@ class EditMyProfileModal extends React.PureComponent {
     });
   };
 
+  uploadeFile(files) {
+    this.setState({ isImgUploaded: true });
+    this.setState({
+      imgFile: files[0]
+    });
+  }
+
   handleSave = () => {
     const { password, newPassword, feeling, about } = this.state;
-    const { fetchEditUser } = this.props;
+    const { fetchEditUser, currentUser } = this.props;
     const clientError = validateForm.editProfile(this.state);
     this.setState({ clientError });
-
-    // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
+      if (this.editor) {
+        const canvasScaled = this.editor.getImageScaledToCanvas();
+        const base64PngImg = canvasScaled.toDataURL("image/png");
+        fetchEditUser({
+          currentUserId: currentUser.id,
+          imgFile: base64PngImg,
+          brief_description: feeling,
+          detail_description: about,
+          password,
+          newPassword
+        });
+      }
+
       fetchEditUser({
         brief_description: feeling,
         detail_description: about,
@@ -93,6 +116,39 @@ class EditMyProfileModal extends React.PureComponent {
     }
   };
 
+  toggleChangeAvatar = () => {
+    this.setState({
+      imgFile: {},
+      changeAvatar: !this.state.changeAvatar,
+      isImgUploaded: false
+    });
+  };
+
+  changeImgScale = e => {
+    const sliderRange = e.target.value;
+    if (sliderRange / 30 > 1) {
+      const imgScale = sliderRange / 30;
+      this.setState({
+        imgScale
+      });
+    }
+    if (sliderRange / 30 < 1) {
+      this.setState({
+        imgScale: 1
+      });
+    }
+  };
+
+  removeUploadImg = () => {
+    this.setState({
+      imgFile: {},
+      isImgUploaded: false
+    });
+  };
+
+  // eslint-disable-next-line
+  setEditorRef = editor => (this.editor = editor);
+
   render() {
     const {
       password,
@@ -100,21 +156,100 @@ class EditMyProfileModal extends React.PureComponent {
       feeling,
       about,
       newPassword,
+      imgFile,
       isModalOpen,
+      imgScale,
       isEditPasswordOn,
-      clientError
+      clientError,
+      changeAvatar,
+      isImgUploaded
     } = this.state;
     const { currentUser } = this.props;
     return (
       <React.Fragment>
         {isModalOpen && (
-          <Modal size="small" open={isModalOpen} onClose={this.toggleModalOpen}>
-            <Modal.Header>
-              <span>Edit Profile</span>
-            </Modal.Header>
-
+          <Modal size="large" open={isModalOpen} onClose={this.toggleModalOpen}>
             <Modal.Content>
               <Form>
+                <Form.Field>
+                  <label>
+                    User Avatar
+                    {changeAvatar ? (
+                      <span
+                        className="edit-toggle-button edit-toggle-button--avatar"
+                        onClick={this.toggleChangeAvatar}
+                      >
+                        Cancel New Avatar
+                      </span>
+                    ) : (
+                      <span
+                        className="edit-toggle-button edit-toggle-button--avatar"
+                        onClick={this.toggleChangeAvatar}
+                      >
+                        Upload New Avatar
+                      </span>
+                    )}
+                  </label>
+                  <div className="modal-avatar">
+                    {changeAvatar ? (
+                      <React.Fragment>
+                        {!isImgUploaded ? (
+                          <Dropzone
+                            className="modal-avatar__dropzone-section"
+                            onDrop={this.uploadeFile.bind(this)}
+                          >
+                            <img
+                              src={currentUser.avatarurl}
+                              className="modal-avatar__dropzone-section__img"
+                              alt="user-profile-pic"
+                            />
+                            <p className="modal-avatar__dropzone-section__hint">
+                              Click or Drag <br />
+                              to upload image.
+                            </p>
+                          </Dropzone>
+                        ) : (
+                          <div className="modal-avatar__editor">
+                            <AvatarEditor
+                              ref={this.setEditorRef}
+                              image={imgFile.preview}
+                              width={400}
+                              height={400}
+                              border={0}
+                              color={[255, 255, 255, 0.6]} // RGBA
+                              scale={imgScale}
+                              rotate={0}
+                            />
+                            <div className="modal-avatar__editor__control">
+                              <div
+                                className="modal-avatar__editor__control__range-slider"
+                                onChange={this.changeImgScale}
+                              >
+                                <label>Zoom:</label>
+                                <input type="range" />
+                              </div>{" "}
+                              <div className="modal-avatar__editor__control__remove">
+                                <i
+                                  className="fa-times fa"
+                                  onClick={this.removeUploadImg}
+                                />
+                                <span onClick={this.removeUploadImg}>
+                                  Remove
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ) : (
+                      <img
+                        src={currentUser.avatarurl}
+                        className="modal-avatar__img"
+                        alt="user-profile-pic"
+                      />
+                    )}
+                  </div>
+                </Form.Field>
                 <Form.Field>
                   <label>Feeling:</label>
                   {currentUser.brief_description ? (
@@ -163,7 +298,7 @@ class EditMyProfileModal extends React.PureComponent {
                 {!isEditPasswordOn ? (
                   <React.Fragment>
                     <label
-                      className="edit-password-toggle"
+                      className="edit-toggle-button"
                       onClick={this.toggleEditPassword}
                     >
                       Edit Password
@@ -174,7 +309,7 @@ class EditMyProfileModal extends React.PureComponent {
                 ) : (
                   <React.Fragment>
                     <label
-                      className="edit-password-toggle"
+                      className="edit-toggle-button"
                       onClick={this.toggleEditPassword}
                     >
                       Hide Edit Password

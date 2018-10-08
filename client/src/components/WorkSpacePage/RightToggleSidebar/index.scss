@@ -16,7 +16,7 @@
 
 /* right toggle sidebar layout */
 .ui.sidebar {
-  width: 450px !important;
+  width: 430px !important;
 }
 
 .right-toggle-sidebar {
@@ -75,9 +75,10 @@
 }
 
 .view-pic {
-  padding: 13px;
+  padding: 10px;
+  text-align: center;
   &__img {
-    width: 420px;
+    width: 400px;
   }
 }
 .view-header {
@@ -174,14 +175,6 @@
     cursor: pointer;
   }
 }
-
-.edit-password-toggle {
-  color: $darkgrey;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .inline-hint {
   color: $lightgrey;
 }

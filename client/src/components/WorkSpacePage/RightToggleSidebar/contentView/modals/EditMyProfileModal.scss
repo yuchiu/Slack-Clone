@@ -1,0 +1,67 @@
+@import "../../../../../assets/css/vars.scss";
+
+.edit-toggle-button {
+  user-select: none;
+  color: $darkgrey;
+  border: 1px solid $darkgrey;
+  padding: 2px 5px;
+  border-radius: 2px;
+  &:hover {
+    cursor: pointer;
+  }
+  &--avatar {
+    margin-left: 10px;
+  }
+}
+
+.modal-avatar {
+  display: flex;
+  margin-top: 10px;
+  height: 420px;
+  &__img {
+    box-shadow: 0px 1px 10px $lightgrey, 0px -1px 10px $superlightgrey;
+    width: 400px;
+    height: 400px;
+    margin-right: 100px;
+  }
+  &__dropzone-section {
+    cursor: pointer;
+    width: 400px;
+    height: 400px;
+    border: 1px $darkgrey solid;
+    border-radius: 2px;
+    &__img {
+      width: 400px;
+      height: 400px;
+      filter: brightness(50%);
+    }
+    &__hint {
+      position: absolute;
+      top: 0;
+      font-size: 1.5em;
+      left: 125px;
+      color: $white;
+      text-align: center;
+      margin: auto;
+      margin-top: 150px;
+      text-shadow: 0px 1px 5px $superlightgrey;
+    }
+  }
+  &__editor {
+    &__control {
+      display: flex;
+      &__range-slider {
+        display: flex;
+        align-items: center;
+      }
+      &__remove {
+        user-select: none;
+        margin-left: 170px;
+        color: $red;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

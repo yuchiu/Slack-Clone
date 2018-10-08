@@ -145,8 +145,12 @@ export default {
       /* create new member & auto join default team and channel */
       const createUserResponse = await models.sequelize.transaction(
         async transaction => {
-          await generateAvatar(credentials);
-          const user = await models.User.create(credentials, { transaction });
+          const newCredentials = await generateAvatar(credentials);
+
+          console.log(newCredentials);
+          const user = await models.User.create(newCredentials, {
+            transaction
+          });
 
           const initialDemoTeamId = 1;
           await models.TeamMember.create(
@@ -372,6 +376,7 @@ export default {
         brief_description,
         detail_description,
         password,
+        imgFile,
         newPassword
       } = req.body;
 
@@ -392,6 +397,15 @@ export default {
             }
           });
         }
+      }
+
+      if (imgFile) {
+        const updatedImgFile = imgFile.split(";base64,").pop();
+
+        const avatarName = randomstring.generate().concat(".png");
+        const filePath = `./assets/${avatarName}`;
+
+        await fse.outputFile(filePath, updatedImgFile, { encoding: "base64" });
       }
       // remove stale data from cache
       redisCache.delete(`userId:${currentUserId}`);
