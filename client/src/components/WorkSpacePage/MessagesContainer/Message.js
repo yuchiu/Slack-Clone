@@ -6,7 +6,16 @@ import { TextType, ImageType, AudioType } from "./filetypes";
 
 class Message extends React.PureComponent {
   handleClick = targetUserId => {
-    const { message, switchRightSidebarView, switchTargetUser } = this.props;
+    const {
+      message,
+      switchRightSidebarView,
+      switchTargetUser,
+      toggleRightSidebar,
+      isSidebarOpen
+    } = this.props;
+    if (!isSidebarOpen) {
+      toggleRightSidebar();
+    }
     if (message.isCurrentUser) {
       switchRightSidebarView("my-profile");
     } else {

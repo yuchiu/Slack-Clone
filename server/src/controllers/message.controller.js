@@ -141,24 +141,6 @@ export default {
       const { channelId } = req.params;
       const { offset } = req.query;
 
-      // check if redis has the data
-      const messagelListCache = await redisCache.get(
-        `messageList:${channelId}offset:${offset}`
-      );
-
-      if (messagelListCache) {
-        const messagelListCacheArr = _.toArray(JSON.parse(messagelListCache));
-
-        return res.status(200).send({
-          meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          messageList: messagelListCacheArr.reverse()
-        });
-      }
-
       const channel = await models.Channel.findOne({
         raw: true,
         where: { id: channelId }
@@ -189,9 +171,7 @@ export default {
         },
         { raw: true }
       );
-
-      // Save the responses in Redis store
-      redisCache.set(`messageList:${channelId}offset:${offset}`, messageList);
+      console.log(messageList);
 
       return res.status(200).send({
         meta: {

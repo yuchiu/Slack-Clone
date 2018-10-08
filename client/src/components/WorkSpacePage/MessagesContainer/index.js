@@ -10,6 +10,7 @@ import { messageAction, globalStateAction, channelAction } from "@/actions";
 import {
   messageSelector,
   teamSelector,
+  globalStateSelector,
   channelSelector
 } from "@/reducers/selectors";
 
@@ -116,6 +117,7 @@ class MessagesContainer extends React.Component {
       messageList,
       isSidebarOpen,
 
+      toggleRightSidebar,
       switchRightSidebarView,
       switchTargetUser
     } = this.props;
@@ -133,6 +135,8 @@ class MessagesContainer extends React.Component {
               key={`${message.id}-${i}`}
               switchRightSidebarView={switchRightSidebarView}
               message={message}
+              isSidebarOpen={isSidebarOpen}
+              toggleRightSidebar={toggleRightSidebar}
               switchTargetUser={switchTargetUser}
             />
           ))}
@@ -145,11 +149,13 @@ MessagesContainer.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired,
   messageList: PropTypes.array.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
 
   fetchGetChannelAssociatedList: PropTypes.func.isRequired,
   fetchMoreMessage: PropTypes.func.isRequired,
   receiveSocketMessage: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired,
+  toggleRightSidebar: PropTypes.func.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
@@ -157,7 +163,8 @@ const stateToProps = state => ({
   messageList: messageSelector.getMessageList(state),
   hasMoreMessage: messageSelector.getHasMoreMessage(state),
   currentTeam: teamSelector.getCurrentTeam(state),
-  currentChannel: channelSelector.getCurrentChannel(state)
+  currentChannel: channelSelector.getCurrentChannel(state),
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
 });
 
 const dispatchToProps = dispatch => ({
@@ -172,6 +179,9 @@ const dispatchToProps = dispatch => ({
   },
   switchTargetUser: targetUserId => {
     dispatch(globalStateAction.switchTargetUser(targetUserId));
+  },
+  toggleRightSidebar: () => {
+    dispatch(globalStateAction.toggleRightSidebar());
   },
   switchRightSidebarView: selectedView => {
     dispatch(globalStateAction.switchRightSidebarView(selectedView));

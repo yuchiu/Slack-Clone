@@ -7,7 +7,7 @@ import AvatarEditor from "react-avatar-editor";
 
 import "./EditMyProfileModal.scss";
 import { validateForm } from "@/utils";
-import { userAction } from "@/actions";
+import { userAction, errorAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
 import { InlineError } from "@/components/common";
 
@@ -81,9 +81,19 @@ class EditMyProfileModal extends React.PureComponent {
   };
 
   uploadeFile(files) {
+    const file = files[0];
+    const { createUploadError } = this.props;
+    if (file.size > 1024 * 1024 * 5) {
+      createUploadError("file size exceed maximum upload size of 5 mb");
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      createUploadError("Avatar file can only be image. i.e png, jpg");
+      return;
+    }
     this.setState({ isImgUploaded: true });
     this.setState({
-      imgFile: files[0]
+      imgFile: file
     });
   }
 
@@ -232,7 +242,7 @@ class EditMyProfileModal extends React.PureComponent {
                                 <i
                                   className="fa-times fa"
                                   onClick={this.removeUploadImg}
-                                />
+                                />{" "}
                                 <span onClick={this.removeUploadImg}>
                                   Remove
                                 </span>
@@ -386,7 +396,8 @@ class EditMyProfileModal extends React.PureComponent {
 
 EditMyProfileModal.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  feeling: PropTypes.string
+  feeling: PropTypes.string,
+  createUploadError: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -396,6 +407,9 @@ const stateToProps = state => ({
 const dispatchToProps = dispatch => ({
   fetchEditUser: editUserData => {
     dispatch(userAction.fetchEditUser(editUserData));
+  },
+  createUploadError: text => {
+    dispatch(errorAction.createUploadError(text));
   }
 });
 

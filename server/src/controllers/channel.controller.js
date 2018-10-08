@@ -183,32 +183,6 @@ export default {
       const currentUserId = req.user.id;
       const { channelId } = req.params;
 
-      // check if redis has the data
-      const messagelListCache = await redisCache.get(
-        `messageList:${channelId}`
-      );
-      const channelMemberListCache = await redisCache.get(
-        `channelMemberList:${channelId}`
-      );
-
-      if (messagelListCache && channelMemberListCache) {
-        const messagelListCacheArr = _.toArray(JSON.parse(messagelListCache));
-
-        const channelMemberListCacheArr = _.toArray(
-          JSON.parse(channelMemberListCache)
-        );
-
-        return res.status(200).send({
-          meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          messageList: messagelListCacheArr.reverse(),
-          channelMemberList: channelMemberListCacheArr
-        });
-      }
-
       /* find channel user request to get message */
       const channel = await models.Channel.findOne({
         raw: true,
@@ -272,10 +246,6 @@ export default {
           raw: true
         }
       );
-
-      // Save the responses in Redis store
-      redisCache.set(`messageList:${channelId}`, messageList);
-      redisCache.set(`channelMemberList:${channelId}`, channelMemberList);
 
       res.status(200).send({
         meta: {

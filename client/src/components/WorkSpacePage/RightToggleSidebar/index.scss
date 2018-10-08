@@ -149,11 +149,14 @@
     width: 65px;
     height: 65px;
     &__img {
+      box-shadow: 0px 1px 2px $lightgrey;
       max-width: 100%;
       max-height: 100%;
+      border-radius: 3px;
     }
   }
   &__right {
+    margin-left: 15px;
     &__name {
       font-size: 1.3em;
       margin: 0;

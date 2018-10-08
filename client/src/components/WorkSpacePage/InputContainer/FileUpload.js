@@ -15,9 +15,13 @@ class FileUpload extends React.Component {
 
   handleUpload = file => {
     if (file) {
-      const { emitSocketMessage, currentUser, currentChannel } = this.props;
+      const {
+        emitSocketMessage,
+        currentUser,
+        currentChannel,
+        createUploadError
+      } = this.props;
       if (file.size > 1024 * 1024 * 5) {
-        const { createUploadError } = this.props;
         createUploadError("file size exceed maximum upload size of 5 mb");
         return;
       }
@@ -26,7 +30,6 @@ class FileUpload extends React.Component {
         !(file.type === "text/plain") &&
         !file.type.startsWith("audio/")
       ) {
-        const { createUploadError } = this.props;
         createUploadError(
           "Files upload can only be in text, image, or audio type"
         );
