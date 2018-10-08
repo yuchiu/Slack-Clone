@@ -20,30 +20,41 @@ const userSummary = user => {
   return summary;
 };
 
-const generateAvatar = async data => {
+const generateRandomImg = () => {
   /* generate random icon for user */
   const avatarData = new Identicon(randomHex(16), 420).toString();
-  const avatarString = `data:image/png;base64,${avatarData}`;
-  const avatarImage = avatarString.split(";base64,").pop();
+  const avatarBase64Img = `data:image/png;base64,${avatarData}`;
+  return avatarBase64Img;
+};
+
+const saveBase64Img = async avatarBase64Img => {
+  /* generate random icon for user */
+  const avatarImage = avatarBase64Img.split(";base64,").pop();
 
   const avatarName = randomstring.generate().concat(".png");
   const filePath = `./assets/${avatarName}`;
 
   await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
 
-  const newData = { ...data };
-  newData.avatarurl = `${config.SERVER_URL}:${
+  const avatarurl = `${config.SERVER_URL}:${
     config.SERVER_PORT
   }/assets/${avatarName}`;
 
-  return newData;
+  return avatarurl;
+};
+
+const removePreviousImg = avatarurl => {
+  fse.remove(avatarurl, err => {
+    if (err) throw err;
+    console.log(`${avatarurl} was deleted`);
+  });
 };
 
 export default {
   getUser: async (req, res) => {
     try {
       const { userId } = req.params;
-      const user = await models.user.findOne(
+      const user = await models.User.findOne(
         {
           where: {
             id: userId
@@ -145,9 +156,10 @@ export default {
       /* create new member & auto join default team and channel */
       const createUserResponse = await models.sequelize.transaction(
         async transaction => {
-          const newCredentials = await generateAvatar(credentials);
+          const avatarBase64Img = generateRandomImg();
+          const avatarurl = await saveBase64Img(avatarBase64Img);
+          const newCredentials = { ...credentials, avatarurl };
 
-          console.log(newCredentials);
           const user = await models.User.create(newCredentials, {
             transaction
           });
@@ -398,20 +410,27 @@ export default {
           });
         }
       }
+      let avatarurl;
 
+      // if user uploads avatar img, save it and remove previous avatar
       if (imgFile) {
-        const updatedImgFile = imgFile.split(";base64,").pop();
-
-        const avatarName = randomstring.generate().concat(".png");
-        const filePath = `./assets/${avatarName}`;
-
-        await fse.outputFile(filePath, updatedImgFile, { encoding: "base64" });
+        avatarurl = await saveBase64Img(imgFile);
+        const user = await models.User.findOne(
+          {
+            where: {
+              id: currentUserId
+            }
+          },
+          { raw: true }
+        );
+        removePreviousImg(user.avatarurl);
       }
       // remove stale data from cache
       redisCache.delete(`userId:${currentUserId}`);
 
       // remove empty field
       let updatedUserData = {
+        avatarurl,
         brief_description,
         detail_description,
         password: newPassword
