@@ -1,10 +1,11 @@
-import _ from "lodash";
+import * as _ from "lodash";
+import { Request, Response } from "express";
 
 import { redisCache } from "./common";
 import models from "../models";
 
 export default {
-  getAllTeam: async (req, res) => {
+  getAllTeam: async (req: Request, res: Response) => {
     try {
       const allTeam = models.Team.findAll({ raw: true });
 
@@ -27,7 +28,7 @@ export default {
       });
     }
   },
-  createTeam: async (req, res) => {
+  createTeam: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const teamName = req.body.name;
@@ -43,18 +44,19 @@ export default {
               name: teamName,
               brief_description: teamAbout
             },
-            { transaction }
+            { transaction, raw: true }
           );
-          const team = teamData.dataValues;
+          const team = teamData.get({ plain: true });
+
           await models.TeamMember.create(
             {
-              teamId: team.id,
-              userId: currentUserId,
+              team_id: team.id,
+              user_id: currentUserId,
               admin: true
             },
             { transaction }
           );
-          const channel = await models.Channel.create(
+          const channelData = await models.Channel.create(
             {
               name: "general",
               public: true,
@@ -62,14 +64,15 @@ export default {
                 "Company-wide announcements and work-based matters",
               detail_description:
                 "This channel is for workspace-wide communication and announcements. All members are in this channel.",
-              teamId: team.id
+              team_id: team.id
             },
             { transaction }
           );
+          const channel = channelData.get({ plain: true });
           await models.ChannelMember.create(
             {
-              userId: currentUserId,
-              channelId: channel.dataValues.id
+              user_id: currentUserId,
+              channel_id: channel.id
             },
             { transaction }
           );
@@ -77,7 +80,7 @@ export default {
         }
       );
 
-      const { team } = createTeamResponse;
+      const team = createTeamResponse;
       /* get user's teams */
       const teamList = await models.sequelize.query(
         "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
@@ -123,10 +126,10 @@ export default {
       );
       const initialChannelId = initialChannel[0].id;
 
-      const userToAdd = await models.User.findOne(
-        { where: { username: targetUsername } },
-        { raw: true }
-      );
+      const userToAdd = await models.User.findOne({
+        where: { username: targetUsername },
+        raw: true
+      });
       if (!userToAdd) {
         return {
           meta: {
@@ -145,14 +148,14 @@ export default {
       /* create new member  */
       await models.sequelize.transaction(async transaction => {
         await models.TeamMember.create(
-          { userId: userToAdd.id, teamId },
+          { user_id: userToAdd.id, team_id: teamId },
           { transaction }
         );
 
         await models.ChannelMember.create(
           {
-            userId: userToAdd.id,
-            channelId: initialChannelId
+            user_id: userToAdd.id,
+            channel_id: initialChannelId
           },
           { transaction }
         );
@@ -196,7 +199,7 @@ export default {
       };
     }
   },
-  getTeamData: async (req, res) => {
+  getTeamData: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const { teamId } = req.params;

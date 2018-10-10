@@ -1,5 +1,5 @@
-import Promise from "bluebird";
-import redis from "redis";
+import * as Promise from "bluebird";
+import * as redis from "redis";
 
 const redisClient = Promise.promisifyAll(redis.createClient());
 

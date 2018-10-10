@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015"],
+    "outDir": "./build/",
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

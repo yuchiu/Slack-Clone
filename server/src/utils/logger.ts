@@ -1,7 +1,8 @@
-import winston from "winston";
-import { ENVIRONMENT } from "./secrets";
+import * as winston from "winston";
+import { NODE_ENV } from "./secrets";
+import { createLogger, Logger } from "winston";
 
-const logger = winston.createLogger({
+const logger: Logger = createLogger({
   transports: [
     new winston.transports.Console({
       level: process.env.NODE_ENV === "production" ? "error" : "debug"
@@ -10,7 +11,7 @@ const logger = winston.createLogger({
   ]
 });
 
-if (ENVIRONMENT !== "production") {
+if (NODE_ENV !== "production") {
   logger.debug("Logging initialized at debug level");
 }
 

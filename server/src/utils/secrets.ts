@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import fs from "fs";
+import * as dotenv from "dotenv";
+import * as fs from "fs";
 import logger from "./logger";
 
 if (fs.existsSync(".env")) {
