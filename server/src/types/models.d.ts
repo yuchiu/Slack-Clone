@@ -21,11 +21,11 @@ declare global {
     id?: number;
     name?: string;
     public?: boolean;
-    messageGroup?: boolean;
+    message_group?: boolean;
     brief_description?: string;
     detail_description?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface ChannelInstance
@@ -42,8 +42,8 @@ declare global {
     text?: string;
     url?: string;
     filetype?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface MessageInstance
@@ -57,8 +57,8 @@ declare global {
     id?: number;
     name: string;
     brief_description?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface TeamInstance
@@ -77,8 +77,8 @@ declare global {
     online?: boolean;
     brief_description?: string;
     detail_description?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface UserInstance
@@ -93,8 +93,8 @@ declare global {
     team_id?: number;
     user_id?: number;
     admin?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface TeamMemberInstance
@@ -108,8 +108,8 @@ declare global {
     id?: number;
     channel_id?: number;
     user_id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface ChannelMemberInstance

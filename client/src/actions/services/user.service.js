@@ -9,20 +9,20 @@ export default {
     return response;
   },
   fetchAutoAuth: async () => {
-    const response = await apiV1().get(`/users/auths`);
+    const response = await apiV1().get(`/users/auth`);
     return response;
   },
   fetchRegisterUser: async credentials => {
-    const response = await apiV1().post(`/users/registers`, credentials);
+    const response = await apiV1().post(`/users/signup`, credentials);
     return response;
   },
 
   fetchLoginUser: async credentials => {
-    const response = await apiV1().post(`/users/logins`, credentials);
+    const response = await apiV1().post(`/users/signin`, credentials);
     return response;
   },
   fetchLogoutUser: async () => {
-    const response = await apiV1().get(`/users/logouts`);
+    const response = await apiV1().get(`/users/signout`);
     return response;
   }
 };

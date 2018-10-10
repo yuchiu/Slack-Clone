@@ -28,7 +28,7 @@ export const TeamFactory = (
     Team.belongsToMany(models.User, {
       through: models.TeamMember,
       foreignKey: {
-        name: "teamId",
+        name: "team_id",
         field: "team_id"
       }
     });

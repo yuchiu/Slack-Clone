@@ -6,6 +6,7 @@ import { TeamFactory } from "./Team";
 import { ChannelMemberFactory } from "./ChannelMember";
 import { MessageFactory } from "./Message";
 import { TeamMemberFactory } from "./TeamMember";
+import sequelizeConfig from "../config/sequelizeConfig";
 
 const createModels = (sequelizeConfig): DbInterface => {
   const { database, username, password, params } = sequelizeConfig;
@@ -30,4 +31,5 @@ const createModels = (sequelizeConfig): DbInterface => {
   return models;
 };
 
-export default createModels;
+const models = createModels(sequelizeConfig);
+export default models;

@@ -7,7 +7,7 @@ import * as bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
 import { redisCache } from "./common";
-import models from "../config/DBConfig";
+import models from "../models";
 import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 
 const userSummary = user => {
@@ -171,7 +171,7 @@ export default {
             raw: true,
             transaction
           });
-
+          console.log(user.id);
           await models.TeamMember.create(
             {
               user_id: user.id,

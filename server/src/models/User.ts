@@ -98,14 +98,14 @@ export const UserFactory = (
   User.associate = models => {
     User.belongsToMany(models.Team, {
       through: models.TeamMember,
-      foreignKey: { name: "userId", field: "user_id" }
+      foreignKey: { name: "user_id", field: "user_id" }
     });
 
     // N:M
     User.belongsToMany(models.Channel, {
       through: models.ChannelMember,
       foreignKey: {
-        name: "userId",
+        name: "user_id",
         field: "user_id"
       }
     });

@@ -10,7 +10,7 @@ export const ChannelFactory = (
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    messageGroup: {
+    message_group: {
       type: DataTypes.BOOLEAN,
       field: "message_group",
       defaultValue: false
@@ -45,7 +45,7 @@ export const ChannelFactory = (
     // 1:M
     Channel.belongsTo(models.Team, {
       foreignKey: {
-        name: "teamId",
+        name: "team_id",
         field: "team_id"
       }
     });
@@ -54,7 +54,7 @@ export const ChannelFactory = (
     Channel.belongsToMany(models.User, {
       through: models.ChannelMember,
       foreignKey: {
-        name: "channelId",
+        name: "channel_id",
         field: "channel_id"
       }
     });
