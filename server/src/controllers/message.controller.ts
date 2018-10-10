@@ -1,6 +1,7 @@
 import fse from "fs-extra";
 import randomstring from "randomstring";
-import _ from "lodash";
+import { Request, Response } from "express";
+import * as _ from "lodash";
 
 import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 import models from "../models";
@@ -12,7 +13,7 @@ const validateUploadFiles = data => {
   }
   if (
     !data.type.startsWith("image/") &&
-    !data.type === "text/plain" &&
+    !data.type.startsWith("text/plain") &&
     !data.type.startsWith("audio/")
   ) {
     return { type: false };
@@ -27,7 +28,7 @@ const generateFileName = data => {
 };
 
 export default {
-  getAllMessage: async (req, res) => {
+  getAllMessage: async (req: Request, res: Response) => {
     try {
       const allMessage = models.Message.findAll({ raw: true });
       res.status(200).send({
@@ -58,15 +59,13 @@ export default {
       /* check if it is upload or message */
       if (!file) {
         const messageResponse = await models.Message.create({
-          channelId,
-          userId,
+          channel_id: channelId,
+          user_id: userId,
           avatarurl,
           username,
           text
         });
-
-        const message = messageResponse.dataValues;
-
+        const message = messageResponse.get({ plain: true });
         return {
           meta: {
             type: "success",
@@ -105,15 +104,15 @@ export default {
       await fse.outputFile(filePath, file.data);
 
       const messageResponse = await models.Message.create({
-        channelId,
-        userId,
+        channel_id: channelId,
+        user_id: userId,
         avatarurl,
         username,
         filetype: file.type,
         url: `${SERVER_URL}:${SERVER_PORT}/assets/${randomFileName}`
       });
 
-      const message = messageResponse.dataValues;
+      const message = messageResponse.get({ plain: true });
       return {
         meta: {
           type: "success",
@@ -133,7 +132,7 @@ export default {
       };
     }
   },
-  getMessage: async (req, res) => {
+  getMessage: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const { channelId } = req.params;
@@ -147,28 +146,26 @@ export default {
       if (!channel.public) {
         const member = await models.ChannelMember.findOne({
           raw: true,
-          where: { channelId, userId: currentUserId }
+          where: { channel_id: channelId, user_id: currentUserId }
         });
         if (!member) {
           res.status(403).send({
             meta: {
               type: "error",
-              status: 500,
+              status: 403,
               message: "Not Authorized"
             }
           });
         }
       }
 
-      const messageList = await models.Message.findAll(
-        {
-          order: [["created_at", "DESC"]],
-          where: { channelId },
-          limit: 30,
-          offset
-        },
-        { raw: true }
-      );
+      const messageList = await models.Message.findAll({
+        order: [["created_at", "DESC"]],
+        where: { channel_id: channelId },
+        limit: 30,
+        offset,
+        raw: true
+      });
 
       return res.status(200).send({
         meta: {

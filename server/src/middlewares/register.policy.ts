@@ -1,6 +1,7 @@
-import Joi from "joi";
+import { Request, Response, NextFunction } from "express";
+import * as Joi from "joi";
 
-export default (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   const schema = {
     username: Joi.string().regex(new RegExp("^[a-zA-Z0-9]{4,32}$")),
     email: Joi.string().email(),

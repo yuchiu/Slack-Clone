@@ -1,8 +1,10 @@
-import fse from "fs-extra";
-import Identicon from "identicon.js";
-import randomstring from "randomstring";
-import randomHex from "randomhex";
-import _ from "lodash";
+import * as fse from "fs-extra";
+import * as Identicon from "identicon.js";
+import * as randomstring from "randomstring";
+import * as randomHex from "randomhex";
+import * as _ from "lodash";
+import * as bcrypt from "bcryptjs";
+import { Request, Response } from "express";
 
 import { redisCache } from "./common";
 import models from "../models";
@@ -18,6 +20,14 @@ const userSummary = user => {
     detail_description: user.detail_description
   };
   return summary;
+};
+
+const comparePassword = async function(credentialsPassword, userPassword) {
+  const isPasswordMatch = await bcrypt.compare(
+    credentialsPassword,
+    userPassword
+  );
+  return isPasswordMatch;
 };
 
 const generateRandomImg = () => {
@@ -52,17 +62,15 @@ const removePreviousImg = avatarurl => {
 };
 
 export default {
-  getUser: async (req, res) => {
+  getUser: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
-      const user = await models.User.findOne(
-        {
-          where: {
-            id: userId
-          }
+      const user = await models.User.findOne({
+        where: {
+          id: userId
         },
-        { raw: true }
-      );
+        raw: true
+      });
       res.status(200).send({
         meta: {
           type: "sucesss",
@@ -82,16 +90,16 @@ export default {
       });
     }
   },
-  getAllUsers: async (req, res) => {
+  getAllUsers: async (req: Request, res: Response) => {
     try {
       const userList = await models.User.findAll({ raw: true });
       res.status(200).send({
         meta: {
           type: "sucess",
           status: 200,
-          message: ""
+          message: "all"
         },
-        userList: userList.dataValues
+        userList: userList
       });
     } catch (err) {
       console.log(err);
@@ -105,7 +113,7 @@ export default {
     }
   },
 
-  createUser: async (req, res) => {
+  signUpUser: async (req: Request, res: Response) => {
     try {
       const credentials = req.body;
 
@@ -160,16 +168,16 @@ export default {
           const avatarBase64Img = generateRandomImg();
           const avatarurl = await saveBase64Img(avatarBase64Img);
           const newCredentials = { ...credentials, avatarurl };
+          const initialDemoTeamId = 1;
 
-          const user = await models.User.create(newCredentials, {
+          const userData = await models.User.create(newCredentials, {
             transaction
           });
-
-          const initialDemoTeamId = 1;
+          const user = userData.get({ plain: true });
           await models.TeamMember.create(
             {
-              userId: user.id,
-              teamId: initialDemoTeamId
+              user_id: user.id,
+              team_id: initialDemoTeamId
             },
             { transaction }
           );
@@ -188,8 +196,8 @@ export default {
 
           await models.ChannelMember.create(
             {
-              userId: user.id,
-              channelId: initialChannelId
+              user_id: user.id,
+              channel_id: initialChannelId
             },
             { transaction }
           );
@@ -213,8 +221,8 @@ export default {
       redisCache.delete(`channelMemberList:${initialChannelId}`);
 
       /* save session */
-      req.session.user = user.dataValues;
-      req.session.save();
+      req.session.user = user;
+      req.session.save(() => {});
 
       /* response */
       res.status(200).send({
@@ -237,11 +245,12 @@ export default {
       });
     }
   },
-  login: async (req, res) => {
+  singInUser: async (req: Request, res: Response) => {
     try {
       const credentials = req.body;
       const user = await models.User.findOne({
-        where: { username: credentials.username }
+        where: { username: credentials.username },
+        raw: true
       });
 
       /* user not registered */
@@ -258,7 +267,10 @@ export default {
       }
 
       /* validate password */
-      const isPasswordValid = await user.comparePassword(credentials.password);
+      const isPasswordValid = await comparePassword(
+        credentials.password,
+        user.password
+      );
 
       /* get user's teams */
       const teamList = await models.sequelize.query(
@@ -271,8 +283,8 @@ export default {
       );
 
       /* save session */
-      req.session.user = user.dataValues;
-      req.session.save();
+      req.session.user = user;
+      req.session.save(() => {});
 
       if (isPasswordValid) {
         return res.status(200).send({
@@ -281,7 +293,7 @@ export default {
             status: 200,
             message: ""
           },
-          user: userSummary(user.dataValues),
+          user: userSummary(user),
           teamList
         });
       }
@@ -301,9 +313,9 @@ export default {
       });
     }
   },
-  logout: async (req, res) => {
+  signOutUser: async (req: Request, res: Response) => {
     try {
-      req.session.destroy();
+      req.session.destroy(() => {});
       res.status(200).send({
         meta: {
           type: "success",
@@ -323,7 +335,7 @@ export default {
     }
   },
 
-  tryAutoLogin: async (req, res) => {
+  tryAutoSingInUser: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       // check if redis has the data
@@ -382,7 +394,7 @@ export default {
       });
     }
   },
-  updateUser: async (req, res) => {
+  updateUser: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const {
@@ -399,7 +411,7 @@ export default {
         });
 
         /* validate password */
-        const isPasswordValid = await user.comparePassword(password);
+        const isPasswordValid = await comparePassword(password, user.password);
 
         if (!isPasswordValid) {
           res.status(500).send({
@@ -416,14 +428,12 @@ export default {
       // if user uploads avatar img, save it and remove previous avatar
       if (imgFile) {
         avatarurl = await saveBase64Img(imgFile);
-        const user = await models.User.findOne(
-          {
-            where: {
-              id: currentUserId
-            }
+        const user = await models.User.findOne({
+          where: {
+            id: currentUserId
           },
-          { raw: true }
-        );
+          raw: true
+        });
         removePreviousImg(user.avatarurl);
         await models.sequelize.query(
           `UPDATE messages 
@@ -441,7 +451,7 @@ export default {
       redisCache.delete(`userId:${currentUserId}`);
 
       // remove empty field
-      let updatedUserData = {
+      let updatedUserData: any = {
         avatarurl,
         brief_description,
         detail_description,

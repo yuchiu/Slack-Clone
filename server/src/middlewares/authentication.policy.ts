@@ -1,4 +1,6 @@
-export default (req, res, next) => {
+import { Response, NextFunction } from "express";
+
+export default (req: any, res: Response, next: NextFunction) => {
   if (!req.user) {
     res.status(403).send({
       meta: {

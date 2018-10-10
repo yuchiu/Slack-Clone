@@ -4,11 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
-    "build": "babel src -d build",
-    "serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost SERVER_PORT=3030 node build/index.js",
-    "seed": "babel-node seed/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently --kill-others \"npm run ts\" \"npm run server\"",
+    "ts": "tsc -w",
+    "server": "nodemon NODE_ENV=development ./build/server.js",
+    "build": "tsc && node ./build/server.js",
+    "old-start": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
+    "old-build": "babel src -d build",
+    "old-serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/server.js",
+    "old-seed": "babel-node seed/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -49,64 +52,86 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-3": "^6.24.1",
+    "@types/bluebird": "^3.5.20",
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "^0.0.35",
+    "@types/dotenv": "^4.0.2",
+    "@types/errorhandler": "^0.0.32",
+    "@types/express": "^4.11.1",
+    "@types/express-session": "^1.15.8",
+    "@types/lodash": "^4.14.91",
+    "@types/node": "^9.4.6",
+    "@types/sequelize": "^4.27.27",
+    "@types/winston": "^2.3.7",
+    "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
-    "eslint": "^5.2.0",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-prettier": "^2.6.2",
     "nodemon": "^1.18.3",
-    "prettier": "^1.14.0"
+    "prettier": "^1.14.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.1"
   },
-  "babel": {
-    "presets": [
-      "env",
-      "stage-3"
-    ],
-    "plugins": [
-      [
-        "transform-runtime",
-        {
-          "polyfill": false,
-          "regenerator": true
-        }
-      ]
-    ]
-  },
-  "eslintConfig": {
-    "env": {
-      "jest": true,
-      "node": true
-    },
+  "tslintConfig": {
     "extends": [
-      "airbnb-base",
-      "plugin:prettier/recommended"
+      "tslint:latest",
+      "tslint-config-prettier"
     ],
     "rules": {
-      "quotes": [
-        "error",
-        "double"
+      "class-name": true,
+      "comment-format": [
+        true,
+        "check-space"
       ],
-      "semi": [
-        "error",
-        "always"
+      "indent": [
+        true,
+        "spaces"
       ],
-      "no-console": 0,
-      "no-unused-vars": 0,
-      "import/prefer-default-export": 0,
-      "no-underscore-dangle": 0,
-      "consistent-return": 0,
-      "linebreak-style": 0,
-      "import/no-cycle": 0,
-      "import/no-mutable-exports": 0,
-      "no-unused-expressions": 0,
-      "prefer-destructuring": 0,
-      "camelcase": 0
+      "one-line": [
+        true,
+        "check-open-brace",
+        "check-whitespace"
+      ],
+      "no-var-keyword": true,
+      "quotemark": [
+        true,
+        "double",
+        "avoid-escape"
+      ],
+      "semicolon": [
+        true,
+        "always",
+        "ignore-bound-class-methods"
+      ],
+      "whitespace": [
+        true,
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-module",
+        "check-separator",
+        "check-type"
+      ],
+      "typedef-whitespace": [
+        true,
+        {
+          "call-signature": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "property-declaration": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "onespace",
+          "index-signature": "onespace",
+          "parameter": "onespace",
+          "property-declaration": "onespace",
+          "variable-declaration": "onespace"
+        }
+      ],
+      "no-internal-module": true,
+      "no-trailing-whitespace": true,
+      "no-null-keyword": true,
+      "prefer-const": true,
+      "jsdoc-format": true
     }
   }
 }

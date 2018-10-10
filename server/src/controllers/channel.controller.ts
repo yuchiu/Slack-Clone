@@ -1,10 +1,11 @@
-import _ from "lodash";
+import * as _ from "lodash";
+import { Request, Response } from "express";
 
 import { redisCache } from "./common";
 import models from "../models";
 
 export default {
-  getAllChannel: async (req, res) => {
+  getAllChannel: async (req: Request, res: Response) => {
     try {
       const allChannel = models.Channel.findAll({ raw: true });
       res.status(200).send({
@@ -25,7 +26,7 @@ export default {
       });
     }
   },
-  createChannel: async (req, res) => {
+  createChannel: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const {
@@ -40,35 +41,36 @@ export default {
       // remove stale data from cache
       redisCache.delete(`channelList:${teamId}`);
 
-      const createChannelResponse = await models.sequelize.transaction(
+      const createChannelResponse: any = await models.sequelize.transaction(
         async transaction => {
           let channel;
 
           /*  check if it's message group */
           if (!messageGroup) {
-            channel = await models.Channel.create(
+            const channelData = await models.Channel.create(
               {
                 name: channelName,
                 detail_description,
                 public: isPublic,
-                teamId
+                team_id: teamId
               },
               { transaction }
             );
+            channel = channelData.get({ plain: true });
           }
           if (messageGroup) {
             /* check if message group already created between requested members */
             const allMembers = [...membersList, currentUserId];
             const [data, result] = await models.sequelize.query(
               `
-          select c.id, c.name
-          from channels as c, channel_members cm
-          where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
-          group by c.id, c.name
-          having array_agg(cm.user_id) @> Array[${allMembers.join(
-            ","
-          )}] and count(cm.user_id) = ${allMembers.length};
-          `,
+              select c.id, c.name
+              from channels as c, channel_members cm
+              where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
+              group by c.id, c.name
+              having array_agg(cm.user_id) @> Array[${allMembers.join(
+                ","
+              )}] and count(cm.user_id) = ${allMembers.length};
+              `,
               { raw: true }
             );
 
@@ -85,16 +87,17 @@ export default {
             }
 
             /* conditions are validated, create the message group */
-            channel = await models.Channel.create(
+            const channelData = await models.Channel.create(
               {
                 name: channelName,
                 public: isPublic,
                 detail_description,
-                messageGroup: true,
-                teamId
+                message_group: true,
+                team_id: teamId
               },
               { transaction }
             );
+            channel = channelData.get({ plain: true });
           }
 
           /*  check if it's private channel */
@@ -105,8 +108,8 @@ export default {
             );
             members.push(currentUserId);
             const ChannelMembers = members.map(memberId => ({
-              userId: memberId,
-              channelId: channel.dataValues.id
+              user_id: memberId,
+              channel_id: channel.id
             }));
             /* create channel member relation for private member */
             await models.ChannelMember.bulkCreate(ChannelMembers, {
@@ -127,8 +130,8 @@ export default {
             }
           );
           const channelMemberIdList = teamMemberList.map(m => ({
-            userId: m.id,
-            channelId: channel.dataValues.id
+            user_id: m.id,
+            channel_id: channel.id
           }));
           await models.ChannelMember.bulkCreate(channelMemberIdList, {
             transaction
@@ -136,7 +139,7 @@ export default {
 
           /* return channel created and public channel members */
           return {
-            channel: channel.dataValues,
+            channel: channel,
             channelMemberList: teamMemberList
           };
         }
@@ -148,9 +151,9 @@ export default {
           select distinct on (id) *
           from channels as c left outer join channel_members as pcm
           on c.id = pcm.channel_id
-          where c.team_id = :teamId and (c.public = true or pcm.user_id = :userId);`,
+          where c.team_id = :team_id and (c.public = true or pcm.user_id = :user_id);`,
         {
-          replacements: { teamId, userId: currentUserId },
+          replacements: { team_id: teamId, user_id: currentUserId },
           model: models.Channel,
           raw: true
         }
@@ -178,7 +181,7 @@ export default {
     }
   },
 
-  getChannelData: async (req, res) => {
+  getChannelData: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
       const { channelId } = req.params;
@@ -188,22 +191,20 @@ export default {
         raw: true,
         where: { id: channelId }
       });
-      const messageList = await models.Message.findAll(
-        {
-          order: [["created_at", "DESC"]],
-          where: { channelId },
-          limit: 30,
-          offset: 0
-        },
-        { raw: true }
-      );
+      const messageList = await models.Message.findAll({
+        order: [["created_at", "DESC"]],
+        where: { channel_id: channelId },
+        limit: 30,
+        offset: 0,
+        raw: true
+      });
 
       /* check if channel is private */
       if (!channel.public) {
         /* check if user is member of private channel */
         const member = await models.ChannelMember.findOne({
           raw: true,
-          where: { channelId, userId: currentUserId }
+          where: { channel_id: channelId, user_id: currentUserId }
         });
         /* return error if user is not member */
         if (!member) {
@@ -255,74 +256,6 @@ export default {
         },
         messageList: messageList.reverse(),
         channelMemberList
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(500).send({
-        meta: {
-          type: "error",
-          status: 500,
-          message: "server error"
-        }
-      });
-    }
-  },
-
-  updateChannel: async (req, res) => {
-    try {
-      const currentUserId = req.user.id;
-      const {
-        teamId,
-        channelId,
-        brief_description,
-        detail_description
-      } = req.body;
-
-      // remove empty field
-      let updatedChannelData = { brief_description, detail_description };
-      updatedChannelData = _.pickBy(updatedChannelData, _.identity);
-
-      // remove stale data from cache
-      redisCache.delete(`channelList:${teamId}`);
-
-      /* update the channel */
-      await models.Channel.update(
-        {
-          ...updatedChannelData
-        },
-        {
-          where: {
-            id: channelId
-          }
-        }
-      );
-
-      const updatedChannel = await models.Channel.findOne({
-        where: {
-          id: channelId
-        }
-      });
-
-      const channelList = await models.sequelize.query(
-        `
-          select distinct on (id) *
-          from channels as c left outer join channel_members as pcm
-          on c.id = pcm.channel_id
-          where c.team_id = :teamId and (c.public = true or pcm.user_id = :userId);`,
-        {
-          replacements: { teamId, userId: currentUserId },
-          model: models.Channel,
-          raw: true
-        }
-      );
-      res.status(200).send({
-        meta: {
-          type: "success",
-          status: 200,
-          message: ""
-        },
-        channelList,
-        channel: updatedChannel.dataValues
       });
     } catch (err) {
       console.log(err);
