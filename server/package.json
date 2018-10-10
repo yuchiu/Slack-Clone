@@ -11,7 +11,7 @@
     "old-start": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
     "old-build": "babel src -d build",
     "old-serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/server.js",
-    "old-seed": "babel-node seed/server.js"
+    "seed": "cross-env PSQL_NAME=slack PSQL_USER=postgres PSQL_PASS=postgres node seed/index.js"
   },
   "author": "",
   "license": "ISC",

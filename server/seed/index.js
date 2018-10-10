@@ -1,18 +1,21 @@
-import Promise from "bluebird";
-import redis from "redis";
+const Promise = require("bluebird");
+const redis = require("redis");
+require("dotenv").config();
 
-import models from "../src/models";
-import users from "./users.json";
-import teams from "./teams.json";
-import initialTeams from "./initialTeams.json";
-import teamMembers from "./teamMembers.json";
-import channels from "./channels.json";
-import channelMembers from "./channelMembers.json";
+const models = require("./models");
+const users = require("./users.json");
+const teams = require("./teams.json");
+const initialTeams = require("./initialTeams.json");
+const teamMembers = require("./teamMembers.json");
+const channels = require("./channels.json");
+const channelMembers = require("./channelMembers.json");
 
 const redisClient = Promise.promisifyAll(redis.createClient());
 
 redisClient.flushdb((err, succeeded) => {
-  console.log("✔ purge caches store in redis");
+  if (err) {
+    console.log("error occured on redisClient.flushdb");
+  } else console.log("✔ purge caches store in redis");
 });
 
 models.sequelize.sync({ force: true }).then(async () => {

@@ -1,37 +1,37 @@
 [
   {
-    "userId": "1",
-    "teamId": "1",
+    "user_id": "1",
+    "team_id": "1",
     "admin": true
   },
   {
-    "userId": "2",
-    "teamId": "2",
+    "user_id": "2",
+    "team_id": "2",
     "admin": true
   },
   {
-    "userId": "3",
-    "teamId": "3",
+    "user_id": "3",
+    "team_id": "3",
     "admin": true
   },
   {
-    "userId": "4",
-    "teamId": "4",
+    "user_id": "4",
+    "team_id": "4",
     "admin": true
   },
   {
-    "userId": "2",
-    "teamId": "1",
+    "user_id": "2",
+    "team_id": "1",
     "admin": true
   },
   {
-    "userId": "3",
-    "teamId": "1",
+    "user_id": "3",
+    "team_id": "1",
     "admin": true
   },
   {
-    "userId": "4",
-    "teamId": "1",
+    "user_id": "4",
+    "team_id": "1",
     "admin": true
   }
 ]
