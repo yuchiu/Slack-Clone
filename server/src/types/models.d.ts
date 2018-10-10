@@ -24,6 +24,7 @@ declare global {
     message_group?: boolean;
     brief_description?: string;
     detail_description?: string;
+    team_id?: number;
     created_at?: Date;
     updated_at?: Date;
   }
@@ -42,6 +43,8 @@ declare global {
     text?: string;
     url?: string;
     filetype?: string;
+    channel_id?: number;
+    user_id?: number;
     created_at?: Date;
     updated_at?: Date;
   }

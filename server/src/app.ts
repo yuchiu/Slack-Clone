@@ -10,7 +10,7 @@ import * as compression from "compression";
 import * as bodyParser from "body-parser";
 
 import { NODE_ENV, SERVER_PORT } from "./utils/secrets";
-import { sessionConfig, checkSession } from "./middlewares";
+import { useSession, checkSession } from "./middlewares";
 import { apiV1Router, sockets } from "./routers";
 
 /* connect express with socket.io, wrapping app with http server, then wrap http server with socket.io */
@@ -19,7 +19,17 @@ const httpServer = http.createServer(app);
 const io = socketIo(httpServer);
 
 /* middlewares */
-// allow cors & dev logs
+app.set("port", SERVER_PORT || 3030);
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
+app.use(cookieParser());
+app.use(useSession());
+app.use(checkSession());
+app.use(helmet());
+app.use(compression());
+app.use("/assets", express.static("assets"));
+// use logger for development
 if (NODE_ENV === "development") {
   app.use(logger("dev"));
 }
@@ -30,17 +40,6 @@ if (NODE_ENV === "production") {
     res.sendFile("index.html", { root: path.join(__dirname, "./client") });
   });
 }
-
-app.set("port", SERVER_PORT || 3030);
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-app.use(bodyParser.json({ limit: "5mb" }));
-app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
-app.use(cookieParser());
-app.use(sessionConfig());
-app.use(checkSession());
-app.use(helmet());
-app.use(compression());
-app.use("/assets", express.static("assets"));
 
 /* routes & websockets events listener */
 app.use("/api/v1", apiV1Router);

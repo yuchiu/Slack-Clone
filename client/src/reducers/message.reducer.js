@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
 
     case constants.MESSAGE_SOCKET_RECEIVE:
       if (
-        action.payload.message.channelId === action.payload.currentChannel.id
+        action.payload.message.channel_id === action.payload.currentChannel.id
       ) {
         newState.messageList = state.messageList.concat(action.payload.message);
       }

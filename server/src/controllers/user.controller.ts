@@ -22,8 +22,11 @@ const userSummary = user => {
   return summary;
 };
 
-const comparePassword = async function(password) {
-  const isPasswordMatch = await bcrypt.compare(password, this.password);
+const comparePassword = async function(credentialsPassword, userPassword) {
+  const isPasswordMatch = await bcrypt.compare(
+    credentialsPassword,
+    userPassword
+  );
   return isPasswordMatch;
 };
 
@@ -167,11 +170,10 @@ export default {
           const newCredentials = { ...credentials, avatarurl };
           const initialDemoTeamId = 1;
 
-          const user = await models.User.create(newCredentials, {
-            raw: true,
+          const userData = await models.User.create(newCredentials, {
             transaction
           });
-          console.log(user.id);
+          const user = userData.get({ plain: true });
           await models.TeamMember.create(
             {
               user_id: user.id,
@@ -220,13 +222,7 @@ export default {
 
       /* save session */
       req.session.user = user;
-      req.session.save(() => {
-        if (req.session.user) {
-          console.log("req.session saved");
-        } else {
-          console.log("req.session not saved");
-        }
-      });
+      req.session.save(() => {});
 
       /* response */
       res.status(200).send({
@@ -251,6 +247,61 @@ export default {
   },
   singInUser: async (req: Request, res: Response) => {
     try {
+      const credentials = req.body;
+      const user = await models.User.findOne({
+        where: { username: credentials.username },
+        raw: true
+      });
+
+      /* user not registered */
+      if (!user) {
+        return res.status(403).send({
+          meta: {
+            type: "error",
+            status: 403,
+            message: `this account ${
+              credentials.username
+            } is not yet registered`
+          }
+        });
+      }
+
+      /* validate password */
+      const isPasswordValid = await comparePassword(
+        credentials.password,
+        user.password
+      );
+
+      /* get user's teams */
+      const teamList = await models.sequelize.query(
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
+        {
+          replacements: [user.id],
+          model: models.Team,
+          raw: true
+        }
+      );
+
+      /* save session */
+      req.session.user = user;
+      req.session.save(() => {});
+
+      if (isPasswordValid) {
+        return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          user: userSummary(user),
+          teamList
+        });
+      }
+
+      /* invalid password */
+      res.status(403).send({
+        error: "invalid password"
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send({
@@ -264,6 +315,14 @@ export default {
   },
   signOutUser: async (req: Request, res: Response) => {
     try {
+      req.session.destroy(() => {});
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        }
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send({
@@ -276,8 +335,54 @@ export default {
     }
   },
 
-  tryAutoSingInUser: async (req: Request, res: Response) => {
+  tryAutoSingInUser: async (req: any, res: Response) => {
     try {
+      const currentUserId = req.user.id;
+      // check if redis has the data
+      const userCache = await redisCache.get(`userId:${currentUserId}`);
+      const teamListCache = await redisCache.get(`teamList:${currentUserId}`);
+
+      if (userCache && teamListCache) {
+        const userCacheJSON = JSON.parse(userCache);
+        const teamListCacheArr = _.toArray(JSON.parse(teamListCache));
+        return res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          user: userSummary(userCacheJSON),
+          teamList: teamListCacheArr
+        });
+      }
+
+      const user = await models.User.findOne({
+        where: { id: currentUserId },
+        raw: true
+      });
+      /* get user's teams */
+      const teamList = await models.sequelize.query(
+        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
+        {
+          replacements: [user.id],
+          model: models.Team,
+          raw: true
+        }
+      );
+
+      // Save the responses in Redis store
+      redisCache.set(`userId:${currentUserId}`, user);
+      redisCache.set(`teamList:${currentUserId}`, teamList);
+
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        user: userSummary(user),
+        teamList
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send({
@@ -289,8 +394,96 @@ export default {
       });
     }
   },
-  updateUser: async (req: Request, res: Response) => {
+  updateUser: async (req: any, res: Response) => {
     try {
+      const currentUserId = req.user.id;
+      const {
+        brief_description,
+        detail_description,
+        password,
+        imgFile,
+        newPassword
+      } = req.body;
+
+      if (newPassword) {
+        const user = await models.User.findOne({
+          where: { id: currentUserId }
+        });
+
+        /* validate password */
+        const isPasswordValid = await comparePassword(password, user.password);
+
+        if (!isPasswordValid) {
+          res.status(500).send({
+            meta: {
+              type: "error",
+              status: 403,
+              message: "invalid password"
+            }
+          });
+        }
+      }
+      let avatarurl;
+
+      // if user uploads avatar img, save it and remove previous avatar
+      if (imgFile) {
+        avatarurl = await saveBase64Img(imgFile);
+        const user = await models.User.findOne({
+          where: {
+            id: currentUserId
+          },
+          raw: true
+        });
+        removePreviousImg(user.avatarurl);
+        await models.sequelize.query(
+          `UPDATE messages 
+          SET avatarurl=:newurl 
+          WHERE messages.user_id=:userId
+          RETURNING *`,
+          {
+            replacements: { userId: currentUserId, newurl: avatarurl },
+            model: models.Channel,
+            raw: true
+          }
+        );
+      }
+      // remove stale data from cache
+      redisCache.delete(`userId:${currentUserId}`);
+
+      // remove empty field
+      let updatedUserData: any = {
+        avatarurl,
+        brief_description,
+        detail_description,
+        password: newPassword
+      };
+      updatedUserData = _.pickBy(updatedUserData, _.identity);
+
+      /* conditions are validated, update the user */
+      await models.User.update(
+        {
+          ...updatedUserData
+        },
+        {
+          where: {
+            id: currentUserId
+          }
+        }
+      );
+      const updatedUser = await models.User.findOne({
+        where: {
+          id: currentUserId
+        }
+      });
+
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        user: updatedUser
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send({

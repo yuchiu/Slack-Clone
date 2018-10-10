@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"npm run ts\" \"npm run server\"",
     "ts": "tsc -w",
-    "server": "nodemon ./build/server.js",
+    "server": "nodemon NODE_ENV=development ./build/server.js",
     "build": "tsc && node ./build/server.js",
     "old-start": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
     "old-build": "babel src -d build",

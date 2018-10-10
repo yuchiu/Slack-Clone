@@ -12,7 +12,7 @@ import {
 
 const RedisStore = connectRedis(session);
 
-export default {
+const sessionConfig = {
   store: new RedisStore({
     client: redisClient,
     port: REDIS_PORT,
@@ -30,3 +30,4 @@ export default {
     maxAge: 604800000 // 1000 * 60 * 60 * 24 * 7 in milliseconds
   }
 };
+export default sessionConfig;
