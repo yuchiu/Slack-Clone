@@ -9,15 +9,14 @@ import helmet from "helmet";
 import compression from "compression";
 import bodyParser from "body-parser";
 
-import models from "./models";
 import { NODE_ENV, SERVER_PORT } from "./utils/secrets";
 import { sessionConfig, checkSession } from "./middlewares";
-import { routes, sockets } from "./routers";
+import { apiV1Router, sockets } from "./routers";
 
-/* connect express with socket.io, wrapping app with server, then wrap server with socket.io */
+/* connect express with socket.io, wrapping app with http server, then wrap http server with socket.io */
 const app = express();
-const server = http.Server(app);
-const io = socketIo(server);
+const httpServer = http.Server(app);
+const io = socketIo(httpServer);
 
 /* middlewares */
 // allow cors & dev logs
@@ -31,6 +30,8 @@ if (NODE_ENV === "production") {
     res.sendFile("index.html", { root: path.join(__dirname, "./client") });
   });
 }
+
+app.set("port", SERVER_PORT || 3030);
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
@@ -42,12 +43,7 @@ app.use(compression());
 app.use("/assets", express.static("assets"));
 
 /* routes & websockets events listener */
-routes(app);
+app.use("/api/v1", apiV1Router);
 sockets(io);
 
-/* listen to port */
-models.sequelize.sync().then(() => {
-  server.listen(SERVER_PORT, () => {
-    console.log(`app listenning on port ${SERVER_PORT}`);
-  });
-});
+export { app, httpServer };

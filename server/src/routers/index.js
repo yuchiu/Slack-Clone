@@ -1,4 +1,4 @@
-import routes from "./routes";
+import apiV1Router from "./apiV1Router";
 import sockets from "./sockets";
 
-export { routes, sockets };
+export { apiV1Router, sockets };
