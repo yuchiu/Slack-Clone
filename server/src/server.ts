@@ -1,7 +1,7 @@
 import * as errorHandler from "errorhandler";
 
-import { app, httpServer } from "./app";
 import models from "./models";
+import { app, httpServer } from "./app";
 
 /**
  * Error Handler. Provides full stack - remove for production

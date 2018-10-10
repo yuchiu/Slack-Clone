@@ -1,5 +1,11 @@
-export default (sequelize, DataTypes) => {
-  const Channel = sequelize.define("channel", {
+import * as Sequelize from "sequelize";
+import { ChannelAttributes, ChannelInstance } from "./types";
+
+export const ChannelFactory = (
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+): Sequelize.Model<ChannelInstance, ChannelAttributes> => {
+  const attributes: SequelizeAttributes<ChannelAttributes> = {
     name: DataTypes.STRING,
     public: {
       type: DataTypes.BOOLEAN,
@@ -30,7 +36,11 @@ export default (sequelize, DataTypes) => {
         }
       }
     }
-  });
+  };
+  const Channel = sequelize.define<ChannelInstance, ChannelAttributes>(
+    "channel",
+    attributes
+  );
 
   Channel.associate = models => {
     // 1:M
@@ -50,6 +60,5 @@ export default (sequelize, DataTypes) => {
       }
     });
   };
-
   return Channel;
 };

@@ -3,6 +3,7 @@ import Identicon from "identicon.js";
 import randomstring from "randomstring";
 import randomHex from "randomhex";
 import * as _ from "lodash";
+import bcrypt from "bcryptjs";
 
 import { redisCache } from "./common";
 import models from "../models";
@@ -18,6 +19,11 @@ const userSummary = user => {
     detail_description: user.detail_description
   };
   return summary;
+};
+
+const comparePassword = async function(password) {
+  const isPasswordMatch = await bcrypt.compare(password, this.password);
+  return isPasswordMatch;
 };
 
 const generateRandomImg = () => {
@@ -258,7 +264,8 @@ export default {
       }
 
       /* validate password */
-      const isPasswordValid = await user.comparePassword(credentials.password);
+
+      const isPasswordValid = await comparePassword(credentials.password);
 
       /* get user's teams */
       const teamList = await models.sequelize.query(
@@ -399,7 +406,7 @@ export default {
         });
 
         /* validate password */
-        const isPasswordValid = await user.comparePassword(password);
+        const isPasswordValid = await comparePassword(password);
 
         if (!isPasswordValid) {
           res.status(500).send({

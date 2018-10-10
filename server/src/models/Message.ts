@@ -1,5 +1,11 @@
-export default (sequelize, DataTypes) => {
-  const Message = sequelize.define("message", {
+import * as Sequelize from "sequelize";
+import { MessageAttributes, MessageInstance } from "./types";
+
+export const MessageFactory = (
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+): Sequelize.Model<MessageInstance, MessageAttributes> => {
+  const attributes: SequelizeAttributes<MessageAttributes> = {
     username: DataTypes.STRING,
     avatarurl: {
       type: DataTypes.STRING,
@@ -29,7 +35,12 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: ""
     }
-  });
+  };
+  const Message = sequelize.define<MessageInstance, MessageAttributes>(
+    "message",
+    attributes
+  );
+
   Message.associate = models => {
     // 1:M
     Message.belongsTo(models.Channel, {

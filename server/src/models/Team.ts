@@ -1,5 +1,11 @@
-export default (sequelize, DataTypes) => {
-  const Team = sequelize.define("team", {
+import * as Sequelize from "sequelize";
+import { TeamAttributes, TeamInstance } from "./types";
+
+export const TeamFactory = (
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+): Sequelize.Model<TeamInstance, TeamAttributes> => {
+  const attributes: SequelizeAttributes<TeamAttributes> = {
     name: {
       type: DataTypes.STRING
     },
@@ -13,7 +19,11 @@ export default (sequelize, DataTypes) => {
         }
       }
     }
-  });
+  };
+  const Team = sequelize.define<TeamInstance, TeamAttributes>(
+    "team",
+    attributes
+  );
 
   Team.associate = models => {
     Team.belongsToMany(models.User, {

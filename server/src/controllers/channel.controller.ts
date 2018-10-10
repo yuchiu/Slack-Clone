@@ -188,15 +188,13 @@ export default {
         raw: true,
         where: { id: channelId }
       });
-      const messageList = await models.Message.findAll(
-        {
-          order: [["created_at", "DESC"]],
-          where: { channelId },
-          limit: 30,
-          offset: 0
-        },
-        { raw: true }
-      );
+      const messageList = await models.Message.findAll({
+        order: [["created_at", "DESC"]],
+        where: { channelId },
+        limit: 30,
+        offset: 0,
+        raw: true
+      });
 
       /* check if channel is private */
       if (!channel.public) {
@@ -322,7 +320,7 @@ export default {
           message: ""
         },
         channelList,
-        channel: updatedChannel.dataValues
+        channel: updatedChannel.getDataValue
       });
     } catch (err) {
       console.log(err);
