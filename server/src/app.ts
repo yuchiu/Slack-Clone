@@ -1,11 +1,11 @@
 import * as express from "express";
 import * as path from "path";
 import * as http from "http";
-import socketIo from "socket.io";
-import cors from "cors";
-import logger from "morgan";
-import cookieParser from "cookie-parser";
-import helmet from "helmet";
+import * as socketIo from "socket.io";
+import * as cors from "cors";
+import * as logger from "morgan";
+import * as cookieParser from "cookie-parser";
+import * as helmet from "helmet";
 import * as compression from "compression";
 import * as bodyParser from "body-parser";
 

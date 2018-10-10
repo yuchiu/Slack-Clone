@@ -9,7 +9,8 @@ export default () => async (req: any, res: Response, next: NextFunction) => {
         username: req.session.user.username
       }
     });
-    if (user.dataValues) {
+    console.log(user);
+    if (user.getDataValue) {
       req.user = user;
       delete req.user.password; // delete the password from the session
       req.session.user = user; // refresh the session value

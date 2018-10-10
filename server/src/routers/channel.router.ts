@@ -12,6 +12,5 @@ router.get(
   channelController.getChannelData
 );
 router.post("/", authenticationPolicy, channelController.createChannel);
-router.put("/", authenticationPolicy, channelController.updateChannel);
 
 export default router;
