@@ -1,5 +1,4 @@
 import * as Sequelize from "sequelize";
-import { ChannelAttributes, ChannelInstance } from "./types";
 
 export const ChannelFactory = (
   sequelize: Sequelize.Sequelize,

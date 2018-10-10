@@ -1,5 +1,4 @@
 import * as Sequelize from "sequelize";
-import { ChannelMemberAttributes, ChannelMemberInstance } from "./types";
 
 export const ChannelMemberFactory = (
   sequelize: Sequelize.Sequelize,

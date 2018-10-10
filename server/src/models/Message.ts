@@ -1,5 +1,4 @@
 import * as Sequelize from "sequelize";
-import { MessageAttributes, MessageInstance } from "./types";
 
 export const MessageFactory = (
   sequelize: Sequelize.Sequelize,

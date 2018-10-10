@@ -1,5 +1,4 @@
 import * as Sequelize from "sequelize";
-import { DbInterface } from "./types";
 
 import { PSQL_NAME, PSQL_USER, PSQL_PASS } from "../utils/secrets";
 import { ChannelFactory } from "./Channel";

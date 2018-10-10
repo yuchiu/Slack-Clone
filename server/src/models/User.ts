@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import * as Sequelize from "sequelize";
-import { UserAttributes, UserInstance } from "./types";
 
 const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;

@@ -1,5 +1,4 @@
 import * as Sequelize from "sequelize";
-import { TeamAttributes, TeamInstance } from "./types";
 
 export const TeamFactory = (
   sequelize: Sequelize.Sequelize,
