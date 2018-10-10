@@ -22,7 +22,7 @@
     "connect-redis": "^3.4.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
+    "dotenv": "^6.1.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "fs-extra": "^7.0.0",
@@ -44,7 +44,8 @@
     "randomstring": "^1.1.5",
     "redis": "^2.8.0",
     "sequelize": "^4.38.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -100,6 +101,10 @@
       "no-underscore-dangle": 0,
       "consistent-return": 0,
       "linebreak-style": 0,
+      "import/no-cycle": 0,
+      "import/no-mutable-exports": 0,
+      "no-unused-expressions": 0,
+      "prefer-destructuring": 0,
       "camelcase": 0
     }
   }

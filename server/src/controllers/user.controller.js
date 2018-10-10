@@ -6,7 +6,7 @@ import _ from "lodash";
 
 import { redisCache } from "./common";
 import models from "../models";
-import config from "../config";
+import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 
 const userSummary = user => {
   const summary = {
@@ -36,9 +36,7 @@ const saveBase64Img = async avatarBase64Img => {
 
   await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
 
-  const avatarurl = `${config.SERVER_URL}:${
-    config.SERVER_PORT
-  }/assets/${avatarName}`;
+  const avatarurl = `${SERVER_URL}:${SERVER_PORT}/assets/${avatarName}`;
 
   return avatarurl;
 };

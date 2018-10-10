@@ -2,7 +2,7 @@ import fse from "fs-extra";
 import randomstring from "randomstring";
 import _ from "lodash";
 
-import config from "../config";
+import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 import models from "../models";
 import { redisCache } from "./common";
 
@@ -110,9 +110,7 @@ export default {
         avatarurl,
         username,
         filetype: file.type,
-        url: `${config.SERVER_URL}:${
-          config.SERVER_PORT
-        }/assets/${randomFileName}`
+        url: `${SERVER_URL}:${SERVER_PORT}/assets/${randomFileName}`
       });
 
       const message = messageResponse.dataValues;

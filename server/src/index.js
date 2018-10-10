@@ -10,7 +10,7 @@ import compression from "compression";
 import bodyParser from "body-parser";
 
 import models from "./models";
-import config from "./config";
+import { NODE_ENV, SERVER_PORT } from "./utils/secrets";
 import { sessionConfig, checkSession } from "./middlewares";
 import { routes, sockets } from "./routers";
 
@@ -21,12 +21,11 @@ const io = socketIo(server);
 
 /* middlewares */
 // allow cors & dev logs
-if (process.env.NODE_ENV === "development") {
+if (NODE_ENV === "development") {
   app.use(logger("dev"));
 }
-
 // use client production build */
-if (process.env.NODE_ENV === "production") {
+if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "./client")));
   app.get("/", (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "./client") });
@@ -48,7 +47,7 @@ sockets(io);
 
 /* listen to port */
 models.sequelize.sync().then(() => {
-  server.listen(config.SERVER_PORT, () => {
-    console.log(`app listenning on port ${config.SERVER_PORT}`);
+  server.listen(SERVER_PORT, () => {
+    console.log(`app listenning on port ${SERVER_PORT}`);
   });
 });

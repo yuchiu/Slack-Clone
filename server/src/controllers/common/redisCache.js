@@ -1,4 +1,4 @@
-import { redisClient } from "../../utils";
+import redisClient from "../../config/redisClient";
 
 export default {
   set: async (key, data) => {

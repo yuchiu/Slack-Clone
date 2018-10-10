@@ -1,8 +1,14 @@
 import connectRedis from "connect-redis";
 import session from "express-session";
 
-import config from "../config";
-import { redisClient } from "../utils";
+import redisClient from "../config/redisClient";
+import {
+  REDIS_PORT,
+  REDIS_HOST,
+  REDIS_TIME_TO_LIVE,
+  SESSION_SECRET,
+  SESSION_NAME
+} from "../utils/secrets";
 
 const RedisStore = connectRedis(session);
 
@@ -10,12 +16,12 @@ export default () =>
   session({
     store: new RedisStore({
       client: redisClient,
-      port: config.REDIS_PORT,
-      host: config.REDIS_HOST,
-      ttl: config.REDIS_TIME_TO_LIVE
+      port: REDIS_PORT,
+      host: REDIS_HOST,
+      ttl: REDIS_TIME_TO_LIVE
     }),
-    secret: config.SESSION_SECRET,
-    name: config.SESSION_NAME,
+    secret: SESSION_SECRET,
+    name: SESSION_NAME,
     resave: false,
     saveUninitialized: false,
     cookie: {

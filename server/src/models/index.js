@@ -1,20 +1,15 @@
 import Sequelize from "sequelize";
-import config from "../config";
+import { PSQL_NAME, PSQL_USER, PSQL_PASS } from "../utils/secrets";
 
-const sequelize = new Sequelize(
-  config.PSQL_NAME,
-  config.PSQL_USER,
-  config.PSQL_PASS,
-  {
-    dialect: "postgres",
-    operatorsAliases: Sequelize.Op,
-    logging: false,
-    host: process.env.PSQL_HOST || "localhost",
-    define: {
-      underscored: true
-    }
+const sequelize = new Sequelize(PSQL_NAME, PSQL_USER, PSQL_PASS, {
+  dialect: "postgres",
+  operatorsAliases: Sequelize.Op,
+  logging: false,
+  host: process.env.PSQL_HOST || "localhost",
+  define: {
+    underscored: true
   }
-);
+});
 
 const models = {
   sequelize,
