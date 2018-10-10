@@ -1,10 +1,11 @@
 import * as _ from "lodash";
+import { Request, Response } from "express";
 
 import { redisCache } from "./common";
 import models from "../models";
 
 export default {
-  getAllTeam: async (req, res) => {
+  getAllTeam: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);
@@ -17,7 +18,7 @@ export default {
       });
     }
   },
-  createTeam: async (req, res) => {
+  createTeam: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);
@@ -43,7 +44,7 @@ export default {
       };
     }
   },
-  getTeamData: async (req, res) => {
+  getTeamData: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);

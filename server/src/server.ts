@@ -1,6 +1,6 @@
 import * as errorHandler from "errorhandler";
 
-import models from "./models";
+import models from "./config/DBConfig";
 import { app, httpServer } from "./app";
 
 /**

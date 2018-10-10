@@ -6,10 +6,10 @@ export default () => async (req: any, res: Response, next: NextFunction) => {
   if (req.session && req.session.user) {
     const user = await models.User.findOne({
       where: {
-        username: req.session.user.username
-      }
+        id: req.session.user.id
+      },
+      raw: true
     });
-    console.log(user);
     if (user.getDataValue) {
       req.user = user;
       delete req.user.password; // delete the password from the session

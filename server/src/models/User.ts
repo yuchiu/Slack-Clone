@@ -85,7 +85,7 @@ export const UserFactory = (
     }
   };
   const User = sequelize.define<UserInstance, UserAttributes>(
-    "channel",
+    "user",
     attributes,
     {
       hooks: {

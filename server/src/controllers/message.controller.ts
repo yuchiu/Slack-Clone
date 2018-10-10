@@ -1,5 +1,6 @@
 import fse from "fs-extra";
 import randomstring from "randomstring";
+import { Request, Response } from "express";
 import * as _ from "lodash";
 
 import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
@@ -27,7 +28,7 @@ const generateFileName = data => {
 };
 
 export default {
-  getAllMessage: async (req, res) => {
+  getAllMessage: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       res.status(500).send({
@@ -52,7 +53,7 @@ export default {
       };
     }
   },
-  getMessage: async (req, res) => {
+  getMessage: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);

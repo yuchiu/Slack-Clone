@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Joi from "joi";
+import * as Joi from "joi";
 
 export default (req: Request, res: Response, next: NextFunction) => {
   const schema = {

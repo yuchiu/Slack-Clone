@@ -1,6 +1,6 @@
 import { Response, NextFunction } from "express";
 
-import models from "../models";
+import models from "../config/DBConfig";
 
 export default async (req: any, res: Response, next: NextFunction) => {
   const { teamId } = req.body;

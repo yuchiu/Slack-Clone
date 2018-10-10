@@ -1,10 +1,11 @@
 import * as _ from "lodash";
+import { Request, Response } from "express";
 
 import { redisCache } from "./common";
 import models from "../models";
 
 export default {
-  getAllChannel: async (req, res) => {
+  getAllChannel: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       res.status(500).send({
@@ -16,7 +17,7 @@ export default {
       });
     }
   },
-  createChannel: async (req, res) => {
+  createChannel: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);
@@ -30,7 +31,7 @@ export default {
     }
   },
 
-  getChannelData: async (req, res) => {
+  getChannelData: async (req: Request, res: Response) => {
     try {
     } catch (err) {
       console.log(err);
