@@ -1,6 +1,8 @@
+import { Response, NextFunction } from "express";
+
 import models from "../models";
 
-export default () => async (req, res, next) => {
+export default () => async (req: any, res: Response, next: NextFunction) => {
   if (req.session && req.session.user) {
     const user = await models.User.findOne({
       where: {

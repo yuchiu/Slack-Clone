@@ -2,7 +2,7 @@ import fse from "fs-extra";
 import Identicon from "identicon.js";
 import randomstring from "randomstring";
 import randomHex from "randomhex";
-import _ from "lodash";
+import * as _ from "lodash";
 
 import { redisCache } from "./common";
 import models from "../models";
@@ -441,7 +441,7 @@ export default {
       redisCache.delete(`userId:${currentUserId}`);
 
       // remove empty field
-      let updatedUserData = {
+      let updatedUserData: any = {
         avatarurl,
         brief_description,
         detail_description,

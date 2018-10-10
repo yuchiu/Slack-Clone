@@ -1,21 +1,21 @@
-import express from "express";
-import path from "path";
-import http from "http";
+import * as express from "express";
+import * as path from "path";
+import * as http from "http";
 import socketIo from "socket.io";
 import cors from "cors";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import compression from "compression";
-import bodyParser from "body-parser";
+import * as compression from "compression";
+import * as bodyParser from "body-parser";
 
 import { NODE_ENV, SERVER_PORT } from "./utils/secrets";
 import { sessionConfig, checkSession } from "./middlewares";
 import { apiV1Router, sockets } from "./routers";
 
 /* connect express with socket.io, wrapping app with http server, then wrap http server with socket.io */
-const app = express();
-const httpServer = http.Server(app);
+const app: express.Application = express();
+const httpServer = http.createServer(app);
 const io = socketIo(httpServer);
 
 /* middlewares */

@@ -1,6 +1,8 @@
+import { Response, NextFunction } from "express";
+
 import models from "../models";
 
-export default async (req, res, next) => {
+export default async (req: any, res: Response, next: NextFunction) => {
   const { teamId } = req.body;
   const currentUserId = req.user.id;
   const member = await models.TeamMember.findOne(

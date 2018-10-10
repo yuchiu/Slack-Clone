@@ -1,4 +1,4 @@
-import errorHandler from "errorhandler";
+import * as errorHandler from "errorhandler";
 
 import { app, httpServer } from "./app";
 import models from "./models";

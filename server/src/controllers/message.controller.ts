@@ -1,6 +1,6 @@
 import fse from "fs-extra";
 import randomstring from "randomstring";
-import _ from "lodash";
+import * as _ from "lodash";
 
 import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 import models from "../models";
@@ -12,7 +12,7 @@ const validateUploadFiles = data => {
   }
   if (
     !data.type.startsWith("image/") &&
-    !data.type === "text/plain" &&
+    !data.type.startsWith("text/plain") &&
     !data.type.startsWith("audio/")
   ) {
     return { type: false };

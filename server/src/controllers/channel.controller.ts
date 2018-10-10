@@ -1,4 +1,4 @@
-import _ from "lodash";
+import * as _ from "lodash";
 
 import { redisCache } from "./common";
 import models from "../models";
@@ -279,7 +279,7 @@ export default {
       } = req.body;
 
       // remove empty field
-      let updatedChannelData = { brief_description, detail_description };
+      let updatedChannelData: any = { brief_description, detail_description };
       updatedChannelData = _.pickBy(updatedChannelData, _.identity);
 
       // remove stale data from cache

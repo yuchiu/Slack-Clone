@@ -3,7 +3,7 @@ import * as express from "express";
 import { userController } from "../controllers";
 import { authenticationPolicy, registerPolicy } from "../middlewares";
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 /* user routes */
 router.get("/auths", authenticationPolicy, userController.tryAutoLogin);

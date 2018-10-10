@@ -1,5 +1,5 @@
 import connectRedis from "connect-redis";
-import session from "express-session";
+import * as session from "express-session";
 
 import redisClient from "../config/redisClient";
 import {
