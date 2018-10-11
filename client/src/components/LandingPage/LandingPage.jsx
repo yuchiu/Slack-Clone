@@ -1,10 +1,10 @@
 import React from "react";
 
-import { NavBar } from "@/components/common";
+import { Navbar } from "@/components/common";
 
 const LandingPage = () => (
   <React.Fragment>
-    <NavBar />
+    <Navbar />
     <main className="landing-page">Slack Clone</main>
   </React.Fragment>
 );

@@ -1,6 +1,6 @@
-import NavBar from "./NavBar";
-import InlineError from "./InlineError";
-import SlackLogo from "./SlackLogo";
-import InlineHint from "./InlineHint";
+import Navbar from "./Navbar/Navbar";
+import InlineError from "./InlineError/InlineError.jsx";
+import SlackLogo from "./SlackLogo/SlackLogo.jsx";
+import InlineHint from "./InlineHint/InlineHint.jsx";
 
-export { NavBar, InlineError, InlineHint, SlackLogo };
+export { Navbar, InlineError, InlineHint, SlackLogo };

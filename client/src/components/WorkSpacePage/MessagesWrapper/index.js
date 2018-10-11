@@ -123,7 +123,7 @@ class MessagesContainer extends React.Component {
     } = this.props;
     return (
       <div
-        className={`messages-container messages-container--sidebar-${isSidebarOpen}`}
+        className={`messages-wrapper messages-wrapper--sidebar-${isSidebarOpen}`}
         ref={scrollerDiv => {
           this.scrollerDiv = scrollerDiv;
         }}

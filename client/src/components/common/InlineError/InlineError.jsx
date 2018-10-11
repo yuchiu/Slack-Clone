@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./index.scss";
+import "./InlineError.scss";
 
 const InlineError = ({ text }) => (
-  <span className="inline-error-span">
-    {"  "}
-    {text}.
-  </span>
+  <span className="inline-error-span">{text}.</span>
 );
 
 InlineError.propTypes = {

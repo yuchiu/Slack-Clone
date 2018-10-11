@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 import store from "@/store";
-import Router from "@/components";
+import Router from "@/components/Router";
 
 const app = (
   <Provider store={store}>

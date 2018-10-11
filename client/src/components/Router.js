@@ -3,19 +3,32 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { userAction } from "@/actions";
+import Router from "./Router.jsx";
 
-class TryAutoAuth extends React.Component {
-  componentDidMount() {
+class RouterContainer extends React.Component {
+  state = {
+    hasError: false
+  };
+
+  UNSAFE_componentWillMount() {
     const { fetchAutoAuth } = this.props;
     fetchAutoAuth();
   }
 
+  componentDidCatch(error, info) {
+    console.log(error, info);
+    this.setState({
+      hasError: true
+    });
+  }
+
   render() {
-    return null;
+    const { hasError } = this.state;
+    return <Router hasError={hasError} />;
   }
 }
 
-TryAutoAuth.propTypes = {
+RouterContainer.propTypes = {
   fetchAutoAuth: PropTypes.func.isRequired
 };
 
@@ -28,4 +41,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   null,
   dispatchToProps
-)(TryAutoAuth);
+)(RouterContainer);

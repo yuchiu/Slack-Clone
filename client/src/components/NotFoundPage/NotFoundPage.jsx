@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { NavBar } from "@/components/common";
-import Content from "./Content";
+import { Navbar } from "@/components/common";
 
 const NotFoundPage = ({
   match: {
@@ -10,9 +9,9 @@ const NotFoundPage = ({
   }
 }) => (
   <React.Fragment>
-    <NavBar />
+    <Navbar />
     <main className="not-found-page">
-      <Content unfoundLocation={unfoundLocation} />
+      <p>404! The page `{unfoundLocation}` is not found.</p>
     </main>
   </React.Fragment>
 );

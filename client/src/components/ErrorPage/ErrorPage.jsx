@@ -1,13 +1,12 @@
 import React from "react";
 
-import { NavBar } from "@/components/common";
-import Content from "./Content";
+import { Navbar } from "@/components/common";
 
 const ErrorPage = () => (
   <React.Fragment>
-    <NavBar />
+    <Navbar />
     <main className="not-found-page">
-      <Content />
+      <p>Error occured while loading the page.</p>
     </main>
   </React.Fragment>
 );

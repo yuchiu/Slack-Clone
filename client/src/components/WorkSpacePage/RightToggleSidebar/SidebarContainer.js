@@ -9,7 +9,7 @@ import SidebarContent from "./SidebarContent";
 class SidebarContainer extends React.Component {
   render() {
     return (
-      <div className="sidebar-container">
+      <div className="sidebar-wrapper">
         <SidebarHeader />
         <SidebarContent />
         <SidebarFooter />

@@ -1,20 +1,22 @@
 import React from "react";
-import { Form, Button, Input, Header, Container } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { Form, Button, Input, Header, Container } from "semantic-ui-react";
 
-import { InlineError } from "../common";
+import "./CreateTeamPage.scss";
+import { Navbar, InlineError } from "../common";
 
-class CreateTeamForm extends React.Component {
-  render() {
-    const {
-      handleChange,
-      name,
-      clientErrors,
-      handleSubmit,
-      about
-    } = this.props;
+const CreateTeamPage = ({
+  error,
+  clientErrors,
+  name,
+  about,
 
-    return (
+  handleChange,
+  handleSubmit
+}) => (
+  <React.Fragment>
+    <Navbar />
+    <main className="create-team-page">
       <Container text>
         <Header as="h2">Create a team</Header>
         <Form>
@@ -44,15 +46,19 @@ class CreateTeamForm extends React.Component {
           </Button>
         </Form>
       </Container>
-    );
-  }
-}
-CreateTeamForm.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+      {error && <InlineError text={error} />}
+    </main>
+  </React.Fragment>
+);
+
+CreateTeamPage.propTypes = {
+  error: PropTypes.string.isRequired,
+  about: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   clientErrors: PropTypes.object.isRequired,
+
   handleSubmit: PropTypes.func.isRequired,
-  about: PropTypes.string.isRequired
+  handleChange: PropTypes.func.isRequired
 };
 
-export default CreateTeamForm;
+export default CreateTeamPage;

@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
-import "./index.scss";
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
-import { NavBar, InlineError } from "@/components/common";
-import LoginForm from "./LoginForm";
+import LoginPage from "./LoginPage.jsx";
 import { authSelector, errorSelector } from "@/reducers/selectors";
 
-class LoginPage extends React.Component {
+class LoginPageContainer extends React.Component {
   state = {
     clientErrors: {},
     credentials: {
@@ -23,6 +20,7 @@ class LoginPage extends React.Component {
     const { clearAllError } = this.props;
     clearAllError();
     this.setState({
+      clientErrors: {},
       credentials: {
         username: "",
         password: ""
@@ -62,28 +60,20 @@ class LoginPage extends React.Component {
     const { clientErrors, credentials } = this.state;
     const { isUserLoggedIn, error } = this.props;
     return (
-      <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/workspace" />}
-        <NavBar />
-        <main className="login-page">
-          <LoginForm
-            handleLogin={this.handleLogin}
-            onChange={this.handleChange}
-            redirectToRegister={this.redirectToRegister}
-            clientErrors={clientErrors}
-            credentials={credentials}
-          />
-          <br />
-          <div className="inline-error--center">
-            {error && <InlineError text={`Error: ${error}`} />}
-          </div>
-        </main>
-      </React.Fragment>
+      <LoginPage
+        clientErrors={clientErrors}
+        credentials={credentials}
+        isUserLoggedIn={isUserLoggedIn}
+        error={error}
+        handleLogin={this.handleLogin}
+        handleChange={this.handleChange}
+        redirectToRegister={this.redirectToRegister}
+      />
     );
   }
 }
 
-LoginPage.propTypes = {
+LoginPageContainer.propTypes = {
   history: PropTypes.object.isRequired,
   fetchLoginUser: PropTypes.func.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
@@ -105,4 +95,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(LoginPage);
+)(LoginPageContainer);

@@ -8,7 +8,7 @@ import InputBox from "./InputBox";
 class InputContainer extends React.PureComponent {
   render() {
     return (
-      <div className="input-container">
+      <div className="input-wrapper">
         <FileUpload />
         <InputBox />
       </div>

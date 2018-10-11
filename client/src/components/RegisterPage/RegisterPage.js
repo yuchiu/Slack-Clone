@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
-import "./index.scss";
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
-import { NavBar, InlineError } from "@/components/common";
 import { authSelector, errorSelector } from "@/reducers/selectors";
-import RegisterForm from "./RegisterForm";
+import RegisterPage from "./RegisterPage.jsx";
 
-class RegisterPage extends React.Component {
+class RegisterPageContainer extends React.Component {
   state = {
     clientErrors: {},
     credentials: {
@@ -81,27 +78,20 @@ class RegisterPage extends React.Component {
     const { clientErrors, credentials } = this.state;
     const { isUserLoggedIn, error } = this.props;
     return (
-      <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/create-team" />}
-        <NavBar />
-        <main className="register-page">
-          <RegisterForm
-            handleRegister={this.handleRegister}
-            onChange={this.handleChange}
-            redirectToLogin={this.redirectToLogin}
-            clientErrors={clientErrors}
-            credentials={credentials}
-          />
-          <div className="inline-error--center">
-            {error && <InlineError text={`Error: ${error}`} />}
-          </div>
-        </main>
-      </React.Fragment>
+      <RegisterPage
+        isUserLoggedIn={isUserLoggedIn}
+        clientErrors={clientErrors}
+        credentials={credentials}
+        error={error}
+        handleRegister={this.handleRegister}
+        handleChange={this.handleChange}
+        redirectToLogin={this.redirectToLogin}
+      />
     );
   }
 }
 
-RegisterPage.propTypes = {
+RegisterPageContainer.propTypes = {
   fetchRegisterUser: PropTypes.func.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
@@ -122,4 +112,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(RegisterPage);
+)(RegisterPageContainer);

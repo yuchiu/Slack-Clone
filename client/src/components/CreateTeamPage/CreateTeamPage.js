@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { NavBar, InlineError } from "../common";
 import { validateForm } from "../../utils";
-import CreateTeamForm from "./CreateTeamForm";
 import { errorSelector } from "@/reducers/selectors";
+import CreateTeamPage from "./CreateTeamPage.jsx";
 
-class CreateTeamPage extends React.Component {
+class CreateTeamPageContainer extends React.Component {
   state = {
     name: "",
     about: "",
@@ -41,24 +40,19 @@ class CreateTeamPage extends React.Component {
     const { error } = this.props;
 
     return (
-      <React.Fragment>
-        <NavBar />
-        <main className="create-team-page">
-          <CreateTeamForm
-            clientErrors={clientErrors}
-            name={name}
-            about={about}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
-          {error && <InlineError text={error} />}
-        </main>
-      </React.Fragment>
+      <CreateTeamPage
+        clientErrors={clientErrors}
+        name={name}
+        about={about}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        error={error}
+      />
     );
   }
 }
 
-CreateTeamPage.propTypes = {
+CreateTeamPageContainer.propTypes = {
   fetchCreateTeam: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   error: PropTypes.string.isRequired
@@ -76,4 +70,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(CreateTeamPage);
+)(CreateTeamPageContainer);
