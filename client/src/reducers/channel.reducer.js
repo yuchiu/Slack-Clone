@@ -9,22 +9,6 @@ const initialState = {
   currentChannelMemberList: []
 };
 
-/* helper functions */
-const getCurrentChannelFromParams = (
-  channelList,
-  currentChannel,
-  channelIdFromParams
-) => {
-  if (!channelIdFromParams) {
-    return currentChannel;
-  }
-  // return current channel using params
-  const currentChannelFromParams = channelList.find(
-    channel => channel.id === parseInt(channelIdFromParams, 10)
-  );
-  return currentChannelFromParams;
-};
-
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
@@ -50,14 +34,6 @@ export default (state = initialState, action) => {
     case constants.CHANNEL_SWITCH:
       newState.currentChannel = state.channelList.find(
         channel => channel.id === action.payload
-      );
-      return newState;
-
-    case constants.CHANNEL_GET_CURRENT:
-      newState.currentChannel = getCurrentChannelFromParams(
-        state.channelList,
-        state.currentChannel,
-        action.payload.channelId
       );
       return newState;
 

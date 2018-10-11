@@ -57,11 +57,5 @@ export default {
         payload: data.meta.message
       });
     }
-  },
-  getCurrentChannel: params => async dispatch => {
-    dispatch({
-      type: constants.CHANNEL_GET_CURRENT,
-      payload: params
-    });
   }
 };

@@ -5,12 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import "./index.scss";
 import { sessionStore } from "@/utils";
-import {
-  teamAction,
-  errorAction,
-  channelAction,
-  globalStateAction
-} from "@/actions";
+import { teamAction, errorAction, globalStateAction } from "@/actions";
 import LeftSidebar from "./LeftSidebar";
 import MainHeader from "./MainHeader";
 import MessagesContainer from "./MessagesContainer";
@@ -52,31 +47,6 @@ class WorkSpacePage extends React.Component {
   isCurrentTeamExist = () => {
     if (sessionStore.getTeamId() === "0") return false;
     return true;
-  };
-
-  componentDidUpdate = () => {
-    const {
-      getCurrentTeam,
-      getCurrentChannel,
-      teamList,
-      channelList,
-      match: { params }
-    } = this.props;
-    const { currentTeamParam, currentChannelParam } = this.state;
-    /* get currentTeam based on params, if params is missing then use previous states */
-    if (
-      currentChannelParam !== params.channelId ||
-      currentTeamParam !== params.teamId
-    ) {
-      if (teamList.length > 0 && channelList.length > 0) {
-        getCurrentTeam(params);
-        getCurrentChannel(params);
-        this.setState({
-          currentTeamParam: params.teamId,
-          currentChannelParam: params.channelId
-        });
-      }
-    }
   };
 
   componentWillUnmount() {
@@ -147,16 +117,8 @@ const dispatchToProps = dispatch => ({
   fetchTeamAssociatedList: teamId => {
     dispatch(teamAction.fetchTeamAssociatedList(teamId));
   },
-  getCurrentTeam: params => {
-    dispatch(teamAction.getCurrentTeam(params));
-  },
-
   clearSocketConnection: () => {
     dispatch(globalStateAction.clearSocketConnection());
-  },
-
-  getCurrentChannel: params => {
-    dispatch(channelAction.getCurrentChannel(params));
   },
   receiveSocketNewTeamMember: () => {
     dispatch(teamAction.receiveSocketNewTeamMember());

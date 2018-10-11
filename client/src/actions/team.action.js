@@ -25,13 +25,6 @@ export default {
       payload: teamId
     });
   },
-  getCurrentTeam: params => async dispatch => {
-    dispatch({
-      type: constants.TEAM_GET_CURRENT,
-      payload: params
-    });
-  },
-
   fetchTeamAssociatedList: teamId => async dispatch => {
     try {
       const response = await teamService.fetchTeamAssociatedList(teamId);
