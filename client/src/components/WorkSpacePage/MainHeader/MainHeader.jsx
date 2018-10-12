@@ -1,15 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 
-import "./index.scss";
-import ChannelHeader from "./ChannelHeader";
-import MessageGroupHeader from "./MessageGroupHeader";
-import { globalStateAction } from "@/actions";
-import { channelSelector, globalStateSelector } from "@/reducers/selectors";
+import "./MainHeader.scss";
+import ChannelHeader from "./ChannelHeader.jsx";
+import MessageGroupHeader from "./MessageGroupHeader.jsx";
 
-class MainHeader extends React.PureComponent {
+class MainHeader extends React.Component {
   switchToMemberListView = selectedView => {
     const {
       toggleRightSidebar,
@@ -47,8 +43,8 @@ class MainHeader extends React.PureComponent {
           <MessageGroupHeader
             messageGroupName={messageGroupName}
             currentChannelMemberList={currentChannelMemberList}
-            switchToUserView={this.switchToUserView}
             messageGroupMemberList={messageGroupMemberList}
+            switchToUserView={this.switchToUserView}
             switchToMemberListView={this.switchToMemberListView.bind(
               this,
               "message-group-members"
@@ -71,6 +67,7 @@ class MainHeader extends React.PureComponent {
 }
 
 MainHeader.propTypes = {
+  isSidebarOpen: PropTypes.bool.isRequired,
   currentChannelMemberList: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
   messageGroupName: PropTypes.string,
@@ -80,26 +77,4 @@ MainHeader.propTypes = {
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({
-  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state),
-  currentChannelMemberList: channelSelector.getCurrentChannelMemberList(state),
-  currentChannel: channelSelector.getCurrentChannel(state),
-  messageGroupName: channelSelector.getMessageGroupName(state),
-  messageGroupMemberList: channelSelector.getMessageGroupMemberList(state)
-});
-
-const dispatchToProps = dispatch => ({
-  toggleRightSidebar: () => {
-    dispatch(globalStateAction.toggleRightSidebar());
-  },
-  switchRightSidebarView: selectedView => {
-    dispatch(globalStateAction.switchRightSidebarView(selectedView));
-  }
-});
-
-export default withRouter(
-  connect(
-    stateToProps,
-    dispatchToProps
-  )(MainHeader)
-);
+export default MainHeader;

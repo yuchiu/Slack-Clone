@@ -2,18 +2,13 @@ import React from "react";
 import { Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import "./index.scss";
+import "./ErrorModal.scss";
 
-class PopUpModal extends React.PureComponent {
-  state = {
-    displayError: false
-  };
-
-  handleClose = e => {
-    const { onClose, clearAllError } = this.props;
-    e.preventDefault();
+class ErrorModal extends React.Component {
+  handleClose = () => {
+    const { toggleErrorModal, clearAllError } = this.props;
     clearAllError();
-    onClose();
+    toggleErrorModal();
   };
 
   render() {
@@ -37,11 +32,12 @@ class PopUpModal extends React.PureComponent {
     );
   }
 }
-PopUpModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+ErrorModal.propTypes = {
   open: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+
+  toggleErrorModal: PropTypes.func.isRequired,
   clearAllError: PropTypes.func.isRequired
 };
 
-export default PopUpModal;
+export default ErrorModal;

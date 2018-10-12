@@ -2,9 +2,11 @@ import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { TextType, ImageType, AudioType } from "./filetypes";
+import TextType from "./TextType";
+import ImageType from "./ImageType.jsx";
+import AudioType from "./AudioType.jsx";
 
-class Message extends React.PureComponent {
+class Message extends React.Component {
   handleClick = targetUserId => {
     const {
       message,

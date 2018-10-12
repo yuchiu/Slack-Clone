@@ -1,11 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Comment, MessageList } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import "./index.scss";
-import Message from "./Message";
 import { messageAction, globalStateAction, channelAction } from "@/actions";
 import {
   messageSelector,
@@ -13,8 +9,9 @@ import {
   globalStateSelector,
   channelSelector
 } from "@/reducers/selectors";
+import MessagesWrapper from "./MessagesWrapper.jsx";
 
-class MessagesContainer extends React.Component {
+class MessagesWrapperContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,6 +109,9 @@ class MessagesContainer extends React.Component {
     });
   };
 
+  // eslint-disable-next-line
+  setScrollerDivRef = scrollerDiv => (this.scrollerDiv = scrollerDiv);
+
   render() {
     const {
       messageList,
@@ -122,30 +122,18 @@ class MessagesContainer extends React.Component {
       switchTargetUser
     } = this.props;
     return (
-      <div
-        className={`messages-wrapper messages-wrapper--sidebar-${isSidebarOpen}`}
-        ref={scrollerDiv => {
-          this.scrollerDiv = scrollerDiv;
-        }}
-      >
-        {" "}
-        <Comment.Group>
-          {messageList.map((message, i) => (
-            <Message
-              key={`${message.id}-${i}`}
-              switchRightSidebarView={switchRightSidebarView}
-              message={message}
-              isSidebarOpen={isSidebarOpen}
-              toggleRightSidebar={toggleRightSidebar}
-              switchTargetUser={switchTargetUser}
-            />
-          ))}
-        </Comment.Group>
-      </div>
+      <MessagesWrapper
+        messageList={messageList}
+        isSidebarOpen={isSidebarOpen}
+        toggleRightSidebar={toggleRightSidebar}
+        switchRightSidebarView={switchRightSidebarView}
+        switchTargetUser={switchTargetUser}
+        setScrollerDivRef={this.setScrollerDivRef}
+      />
     );
   }
 }
-MessagesContainer.propTypes = {
+MessagesWrapperContainer.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired,
   messageList: PropTypes.array.isRequired,
@@ -191,4 +179,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(MessagesContainer);
+)(MessagesWrapperContainer);

@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 import "./WorkSpacePage.scss";
 import LeftSidebar from "./LeftSidebar";
-import MainHeader from "./MainHeader";
-import MessagesWrapper from "./MessagesWrapper";
-import InputWrapper from "./InputWrapper";
-import RightStickySidebar from "./RightStickySidebar";
+import InputWrapper from "./InputWrapper/InputWrapper";
+import MainHeader from "./MainHeader/MainHeader";
+import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";
+import RightStickySidebar from "./RightStickySidebar/RightStickySidebar";
 import RightToggleSidebar from "./RightToggleSidebar/RightToggleSidebar";
-import ErrorModal from "./ErrorModal";
+import ErrorModal from "./ErrorModal/ErrorModal.jsx";
 
 const WorkSpacePage = ({
   error,
@@ -36,7 +36,7 @@ const WorkSpacePage = ({
           <InputWrapper />
           <RightStickySidebar />
           <ErrorModal
-            onClose={toggleErrorModal}
+            toggleErrorModal={toggleErrorModal}
             open={errorModalOpen}
             error={error}
             clearAllError={clearAllError}

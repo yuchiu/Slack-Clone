@@ -2,17 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import { Button, Icon } from "semantic-ui-react";
-import { connect } from "react-redux";
-
-import { messageAction, errorAction } from "@/actions";
-import { userSelector, channelSelector } from "@/reducers/selectors";
 
 class FileUpload extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleUpload = this.handleUpload.bind(this);
-  }
-
   handleUpload = file => {
     if (file) {
       const {
@@ -51,12 +42,10 @@ class FileUpload extends React.Component {
   };
 
   render() {
-    const { disableClick, cssClass } = this.props;
     return (
       <Dropzone
-        className={`ignore ${cssClass}`}
+        className={`ignore `}
         onDrop={file => this.handleUpload(file[0])}
-        disableClick={disableClick}
       >
         <Button icon>
           <Icon name="paperclip" />
@@ -69,24 +58,9 @@ class FileUpload extends React.Component {
 FileUpload.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
+
   emitSocketMessage: PropTypes.func.isRequired,
   createUploadError: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({
-  currentUser: userSelector.getCurrentUser(state),
-  currentChannel: channelSelector.getCurrentChannel(state)
-});
-const dispatchToProps = dispatch => ({
-  emitSocketMessage: file => {
-    dispatch(messageAction.emitSocketMessage(file));
-  },
-  createUploadError: text => {
-    dispatch(errorAction.createUploadError(text));
-  }
-});
-
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(FileUpload);
+export default FileUpload;
