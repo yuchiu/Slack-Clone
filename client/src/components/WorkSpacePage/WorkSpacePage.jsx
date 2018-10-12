@@ -8,7 +8,7 @@ import MainHeader from "./MainHeader";
 import MessagesWrapper from "./MessagesWrapper";
 import InputWrapper from "./InputWrapper";
 import RightStickySidebar from "./RightStickySidebar";
-import RightToggleSidebar from "./RightToggleSidebar";
+import RightToggleSidebar from "./RightToggleSidebar/RightToggleSidebar";
 import ErrorModal from "./ErrorModal";
 
 const WorkSpacePage = ({

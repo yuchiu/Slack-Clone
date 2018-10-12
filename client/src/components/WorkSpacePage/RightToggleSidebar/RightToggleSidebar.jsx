@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Menu, Segment, Sidebar } from "semantic-ui-react";
 
-import "./index.scss";
-import { globalStateSelector } from "@/reducers/selectors";
-import SidebarContainer from "./SidebarContainer";
+import "./RightToggleSidebar.scss";
+
+import SidebarHeader from "./SidebarHeader/SidebarHeader";
+import SidebarFooter from "./SidebarFooter/SidebarFooter";
+import SidebarContent from "./SidebarContent/SidebarContent";
 
 class RightToggleSidebar extends React.Component {
   render() {
@@ -22,7 +23,11 @@ class RightToggleSidebar extends React.Component {
           vertical
           visible={isSidebarOpen}
         >
-          <SidebarContainer />
+          <div className="sidebar-wrapper">
+            <SidebarHeader />
+            <SidebarContent />
+            <SidebarFooter />
+          </div>
         </Sidebar>
 
         <Sidebar.Pusher className="Sidebar-pusher">
@@ -39,11 +44,4 @@ RightToggleSidebar.propTypes = {
   isSidebarOpen: PropTypes.bool.isRequired
 };
 
-const stateToProps = state => ({
-  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
-});
-
-export default connect(
-  stateToProps,
-  null
-)(RightToggleSidebar);
+export default RightToggleSidebar;

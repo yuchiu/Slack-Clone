@@ -60,6 +60,7 @@ class ChannelDetailView extends React.Component {
 ChannelDetailView.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   currentChannelMemberList: PropTypes.array.isRequired,
+
   switchRightSidebarView: PropTypes.func.isRequired
 };
 

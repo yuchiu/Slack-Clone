@@ -16,9 +16,9 @@ class LoginPageContainer extends React.Component {
     }
   };
 
-  componentWillUnmount() {
+  componentDidMount() {
     const { clearAllError } = this.props;
-    clearAllError();
+    // clearAllError();
     this.setState({
       clientErrors: {},
       credentials: {

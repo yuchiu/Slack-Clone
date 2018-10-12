@@ -61,6 +61,7 @@ class TeamDetailView extends React.Component {
 TeamDetailView.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   currentTeamMemberList: PropTypes.array.isRequired,
+
   switchRightSidebarView: PropTypes.func.isRequired
 };
 

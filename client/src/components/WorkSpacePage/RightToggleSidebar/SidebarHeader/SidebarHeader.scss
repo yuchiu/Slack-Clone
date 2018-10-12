@@ -1,0 +1,27 @@
+@import "../../../../assets/css/vars.scss";
+
+.right-sidebar-header {
+  grid-row: 1;
+  font-size: 1.1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  color: $black;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  &__toggle_button {
+    color: $grey;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__title {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  &__my-profile {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

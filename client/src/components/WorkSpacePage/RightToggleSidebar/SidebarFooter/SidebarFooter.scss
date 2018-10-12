@@ -1,0 +1,11 @@
+@import "../../../../assets/css/vars.scss";
+
+.right-sidebar-footer {
+  grid-row: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 5px;
+  height: 40px;
+}

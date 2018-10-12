@@ -101,6 +101,7 @@ UserProfileView.propTypes = {
   targetUser: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   messageGroupList: PropTypes.array.isRequired,
+
   switchChannel: PropTypes.func.isRequired,
   fetchCreateChannel: PropTypes.func.isRequired
 };

@@ -1,0 +1,94 @@
+@import "../../../../assets/css/vars.scss";
+
+.right-sidebar-content {
+  grid-row: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 110px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.view-pic {
+  padding: 10px;
+  text-align: center;
+  &__img {
+    width: 400px;
+  }
+}
+.view-header {
+  font-size: 1.3em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin-bottom: 10px;
+  &__name {
+    font-size: 1.6em;
+  }
+  &__members {
+    &__icon {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &__text {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  // &__brief-description {
+  // }
+}
+.view-detail {
+  padding: 10px;
+  font-size: 1.1em;
+  overflow-y: auto;
+  &__details-header {
+    font-size: 1.3em;
+  }
+  // &__email {
+  // }
+  // &__detail-description {
+  // }
+  // &__role {
+  // }
+}
+
+.member-row {
+  display: flex;
+  overflow-y: hidden;
+  border-bottom: 1px solid $lightgrey;
+  padding: 5px;
+  align-items: center;
+  &__left {
+    width: 65px;
+    height: 65px;
+    &__img {
+      box-shadow: 0px 1px 2px $lightgrey;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 3px;
+    }
+  }
+  &__right {
+    margin-left: 15px;
+    &__name {
+      font-size: 1.3em;
+      margin: 0;
+    }
+    &__email {
+      margin: 0;
+      color: $grey;
+      font-weight: 300;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.toggle-edit-button {
+  color: $lightgrey;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,51 @@
+@import "../../../assets/css/vars.scss";
+/* remove base styles */
+.ui.menu .item {
+  padding: 0;
+}
+
+.ui.segment.pushable {
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.ui.basic.segment {
+  padding: 0;
+}
+
+/* right toggle sidebar layout */
+.ui.sidebar {
+  width: 430px !important;
+}
+
+.right-toggle-sidebar {
+  height: 100vh;
+}
+
+.sidebar-wrapper {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 63px auto 40px;
+}
+
+/* components */
+.right-sidebar-label {
+  color: $grey;
+}
+.right-sidebar-item {
+  margin-bottom: 10px;
+}
+.right-sidebar-button {
+  background-color: $white;
+  border: 1px solid $lightgrey;
+  border-radius: 3px;
+  padding: 5px 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus,
+  &:active & {
+    outline: none;
+  }
+}

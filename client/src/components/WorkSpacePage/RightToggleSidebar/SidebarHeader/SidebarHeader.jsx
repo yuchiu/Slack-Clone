@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-import { globalStateAction } from "@/actions";
-import { globalStateSelector } from "@/reducers/selectors";
+import "./SidebarHeader.scss";
 
-class SidebarHeader extends React.PureComponent {
+class SidebarHeader extends React.Component {
   handleClick = () => {
     const { switchRightSidebarView } = this.props;
     switchRightSidebarView("my-profile");
@@ -47,21 +45,4 @@ SidebarHeader.propTypes = {
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({
-  /* global state */
-  rightSidebarTitle: globalStateSelector.getRightSidebarTitle(state)
-});
-
-const dispatchToProps = dispatch => ({
-  toggleRightSidebar: () => {
-    dispatch(globalStateAction.toggleRightSidebar());
-  },
-  switchRightSidebarView: selectedView => {
-    dispatch(globalStateAction.switchRightSidebarView(selectedView));
-  }
-});
-
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(SidebarHeader);
+export default SidebarHeader;

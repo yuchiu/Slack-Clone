@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 
-import { userAction } from "@/actions";
+import "./SidebarFooter.scss";
 
-class SidebarFooter extends React.PureComponent {
+class SidebarFooter extends React.Component {
   handleClick = () => {
     const { history, fetchLogoutUser } = this.props;
     fetchLogoutUser();
@@ -32,15 +30,4 @@ SidebarFooter.propTypes = {
   fetchLogoutUser: PropTypes.func.isRequired
 };
 
-const dispatchToProps = dispatch => ({
-  fetchLogoutUser: () => {
-    dispatch(userAction.fetchLogoutUser());
-  }
-});
-
-export default withRouter(
-  connect(
-    null,
-    dispatchToProps
-  )(SidebarFooter)
-);
+export default SidebarFooter;
