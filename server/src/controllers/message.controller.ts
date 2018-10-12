@@ -1,5 +1,5 @@
-import fse from "fs-extra";
-import randomstring from "randomstring";
+import * as fse from "fs-extra";
+import * as randomstring from "randomstring";
 import { Request, Response } from "express";
 import * as _ from "lodash";
 
