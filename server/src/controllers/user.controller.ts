@@ -116,7 +116,6 @@ export default {
   signUpUser: async (req: Request, res: Response) => {
     try {
       const credentials = req.body;
-
       /* username or email is missing */
       if (!credentials.username || !credentials.email) {
         return res.status(403).send({
@@ -169,7 +168,6 @@ export default {
           const avatarurl = await saveBase64Img(avatarBase64Img);
           const newCredentials = { ...credentials, avatarurl };
           const initialDemoTeamId = 1;
-
           const userData = await models.User.create(newCredentials, {
             transaction
           });
