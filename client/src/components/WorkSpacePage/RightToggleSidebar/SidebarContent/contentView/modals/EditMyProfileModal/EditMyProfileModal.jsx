@@ -5,7 +5,7 @@ import Dropzone from "react-dropzone";
 import AvatarEditor from "react-avatar-editor";
 
 import "./EditMyProfileModal.scss";
-import { InlineError, InlineHint } from "@/components/common";
+import { InlineError, InlineHint, ButtonOutline } from "@/components/common";
 
 const EditMyProfileModal = ({
   password,
@@ -242,12 +242,11 @@ const EditMyProfileModal = ({
       </Modal>
     )}
     {!isModalOpen && (
-      <button
-        className="right-sidebar-button right-sidebar-item"
-        onClick={toggleModalOpen}
-      >
-        Edit Profile
-      </button>
+      <ButtonOutline
+        cssClass="right-sidebar-item"
+        text="Edit Profile"
+        handleClick={toggleModalOpen}
+      />
     )}
   </React.Fragment>
 );

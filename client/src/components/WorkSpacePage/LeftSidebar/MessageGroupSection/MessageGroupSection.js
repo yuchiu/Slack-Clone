@@ -21,7 +21,7 @@ class SidebarList extends React.PureComponent {
     return (
       <MessageGroupSection
         toggleAddMessageGroupModal={toggleAddMessageGroupModal}
-        teamId={currentTeam.id}
+        currentTeam={currentTeam}
         messageGroupList={messageGroupList}
         messageGroupMemberList={messageGroupMemberList}
         switchTargetUser={switchTargetUser}

@@ -5,8 +5,7 @@ import ChannelHeader from "./ChannelHeader.jsx";
 import ChannelList from "./ChannelList.jsx";
 
 const ChannelSection = ({
-  isAdmin,
-  teamId,
+  currentTeam,
   channelList,
 
   switchChannel,
@@ -15,21 +14,20 @@ const ChannelSection = ({
 }) => (
   <ul className="leftsidebar__List">
     <ChannelHeader
-      isAdmin={isAdmin}
+      currentTeam={currentTeam}
       toggleAddChannelModal={toggleAddChannelModal}
     />
     <ChannelList
       switchChannel={switchChannel}
       switchRightSidebarView={switchRightSidebarView}
-      teamId={teamId}
+      currentTeam={currentTeam}
       channelList={channelList}
     />
   </ul>
 );
 
 ChannelSection.propTypes = {
-  teamId: PropTypes.number.isRequired,
-  isAdmin: PropTypes.bool.isRequired,
+  currentTeam: PropTypes.object.isRequired,
   channelList: PropTypes.array.isRequired,
 
   switchChannel: PropTypes.func.isRequired,

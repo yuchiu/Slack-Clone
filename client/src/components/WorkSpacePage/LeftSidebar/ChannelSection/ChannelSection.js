@@ -19,11 +19,10 @@ class ChannelSectionContainer extends React.PureComponent {
     } = this.props;
     return (
       <ChannelSection
-        isAdmin={currentTeam.admin}
+        currentTeam={currentTeam}
         toggleAddChannelModal={toggleAddChannelModal}
         switchChannel={switchChannel}
         switchRightSidebarView={switchRightSidebarView}
-        teamId={currentTeam.id}
         channelList={channelList}
       />
     );

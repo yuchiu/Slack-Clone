@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 
 class SidebarInviteSection extends React.Component {
   render() {
-    const { isAdmin, toggleAddTeamMemberModal } = this.props;
+    const { currentTeam, toggleAddTeamMemberModal } = this.props;
     return (
       <React.Fragment>
-        {/* {isAdmin && (
+        {/* {currentTeam.admin && (
           <div
             className="leftsidebar__invite"
             onClick={toggleAddTeamMemberModal}
@@ -24,9 +24,9 @@ class SidebarInviteSection extends React.Component {
   }
 }
 SidebarInviteSection.propTypes = {
-  isAdmin: PropTypes.bool.isRequired,
+  currentTeam: PropTypes.object.isRequired,
 
-  currentTeam: PropTypes.object.isRequired
+  toggleAddTeamMemberModal: PropTypes.func.isRequired
 };
 
 export default SidebarInviteSection;

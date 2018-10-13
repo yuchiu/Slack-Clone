@@ -6,7 +6,7 @@ class ChannelHeader extends React.Component {
   state = {};
 
   render() {
-    const { isAdmin, toggleAddChannelModal } = this.props;
+    const { currentTeam, toggleAddChannelModal } = this.props;
     return (
       <React.Fragment>
         <h1 className="leftsidebar__List__header">
@@ -22,7 +22,7 @@ class ChannelHeader extends React.Component {
   }
 }
 ChannelHeader.propTypes = {
-  isAdmin: PropTypes.bool,
+  currentTeam: PropTypes.object.isRequired,
   toggleAddChannelModal: PropTypes.func.isRequired
 };
 

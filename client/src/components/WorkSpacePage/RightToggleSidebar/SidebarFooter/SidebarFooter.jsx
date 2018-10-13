@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { ButtonOutline } from "@/components/common";
 import "./SidebarFooter.scss";
 
 class SidebarFooter extends React.Component {
@@ -13,12 +14,11 @@ class SidebarFooter extends React.Component {
   render() {
     return (
       <div className="right-sidebar-footer">
-        <button
-          className="right-sidebar-button right-sidebar-item"
-          onClick={this.handleClick}
-        >
-          Log Out
-        </button>
+        <ButtonOutline
+          handleClick={this.handleClick}
+          cssClass="right-sidebar-item"
+          text="Log Out"
+        />
       </div>
     );
   }

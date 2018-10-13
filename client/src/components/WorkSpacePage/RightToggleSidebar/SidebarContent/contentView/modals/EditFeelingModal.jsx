@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineError, InlineHint } from "@/components/common";
+import { InlineError, InlineHint, ButtonInline } from "@/components/common";
 
 const EditFeelingModal = ({
   text,
@@ -56,25 +56,23 @@ const EditFeelingModal = ({
         </Modal.Content>
       </Modal>
     )}
-    {!isModalOpen &&
-      feeling && (
-        <React.Fragment>
-          <span className="">
-            {feeling}{" "}
-            <span onClick={toggleModalOpen} className="toggle-edit-button">
-              <i className="fas fa-pencil-alt" />
-              edit
-            </span>
-          </span>
-        </React.Fragment>
-      )}
-    {!isModalOpen &&
-      !feeling && (
-        <span className="toggle-edit-button" onClick={toggleModalOpen}>
-          <i className="fas fa-pencil-alt" />
-          add channel feeling
-        </span>
-      )}
+    {!isModalOpen && feeling ? (
+      <ButtonInline
+        title={feeling}
+        cssClass="lightgrey"
+        displayText="edit"
+        icon={<i className="fas fa-pencil-alt" />}
+        handleClick={toggleModalOpen}
+      />
+    ) : (
+      <ButtonInline
+        cssClass="lightgrey"
+        title={feeling}
+        displayText="add feeling"
+        icon={<i className="fas fa-pencil-alt" />}
+        handleClick={toggleModalOpen}
+      />
+    )}
   </React.Fragment>
 );
 

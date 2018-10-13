@@ -2,8 +2,7 @@ import React from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import "./TopicModal.scss";
-import { InlineHint, InlineError } from "@/components/common";
+import { InlineHint, ButtonInline, InlineError } from "@/components/common";
 
 const TopicModal = ({
   text,
@@ -55,25 +54,23 @@ const TopicModal = ({
         </Modal.Content>
       </Modal>
     )}
-    {!isEditModalOpen &&
-      topic && (
-        <React.Fragment>
-          <span className="">
-            {topic}{" "}
-            <span onClick={toggleEditModal} className="topic-edit-button">
-              <i className="fas fa-pencil-alt" />
-              edit
-            </span>
-          </span>
-        </React.Fragment>
-      )}
-    {!isEditModalOpen &&
-      !topic && (
-        <span className="topic-edit-button" onClick={toggleEditModal}>
-          <i className="fas fa-pencil-alt" />
-          add a topic
-        </span>
-      )}
+    {!isEditModalOpen && topic ? (
+      <ButtonInline
+        cssClass="lightgrey"
+        title={topic}
+        icon={<i className="fas fa-pencil-alt" />}
+        displayText="edit"
+        handleClick={toggleEditModal}
+      />
+    ) : (
+      <ButtonInline
+        cssClass="lightgrey"
+        title={topic}
+        icon={<i className="fas fa-pencil-alt" />}
+        displayText="add a topic"
+        handleClick={toggleEditModal}
+      />
+    )}
   </React.Fragment>
 );
 

@@ -29,7 +29,7 @@ class MessageGroupList extends React.PureComponent {
   }
 
   render() {
-    const { messageGroupList, teamId } = this.props;
+    const { messageGroupList, currentTeam } = this.props;
     return (
       <React.Fragment>
         {!messageGroupList
@@ -38,7 +38,7 @@ class MessageGroupList extends React.PureComponent {
               <Link
                 className="leftsidebar__List__link"
                 key={`index-${i}-channelid-${messageGroup.id}`}
-                to={`/workspace/${teamId}/${messageGroup.id}`}
+                to={`/workspace/${currentTeam.id}/${messageGroup.id}`}
                 onClick={this.handleSwitchChannel.bind(this, messageGroup.id)}
               >
                 {messageGroup.directMessage ? (
@@ -70,7 +70,7 @@ class MessageGroupList extends React.PureComponent {
 }
 
 MessageGroupList.propTypes = {
-  teamId: PropTypes.number,
+  currentTeam: PropTypes.object.isRequired,
   messageGroupList: PropTypes.array.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,
 

@@ -17,14 +17,14 @@ class ChannelList extends React.PureComponent {
   };
 
   render() {
-    const { channelList, teamId } = this.props;
+    const { channelList, currentTeam } = this.props;
     return (
       <React.Fragment>
         {channelList.map((channel, i) => (
           <Link
             className="leftsidebar__List__link"
             key={`index-${i}-channelid-${channel.id}`}
-            to={`/workspace/${teamId}/${channel.id}`}
+            to={`/workspace/${currentTeam.id}/${channel.id}`}
             onClick={this.handleClick.bind(this, channel.id)}
           >
             <li className="leftsidebar__List__link__item leftsidebar__List__link__item--link">
@@ -43,7 +43,7 @@ class ChannelList extends React.PureComponent {
 }
 ChannelList.propTypes = {
   channelList: PropTypes.array.isRequired,
-  teamId: PropTypes.number,
+  currentTeam: PropTypes.object.isRequired,
 
   switchChannel: PropTypes.func.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired

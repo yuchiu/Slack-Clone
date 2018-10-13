@@ -9,7 +9,7 @@ class SidebarList extends React.PureComponent {
     const {
       toggleAddMessageGroupModal,
 
-      teamId,
+      currentTeam,
       messageGroupList,
       messageGroupMemberList,
 
@@ -23,7 +23,7 @@ class SidebarList extends React.PureComponent {
           toggleAddMessageGroupModal={toggleAddMessageGroupModal}
         />
         <MessageGroupList
-          teamId={teamId}
+          currentTeam={currentTeam}
           messageGroupList={messageGroupList}
           switchTargetUser={switchTargetUser}
           switchChannel={switchChannel}
@@ -37,7 +37,7 @@ class SidebarList extends React.PureComponent {
 SidebarList.propTypes = {
   toggleAddMessageGroupModal: PropTypes.func.isRequired,
 
-  teamId: PropTypes.number.isRequired,
+  currentTeam: PropTypes.object.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,
   messageGroupList: PropTypes.array.isRequired,
 

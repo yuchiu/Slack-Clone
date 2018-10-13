@@ -10,7 +10,7 @@ class InviteMemberSectionContainer extends React.Component {
     const { currentTeam, toggleAddTeamMemberModal } = this.props;
     return (
       <SidebarInviteSection
-        isAdmin={currentTeam.admin}
+        currentTeam={currentTeam}
         toggleAddTeamMemberModal={toggleAddTeamMemberModal}
       />
     );

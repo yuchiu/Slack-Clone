@@ -1,0 +1,10 @@
+@import "../../../assets/css/vars.scss";
+
+.button-inline {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.lightgrey {
+  color: $lightgrey;
+}

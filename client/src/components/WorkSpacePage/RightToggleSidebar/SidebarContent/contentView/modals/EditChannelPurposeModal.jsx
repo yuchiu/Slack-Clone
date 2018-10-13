@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineHint, InlineError } from "@/components/common";
+import { InlineHint, InlineError, ButtonInline } from "@/components/common";
 
 const EditChannelPurposeModal = ({
   text,
@@ -54,25 +54,23 @@ const EditChannelPurposeModal = ({
         </Modal.Content>
       </Modal>
     )}
-    {!isModalOpen &&
-      purpose && (
-        <React.Fragment>
-          <span className="">
-            {purpose}{" "}
-            <span onClick={toggleModalOpen} className="toggle-edit-button">
-              <i className="fas fa-pencil-alt" />
-              edit
-            </span>
-          </span>
-        </React.Fragment>
-      )}
-    {!isModalOpen &&
-      !purpose && (
-        <span className="toggle-edit-button" onClick={toggleModalOpen}>
-          <i className="fas fa-pencil-alt" />
-          add channel purpose
-        </span>
-      )}
+    {!isModalOpen && purpose ? (
+      <ButtonInline
+        title={purpose}
+        cssClass="lightgrey"
+        displayText="edit"
+        icon={<i className="fas fa-pencil-alt" />}
+        handleClick={toggleModalOpen}
+      />
+    ) : (
+      <ButtonInline
+        title={purpose}
+        cssClass="lightgrey"
+        displayText="add channel purpose"
+        icon={<i className="fas fa-pencil-alt" />}
+        handleClick={toggleModalOpen}
+      />
+    )}
   </React.Fragment>
 );
 
