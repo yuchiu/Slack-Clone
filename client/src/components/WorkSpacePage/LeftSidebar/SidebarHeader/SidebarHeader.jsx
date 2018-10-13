@@ -1,18 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-import {
-  globalStateSelector,
-  teamSelector,
-  userSelector
-} from "@/reducers/selectors";
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
-import { globalStateAction } from "@/actions";
 
 class SidebarHeader extends React.Component {
-  state = {};
-
   handleSwitchRightSidebarView = selectedView => {
     const {
       toggleRightSidebar,
@@ -71,22 +62,4 @@ SidebarHeader.propTypes = {
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({
-  currentUser: userSelector.getCurrentUser(state),
-  currentTeam: teamSelector.getCurrentTeam(state),
-  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
-});
-
-const dispatchToProps = dispatch => ({
-  toggleRightSidebar: () => {
-    dispatch(globalStateAction.toggleRightSidebar());
-  },
-  switchRightSidebarView: selectedView => {
-    dispatch(globalStateAction.switchRightSidebarView(selectedView));
-  }
-});
-
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(SidebarHeader);
+export default SidebarHeader;

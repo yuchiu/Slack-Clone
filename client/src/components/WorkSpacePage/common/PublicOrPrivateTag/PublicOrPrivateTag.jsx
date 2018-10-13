@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./index.scss";
+import "./PublicOrPrivateTag.scss";
 
 const PublicOrPrivateTag = ({ publicChannel, addClass }) =>
   publicChannel ? (

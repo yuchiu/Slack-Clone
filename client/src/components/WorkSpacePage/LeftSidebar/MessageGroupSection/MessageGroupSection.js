@@ -2,23 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import ChannelHeader from "./ChannelHeader";
-import ChannelList from "./ChannelList";
-import MessageGroupHeader from "./MessageGroupHeader";
-import MessageGroupList from "./MessageGroupList";
 import { channelAction, globalStateAction } from "@/actions";
-
 import { teamSelector, channelSelector } from "@/reducers/selectors";
+import MessageGroupSection from "./MessageGroupSection.jsx";
 
 class SidebarList extends React.PureComponent {
   render() {
     const {
       toggleAddMessageGroupModal,
-      toggleAddChannelModal,
-
       currentTeam,
       messageGroupList,
-      channelList,
       messageGroupMemberList,
 
       switchTargetUser,
@@ -26,45 +19,24 @@ class SidebarList extends React.PureComponent {
       switchRightSidebarView
     } = this.props;
     return (
-      <React.Fragment>
-        <ul className="leftsidebar__List">
-          <ChannelHeader
-            isAdmin={currentTeam.admin}
-            toggleAddChannelModal={toggleAddChannelModal}
-          />
-          <ChannelList
-            switchChannel={switchChannel}
-            switchRightSidebarView={switchRightSidebarView}
-            teamId={currentTeam.id}
-            channelList={channelList}
-          />
-        </ul>
-        <ul className="leftsidebar__List">
-          <MessageGroupHeader
-            toggleAddMessageGroupModal={toggleAddMessageGroupModal}
-          />
-          <MessageGroupList
-            teamId={currentTeam.id}
-            messageGroupList={messageGroupList}
-            switchTargetUser={switchTargetUser}
-            switchChannel={switchChannel}
-            messageGroupMemberList={messageGroupMemberList}
-            switchRightSidebarView={switchRightSidebarView}
-          />
-        </ul>
-      </React.Fragment>
+      <MessageGroupSection
+        toggleAddMessageGroupModal={toggleAddMessageGroupModal}
+        teamId={currentTeam.id}
+        messageGroupList={messageGroupList}
+        messageGroupMemberList={messageGroupMemberList}
+        switchTargetUser={switchTargetUser}
+        switchChannel={switchChannel}
+        switchRightSidebarView={switchRightSidebarView}
+      />
     );
   }
 }
 SidebarList.propTypes = {
-  toggleAddMessageGroupModal: PropTypes.func.isRequired,
-  toggleAddChannelModal: PropTypes.func.isRequired,
-
   currentTeam: PropTypes.object.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,
-  channelList: PropTypes.array.isRequired,
   messageGroupList: PropTypes.array.isRequired,
 
+  toggleAddMessageGroupModal: PropTypes.func.isRequired,
   switchTargetUser: PropTypes.func.isRequired,
   switchChannel: PropTypes.func.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
@@ -74,7 +46,6 @@ SidebarList.propTypes = {
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
   messageGroupMemberList: channelSelector.getMessageGroupMemberList(state),
-  channelList: channelSelector.getChannelList(state),
   messageGroupList: channelSelector.getMessageGroupList(state)
 });
 

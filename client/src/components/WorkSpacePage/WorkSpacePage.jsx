@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "./WorkSpacePage.scss";
-import LeftSidebar from "./LeftSidebar";
+import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import InputWrapper from "./InputWrapper/InputWrapper";
 import MainHeader from "./MainHeader/MainHeader";
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";
