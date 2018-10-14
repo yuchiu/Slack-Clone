@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineHint, InlineError, ButtonInline } from "@/components/common";
+import { HintInline, ErrorInline, ButtonInline } from "@/components/common";
 
 const EditChannelPurposeModal = ({
   text,
@@ -37,9 +37,9 @@ const EditChannelPurposeModal = ({
                 />
               )}
               {clientError.text ? (
-                <InlineError text={clientError.text} />
+                <ErrorInline text={clientError.text} />
               ) : (
-                <InlineHint text={"max characters: 256"} />
+                <HintInline text={"max characters: 256"} />
               )}
             </Form.Field>
             <Form.Group widths="equal">

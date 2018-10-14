@@ -5,7 +5,7 @@ import Dropzone from "react-dropzone";
 import AvatarEditor from "react-avatar-editor";
 
 import "./EditMyProfileModal.scss";
-import { InlineError, InlineHint, ButtonOutline } from "@/components/common";
+import { ErrorInline, HintInline, ButtonOutline } from "@/components/common";
 
 const EditMyProfileModal = ({
   password,
@@ -78,7 +78,7 @@ const EditMyProfileModal = ({
                             to upload image.
                           </p>
                         </Dropzone>
-                        <InlineHint
+                        <HintInline
                           text={"Avatar image resolution are 400 x 400 pixels"}
                         />
                       </React.Fragment>
@@ -142,7 +142,7 @@ const EditMyProfileModal = ({
                 />
               )}
               {clientError.feeling && (
-                <InlineError text={clientError.feeling} />
+                <ErrorInline text={clientError.feeling} />
               )}
             </Form.Field>
             <Form.Field>
@@ -162,7 +162,7 @@ const EditMyProfileModal = ({
                   placeholder="about yourself"
                 />
               )}
-              {clientError.about && <InlineError text={clientError.about} />}
+              {clientError.about && <ErrorInline text={clientError.about} />}
             </Form.Field>
 
             {!isEditPasswordOn ? (
@@ -196,7 +196,7 @@ const EditMyProfileModal = ({
                     placeholder={`password`}
                   />
                   {clientError.password && (
-                    <InlineError text={clientError.password} />
+                    <ErrorInline text={clientError.password} />
                   )}
                 </Form.Field>
 
@@ -210,7 +210,7 @@ const EditMyProfileModal = ({
                     placeholder="new password"
                   />
                   {clientError.newPassword && (
-                    <InlineError text={clientError.newPassword} />
+                    <ErrorInline text={clientError.newPassword} />
                   )}
                 </Form.Field>
                 <Form.Field>
@@ -223,7 +223,7 @@ const EditMyProfileModal = ({
                     placeholder="confirm new password"
                   />
                   {clientError.confirmPassword && (
-                    <InlineError text={clientError.confirmPassword} />
+                    <ErrorInline text={clientError.confirmPassword} />
                   )}
                 </Form.Field>
               </React.Fragment>

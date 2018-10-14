@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Form, Button, Input, Container, Header } from "semantic-ui-react";
 
 import "./RegisterPage.scss";
-import { Navbar, InlineError } from "@/components/common";
+import { Navbar, ErrorInline } from "@/components/common";
 
 class RegisterPage extends React.Component {
   render() {
@@ -30,7 +30,7 @@ class RegisterPage extends React.Component {
               <Form.Field>
                 <label htmlFor="username">Username</label>
                 {clientErrors.username && (
-                  <InlineError text={clientErrors.username} />
+                  <ErrorInline text={clientErrors.username} />
                 )}
                 <Input
                   id="username"
@@ -46,7 +46,7 @@ class RegisterPage extends React.Component {
               <Form.Field>
                 <label htmlFor="email">Email</label>
                 {clientErrors.email && (
-                  <InlineError text={clientErrors.email} />
+                  <ErrorInline text={clientErrors.email} />
                 )}
                 <Input
                   id="email"
@@ -62,7 +62,7 @@ class RegisterPage extends React.Component {
               <Form.Field>
                 <label htmlFor="password">Password</label>
                 {clientErrors.password && (
-                  <InlineError text={clientErrors.password} />
+                  <ErrorInline text={clientErrors.password} />
                 )}
                 <Input
                   id="password"
@@ -78,7 +78,7 @@ class RegisterPage extends React.Component {
               <Form.Field>
                 <label htmlFor="confirm_password">Confirm Password</label>
                 {clientErrors.confirmPassword && (
-                  <InlineError text={clientErrors.confirmPassword} />
+                  <ErrorInline text={clientErrors.confirmPassword} />
                 )}
                 <Input
                   id="confirm_password"
@@ -107,7 +107,7 @@ class RegisterPage extends React.Component {
             </Form>
           </Container>
           <div className="inline-error--center">
-            {error && <InlineError text={`Error: ${error}`} />}
+            {error && <ErrorInline text={`Error: ${error}`} />}
           </div>
         </main>
       </React.Fragment>

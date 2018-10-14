@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { InlineError } from "@/components/common";
+import { ErrorInline } from "@/components/common";
 import { validateForm } from "@/utils";
 import { teamSelector } from "@/reducers/selectors";
 
@@ -79,7 +79,7 @@ class AddTeamMemberModal extends React.Component {
                 placeholder="# username"
               />
               {clientError.username && (
-                <InlineError text={clientError.username} />
+                <ErrorInline text={clientError.username} />
               )}
             </Form.Field>
             <br />

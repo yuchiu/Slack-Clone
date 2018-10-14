@@ -1,88 +1,69 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { sessionStore } from "@/utils";
-import { teamAction, errorAction, globalStateAction } from "@/actions";
-import {
-  teamSelector,
-  globalStateSelector,
-  errorSelector
-} from "@/reducers/selectors";
+import { teamAction, globalStateAction } from "@/actions";
+import { teamSelector, globalStateSelector } from "@/reducers/selectors";
 import WorkSpacePage from "./WorkSpacePage.jsx";
 
-class WorkSpacePageContainer extends React.Component {
-  state = {
-    errorModalOpen: false
-  };
+const WorkSpacePageHOC = WrappedComponent => {
+  class WorkSpacePageContainer extends React.Component {
+    UNSAFE_componentWillMount() {
+      const {
+        fetchTeamAssociatedList,
+        receiveSocketNewTeamMember
+      } = this.props;
+      receiveSocketNewTeamMember();
+      // get channelList, messageGroupList, teamMemberList when component mount
+      if (this.isCurrentTeamExist()) {
+        const teamId = sessionStore.getTeamId();
+        fetchTeamAssociatedList(teamId);
+      }
+    }
 
-  UNSAFE_componentWillMount() {
-    const { fetchTeamAssociatedList, receiveSocketNewTeamMember } = this.props;
-    receiveSocketNewTeamMember();
-    // get channelList, messageGroupList, teamMemberList when component mount
-    if (this.isCurrentTeamExist()) {
-      const teamId = sessionStore.getTeamId();
-      fetchTeamAssociatedList(teamId);
+    componentWillUnmount() {
+      const { clearSocketConnection } = this.props;
+      clearSocketConnection();
+    }
+
+    isCurrentTeamExist = () => {
+      if (sessionStore.getTeamId() === "0") return false;
+      return true;
+    };
+
+    render() {
+      const { isSidebarOpen } = this.props;
+      return (
+        <React.Fragment>
+          {/* redirect to create team if user is not in any team */}
+          {this.isCurrentTeamExist ? (
+            <WrappedComponent isSidebarOpen={isSidebarOpen} />
+          ) : (
+            <Redirect to="/create-team" />
+          )}
+        </React.Fragment>
+      );
     }
   }
+  WorkSpacePageContainer.propTypes = {
+    currentTeam: PropTypes.object.isRequired,
+    isSidebarOpen: PropTypes.bool.isRequired,
 
-  componentWillUnmount() {
-    const { clearSocketConnection } = this.props;
-    clearSocketConnection();
-  }
-
-  toggleErrorModal = e => {
-    if (e) {
-      e.preventDefault();
-    }
-    this.setState({
-      errorModalOpen: !this.state.errorModalOpen
-    });
+    clearSocketConnection: PropTypes.func.isRequired,
+    fetchTeamAssociatedList: PropTypes.func.isRequired,
+    receiveSocketNewTeamMember: PropTypes.func.isRequired
   };
-
-  isCurrentTeamExist = () => {
-    if (sessionStore.getTeamId() === "0") return false;
-    return true;
-  };
-
-  render() {
-    const { errorModalOpen } = this.state;
-    const { error, clearAllError, isSidebarOpen } = this.props;
-    return (
-      <WorkSpacePage
-        isCurrentTeamExist={this.isCurrentTeamExist}
-        toggleErrorModal={this.toggleErrorModal}
-        isSidebarOpen={isSidebarOpen}
-        errorModalOpen={errorModalOpen}
-        error={error}
-        clearAllError={clearAllError}
-        key="error-modal"
-      />
-    );
-  }
-}
-
-WorkSpacePageContainer.propTypes = {
-  currentTeam: PropTypes.object.isRequired,
-  error: PropTypes.string.isRequired,
-  isSidebarOpen: PropTypes.bool.isRequired,
-
-  clearSocketConnection: PropTypes.func.isRequired,
-  clearAllError: PropTypes.func.isRequired,
-  fetchTeamAssociatedList: PropTypes.func.isRequired,
-  receiveSocketNewTeamMember: PropTypes.func.isRequired
+  return WorkSpacePageContainer;
 };
 
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
-  error: errorSelector.getError(state),
   isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
 });
 
 const dispatchToProps = dispatch => ({
-  clearAllError: () => {
-    dispatch(errorAction.clearAllError());
-  },
   fetchTeamAssociatedList: teamId => {
     dispatch(teamAction.fetchTeamAssociatedList(teamId));
   },
@@ -97,4 +78,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(WorkSpacePageContainer);
+)(WorkSpacePageHOC(WorkSpacePage));

@@ -27,10 +27,10 @@ const checkSize = size => {
       return <img src={slackLogo32} alt="logo" />;
   }
 };
-const SlackLogo = ({ size }) => checkSize(size);
+const LogoSlack = ({ size }) => checkSize(size);
 
-SlackLogo.propTypes = {
+LogoSlack.propTypes = {
   size: PropTypes.string.isRequired
 };
 
-export default SlackLogo;
+export default LogoSlack;

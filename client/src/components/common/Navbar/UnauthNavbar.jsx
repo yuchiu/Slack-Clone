@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
 
-import { SlackLogo } from "@/components/common";
+import { LogoSlack } from "@/components/common";
 
 const UnauthNavBar = ({ history }) => (
   <Menu size="large">
     <Menu.Item name="home" onClick={() => history.push("/")}>
-      <SlackLogo size="32" />
+      <LogoSlack size="32" />
       Slack
     </Menu.Item>
     <Menu.Menu position="right">

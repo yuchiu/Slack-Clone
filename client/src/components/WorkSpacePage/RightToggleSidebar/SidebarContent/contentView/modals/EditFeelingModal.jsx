@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineError, InlineHint, ButtonInline } from "@/components/common";
+import { ErrorInline, HintInline, ButtonInline } from "@/components/common";
 
 const EditFeelingModal = ({
   text,
@@ -39,9 +39,9 @@ const EditFeelingModal = ({
                 />
               )}
               {clientError.text ? (
-                <InlineError text={clientError.text} />
+                <ErrorInline text={clientError.text} />
               ) : (
-                <InlineHint text={"max characters: 32"} />
+                <HintInline text={"max characters: 32"} />
               )}
             </Form.Field>
             <Form.Group widths="equal">

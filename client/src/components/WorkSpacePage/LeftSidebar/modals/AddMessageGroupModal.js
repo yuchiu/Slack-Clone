@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { channelAction } from "@/actions";
-import { InlineError } from "@/components/common";
+import { ErrorInline } from "@/components/common";
 import { validateForm } from "@/utils";
 import { teamSelector, userSelector } from "@/reducers/selectors";
 
@@ -113,7 +113,7 @@ class AddMessageGroupModal extends React.Component {
                 onChange={this.handleChange}
               />
               {clientError.members && (
-                <InlineError text={clientError.members} />
+                <ErrorInline text={clientError.members} />
               )}
             </Form.Field>
             <br />

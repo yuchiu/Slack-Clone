@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { InlineHint, ButtonInline, InlineError } from "@/components/common";
+import { HintInline, ButtonInline, ErrorInline } from "@/components/common";
 
 const TopicModal = ({
   text,
@@ -36,9 +36,9 @@ const TopicModal = ({
                 />
               )}
               {clientError.text ? (
-                <InlineError text={clientError.text} />
+                <ErrorInline text={clientError.text} />
               ) : (
-                <InlineHint text={"max characters: 128"} />
+                <HintInline text={"max characters: 128"} />
               )}
             </Form.Field>
 

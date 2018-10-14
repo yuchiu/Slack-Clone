@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./InlineError.scss";
+import "./ErrorInline.scss";
 
-const InlineError = ({ text }) => (
+const ErrorInline = ({ text }) => (
   <span className="inline-error-span">{text}.</span>
 );
 
-InlineError.propTypes = {
+ErrorInline.propTypes = {
   text: PropTypes.string.isRequired
 };
 
-export default InlineError;
+export default ErrorInline;

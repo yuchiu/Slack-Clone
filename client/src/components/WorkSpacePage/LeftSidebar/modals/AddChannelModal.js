@@ -10,7 +10,7 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { InlineError } from "@/components/common";
+import { ErrorInline } from "@/components/common";
 import { validateForm } from "@/utils";
 import { channelAction } from "@/actions";
 import { teamSelector, userSelector } from "@/reducers/selectors";
@@ -124,7 +124,7 @@ class AddChannelModal extends React.Component {
                 placeholder="# random channel"
               />
               {clientError.channelName && (
-                <InlineError text={clientError.channelName} />
+                <ErrorInline text={clientError.channelName} />
               )}
             </Form.Field>
             <Form.Field>
@@ -144,14 +144,14 @@ class AddChannelModal extends React.Component {
                 placeholder="purpose"
               />
               {clientError.purpose && (
-                <InlineError text={clientError.purpose} />
+                <ErrorInline text={clientError.purpose} />
               )}
             </Form.Field>
             {isChannelPrivate ? (
               <Form.Field>
                 <label>Select members to join your private channel:</label>
                 {clientError.members && (
-                  <InlineError text={clientError.members} />
+                  <ErrorInline text={clientError.members} />
                 )}
                 <Dropdown
                   placeholder="# username"

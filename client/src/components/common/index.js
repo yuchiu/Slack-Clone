@@ -1,15 +1,19 @@
 import Navbar from "./Navbar/Navbar";
-import InlineError from "./InlineError/InlineError.jsx";
-import SlackLogo from "./SlackLogo/SlackLogo.jsx";
-import InlineHint from "./InlineHint/InlineHint.jsx";
+import ErrorInline from "./ErrorInline/ErrorInline.jsx";
+import LogoSlack from "./LogoSlack/LogoSlack.jsx";
+import HintInline from "./HintInline/HintInline.jsx";
 import ButtonOutline from "./ButtonOutline/ButtonOutline.jsx";
 import ButtonInline from "./ButtonInline/ButtonInline.jsx";
+import ModalHOC from "./ModalHOC/ModalHOC";
+import ErrorModal from "./ErrorModal/ErrorModal";
 
 export {
   Navbar,
-  InlineError,
-  InlineHint,
+  ErrorInline,
+  HintInline,
+  ModalHOC,
   ButtonOutline,
   ButtonInline,
-  SlackLogo
+  ErrorModal,
+  LogoSlack
 };

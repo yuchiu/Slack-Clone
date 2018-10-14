@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Form, Button, Input, Container, Header } from "semantic-ui-react";
 
 import "./LoginPage.scss";
-import { Navbar, InlineError } from "@/components/common";
+import { Navbar, ErrorInline } from "@/components/common";
 
 const LoginPage = ({
   isUserLoggedIn,
@@ -26,7 +26,7 @@ const LoginPage = ({
           <Form.Field>
             <label htmlFor="username">Username</label>
             {clientErrors.username && (
-              <InlineError text={clientErrors.username} />
+              <ErrorInline text={clientErrors.username} />
             )}
             <Input
               id="username"
@@ -42,7 +42,7 @@ const LoginPage = ({
           <Form.Field>
             <label htmlFor="password">Password</label>
             {clientErrors.password && (
-              <InlineError text={clientErrors.password} />
+              <ErrorInline text={clientErrors.password} />
             )}
             <Input
               id="password"
@@ -67,7 +67,7 @@ const LoginPage = ({
       </Container>
       <br />
       <div className="inline-error--center">
-        {error && <InlineError text={`Error: ${error}`} />}
+        {error && <ErrorInline text={`Error: ${error}`} />}
       </div>
     </main>
   </React.Fragment>

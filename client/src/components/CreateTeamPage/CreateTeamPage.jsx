@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Button, Input, Header, Container } from "semantic-ui-react";
 
 import "./CreateTeamPage.scss";
-import { Navbar, InlineError } from "../common";
+import { Navbar, ErrorInline } from "../common";
 
 const CreateTeamPage = ({
   error,
@@ -29,7 +29,7 @@ const CreateTeamPage = ({
               fluid
             />
           </Form.Field>
-          {clientErrors.name && <InlineError text={clientErrors.name} />}
+          {clientErrors.name && <ErrorInline text={clientErrors.name} />}
           <Form.Field>
             <Input
               name="about"
@@ -39,14 +39,14 @@ const CreateTeamPage = ({
               fluid
             />
           </Form.Field>
-          {clientErrors.about && <InlineError text={clientErrors.about} />}
+          {clientErrors.about && <ErrorInline text={clientErrors.about} />}
           <br />
           <Button primary type="button" onClick={handleSubmit}>
             Submit
           </Button>
         </Form>
       </Container>
-      {error && <InlineError text={error} />}
+      {error && <ErrorInline text={error} />}
     </main>
   </React.Fragment>
 );

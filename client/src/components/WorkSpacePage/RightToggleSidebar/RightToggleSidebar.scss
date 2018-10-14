@@ -36,16 +36,3 @@
 .right-sidebar-item {
   margin-bottom: 10px;
 }
-.right-sidebar-button {
-  background-color: $white;
-  border: 1px solid $lightgrey;
-  border-radius: 3px;
-  padding: 5px 10px;
-  &:hover {
-    cursor: pointer;
-  }
-  &:focus,
-  &:active & {
-    outline: none;
-  }
-}
