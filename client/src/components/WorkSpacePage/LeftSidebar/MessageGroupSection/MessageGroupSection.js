@@ -6,7 +6,7 @@ import { channelAction, globalStateAction } from "@/actions";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import MessageGroupSection from "./MessageGroupSection.jsx";
 
-class SidebarList extends React.PureComponent {
+class SidebarList extends React.Component {
   render() {
     const {
       currentTeam,

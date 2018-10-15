@@ -7,16 +7,16 @@ import HOCModal from "@/components/common/HOCModal/HOCModal";
 
 class ErrorModal extends React.Component {
   handleClose = () => {
-    const { toggleModal, clearAllError } = this.props;
+    const { closeModal, clearAllError } = this.props;
     clearAllError();
-    toggleModal();
+    closeModal();
   };
 
   render() {
-    const { isModalOpen, toggleModal, error } = this.props;
+    const { error, closeModal, openModal, isModalOpen } = this.props;
     return (
       <React.Fragment>
-        {error && !isModalOpen ? toggleModal() : null}
+        {error && !isModalOpen ? openModal() : null}
         <Modal
           className="error-modal"
           size="mini"
@@ -40,8 +40,9 @@ ErrorModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
 
-  toggleModal: PropTypes.func.isRequired,
-  clearAllError: PropTypes.func.isRequired
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  clearAllError: PropTypes.func.isRequire
 };
 
 export default HOCModal(ErrorModal);

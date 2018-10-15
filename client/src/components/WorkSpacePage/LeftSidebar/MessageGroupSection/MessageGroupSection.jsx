@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import MessageGroupHeader from "./MessageGroupHeader.jsx";
 import MessageGroupList from "./MessageGroupList.jsx";
 
-class SidebarList extends React.PureComponent {
+class SidebarList extends React.Component {
   render() {
     const {
       currentTeam,

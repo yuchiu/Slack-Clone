@@ -6,7 +6,7 @@ import { channelAction, globalStateAction } from "@/actions";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import ChannelSection from "./ChannelSection.jsx";
 
-class ChannelSectionContainer extends React.PureComponent {
+class ChannelSectionContainer extends React.Component {
   render() {
     const {
       currentTeam,

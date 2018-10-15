@@ -8,7 +8,7 @@ import { userSelector } from "@/reducers/selectors";
 import { HOCModal } from "@/components/common";
 import EditMyProfileModal from "./EditMyProfileModal.jsx";
 
-class EditMyProfileModalContainer extends React.PureComponent {
+class EditMyProfileModalContainer extends React.Component {
   state = {
     password: "",
     newPassword: "",

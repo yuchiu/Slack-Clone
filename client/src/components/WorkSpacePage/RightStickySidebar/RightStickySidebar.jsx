@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./RightStickySidebar.scss";
 import TeamList from "./TeamList";
 
-class RightStickySidebar extends React.PureComponent {
+class RightStickySidebar extends React.Component {
   constructor(props) {
     super(props);
     this.toggleRightSidebar = this.toggleRightSidebar.bind(this);

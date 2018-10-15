@@ -1,9 +1,42 @@
 import React from "react";
 
-const HOCForm = WrappedComponent => {
+const HOCForm = propState => WrappedComponent => {
   class newForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { ...propState, clientError: {} };
+    }
+
+    logFormState = () => {
+      console.log(this.state);
+    };
+
+    resetForm = () => {
+      this.setState({
+        ...propState,
+        clientError: {}
+      });
+    };
+
+    changeName = () => {
+      this.setState({
+        formData: {
+          name: "salfalsfkasljf"
+        }
+      });
+    };
+
     render() {
-      return <WrappedComponent {...this.state} {...this.props} />;
+      return (
+        <div>
+          <WrappedComponent
+            {...this.props}
+            {...this.state}
+            changeName={this.changeName}
+            logFormState={this.logFormState}
+          />
+        </div>
+      );
     }
   }
   return newForm;

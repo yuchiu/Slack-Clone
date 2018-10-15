@@ -5,6 +5,7 @@ import HintInline from "./HintInline/HintInline.jsx";
 import ButtonOutline from "./ButtonOutline/ButtonOutline.jsx";
 import ButtonInline from "./ButtonInline/ButtonInline.jsx";
 import HOCModal from "./HOCModal/HOCModal";
+import HOCForm from "./HOCForm/HOCForm";
 import ErrorModal from "./ErrorModal/ErrorModal";
 
 export {
@@ -12,6 +13,7 @@ export {
   ErrorInline,
   HintInline,
   HOCModal,
+  HOCForm,
   ButtonOutline,
   ButtonInline,
   ErrorModal,

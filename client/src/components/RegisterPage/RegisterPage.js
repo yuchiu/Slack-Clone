@@ -18,19 +18,6 @@ class RegisterPageContainer extends React.Component {
     }
   };
 
-  componentDidMount() {
-    const { clearAllError } = this.props;
-    // clearAllError();
-    this.setState({
-      credentials: {
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      }
-    });
-  }
-
   redirectToLogin = () => {
     const { history } = this.props;
     history.push("/login");
@@ -104,7 +91,6 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  clearAllError: () => dispatch(errorAction.clearAllError()),
   fetchRegisterUser: credential => {
     dispatch(userAction.fetchRegisterUser(credential));
   }

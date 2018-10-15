@@ -6,7 +6,8 @@ import "./SidebarFooter.scss";
 
 class SidebarFooter extends React.Component {
   handleClick = () => {
-    const { history, fetchLogoutUser } = this.props;
+    const { history, fetchLogoutUser, clearAllError } = this.props;
+    clearAllError();
     fetchLogoutUser();
     history.push("/");
   };
@@ -27,6 +28,7 @@ class SidebarFooter extends React.Component {
 SidebarFooter.propTypes = {
   history: PropTypes.object.isRequired,
 
+  clearAllError: PropTypes.func.isRequired,
   fetchLogoutUser: PropTypes.func.isRequired
 };
 

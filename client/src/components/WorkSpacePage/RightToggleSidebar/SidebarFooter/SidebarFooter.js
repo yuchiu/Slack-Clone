@@ -1,10 +1,13 @@
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { userAction } from "@/actions";
+import { userAction, errorAction } from "@/actions";
 import SidebarFooter from "./SidebarFooter.jsx";
 
 const dispatchToProps = dispatch => ({
+  clearAllError: () => {
+    dispatch(errorAction.clearAllError());
+  },
   fetchLogoutUser: () => {
     dispatch(userAction.fetchLogoutUser());
   }

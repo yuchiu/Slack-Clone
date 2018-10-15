@@ -1,6 +1,9 @@
-#build
+# build
 dist
 build
+
+# OS
+.DS_Store*
 
 # editor
 .vs

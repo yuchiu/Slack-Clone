@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
-import LoginPage from "./LoginPage.jsx";
 import { authSelector, errorSelector } from "@/reducers/selectors";
+import LoginPage from "./LoginPage.jsx";
 
 class LoginPageContainer extends React.Component {
   state = {

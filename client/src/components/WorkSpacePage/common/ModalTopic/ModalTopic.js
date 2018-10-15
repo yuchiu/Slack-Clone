@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 import { validateForm } from "@/utils";
 import { channelAction } from "@/actions";
-import { HOCModal } from "@/components/common";
 import { channelSelector, teamSelector } from "@/reducers/selectors";
+import { HOCModal } from "@/components/common";
 import ModalTopic from "./ModalTopic.jsx";
 
-class ModalTopicContainer extends React.PureComponent {
+class ModalTopicContainer extends React.Component {
   state = {
     clientError: {},
     text: ""
@@ -54,7 +54,7 @@ class ModalTopicContainer extends React.PureComponent {
       this.setState({
         text: ""
       });
-      this.toggleEditModal();
+      this.closeModal();
     }
   };
 
@@ -67,8 +67,8 @@ class ModalTopicContainer extends React.PureComponent {
         clientError={clientError}
         topic={topic}
         isModalOpen={isModalOpen}
-        handleChange={this.handleChange}
         toggleModal={toggleModal}
+        handleChange={this.handleChange}
         handleClose={this.handleClose}
         handleSave={this.handleSave}
       />

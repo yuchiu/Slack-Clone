@@ -7,7 +7,7 @@ import { validateForm } from "@/utils";
 import { HOCModal } from "@/components/common";
 import EditFeelingModal from "./EditFeelingModal.jsx";
 
-class EditFeelingModalContainer extends React.PureComponent {
+class EditFeelingModalContainer extends React.Component {
   state = {
     clientError: {},
     text: ""

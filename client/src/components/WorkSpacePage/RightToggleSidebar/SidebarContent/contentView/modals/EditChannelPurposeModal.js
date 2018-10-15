@@ -8,7 +8,7 @@ import { channelAction } from "@/actions";
 import { HOCModal } from "@/components/common";
 import EditChannelPurposeModal from "./EditChannelPurposeModal.jsx";
 
-class EditChannelPurposeModalContainer extends React.PureComponent {
+class EditChannelPurposeModalContainer extends React.Component {
   state = {
     text: "",
     clientError: {},
