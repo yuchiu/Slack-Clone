@@ -10,14 +10,14 @@ const EditChannelPurposeModal = ({
   clientError,
   purpose,
 
-  toggleModalOpen,
+  toggleModal,
   handleClose,
   handleChange,
   handleSave
 }) => (
   <React.Fragment>
     {isModalOpen && (
-      <Modal size="small" open={isModalOpen} onClose={toggleModalOpen}>
+      <Modal size="small" open={isModalOpen} onClose={toggleModal}>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -60,7 +60,7 @@ const EditChannelPurposeModal = ({
         cssClass="lightgrey"
         displayText="edit"
         icon={<i className="fas fa-pencil-alt" />}
-        handleClick={toggleModalOpen}
+        handleClick={toggleModal}
       />
     ) : (
       <ButtonInline
@@ -68,7 +68,7 @@ const EditChannelPurposeModal = ({
         cssClass="lightgrey"
         displayText="add channel purpose"
         icon={<i className="fas fa-pencil-alt" />}
-        handleClick={toggleModalOpen}
+        handleClick={toggleModal}
       />
     )}
   </React.Fragment>
@@ -80,7 +80,7 @@ EditChannelPurposeModal.propTypes = {
   clientError: PropTypes.object.isRequired,
   purpose: PropTypes.string.isRequired,
 
-  toggleModalOpen: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired

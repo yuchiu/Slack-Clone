@@ -3,7 +3,7 @@ import { Button, Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import "./ErrorModal.scss";
-import ModalHOC from "@/components/common/ModalHOC/ModalHOC";
+import HOCModal from "@/components/common/HOCModal/HOCModal";
 
 class ErrorModal extends React.Component {
   handleClose = () => {
@@ -44,4 +44,4 @@ ErrorModal.propTypes = {
   clearAllError: PropTypes.func.isRequired
 };
 
-export default ModalHOC(ErrorModal);
+export default HOCModal(ErrorModal);

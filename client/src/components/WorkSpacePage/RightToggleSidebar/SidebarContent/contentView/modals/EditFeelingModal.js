@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 
 import { userAction } from "@/actions";
 import { validateForm } from "@/utils";
+import { HOCModal } from "@/components/common";
 import EditFeelingModal from "./EditFeelingModal.jsx";
 
 class EditFeelingModalContainer extends React.PureComponent {
   state = {
     clientError: {},
-    text: "",
-    isModalOpen: false
+    text: ""
   };
 
   componentWillUnmount() {
@@ -20,25 +20,23 @@ class EditFeelingModalContainer extends React.PureComponent {
     });
   }
 
-  toggleModalOpen = () => {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    });
-  };
-
   handleClose = e => {
+    const { toggleModal } = this.props;
     e.preventDefault();
-    this.setState({
-      text: "",
-      isModalOpen: false
-    });
-    this.toggleModalOpen();
+    toggleModal();
+    this.resetState();
   };
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value
+    });
+  };
+
+  resetState = () => {
+    this.setState({
+      text: ""
     });
   };
 
@@ -51,23 +49,20 @@ class EditFeelingModalContainer extends React.PureComponent {
     // proceed to send data to server if there's no error
     if (Object.keys(clientError).length === 0) {
       fetchEditUser({ brief_description: text });
-      this.setState({
-        text: "",
-        isModalOpen: false
-      });
+      this.resetState();
     }
   };
 
   render() {
-    const { text, isModalOpen, clientError } = this.state;
-    const { feeling } = this.props;
+    const { text, clientError } = this.state;
+    const { feeling, toggleModal, isModalOpen } = this.props;
     return (
       <EditFeelingModal
         text={text}
         isModalOpen={isModalOpen}
         clientError={clientError}
         feeling={feeling}
-        toggleModalOpen={this.toggleModalOpen}
+        toggleModal={toggleModal}
         handleClose={this.handleClose}
         handleChange={this.handleChange}
         handleSave={this.handleSave}
@@ -78,7 +73,9 @@ class EditFeelingModalContainer extends React.PureComponent {
 
 EditFeelingModalContainer.propTypes = {
   feeling: PropTypes.string,
+  isModalOpen: PropTypes.bool.isRequired,
 
+  toggleModal: PropTypes.func.isRequired,
   fetchEditUser: PropTypes.func.isRequired
 };
 
@@ -91,4 +88,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   null,
   dispatchToProps
-)(EditFeelingModalContainer);
+)(HOCModal(EditFeelingModalContainer));

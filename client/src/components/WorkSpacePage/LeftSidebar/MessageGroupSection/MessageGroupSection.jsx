@@ -7,8 +7,6 @@ import MessageGroupList from "./MessageGroupList.jsx";
 class SidebarList extends React.PureComponent {
   render() {
     const {
-      toggleAddMessageGroupModal,
-
       currentTeam,
       messageGroupList,
       messageGroupMemberList,
@@ -19,9 +17,7 @@ class SidebarList extends React.PureComponent {
     } = this.props;
     return (
       <ul className="leftsidebar__List">
-        <MessageGroupHeader
-          toggleAddMessageGroupModal={toggleAddMessageGroupModal}
-        />
+        <MessageGroupHeader />
         <MessageGroupList
           currentTeam={currentTeam}
           messageGroupList={messageGroupList}
@@ -35,8 +31,6 @@ class SidebarList extends React.PureComponent {
   }
 }
 SidebarList.propTypes = {
-  toggleAddMessageGroupModal: PropTypes.func.isRequired,
-
   currentTeam: PropTypes.object.isRequired,
   messageGroupMemberList: PropTypes.array.isRequired,
   messageGroupList: PropTypes.array.isRequired,

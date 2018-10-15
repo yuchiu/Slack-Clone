@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
+import { HOCModal } from "@/components/common";
 import EditMyProfileModal from "./EditMyProfileModal.jsx";
 
 class EditMyProfileModalContainer extends React.PureComponent {
@@ -17,16 +18,11 @@ class EditMyProfileModalContainer extends React.PureComponent {
     imgFile: {},
 
     clientError: {},
-    isModalOpen: false,
     isEditPasswordOn: false,
     changeAvatar: false,
     imgScale: 1.67,
     isImgUploaded: false
   };
-
-  componentWillUnmount() {
-    this.resetState();
-  }
 
   resetState = () => {
     this.setState({
@@ -38,18 +34,10 @@ class EditMyProfileModalContainer extends React.PureComponent {
       imgFile: {},
 
       clientError: {},
-      isModalOpen: false,
       isEditPasswordOn: false,
       changeAvatar: false,
       imgScale: 1.67,
       isImgUploaded: false
-    });
-  };
-
-  toggleModalOpen = () => {
-    const { isModalOpen } = this.state;
-    this.setState({
-      isModalOpen: !isModalOpen
     });
   };
 
@@ -65,8 +53,9 @@ class EditMyProfileModalContainer extends React.PureComponent {
   };
 
   handleClose = e => {
+    const { toggleModal } = this.props;
     this.resetState();
-    this.toggleModalOpen();
+    toggleModal();
   };
 
   handleChange = e => {
@@ -163,14 +152,13 @@ class EditMyProfileModalContainer extends React.PureComponent {
       about,
       newPassword,
       imgFile,
-      isModalOpen,
       imgScale,
       isEditPasswordOn,
       clientError,
       changeAvatar,
       isImgUploaded
     } = this.state;
-    const { currentUser } = this.props;
+    const { currentUser, isModalOpen, toggleModal } = this.props;
     return (
       <EditMyProfileModal
         password={password}
@@ -186,7 +174,7 @@ class EditMyProfileModalContainer extends React.PureComponent {
         changeAvatar={changeAvatar}
         isImgUploaded={isImgUploaded}
         currentUser={currentUser}
-        toggleModalOpen={this.toggleModalOpen}
+        toggleModal={toggleModal}
         toggleEditPassword={this.toggleEditPassword}
         handleClose={this.handleClose}
         handleChange={this.handleChange}
@@ -204,6 +192,9 @@ class EditMyProfileModalContainer extends React.PureComponent {
 EditMyProfileModalContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   feeling: PropTypes.string,
+  isModalOpen: PropTypes.bool.isRequired,
+
+  toggleModal: PropTypes.func.isRequired,
   createUploadError: PropTypes.func.isRequired
 };
 
@@ -223,4 +214,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(EditMyProfileModalContainer);
+)(HOCModal(EditMyProfileModalContainer));

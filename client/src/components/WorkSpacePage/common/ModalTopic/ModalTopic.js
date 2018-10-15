@@ -3,38 +3,32 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { validateForm } from "@/utils";
-import { globalStateAction, channelAction } from "@/actions";
-import {
-  globalStateSelector,
-  channelSelector,
-  teamSelector
-} from "@/reducers/selectors";
-import TopicModal from "./TopicModal.jsx";
+import { channelAction } from "@/actions";
+import { HOCModal } from "@/components/common";
+import { channelSelector, teamSelector } from "@/reducers/selectors";
+import ModalTopic from "./ModalTopic.jsx";
 
-class TopicModalContainer extends React.PureComponent {
+class ModalTopicContainer extends React.PureComponent {
   state = {
     clientError: {},
     text: ""
   };
 
-  componentWillUnmount() {
+  clearState = () => {
     this.setState({
       clientError: {},
       text: ""
     });
-  }
-
-  toggleEditModal = () => {
-    const { toggleEditModal } = this.props;
-    toggleEditModal();
   };
 
   handleClose = e => {
+    const { toggleModal } = this.props;
     e.preventDefault();
     this.setState({
       text: ""
     });
-    this.toggleEditModal();
+    toggleModal();
+    this.clearState();
   };
 
   handleChange = e => {
@@ -66,15 +60,15 @@ class TopicModalContainer extends React.PureComponent {
 
   render() {
     const { text, clientError } = this.state;
-    const { topic, isEditModalOpen } = this.props;
+    const { topic, isModalOpen, toggleModal } = this.props;
     return (
-      <TopicModal
+      <ModalTopic
         text={text}
         clientError={clientError}
         topic={topic}
-        isEditModalOpen={isEditModalOpen}
+        isModalOpen={isModalOpen}
         handleChange={this.handleChange}
-        toggleEditModal={this.toggleEditModal}
+        toggleModal={toggleModal}
         handleClose={this.handleClose}
         handleSave={this.handleSave}
       />
@@ -82,27 +76,23 @@ class TopicModalContainer extends React.PureComponent {
   }
 }
 
-TopicModalContainer.propTypes = {
+ModalTopicContainer.propTypes = {
   topic: PropTypes.string,
 
-  isEditModalOpen: PropTypes.bool.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
   currentTeam: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
 
-  fetchEditChannel: PropTypes.func.isRequired,
-  toggleEditModal: PropTypes.func.isRequired
+  toggleModal: PropTypes.func.isRequired,
+  fetchEditChannel: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
-  isEditModalOpen: globalStateSelector.getIsEditModalOpen(state),
   currentTeam: teamSelector.getCurrentTeam(state),
   currentChannel: channelSelector.getCurrentChannel(state)
 });
 
 const dispatchToProps = dispatch => ({
-  toggleEditModal: () => {
-    dispatch(globalStateAction.toggleEditModal());
-  },
   fetchEditChannel: editChannelData => {
     dispatch(channelAction.fetchEditChannel(editChannelData));
   }
@@ -111,4 +101,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(TopicModalContainer);
+)(HOCModal(ModalTopicContainer));

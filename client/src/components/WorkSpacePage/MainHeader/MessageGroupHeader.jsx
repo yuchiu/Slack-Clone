@@ -32,7 +32,7 @@ const MessageGroupHeader = ({
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <OnlineStatusBubble on={false} addClass="dark" />
+          <OnlineStatusBubble on={true} addClass="dark" />
         </React.Fragment>
       )}
       <SubHeaderDivider />

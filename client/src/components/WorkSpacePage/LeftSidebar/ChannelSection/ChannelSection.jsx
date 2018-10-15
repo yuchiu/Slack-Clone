@@ -9,14 +9,10 @@ const ChannelSection = ({
   channelList,
 
   switchChannel,
-  toggleAddChannelModal,
   switchRightSidebarView
 }) => (
   <ul className="leftsidebar__List">
-    <ChannelHeader
-      currentTeam={currentTeam}
-      toggleAddChannelModal={toggleAddChannelModal}
-    />
+    <ChannelHeader currentTeam={currentTeam} />
     <ChannelList
       switchChannel={switchChannel}
       switchRightSidebarView={switchRightSidebarView}
@@ -31,7 +27,6 @@ ChannelSection.propTypes = {
   channelList: PropTypes.array.isRequired,
 
   switchChannel: PropTypes.func.isRequired,
-  toggleAddChannelModal: PropTypes.func.isRequired,
   switchRightSidebarView: PropTypes.func.isRequired
 };
 

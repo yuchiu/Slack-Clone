@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { validateForm } from "@/utils";
 import { teamSelector, channelSelector } from "@/reducers/selectors";
 import { channelAction } from "@/actions";
+import { HOCModal } from "@/components/common";
 import EditChannelPurposeModal from "./EditChannelPurposeModal.jsx";
 
 class EditChannelPurposeModalContainer extends React.PureComponent {
@@ -21,19 +22,17 @@ class EditChannelPurposeModalContainer extends React.PureComponent {
     });
   }
 
-  toggleModalOpen = () => {
+  resetState = () => {
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      text: ""
     });
   };
 
   handleClose = e => {
+    const { toggleModal } = this.props;
     e.preventDefault();
-    this.setState({
-      text: "",
-      isModalOpen: false
-    });
-    this.toggleModalOpen();
+    toggleModal();
+    this.resetState();
   };
 
   handleChange = e => {
@@ -56,23 +55,20 @@ class EditChannelPurposeModalContainer extends React.PureComponent {
         channelId: currentChannel.id,
         teamId: currentTeam.id
       });
-      this.setState({
-        isModalOpen: false,
-        text: ""
-      });
+      this.resetState();
     }
   };
 
   render() {
-    const { text, isModalOpen, clientError } = this.state;
-    const { purpose } = this.props;
+    const { text, clientError } = this.state;
+    const { purpose, toggleModal, isModalOpen } = this.props;
     return (
       <EditChannelPurposeModal
         purpose={purpose}
         text={text}
         isModalOpen={isModalOpen}
         clientError={clientError}
-        toggleModalOpen={this.toggleModalOpen}
+        toggleModal={toggleModal}
         handleClose={this.handleClose}
         handleChange={this.handleChange}
         handleSave={this.handleSave}
@@ -86,7 +82,9 @@ EditChannelPurposeModalContainer.propTypes = {
 
   currentTeam: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
 
+  toggleModal: PropTypes.func.isRequired,
   fetchEditChannel: PropTypes.func.isRequired
 };
 
@@ -104,4 +102,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(EditChannelPurposeModalContainer);
+)(HOCModal(EditChannelPurposeModalContainer));

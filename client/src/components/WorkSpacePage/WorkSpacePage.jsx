@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./WorkSpacePage.scss";
 import { ErrorModal } from "@/components/common";
-import LeftSidebar from "./LeftSidebar/LeftSidebar";
+import LeftSidebar from "./LeftSidebar/LeftSidebar.jsx";
 import InputWrapper from "./InputWrapper/InputWrapper";
 import MainHeader from "./MainHeader/MainHeader";
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";

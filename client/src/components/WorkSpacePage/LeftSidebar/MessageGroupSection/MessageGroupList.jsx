@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
-class MessageGroupList extends React.PureComponent {
+class MessageGroupList extends React.Component {
   handleSwitchChannel = channelId => {
     const { switchChannel } = this.props;
     switchChannel(channelId);
@@ -46,7 +46,7 @@ class MessageGroupList extends React.PureComponent {
                     className="leftsidebar__List__link__item leftsidebar__List__link__item--link"
                     onClick={this.switchTargetUserView}
                   >
-                    <OnlineStatusBubble on={false} />
+                    <OnlineStatusBubble on={true} />
                     {"  "}
                     {messageGroup.name}
                   </li>

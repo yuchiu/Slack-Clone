@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 
 import { HintInline, ButtonInline, ErrorInline } from "@/components/common";
 
-const TopicModal = ({
+const ModalTopic = ({
   text,
   clientError,
   topic,
-  isEditModalOpen,
-  toggleEditModal,
+  isModalOpen,
+  toggleModal,
   handleChange,
   handleClose,
   handleSave
 }) => (
   <React.Fragment>
-    {isEditModalOpen && (
-      <Modal size="small" open={isEditModalOpen} onClose={toggleEditModal}>
+    {isModalOpen && (
+      <Modal size="small" open={isModalOpen} onClose={toggleModal}>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -54,13 +54,13 @@ const TopicModal = ({
         </Modal.Content>
       </Modal>
     )}
-    {!isEditModalOpen && topic ? (
+    {!isModalOpen && topic ? (
       <ButtonInline
         cssClass="lightgrey"
         title={topic}
         icon={<i className="fas fa-pencil-alt" />}
         displayText="edit"
-        handleClick={toggleEditModal}
+        handleClick={toggleModal}
       />
     ) : (
       <ButtonInline
@@ -68,22 +68,22 @@ const TopicModal = ({
         title={topic}
         icon={<i className="fas fa-pencil-alt" />}
         displayText="add a topic"
-        handleClick={toggleEditModal}
+        handleClick={toggleModal}
       />
     )}
   </React.Fragment>
 );
 
-TopicModal.propTypes = {
+ModalTopic.propTypes = {
   text: PropTypes.string,
   topic: PropTypes.string,
   clientError: PropTypes.object.isRequired,
-  isEditModalOpen: PropTypes.bool.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
 
-  toggleEditModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired
 };
 
-export default TopicModal;
+export default ModalTopic;

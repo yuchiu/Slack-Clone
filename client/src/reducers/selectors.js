@@ -17,7 +17,6 @@ import { getMessageList, getHasMoreMessage } from "./message.reducer";
 import { getError } from "./error.reducer";
 import {
   getIsSidebarOpen,
-  getIsEditModalOpen,
   getRightSidebarView,
   getTargetUser,
   getRightSidebarTitle
@@ -27,8 +26,7 @@ const globalStateSelector = {
   getIsSidebarOpen: state => getIsSidebarOpen(state),
   getRightSidebarView: state => getRightSidebarView(state),
   getRightSidebarTitle: state => getRightSidebarTitle(state),
-  getTargetUser: state => getTargetUser(state),
-  getIsEditModalOpen: state => getIsEditModalOpen(state)
+  getTargetUser: state => getTargetUser(state)
 };
 
 const authSelector = {

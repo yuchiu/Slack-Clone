@@ -10,14 +10,14 @@ const EditFeelingModal = ({
   clientError,
   feeling,
 
-  toggleModalOpen,
+  toggleModal,
   handleChange,
   handleClose,
   handleSave
 }) => (
   <React.Fragment>
     {isModalOpen && (
-      <Modal size="small" open={isModalOpen} onClose={toggleModalOpen}>
+      <Modal size="small" open={isModalOpen} onClose={toggleModal}>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -62,7 +62,7 @@ const EditFeelingModal = ({
         cssClass="lightgrey"
         displayText="edit"
         icon={<i className="fas fa-pencil-alt" />}
-        handleClick={toggleModalOpen}
+        handleClick={toggleModal}
       />
     ) : (
       <ButtonInline
@@ -70,7 +70,7 @@ const EditFeelingModal = ({
         title={feeling}
         displayText="add feeling"
         icon={<i className="fas fa-pencil-alt" />}
-        handleClick={toggleModalOpen}
+        handleClick={toggleModal}
       />
     )}
   </React.Fragment>
@@ -82,7 +82,7 @@ EditFeelingModal.propTypes = {
   clientError: PropTypes.object.isRequired,
   feeling: PropTypes.string.isRequired,
 
-  toggleModalOpen: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired

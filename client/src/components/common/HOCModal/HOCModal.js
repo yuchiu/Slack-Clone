@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalHOC = WrappedComponent => {
+const HOCModal = WrappedComponent => {
   class newModal extends React.Component {
     state = {
       isModalOpen: false
@@ -26,4 +26,4 @@ const ModalHOC = WrappedComponent => {
   return newModal;
 };
 
-export default ModalHOC;
+export default HOCModal;

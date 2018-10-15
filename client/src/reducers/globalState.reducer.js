@@ -6,8 +6,7 @@ import constants from "../constants";
 const initialState = {
   isSidebarOpen: false,
   rightSidebarView: "team",
-  targetUserId: null,
-  isEditModalOpen: false
+  targetUserId: null
 };
 
 export default (state = initialState, action) => {
@@ -24,10 +23,6 @@ export default (state = initialState, action) => {
       newState.rightSidebarView = action.payload;
       return newState;
 
-    case constants.GLOBAL_EDIT_MODAL_TOGGLE:
-      newState.isEditModalOpen = !newState.isEditModalOpen;
-      return newState;
-
     case constants.GLOBAL_TARGET_USER_SWITCH:
       newState.targetUserId = action.payload;
       return newState;
@@ -42,8 +37,6 @@ export default (state = initialState, action) => {
 
 /* state selectors */
 const getIsSidebarOpen = state => state.globalStateReducer.isSidebarOpen;
-
-const getIsEditModalOpen = state => state.globalStateReducer.isEditModalOpen;
 
 const getRightSidebarView = state => state.globalStateReducer.rightSidebarView;
 
@@ -72,7 +65,6 @@ const getTargetUser = createSelector(
 
 export {
   getIsSidebarOpen,
-  getIsEditModalOpen,
   getRightSidebarView,
   getRightSidebarTitle,
   getTargetUser

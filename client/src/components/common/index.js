@@ -4,14 +4,14 @@ import LogoSlack from "./LogoSlack/LogoSlack.jsx";
 import HintInline from "./HintInline/HintInline.jsx";
 import ButtonOutline from "./ButtonOutline/ButtonOutline.jsx";
 import ButtonInline from "./ButtonInline/ButtonInline.jsx";
-import ModalHOC from "./ModalHOC/ModalHOC";
+import HOCModal from "./HOCModal/HOCModal";
 import ErrorModal from "./ErrorModal/ErrorModal";
 
 export {
   Navbar,
   ErrorInline,
   HintInline,
-  ModalHOC,
+  HOCModal,
   ButtonOutline,
   ButtonInline,
   ErrorModal,

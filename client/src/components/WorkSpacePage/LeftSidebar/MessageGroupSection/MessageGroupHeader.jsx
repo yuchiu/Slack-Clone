@@ -1,28 +1,13 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
-import PropTypes from "prop-types";
 
-class MessageGroupHeader extends React.Component {
-  state = {};
+import { ModalAddMessageGroup } from "@/components/WorkSpacePage/LeftSidebar/modals";
 
-  render() {
-    const { toggleAddMessageGroupModal } = this.props;
-    return (
-      <h1 className="leftsidebar__List__header">
-        <span className="leftsidebar__List__header__title  leftsidebar__List__header__title--closer">
-          Direct Messages
-        </span>
-        <Icon
-          className="leftsidebar__List__header__icon"
-          onClick={toggleAddMessageGroupModal}
-          name="plus circle"
-        />
-      </h1>
-    );
-  }
-}
-MessageGroupHeader.propTypes = {
-  toggleAddMessageGroupModal: PropTypes.func.isRequired
-};
-
+const MessageGroupHeader = () => (
+  <h1 className="leftsidebar__List__header">
+    <span className="leftsidebar__List__header__title  leftsidebar__List__header__title--closer">
+      Direct Messages
+    </span>
+    <ModalAddMessageGroup />
+  </h1>
+);
 export default MessageGroupHeader;

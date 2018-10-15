@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { TopicModal } from "@/components/WorkSpacePage/common";
+import { ModalTopic } from "@/components/WorkSpacePage/common";
 import { EditChannelPurposeModal } from "./modals";
 
 class ChannelDetailView extends React.Component {
@@ -39,7 +39,7 @@ class ChannelDetailView extends React.Component {
           </div>
           <div className="view-detail__brief-description  right-sidebar-item">
             <span className="right-sidebar-label">Topic: </span>
-            <TopicModal topic={currentChannel.brief_description} />
+            <ModalTopic topic={currentChannel.brief_description} />
           </div>
           <div className="view-detail__detail-description  right-sidebar-item">
             <span className="right-sidebar-label">Purpose: </span>

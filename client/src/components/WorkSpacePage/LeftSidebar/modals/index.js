@@ -1,5 +1,5 @@
-import AddChannelModal from "./AddChannelModal";
-import AddMessageGroupModal from "./AddMessageGroupModal";
-import AddTeamMemberModal from "./AddTeamMemberModal";
+import ModalAddChannel from "./ModalAddChannel";
+import ModalAddMessageGroup from "./ModalAddMessageGroup";
+import ModalAddTeamMember from "./ModalAddTeamMember";
 
-export { AddChannelModal, AddMessageGroupModal, AddTeamMemberModal };
+export { ModalAddChannel, ModalAddMessageGroup, ModalAddTeamMember };

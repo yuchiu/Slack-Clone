@@ -9,8 +9,6 @@ import ChannelSection from "./ChannelSection.jsx";
 class ChannelSectionContainer extends React.PureComponent {
   render() {
     const {
-      toggleAddChannelModal,
-
       currentTeam,
       channelList,
 
@@ -20,7 +18,6 @@ class ChannelSectionContainer extends React.PureComponent {
     return (
       <ChannelSection
         currentTeam={currentTeam}
-        toggleAddChannelModal={toggleAddChannelModal}
         switchChannel={switchChannel}
         switchRightSidebarView={switchRightSidebarView}
         channelList={channelList}
@@ -29,8 +26,6 @@ class ChannelSectionContainer extends React.PureComponent {
   }
 }
 ChannelSectionContainer.propTypes = {
-  toggleAddChannelModal: PropTypes.func.isRequired,
-
   currentTeam: PropTypes.object.isRequired,
   channelList: PropTypes.array.isRequired,
 

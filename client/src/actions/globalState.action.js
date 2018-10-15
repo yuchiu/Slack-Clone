@@ -13,11 +13,6 @@ export default {
       payload: selectedView
     });
   },
-  toggleEditModal: () => dispatch => {
-    dispatch({
-      type: constants.GLOBAL_EDIT_MODAL_TOGGLE
-    });
-  },
   switchTargetUser: targetUserId => dispatch => {
     dispatch({
       type: constants.GLOBAL_TARGET_USER_SWITCH,

@@ -22,7 +22,7 @@ const EditMyProfileModal = ({
   isImgUploaded,
   currentUser,
 
-  toggleModalOpen,
+  toggleModal,
   toggleEditPassword,
   handleClose,
   handleChange,
@@ -35,7 +35,7 @@ const EditMyProfileModal = ({
 }) => (
   <React.Fragment>
     {isModalOpen && (
-      <Modal size="large" open={isModalOpen} onClose={toggleModalOpen}>
+      <Modal size="large" open={isModalOpen} onClose={toggleModal}>
         <Modal.Content>
           <Form>
             <Form.Field>
@@ -245,7 +245,7 @@ const EditMyProfileModal = ({
       <ButtonOutline
         cssClass="right-sidebar-item"
         text="Edit Profile"
-        handleClick={toggleModalOpen}
+        handleClick={toggleModal}
       />
     )}
   </React.Fragment>
@@ -266,7 +266,7 @@ EditMyProfileModal.propTypes = {
   isImgUploaded: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
 
-  toggleModalOpen: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   toggleEditPassword: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,

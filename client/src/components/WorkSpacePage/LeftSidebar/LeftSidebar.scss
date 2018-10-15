@@ -8,17 +8,6 @@
   overflow-y: auto;
   background-color: $purple;
   color: $superlightgrey;
-  &__invite {
-    padding: 15px 0px 10px $paddingLeft;
-    color: $white;
-    &:hover {
-      background: $darkpurple;
-      cursor: pointer;
-    }
-    &__plus {
-      font-size: 16px;
-    }
-  }
   &__header {
     &__top {
       user-select: none;
@@ -78,11 +67,6 @@
           padding-right: 76px;
         }
       }
-      &__icon {
-        &:hover {
-          cursor: pointer;
-        }
-      }
     }
     &__link {
       &:focus,
@@ -108,5 +92,25 @@
         }
       }
     }
+  }
+}
+
+.invite-people-button {
+  padding: 15px 0px 10px $paddingLeft;
+  color: $white;
+  &:hover {
+    background: $darkpurple;
+    cursor: pointer;
+  }
+  &__plus {
+    font-size: 16px;
+  }
+}
+
+.plus-icon {
+  color: $white;
+  font-size: 14px;
+  &:hover {
+    cursor: pointer;
   }
 }
