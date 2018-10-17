@@ -29,11 +29,14 @@ export default {
   },
 
   fetchRegisterUser: credentials => async dispatch => {
+    dispatch({
+      type: constants.USER_FETCH_LOGIN
+    });
     try {
       const response = await userService.fetchRegisterUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN,
+        type: constants.USER_FETCH_LOGIN_SUCCESS,
         payload: data
       });
     } catch (err) {
@@ -46,11 +49,14 @@ export default {
   },
 
   fetchLoginUser: credentials => async dispatch => {
+    dispatch({
+      type: constants.USER_FETCH_LOGIN
+    });
     try {
       const response = await userService.fetchLoginUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN,
+        type: constants.USER_FETCH_LOGIN_SUCCESS,
         payload: data
       });
     } catch (err) {

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { teamSelector } from "@/reducers/selectors";
+import { teamSelector } from "@/reducers/";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalAddTeamMember from "./ModalAddTeamMember.jsx";
 

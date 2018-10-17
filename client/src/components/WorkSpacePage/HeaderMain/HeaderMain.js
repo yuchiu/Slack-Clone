@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 import { globalStateAction } from "@/actions";
-import { channelSelector, globalStateSelector } from "@/reducers/selectors";
+import { channelSelector, globalStateSelector } from "@/reducers/";
 import HeaderMain from "./HeaderMain.jsx";
 
 const stateToProps = state => ({

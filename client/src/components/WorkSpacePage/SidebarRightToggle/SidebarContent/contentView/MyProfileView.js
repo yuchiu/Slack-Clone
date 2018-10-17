@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { userSelector } from "@/reducers/selectors";
+import { userSelector } from "@/reducers/";
 import MyProfileView from "./MyProfileView.jsx";
 
 const stateToProps = state => ({

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { sessionStore } from "@/utils";
 import { teamAction, globalStateAction } from "@/actions";
-import { teamSelector, globalStateSelector } from "@/reducers/selectors";
+import { teamSelector, globalStateSelector } from "@/reducers/";
 import WorkSpacePage from "./WorkSpacePage.jsx";
 
 const WorkSpacePageHOC = WrappedComponent => {

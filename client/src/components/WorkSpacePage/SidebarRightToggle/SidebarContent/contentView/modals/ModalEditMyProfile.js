@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
-import { userSelector } from "@/reducers/selectors";
+import { userSelector } from "@/reducers/";
 import { HOCModal } from "@/components/common";
 import ModalEditMyProfile from "./ModalEditMyProfile.jsx";
 

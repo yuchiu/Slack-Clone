@@ -6,7 +6,8 @@ import { sessionStore } from "@/utils";
 const initialState = {
   teamList: [],
   currentTeam: {},
-  currentTeamMemberList: []
+  currentTeamMemberList: [],
+  isLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -20,7 +21,7 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.USER_FETCH_LOGIN:
+    case constants.USER_FETCH_LOGIN_SUCCESS:
       if (action.payload.teamList && action.payload.teamList.length > 0) {
         newState.teamList = action.payload.teamList;
         newState.currentTeam = action.payload.teamList[0];
@@ -52,6 +53,11 @@ export default (state = initialState, action) => {
     case constants.USER_FETCH_LOGOUT:
       sessionStore.removeTeamId();
       return initialState;
+
+    case constants.ERROR_TEAM:
+      newState.error = action.payload;
+      newState.isLoading = false;
+      return newState;
 
     default:
       return state;

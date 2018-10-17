@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 
 import { userAction, errorAction } from "@/actions";
-import { authSelector, errorSelector } from "@/reducers/selectors";
+import { authSelector, errorSelector } from "@/reducers/";
 import { HOCForm } from "@/components/common";
 import LoginPage from "./LoginPage.jsx";
 
 const stateToProps = state => ({
+  isLoading: authSelector.getAuthIsLoading(state),
   isUserLoggedIn: authSelector.getIsUserLoggedIn(state),
   error: errorSelector.getError(state)
 });

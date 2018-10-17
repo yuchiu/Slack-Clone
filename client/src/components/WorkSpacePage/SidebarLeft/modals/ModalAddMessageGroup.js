@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { channelAction } from "@/actions";
 import { HOCModal, ErrorInline } from "@/components/common";
 import { validateForm } from "@/utils";
-import { teamSelector, userSelector } from "@/reducers/selectors";
+import { teamSelector, userSelector } from "@/reducers/";
 
 class ModalAddMessageGroup extends React.Component {
   state = {

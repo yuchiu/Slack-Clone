@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { validateForm } from "@/utils";
 import { channelAction } from "@/actions";
 import { HOCModal, ErrorInline } from "@/components/common";
-import { teamSelector, userSelector } from "@/reducers/selectors";
+import { teamSelector, userSelector } from "@/reducers/";
 
 class ModalAddChannel extends React.Component {
   state = {

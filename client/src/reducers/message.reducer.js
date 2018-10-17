@@ -5,7 +5,8 @@ import { getCurrentUser } from "./user.reducer";
 
 const initialState = {
   messageList: [],
-  hasMoreMessage: true
+  hasMoreMessage: true,
+  isLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +40,11 @@ export default (state = initialState, action) => {
 
     case constants.USER_FETCH_LOGOUT:
       return initialState;
+
+    case constants.ERROR_MESSAGE:
+      newState.error = action.payload;
+      newState.isLoading = false;
+      return newState;
 
     default:
       return state;

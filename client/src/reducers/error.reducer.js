@@ -11,6 +11,10 @@ export default (state = initialState, action) => {
       newState.error = action.payload;
       return newState;
 
+    case constants.ERROR_USER:
+      newState.error = action.payload;
+      return newState;
+
     case constants.ERROR_CHANNEL:
       newState.error = action.payload;
       return newState;

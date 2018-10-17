@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+import LoadingOverlay from "react-loading-overlay";
 
 import "./LoginPage.scss";
 import { Navbar, ErrorInline } from "@/components/common";
@@ -33,16 +34,17 @@ class LoginPage extends React.Component {
     const {
       isUserLoggedIn,
       error,
+      isLoading,
       fieldErrors,
       formFields,
 
       handleChange
     } = this.props;
     return (
-      <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/workspace" />}
-        <Navbar />
+      <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
         <main className="login-page">
+          {isUserLoggedIn && <Redirect to="/workspace" />}
+          <Navbar />{" "}
           <Container text>
             <LoginForm
               fieldErrors={fieldErrors}
@@ -61,7 +63,7 @@ class LoginPage extends React.Component {
             {error && <ErrorInline text={`Error: ${error}`} />}
           </div>
         </main>
-      </React.Fragment>
+      </LoadingOverlay>
     );
   }
 }
@@ -69,6 +71,7 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  isLoading: PropTypes.bool.isRequired,
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,

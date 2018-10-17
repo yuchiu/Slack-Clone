@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { globalStateAction, teamAction } from "@/actions";
-import { teamSelector } from "@/reducers/selectors";
+import { teamSelector } from "@/reducers/";
 
 import SidebarRightSticky from "./SidebarRightSticky.jsx";
 

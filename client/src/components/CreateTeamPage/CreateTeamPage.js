@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
 import { validateForm } from "../../utils";
-import { errorSelector } from "@/reducers/selectors";
+import { errorSelector } from "@/reducers/";
 import CreateTeamPage from "./CreateTeamPage.jsx";
 
 class CreateTeamPageContainer extends React.Component {

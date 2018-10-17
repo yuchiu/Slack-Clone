@@ -1,7 +1,8 @@
 import constants from "@/constants";
 
 const initialState = {
-  currentUser: {}
+  currentUser: {},
+  isLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -11,7 +12,7 @@ export default (state = initialState, action) => {
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_FETCH_LOGIN:
+    case constants.USER_FETCH_LOGIN_SUCCESS:
       newState.currentUser = action.payload.user;
       return newState;
 
@@ -21,6 +22,11 @@ export default (state = initialState, action) => {
 
     case constants.USER_FETCH_LOGOUT:
       return initialState;
+
+    case constants.ERROR_USER:
+      newState.error = action.payload;
+      newState.isLoading = false;
+      return newState;
 
     default:
       return state;

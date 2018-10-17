@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
-import { teamSelector } from "@/reducers/selectors";
+import { teamSelector } from "@/reducers/";
 import TeamDetailView from "./TeamDetailView.jsx";
 
 const stateToProps = state => ({

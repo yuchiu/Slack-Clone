@@ -14,13 +14,13 @@ const HOCForm = getInitialState => WrappedComponent => {
       const normalizedState = getInitialState();
       if (!normalizedState.formFields) {
         console.error(
-          "initial state formFields of type object is required to be passed in with HOC Form"
+          "formFields of type object is required to be passed in with HOC Form as initial state"
         );
         normalizedState.formFields = {};
       }
       if (!normalizedState.fieldsToValidate) {
         console.error(
-          "initial state fieldsToValidate of type array is required to be passed in with HOC Form"
+          "fieldsToValidate of type array is required to be passed in with HOC Form as initial state"
         );
         normalizedState.fieldsToValidate = [];
       }

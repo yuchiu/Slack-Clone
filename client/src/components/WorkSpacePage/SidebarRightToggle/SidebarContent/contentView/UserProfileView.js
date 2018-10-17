@@ -6,7 +6,7 @@ import {
   channelSelector,
   teamSelector,
   userSelector
-} from "@/reducers/selectors";
+} from "@/reducers/";
 import UserProfileView from "./UserProfileView.jsx";
 
 const stateToProps = state => ({

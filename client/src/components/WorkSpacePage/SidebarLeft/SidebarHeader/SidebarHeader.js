@@ -2,11 +2,7 @@ import { connect } from "react-redux";
 
 import SidebarHeader from "./SidebarHeader.jsx";
 
-import {
-  globalStateSelector,
-  teamSelector,
-  userSelector
-} from "@/reducers/selectors";
+import { globalStateSelector, teamSelector, userSelector } from "@/reducers/";
 import { globalStateAction } from "@/actions";
 
 const stateToProps = state => ({

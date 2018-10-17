@@ -1,11 +1,7 @@
 import { connect } from "react-redux";
 
 import { messageAction, errorAction } from "@/actions";
-import {
-  userSelector,
-  channelSelector,
-  teamSelector
-} from "@/reducers/selectors";
+import { userSelector, channelSelector, teamSelector } from "@/reducers/";
 import InputWrapper from "./InputWrapper.jsx";
 
 const stateToProps = state => ({

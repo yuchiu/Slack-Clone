@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
-import { channelSelector } from "@/reducers/selectors";
+import { channelSelector } from "@/reducers/";
 import ChannelDetailView from "./ChannelDetailView.jsx";
 
 const stateToProps = state => ({

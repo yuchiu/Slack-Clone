@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { teamSelector, channelSelector } from "@/reducers/selectors";
+import { teamSelector, channelSelector } from "@/reducers/";
 import { channelAction } from "@/actions";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalEditPurpose from "./ModalEditPurpose.jsx";

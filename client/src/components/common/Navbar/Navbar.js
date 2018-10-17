@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Navbar from "./Navbar.jsx";
 import { userAction } from "@/actions";
-import { authSelector, userSelector } from "@/reducers/selectors";
+import { authSelector, userSelector } from "@/reducers/";
 
 const stateToProps = state => ({
   isUserLoggedIn: authSelector.getIsUserLoggedIn(state),

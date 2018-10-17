@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { errorAction } from "@/actions";
-import { errorSelector } from "@/reducers/selectors";
+import { errorSelector } from "@/reducers/";
 import ErrorModal from "./ErrorModal.jsx";
 
 const stateToProps = state => ({
