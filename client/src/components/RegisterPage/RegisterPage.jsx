@@ -12,7 +12,7 @@ class RegisterPage extends React.Component {
       isUserLoggedIn,
       error,
       clientErrors,
-      credentials,
+      formFields,
 
       handleRegister,
       handleChange,
@@ -20,7 +20,7 @@ class RegisterPage extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        {isUserLoggedIn && <Redirect to="/create-team" />}
+        {isUserLoggedIn && <Redirect to="/workspace" />}
         <Navbar />
         <main className="register-page">
           {" "}
@@ -36,7 +36,7 @@ class RegisterPage extends React.Component {
                   id="username"
                   type="username"
                   name="username"
-                  value={credentials.username}
+                  value={formFields.username}
                   className=""
                   onChange={handleChange}
                   placeholder="username"
@@ -52,7 +52,7 @@ class RegisterPage extends React.Component {
                   id="email"
                   type="email"
                   name="email"
-                  value={credentials.email}
+                  value={formFields.email}
                   className=""
                   onChange={handleChange}
                   placeholder="email"
@@ -68,7 +68,7 @@ class RegisterPage extends React.Component {
                   id="password"
                   type="password"
                   name="password"
-                  value={credentials.password}
+                  value={formFields.password}
                   className="validate"
                   onChange={handleChange}
                   placeholder="password"
@@ -84,7 +84,7 @@ class RegisterPage extends React.Component {
                   id="confirm_password"
                   type="password"
                   name="confirmPassword"
-                  value={credentials.confirmPassword}
+                  value={formFields.confirmPassword}
                   className="validate"
                   onChange={handleChange}
                   placeholder="confirm password"
@@ -118,7 +118,7 @@ class RegisterPage extends React.Component {
 RegisterPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  credentials: PropTypes.object.isRequired,
+  formFields: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired,
 
   handleRegister: PropTypes.func.isRequired,

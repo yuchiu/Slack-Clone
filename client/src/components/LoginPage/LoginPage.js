@@ -2,71 +2,51 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
 import { authSelector, errorSelector } from "@/reducers/selectors";
+import { HOCForm } from "@/components/common";
 import LoginPage from "./LoginPage.jsx";
 
 class LoginPageContainer extends React.Component {
-  state = {
-    clientErrors: {},
-    credentials: {
-      username: "",
-      password: ""
-    }
-  };
-
-  componentDidMount() {
-    const { clearAllError } = this.props;
-    // clearAllError();
-    this.setState({
-      clientErrors: {},
-      credentials: {
-        username: "",
-        password: ""
-      }
-    });
-  }
-
   redirectToRegister = () => {
     const { history } = this.props;
     history.push("/register");
   };
 
-  handleChange = e => {
-    const { credentials } = this.state;
-    const field = e.target.name;
-    credentials[field] = e.target.value;
+  handleLogin = () => {
+    const {
+      fieldsValidation,
+      resetForm,
+      clearAllError,
+      formFields,
+      fetchLoginUser
+    } = this.props;
+    const clientErrors = fieldsValidation();
 
-    this.setState({
-      credentials
-    });
-  };
-
-  handleLogin = e => {
-    e.preventDefault();
-
-    const { credentials } = this.state;
-
-    const clientErrors = validateForm.login(credentials);
-    this.setState({ clientErrors });
+    // fetch login if there are no errors
     if (Object.keys(clientErrors).length === 0) {
-      const { fetchLoginUser } = this.props;
-      fetchLoginUser(credentials);
+      fetchLoginUser(formFields);
+      resetForm();
+      clearAllError();
     }
   };
 
   render() {
-    const { clientErrors, credentials } = this.state;
-    const { isUserLoggedIn, error } = this.props;
+    const {
+      isUserLoggedIn,
+      error,
+      handleChange,
+      clientErrors,
+      formFields
+    } = this.props;
     return (
       <LoginPage
         clientErrors={clientErrors}
-        credentials={credentials}
+        formFields={formFields}
         isUserLoggedIn={isUserLoggedIn}
         error={error}
+        handleChange={handleChange}
         handleLogin={this.handleLogin}
-        handleChange={this.handleChange}
         redirectToRegister={this.redirectToRegister}
       />
     );
@@ -75,9 +55,14 @@ class LoginPageContainer extends React.Component {
 
 LoginPageContainer.propTypes = {
   history: PropTypes.object.isRequired,
-  fetchLoginUser: PropTypes.func.isRequired,
+  formFields: PropTypes.object.isRequired,
   isUserLoggedIn: PropTypes.bool.isRequired,
-  error: PropTypes.string
+  error: PropTypes.string,
+
+  fetchLoginUser: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  fieldsValidation: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -95,4 +80,9 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(LoginPageContainer);
+)(
+  HOCForm({
+    formFields: { username: "", password: "" },
+    fieldsToValidate: ["username", "password"]
+  })(LoginPageContainer)
+);

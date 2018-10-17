@@ -2,76 +2,58 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
 import { authSelector, errorSelector } from "@/reducers/selectors";
+import { HOCForm } from "@/components/common";
 import RegisterPage from "./RegisterPage.jsx";
 
 class RegisterPageContainer extends React.Component {
-  state = {
-    clientErrors: {},
-    credentials: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    }
-  };
-
   redirectToLogin = () => {
     const { history } = this.props;
     history.push("/login");
   };
 
-  handleChange = e => {
-    const { credentials } = this.state;
-    const field = e.target.name;
-    credentials[field] = e.target.value;
-    this.setState({
-      credentials
-    });
-    if (credentials.password !== credentials.confirmPassword) {
-      const { clientErrors } = this.state;
-      clientErrors.confirmPassword =
-        "Password and Confirm Password don't match.";
-      this.setState({ clientErrors });
-    } else {
-      const { clientErrors } = this.state;
-      clientErrors.confirmPassword = "";
-      this.setState({ clientErrors });
-    }
-  };
-
-  handleRegister = e => {
-    e.preventDefault();
-
+  handleRegister = () => {
     const {
-      credentials,
-      credentials: { username, email, password, confirmPassword }
-    } = this.state;
+      fetchRegisterUser,
+      clearAllError,
+      setClientErrors,
+      fieldsValidation,
+      formFields: { username, email, password, confirmPassword }
+    } = this.props;
 
-    if (password === confirmPassword) {
-      const clientErrors = validateForm.register(credentials);
-      this.setState({ clientErrors });
+    console.log(this.props.clientErrors);
 
+    if (password !== confirmPassword) {
+      console.log("password !=== confirm");
+      setClientErrors({
+        confirmPassword: "confirm password have to match with password"
+      });
+    } else {
+      const clientErrors = fieldsValidation();
       if (Object.keys(clientErrors).length === 0) {
-        const { fetchRegisterUser } = this.props;
         fetchRegisterUser({ username, email, password });
+        clearAllError();
       }
     }
   };
 
   render() {
-    const { clientErrors, credentials } = this.state;
-    const { isUserLoggedIn, error } = this.props;
+    const {
+      clientErrors,
+      formFields,
+      isUserLoggedIn,
+      error,
+      handleChange
+    } = this.props;
     return (
       <RegisterPage
         isUserLoggedIn={isUserLoggedIn}
         clientErrors={clientErrors}
-        credentials={credentials}
+        formFields={formFields}
         error={error}
+        handleChange={handleChange}
         handleRegister={this.handleRegister}
-        handleChange={this.handleChange}
         redirectToLogin={this.redirectToLogin}
       />
     );
@@ -79,10 +61,15 @@ class RegisterPageContainer extends React.Component {
 }
 
 RegisterPageContainer.propTypes = {
-  fetchRegisterUser: PropTypes.func.isRequired,
-  isUserLoggedIn: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
-  error: PropTypes.string
+  formFields: PropTypes.object.isRequired,
+  isUserLoggedIn: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+
+  fetchRegisterUser: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  fieldsValidation: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -91,6 +78,7 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
+  clearAllError: () => dispatch(errorAction.clearAllError()),
   fetchRegisterUser: credential => {
     dispatch(userAction.fetchRegisterUser(credential));
   }
@@ -98,4 +86,9 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(RegisterPageContainer);
+)(
+  HOCForm({
+    formFields: { username: "", email: "", password: "", confirmPassword: "" },
+    fieldsToValidate: ["username", "email", "password"]
+  })(RegisterPageContainer)
+);

@@ -13,7 +13,7 @@ class ErrorModal extends React.Component {
   };
 
   render() {
-    const { error, closeModal, openModal, isModalOpen } = this.props;
+    const { error, openModal, isModalOpen } = this.props;
     return (
       <React.Fragment>
         {error && !isModalOpen ? openModal() : null}
@@ -42,7 +42,7 @@ ErrorModal.propTypes = {
 
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  clearAllError: PropTypes.func.isRequire
+  clearAllError: PropTypes.func.isRequired
 };
 
 export default HOCModal(ErrorModal);
