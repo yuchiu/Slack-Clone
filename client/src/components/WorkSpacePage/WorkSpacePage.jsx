@@ -3,24 +3,24 @@ import PropTypes from "prop-types";
 
 import "./WorkSpacePage.scss";
 import { ErrorModal } from "@/components/common";
-import LeftSidebar from "./LeftSidebar/LeftSidebar.jsx";
+import SidebarLeft from "./SidebarLeft/SidebarLeft.jsx";
 import InputWrapper from "./InputWrapper/InputWrapper";
-import MainHeader from "./MainHeader/MainHeader";
+import HeaderMain from "./HeaderMain/HeaderMain";
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";
-import RightStickySidebar from "./RightStickySidebar/RightStickySidebar";
-import RightToggleSidebar from "./RightToggleSidebar/RightToggleSidebar";
+import SidebarRightSticky from "./SidebarRightSticky/SidebarRightSticky";
+import SidebarRightToggle from "./SidebarRightToggle/SidebarRightToggle";
 
 const WorkSpacePage = ({ isSidebarOpen }) => (
-  <RightToggleSidebar>
+  <SidebarRightToggle>
     <main className={`workspace-page workspace-page--sidebar-${isSidebarOpen}`}>
-      <LeftSidebar />
-      <MainHeader />
+      <SidebarLeft />
+      <HeaderMain />
       <MessagesWrapper />
       <InputWrapper />
-      <RightStickySidebar />
+      <SidebarRightSticky />
       <ErrorModal />
     </main>
-  </RightToggleSidebar>
+  </SidebarRightToggle>
 );
 
 WorkSpacePage.propTypes = {

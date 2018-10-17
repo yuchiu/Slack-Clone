@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Menu, Segment, Sidebar } from "semantic-ui-react";
 
-import "./RightToggleSidebar.scss";
+import "./SidebarRightToggle.scss";
 
 import SidebarHeader from "./SidebarHeader/SidebarHeader";
 import SidebarFooter from "./SidebarFooter/SidebarFooter";
 import SidebarContent from "./SidebarContent/SidebarContent";
 
-class RightToggleSidebar extends React.Component {
+class SidebarRightToggle extends React.Component {
   render() {
     const { children, isSidebarOpen } = this.props;
     return (
@@ -40,8 +40,8 @@ class RightToggleSidebar extends React.Component {
   }
 }
 
-RightToggleSidebar.propTypes = {
+SidebarRightToggle.propTypes = {
   isSidebarOpen: PropTypes.bool.isRequired
 };
 
-export default RightToggleSidebar;
+export default SidebarRightToggle;

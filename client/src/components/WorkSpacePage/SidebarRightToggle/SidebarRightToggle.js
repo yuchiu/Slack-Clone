@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { globalStateSelector } from "@/reducers/selectors";
-import RightToggleSidebar from "./RightToggleSidebar.jsx";
+import SidebarRightToggle from "./SidebarRightToggle.jsx";
 
 const stateToProps = state => ({
   isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
@@ -10,4 +10,4 @@ const stateToProps = state => ({
 export default connect(
   stateToProps,
   null
-)(RightToggleSidebar);
+)(SidebarRightToggle);

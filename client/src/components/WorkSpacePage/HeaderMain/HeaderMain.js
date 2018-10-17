@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import { globalStateAction } from "@/actions";
 import { channelSelector, globalStateSelector } from "@/reducers/selectors";
-import MainHeader from "./MainHeader.jsx";
+import HeaderMain from "./HeaderMain.jsx";
 
 const stateToProps = state => ({
   isSidebarOpen: globalStateSelector.getIsSidebarOpen(state),
@@ -27,5 +27,5 @@ export default withRouter(
   connect(
     stateToProps,
     dispatchToProps
-  )(MainHeader)
+  )(HeaderMain)
 );

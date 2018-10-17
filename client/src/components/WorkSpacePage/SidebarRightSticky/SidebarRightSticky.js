@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { globalStateAction, teamAction } from "@/actions";
 import { teamSelector } from "@/reducers/selectors";
 
-import RightStickySidebar from "./RightStickySidebar.jsx";
+import SidebarRightSticky from "./SidebarRightSticky.jsx";
 
 const stateToProps = state => ({
   teamList: teamSelector.getTeamList(state)
@@ -24,4 +24,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(RightStickySidebar);
+)(SidebarRightSticky);

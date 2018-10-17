@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ModalAddChannel } from "@/components/WorkSpacePage/LeftSidebar/modals";
+import { ModalAddChannel } from "@/components/WorkSpacePage/SidebarLeft/modals";
 
 const ChannelHeader = ({ currentTeam }) => (
   <React.Fragment>

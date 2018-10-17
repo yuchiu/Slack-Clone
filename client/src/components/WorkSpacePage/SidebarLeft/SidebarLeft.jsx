@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./LeftSidebar.scss";
+import "./SidebarLeft.scss";
 import ChannelSection from "./ChannelSection/ChannelSection";
 import MessageGroupSection from "./MessageGroupSection/MessageGroupSection";
 import SidebarHeader from "./SidebarHeader/SidebarHeader";
 import { ModalAddTeamMember } from "./modals";
 
-const LeftSidebar = () => (
+const SidebarLeft = () => (
   <React.Fragment>
     <section className="leftsidebar">
       <SidebarHeader />
@@ -18,4 +18,4 @@ const LeftSidebar = () => (
   </React.Fragment>
 );
 
-export default LeftSidebar;
+export default SidebarLeft;

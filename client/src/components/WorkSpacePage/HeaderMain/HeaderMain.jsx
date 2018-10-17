@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./MainHeader.scss";
+import "./HeaderMain.scss";
 import ChannelHeader from "./ChannelHeader.jsx";
 import MessageGroupHeader from "./MessageGroupHeader.jsx";
 
-class MainHeader extends React.Component {
+class HeaderMain extends React.Component {
   switchToMemberListView = selectedView => {
     const {
       toggleRightSidebar,
@@ -66,7 +66,7 @@ class MainHeader extends React.Component {
   }
 }
 
-MainHeader.propTypes = {
+HeaderMain.propTypes = {
   isSidebarOpen: PropTypes.bool.isRequired,
   currentChannelMemberList: PropTypes.array.isRequired,
   currentChannel: PropTypes.object.isRequired,
@@ -77,4 +77,4 @@ MainHeader.propTypes = {
   switchRightSidebarView: PropTypes.func.isRequired
 };
 
-export default MainHeader;
+export default HeaderMain;

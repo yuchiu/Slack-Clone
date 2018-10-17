@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ModalAddMessageGroup } from "@/components/WorkSpacePage/LeftSidebar/modals";
+import { ModalAddMessageGroup } from "@/components/WorkSpacePage/SidebarLeft/modals";
 
 const MessageGroupHeader = () => (
   <h1 className="leftsidebar__List__header">

@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import "./RightStickySidebar.scss";
+import "./SidebarRightSticky.scss";
 import TeamList from "./TeamList";
 
-class RightStickySidebar extends React.Component {
+class SidebarRightSticky extends React.Component {
   constructor(props) {
     super(props);
     this.toggleRightSidebar = this.toggleRightSidebar.bind(this);
@@ -42,7 +42,7 @@ class RightStickySidebar extends React.Component {
   }
 }
 
-RightStickySidebar.propTypes = {
+SidebarRightSticky.propTypes = {
   teamList: PropTypes.array.isRequired,
 
   toggleRightSidebar: PropTypes.func.isRequired,
@@ -50,4 +50,4 @@ RightStickySidebar.propTypes = {
   fetchTeamAssociatedList: PropTypes.func.isRequired
 };
 
-export default RightStickySidebar;
+export default SidebarRightSticky;

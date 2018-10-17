@@ -60,8 +60,6 @@ const ModalEditMyProfile = ({
               <div className="modal-avatar">
                 {changeAvatar ? (
                   <React.Fragment>
-                    {console.log("isImgUploaded")}
-                    {console.log(isImgUploaded)}
                     {!isImgUploaded ? (
                       <React.Fragment>
                         <Dropzone
