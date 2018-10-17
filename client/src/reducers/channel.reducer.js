@@ -144,13 +144,18 @@ const getMessageGroupList = createSelector(
           );
 
           // trim the extra char for name longer than 32 char
-          newMessageGroup.name = trimExtraChar(newMessageGroup.name);
+          if (newMessageGroup.name)
+            newMessageGroup.name = trimExtraChar(newMessageGroup.name);
 
           // hide status bubble if the group is more than 2 people
-          newMessageGroup.directMessage = isDirectMessage(newMessageGroup.name);
+          if (newMessageGroup.name)
+            newMessageGroup.directMessage = isDirectMessage(
+              newMessageGroup.name
+            );
 
-          newMessageGroup.memberNumber =
-            (newMessageGroup.name.match(/,/g) || []).length + 1;
+          if (newMessageGroup.name)
+            newMessageGroup.memberNumber =
+              (newMessageGroup.name.match(/,/g) || []).length + 1;
 
           return newMessageGroup;
         }

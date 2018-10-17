@@ -33,6 +33,17 @@ class MessagesWrapperContainer extends React.Component {
     this.scrollerDiv.addEventListener("scroll", () => this.handleScroll());
   }
 
+  componentWillUnmout() {
+    this.setState({
+      isMessageFetched: false,
+      currentTeamParams: 0,
+      allowToFetchMore: true,
+      currentMessageLength: 0,
+      scrollerDivRepositionRatio: 2,
+      currentChannelParams: 0
+    });
+  }
+
   componentDidUpdate() {
     const {
       fetchGetChannelAssociatedList,
@@ -42,7 +53,10 @@ class MessagesWrapperContainer extends React.Component {
     /* fetch channel message list if currentchannel and currentTeam exist, set isMessageFetched to true */
     if (this.isCurrentDataFetched() && !this.state.isMessageFetched) {
       fetchGetChannelAssociatedList(currentChannel.id);
-      this.setState({ isMessageFetched: true });
+      this.setState({
+        isMessageFetched: true,
+        scrollerDivRepositionRatio: 2
+      });
     }
 
     /* refetch channel message again if channel has changed */

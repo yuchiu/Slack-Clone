@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS:
       newState.messageList = action.payload.messageList;
-
+      newState.hasMoreMessage = true;
       return newState;
 
     case constants.MESSAGE_SOCKET_RECEIVE:

@@ -27,7 +27,7 @@ class MessagesContainer extends React.Component {
           active={isLoading}
           zIndex={10}
           animate={true}
-          background={"rgba(55,55,55, 0.15)"}
+          background={"rgba(0,0,0,0.15)"}
         >
           <Comment.Group>
             {messageList.map((message, i) => (
