@@ -1,5 +1,5 @@
 import OnlineStatusBubble from "./OnlineStatusBubble/OnlineStatusBubble.jsx";
 import PublicOrPrivateTag from "./PublicOrPrivateTag/PublicOrPrivateTag.jsx";
-import ModalTopic from "./ModalTopic/ModalTopic";
+import ModalEditTopic from "./ModalEditTopic/ModalEditTopic";
 
-export { PublicOrPrivateTag, OnlineStatusBubble, ModalTopic };
+export { PublicOrPrivateTag, OnlineStatusBubble, ModalEditTopic };

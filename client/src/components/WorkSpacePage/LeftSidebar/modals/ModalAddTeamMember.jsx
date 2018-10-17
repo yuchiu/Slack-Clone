@@ -1,72 +1,98 @@
 import React from "react";
-import { Form, Input, Button, Modal } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { ErrorInline } from "@/components/common";
+import AddTeamMemberForm from "./AddTeamMemberForm.jsx";
 
-const ModalAddTeamMember = ({
-  isModalOpen,
-  username,
-  clientError,
+class ModalAddTeamMember extends React.Component {
+  checkDuplicateMember = () => {
+    const { formFields, currentTeamMemberList } = this.props;
+    const findMember = currentTeamMemberList.filter(
+      member => member.username === formFields.username
+    );
+    if (findMember.length > 0) return true;
+    return false;
+  };
 
-  toggleModal,
-  handleChange,
-  handleClose,
-  handleSubmit
-}) => (
-  <React.Fragment>
-    {isModalOpen ? (
+  handleSubmit = async () => {
+    const {
+      formFields,
+      fieldsValidation,
+      setClientErrors,
+      toggleModal,
+      emitSocketAddTeamMember,
+      currentTeam
+    } = this.props;
+
+    const isMemberDuplicated = this.checkDuplicateMember();
+    if (isMemberDuplicated) {
+      // display error if the user is already member of the team
+      setClientErrors({
+        username: `${formFields.username} is already member of the team`
+      });
+    } else {
+      const clientErrors = fieldsValidation();
+      // proceed to send data to server if there's no error
+      if (Object.keys(clientErrors).length === 0) {
+        emitSocketAddTeamMember({
+          teamId: currentTeam.id,
+          targetUsername: formFields.username
+        });
+        toggleModal();
+      }
+    }
+  };
+
+  render() {
+    const {
+      isModalOpen,
+      formFields,
+      clientErrors,
+
+      toggleModal,
+      handleChange
+    } = this.props;
+    return (
       <React.Fragment>
-        <Modal size="small" open={isModalOpen} onClose={toggleModal}>
-          <Modal.Header>Invite Team Member</Modal.Header>
-          <Modal.Content>
-            <Form>
-              <Form.Field>
-                <label>Add user to the team:</label>
-                <Input
-                  value={username}
-                  onChange={handleChange}
-                  name="username"
-                  fluid
-                  placeholder="# username"
+        {isModalOpen ? (
+          <React.Fragment>
+            <Modal size="small" open={isModalOpen} onClose={toggleModal}>
+              <Modal.Header>Invite Team Member</Modal.Header>
+              <Modal.Content>
+                <AddTeamMemberForm
+                  formFields={formFields}
+                  clientErrors={clientErrors}
+                  handleChange={handleChange}
+                  toggleModal={toggleModal}
+                  handleSubmit={this.handleSubmit}
                 />
-                {clientError.username && (
-                  <ErrorInline text={clientError.username} />
-                )}
-              </Form.Field>
-              <br />
-              <Form.Group widths="equal">
-                <Button primary type="button" onClick={handleSubmit} fluid>
-                  Invite
-                </Button>
-                <Button type="button" fluid onClick={handleClose}>
-                  Cancel
-                </Button>
-              </Form.Group>
-            </Form>
-          </Modal.Content>
-        </Modal>
-        <div className="invite-people-button" onClick={toggleModal}>
-          <span className="invite-people-button__plus">+</span> Invite People
-        </div>
+              </Modal.Content>
+            </Modal>
+            <div className="invite-people-button" onClick={toggleModal}>
+              <span className="invite-people-button__plus">+</span> Invite
+              People
+            </div>
+          </React.Fragment>
+        ) : (
+          <div className="invite-people-button" onClick={toggleModal}>
+            <span className="invite-people-button__plus">+</span> Invite People
+          </div>
+        )}
       </React.Fragment>
-    ) : (
-      <div className="invite-people-button" onClick={toggleModal}>
-        <span className="invite-people-button__plus">+</span> Invite People
-      </div>
-    )}
-  </React.Fragment>
-);
+    );
+  }
+}
 
 ModalAddTeamMember.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
-  username: PropTypes.string.isRequired,
-  clientError: PropTypes.object.isRequired,
+  formFields: PropTypes.object.isRequired,
+  clientErrors: PropTypes.object.isRequired,
+  currentTeam: PropTypes.object.isRequired,
+  currentTeamMemberList: PropTypes.array.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  emitSocketAddTeamMember: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default ModalAddTeamMember;

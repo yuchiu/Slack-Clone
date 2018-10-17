@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
-import { EditMyProfileModal, EditFeelingModal } from "./modals";
+import { ModalEditMyProfile, ModalEditFeeling } from "./modals";
 
 const MyProfileView = ({ currentUser }) => (
   <React.Fragment>
@@ -24,9 +24,9 @@ const MyProfileView = ({ currentUser }) => (
       <br />
       <div className="view-header__brief-description  right-sidebar-item">
         <span className="right-sidebar-label">feeling: </span>
-        <EditFeelingModal feeling={currentUser.brief_description} />
+        <ModalEditFeeling currentFeeling={currentUser.brief_description} />
       </div>
-      <EditMyProfileModal />
+      <ModalEditMyProfile />
     </div>
     <div className="view-detail">
       <div className="view-detail__email  right-sidebar-item">

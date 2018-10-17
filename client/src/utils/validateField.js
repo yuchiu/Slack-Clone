@@ -15,6 +15,7 @@ export default (fieldName, data) => {
           "only number and characters, special characters and space are not allowed";
       }
       return error;
+
     case "password":
       if (!data) {
         error = "password can't be blank";
@@ -23,11 +24,31 @@ export default (fieldName, data) => {
         error = "length of password have to be between 4 to 32";
       }
       return error;
+
     case "email":
       if (!validator.isEmail(data)) {
         error = "invalid email";
       }
       return error;
+
+    case "topic":
+      if (data.length > 128) {
+        error = "length of topic can not exceed 128 characters";
+      }
+      return error;
+
+    case "purpose":
+      if (data.length > 256) {
+        error = "length of purpose can not exceed 256 characters";
+      }
+      return error;
+
+    case "feeling":
+      if (data.length > 32) {
+        error = "length of feeling can not exceed 32 characters";
+      }
+      return error;
+
     default:
       return error;
   }

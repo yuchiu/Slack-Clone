@@ -37,8 +37,8 @@ const HOCForm = getInitialState => WrappedComponent => {
 
     handleChange = e => {
       const { formFields } = this.state;
-      const field = e.target.name;
-      formFields[field] = e.target.value;
+      const { name, value } = e.target;
+      formFields[name] = value;
       this.setState({
         formFields
       });

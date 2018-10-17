@@ -1,12 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { Form, Button, Input, Container, Header } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import "./RegisterPage.scss";
 import { Navbar, ErrorInline } from "@/components/common";
+import RegisterForm from "./RegisterForm.jsx";
 
 class RegisterPage extends React.Component {
+  redirectToLogin = () => {
+    const { history } = this.props;
+    history.push("/login");
+  };
+
+  handleRegister = () => {
+    const {
+      fetchRegisterUser,
+      clearAllError,
+      setClientErrors,
+      fieldsValidation,
+      formFields
+    } = this.props;
+
+    if (formFields.password !== formFields.confirmPassword) {
+      // display error if confirm password does not match password
+      setClientErrors({
+        confirmPassword: "confirm password have to match with password"
+      });
+    } else {
+      const clientErrors = fieldsValidation();
+
+      // fetch login if there are no errors
+      if (Object.keys(clientErrors).length === 0) {
+        fetchRegisterUser({
+          username: formFields.username,
+          email: formFields.email,
+          password: formFields.password
+        });
+        clearAllError();
+      }
+    }
+  };
+
   render() {
     const {
       isUserLoggedIn,
@@ -14,101 +49,29 @@ class RegisterPage extends React.Component {
       clientErrors,
       formFields,
 
-      handleRegister,
-      handleChange,
-      redirectToLogin
+      handleChange
     } = this.props;
     return (
       <React.Fragment>
         {isUserLoggedIn && <Redirect to="/workspace" />}
         <Navbar />
         <main className="register-page">
-          {" "}
           <Container text>
-            <Form className="register-form">
-              <Header as="h2">Register</Header>
-              <Form.Field>
-                <label htmlFor="username">Username</label>
-                {clientErrors.username && (
-                  <ErrorInline text={clientErrors.username} />
-                )}
-                <Input
-                  id="username"
-                  type="username"
-                  name="username"
-                  value={formFields.username}
-                  className=""
-                  onChange={handleChange}
-                  placeholder="username"
-                  size="large"
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="email">Email</label>
-                {clientErrors.email && (
-                  <ErrorInline text={clientErrors.email} />
-                )}
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formFields.email}
-                  className=""
-                  onChange={handleChange}
-                  placeholder="email"
-                  size="large"
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="password">Password</label>
-                {clientErrors.password && (
-                  <ErrorInline text={clientErrors.password} />
-                )}
-                <Input
-                  id="password"
-                  type="password"
-                  name="password"
-                  value={formFields.password}
-                  className="validate"
-                  onChange={handleChange}
-                  placeholder="password"
-                  size="large"
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor="confirm_password">Confirm Password</label>
-                {clientErrors.confirmPassword && (
-                  <ErrorInline text={clientErrors.confirmPassword} />
-                )}
-                <Input
-                  id="confirm_password"
-                  type="password"
-                  name="confirmPassword"
-                  value={formFields.confirmPassword}
-                  className="validate"
-                  onChange={handleChange}
-                  placeholder="confirm password"
-                  size="large"
-                />
-              </Form.Field>
-              <Button
-                primary
-                className=""
-                size="large"
-                onClick={handleRegister}
-              >
-                Register
-              </Button>
-              <br />
-              <br /> Already have an account?{" "}
-              <a className="redirect" onClick={redirectToLogin}>
-                Log In
-              </a>
-            </Form>
+            <RegisterForm
+              clientErrors={clientErrors}
+              formFields={formFields}
+              handleRegister={this.handleRegister}
+              handleChange={handleChange}
+            />
+            <br />
+            <br /> Already have an account?{" "}
+            <a className="redirect" onClick={this.redirectToLogin}>
+              Log In
+            </a>
+            <div className="inline-error--center">
+              {error && <ErrorInline text={`Error: ${error}`} />}
+            </div>
           </Container>
-          <div className="inline-error--center">
-            {error && <ErrorInline text={`Error: ${error}`} />}
-          </div>
         </main>
       </React.Fragment>
     );
@@ -120,10 +83,11 @@ RegisterPage.propTypes = {
   error: PropTypes.string,
   formFields: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 
-  handleRegister: PropTypes.func.isRequired,
-  redirectToLogin: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  fetchRegisterUser: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  fieldsValidation: PropTypes.func.isRequired
 };
 
 export default RegisterPage;

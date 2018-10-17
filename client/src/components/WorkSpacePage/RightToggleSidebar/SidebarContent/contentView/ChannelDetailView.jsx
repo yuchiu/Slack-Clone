@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ModalTopic } from "@/components/WorkSpacePage/common";
-import { EditChannelPurposeModal } from "./modals";
+import { ModalEditTopic } from "@/components/WorkSpacePage/common";
+import { ModalEditPurpose } from "./modals";
 
 class ChannelDetailView extends React.Component {
   handleClick = () => {
@@ -39,12 +39,12 @@ class ChannelDetailView extends React.Component {
           </div>
           <div className="view-detail__brief-description  right-sidebar-item">
             <span className="right-sidebar-label">Topic: </span>
-            <ModalTopic topic={currentChannel.brief_description} />
+            <ModalEditTopic currentTopic={currentChannel.brief_description} />
           </div>
           <div className="view-detail__detail-description  right-sidebar-item">
             <span className="right-sidebar-label">Purpose: </span>
-            <EditChannelPurposeModal
-              purpose={currentChannel.detail_description}
+            <ModalEditPurpose
+              currentPurpose={currentChannel.detail_description}
             />
           </div>
           <div className="view-detail__created-at  right-sidebar-item">

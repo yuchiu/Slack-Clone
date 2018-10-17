@@ -6,7 +6,7 @@ import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
 import { userSelector } from "@/reducers/selectors";
 import { HOCModal } from "@/components/common";
-import EditMyProfileModal from "./EditMyProfileModal.jsx";
+import ModalEditMyProfile from "./ModalEditMyProfile.jsx";
 
 class EditMyProfileModalContainer extends React.Component {
   state = {
@@ -160,7 +160,7 @@ class EditMyProfileModalContainer extends React.Component {
     } = this.state;
     const { currentUser, isModalOpen, toggleModal } = this.props;
     return (
-      <EditMyProfileModal
+      <ModalEditMyProfile
         password={password}
         confirmPassword={confirmPassword}
         feeling={feeling}

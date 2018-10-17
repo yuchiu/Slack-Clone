@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {
-  ModalTopic,
+  ModalEditTopic,
   PublicOrPrivateTag
 } from "@/components/WorkSpacePage/common";
 import SubHeaderDivider from "./SubHeaderDivider.jsx";
@@ -34,7 +34,7 @@ const ChannelHeader = ({
         {currentChannelMemberList.length}
         <SubHeaderDivider />
       </span>
-      <ModalTopic topic={currentChannel.brief_description} />
+      <ModalEditTopic currentTopic={currentChannel.brief_description} />
     </div>
   </div>
 );

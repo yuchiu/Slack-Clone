@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import AvatarEditor from "react-avatar-editor";
 
-import "./EditMyProfileModal.scss";
+import "./ModalEditMyProfile.scss";
 import { ErrorInline, HintInline, ButtonOutline } from "@/components/common";
 
-const EditMyProfileModal = ({
+const ModalEditMyProfile = ({
   password,
   confirmPassword,
   feeling,
@@ -251,7 +251,7 @@ const EditMyProfileModal = ({
   </React.Fragment>
 );
 
-EditMyProfileModal.propTypes = {
+ModalEditMyProfile.propTypes = {
   password: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
   feeling: PropTypes.string.isRequired,
@@ -278,4 +278,4 @@ EditMyProfileModal.propTypes = {
   setEditorRef: PropTypes.func.isRequired
 };
 
-export default EditMyProfileModal;
+export default ModalEditMyProfile;

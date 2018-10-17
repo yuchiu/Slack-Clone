@@ -1,5 +1,5 @@
-import EditChannelPurposeModal from "./EditChannelPurposeModal";
-import EditMyProfileModal from "./EditMyProfileModal/EditMyProfileModal";
-import EditFeelingModal from "./EditFeelingModal";
+import ModalEditPurpose from "./ModalEditPurpose";
+import ModalEditMyProfile from "./ModalEditMyProfile";
+import ModalEditFeeling from "./ModalEditFeeling";
 
-export { EditChannelPurposeModal, EditMyProfileModal, EditFeelingModal };
+export { ModalEditPurpose, ModalEditMyProfile, ModalEditFeeling };
