@@ -10,7 +10,7 @@ import * as compression from "compression";
 import * as bodyParser from "body-parser";
 
 import { NODE_ENV, SERVER_PORT } from "./utils/secrets";
-import { useSession, checkSession } from "./middlewares";
+import { useSession, checkSession, simulateLatency } from "./middlewares";
 import { apiV1Router, sockets } from "./routers";
 
 /* connect express with socket.io, wrapping app with http server, then wrap http server with socket.io */
@@ -29,9 +29,11 @@ app.use(checkSession());
 app.use(helmet());
 app.use(compression());
 app.use("/assets", express.static("assets"));
-// use logger for development
+// use logger, simulateLatency for development
 if (NODE_ENV === "development") {
   app.use(logger("dev"));
+  //first arg is min time in millisecond, second arg is max time in millisecond add on top of min time
+  app.use(simulateLatency(10, 100));
 }
 // use client production build */
 if (NODE_ENV === "production") {
