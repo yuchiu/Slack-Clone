@@ -30,7 +30,6 @@ export default (state = initialState, action) => {
       return initialState;
 
     case constants.ERROR_AUTH:
-      newState.error = action.payload;
       newState.isLoading = false;
       return newState;
 

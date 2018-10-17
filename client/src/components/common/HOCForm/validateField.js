@@ -49,6 +49,21 @@ export default (fieldName, data) => {
       }
       return error;
 
+    case "teamname":
+      if (!data) {
+        error = "team name can't be blank";
+      }
+      if (data.length < 1 || data.length > 32) {
+        error = "length of team name have to be between 1 to 32";
+      }
+      return error;
+
+    case "about":
+      if (data.length > 128) {
+        error = "length of about can not exceed 128 characters";
+      }
+      return error;
+
     default:
       return error;
   }

@@ -30,6 +30,11 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.TEAM_FETCH_CREATE:
+      newState.isLoading = true;
+      return newState;
+
+    case constants.TEAM_FETCH_CREATE_SUCCESS:
+      newState.isLoading = false;
       newState.teamList = action.payload.teamList;
       newState.currentTeam = action.payload.team;
       sessionStore.setTeamId(newState.currentTeam.id);
@@ -43,6 +48,11 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.TEAM_FETCH_ASSOCIATED_LIST:
+      newState.isLoading = true;
+      return newState;
+
+    case constants.TEAM_FETCH_ASSOCIATED_LIST_SUCCESS:
+      newState.isLoading = false;
       newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
@@ -50,14 +60,13 @@ export default (state = initialState, action) => {
       newState.currentTeamMemberList = action.payload.teamMemberList;
       return newState;
 
+    case constants.ERROR_TEAM:
+      newState.isLoading = false;
+      return newState;
+
     case constants.USER_FETCH_LOGOUT:
       sessionStore.removeTeamId();
       return initialState;
-
-    case constants.ERROR_TEAM:
-      newState.error = action.payload;
-      newState.isLoading = false;
-      return newState;
 
     default:
       return state;
@@ -72,6 +81,8 @@ const getCurrentTeamMemberList = state =>
 
 const getStateTeamList = state => state.teamReducer.teamList;
 
+const getTeamIsLoading = state => state.teamReducer.isLoading;
+
 /* derived data selectors */
 const getTeamList = createSelector(getStateTeamList, teamList =>
   teamList.map(team => {
@@ -85,4 +96,9 @@ const getTeamList = createSelector(getStateTeamList, teamList =>
   })
 );
 
-export { getCurrentTeam, getCurrentTeamMemberList, getTeamList };
+export {
+  getCurrentTeam,
+  getTeamIsLoading,
+  getCurrentTeamMemberList,
+  getTeamList
+};

@@ -14,7 +14,7 @@ const LoginForm = ({
   <Form className="login-form">
     <Header as="h2">Log In</Header>
     <Form.Field>
-      <label htmlFor="username">Username:</label>
+      <label>Username:</label>
       {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
       <Input
         id="username"
@@ -28,7 +28,7 @@ const LoginForm = ({
       />
     </Form.Field>
     <Form.Field>
-      <label htmlFor="password">Password:</label>
+      <label>Password:</label>
       {fieldErrors.password && <ErrorInline text={fieldErrors.password} />}
       <Input
         id="password"

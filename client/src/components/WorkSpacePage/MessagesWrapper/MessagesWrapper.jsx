@@ -1,6 +1,7 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import LoadingOverlay from "react-loading-overlay";
 
 import "./MessagesWrapper.scss";
 import Message from "./Message.jsx";
@@ -10,6 +11,7 @@ class MessagesContainer extends React.Component {
     const {
       messageList,
       isSidebarOpen,
+      isLoading,
 
       toggleRightSidebar,
       switchRightSidebarView,
@@ -21,18 +23,25 @@ class MessagesContainer extends React.Component {
         className={`messages-wrapper messages-wrapper--sidebar-${isSidebarOpen}`}
         ref={setScrollerDivRef}
       >
-        <Comment.Group>
-          {messageList.map((message, i) => (
-            <Message
-              key={`${message.id}-${i}`}
-              switchRightSidebarView={switchRightSidebarView}
-              message={message}
-              isSidebarOpen={isSidebarOpen}
-              toggleRightSidebar={toggleRightSidebar}
-              switchTargetUser={switchTargetUser}
-            />
-          ))}
-        </Comment.Group>
+        <LoadingOverlay
+          active={isLoading}
+          zIndex={10}
+          animate={true}
+          background={"rgba(55,55,55, 0.15)"}
+        >
+          <Comment.Group>
+            {messageList.map((message, i) => (
+              <Message
+                key={`${message.id}-${i}`}
+                switchRightSidebarView={switchRightSidebarView}
+                message={message}
+                isSidebarOpen={isSidebarOpen}
+                toggleRightSidebar={toggleRightSidebar}
+                switchTargetUser={switchTargetUser}
+              />
+            ))}
+          </Comment.Group>
+        </LoadingOverlay>
       </div>
     );
   }

@@ -14,7 +14,7 @@ const RegisterForm = ({
   <Form className="register-form">
     <Header as="h2">Register</Header>
     <Form.Field>
-      <label htmlFor="username">Username:</label>
+      <label>Username:</label>
       {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
       <Input
         id="username"
@@ -28,7 +28,7 @@ const RegisterForm = ({
       />
     </Form.Field>
     <Form.Field>
-      <label htmlFor="email">Email:</label>
+      <label>Email:</label>
       {fieldErrors.email && <ErrorInline text={fieldErrors.email} />}
       <Input
         id="email"
@@ -42,7 +42,7 @@ const RegisterForm = ({
       />
     </Form.Field>
     <Form.Field>
-      <label htmlFor="password">Password:</label>
+      <label>Password:</label>
       {fieldErrors.password && <ErrorInline text={fieldErrors.password} />}
       <Input
         id="password"
@@ -56,7 +56,7 @@ const RegisterForm = ({
       />
     </Form.Field>
     <Form.Field>
-      <label htmlFor="confirm_password">Confirm Password:</label>
+      <label>Confirm Password:</label>
       {fieldErrors.confirmPassword && (
         <ErrorInline text={fieldErrors.confirmPassword} />
       )}

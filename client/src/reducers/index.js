@@ -1,21 +1,28 @@
 import { combineReducers } from "redux";
 
+import errorReducer, { getError } from "./error.reducer";
 import authReducer, {
   getIsUserLoggedIn,
   getAuthIsLoading
 } from "./auth.reducer";
-import userReducer, { getCurrentUser, getUsername } from "./user.reducer";
-import errorReducer, { getError } from "./error.reducer";
+import userReducer, {
+  getCurrentUser,
+  getUsername,
+  getUserIsLoading
+} from "./user.reducer";
 import teamReducer, {
+  getTeamIsLoading,
   getCurrentTeam,
   getCurrentTeamMemberList,
   getTeamList
 } from "./team.reducer";
 import messageReducer, {
+  getMessageIsLoading,
   getMessageList,
   getHasMoreMessage
 } from "./message.reducer";
 import channelReducer, {
+  getChannelIsLoading,
   getCurrentChannel,
   getCurrentChannelMemberList,
   getChannelList,
@@ -29,16 +36,6 @@ import globalStateReducer, {
   getTargetUser,
   getRightSidebarTitle
 } from "./globalState.reducer";
-
-export default combineReducers({
-  authReducer,
-  teamReducer,
-  channelReducer,
-  messageReducer,
-  errorReducer,
-  globalStateReducer,
-  userReducer
-});
 
 export const globalStateSelector = {
   getIsSidebarOpen: state => getIsSidebarOpen(state),
@@ -54,16 +51,19 @@ export const authSelector = {
 
 export const userSelector = {
   getCurrentUser: state => getCurrentUser(state),
+  getUserIsLoading: state => getUserIsLoading(state),
   getUsername: state => getUsername(state)
 };
 
 export const teamSelector = {
   getCurrentTeam: state => getCurrentTeam(state),
+  getTeamIsLoading: state => getTeamIsLoading(state),
   getCurrentTeamMemberList: state => getCurrentTeamMemberList(state),
   getTeamList: state => getTeamList(state)
 };
 
 export const channelSelector = {
+  getChannelIsLoading: state => getChannelIsLoading(state),
   getCurrentChannel: state => getCurrentChannel(state),
   getCurrentChannelMemberList: state => getCurrentChannelMemberList(state),
   getChannelList: state => getChannelList(state),
@@ -72,6 +72,7 @@ export const channelSelector = {
   getMessageGroupMemberList: state => getMessageGroupMemberList(state)
 };
 export const messageSelector = {
+  getMessageIsLoading: state => getMessageIsLoading(state),
   getMessageList: state => getMessageList(state),
   getHasMoreMessage: state => getHasMoreMessage(state)
 };
@@ -79,3 +80,13 @@ export const messageSelector = {
 export const errorSelector = {
   getError: state => getError(state)
 };
+
+export default combineReducers({
+  authReducer,
+  teamReducer,
+  channelReducer,
+  messageReducer,
+  errorReducer,
+  globalStateReducer,
+  userReducer
+});

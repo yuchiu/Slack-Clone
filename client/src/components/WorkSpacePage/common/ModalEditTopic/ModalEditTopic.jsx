@@ -35,8 +35,7 @@ class ModalEditTopic extends React.Component {
       formFields,
       isModalOpen,
       toggleModal,
-      handleChange,
-      handleSave
+      handleChange
     } = this.props;
     return (
       <React.Fragment>
@@ -49,7 +48,7 @@ class ModalEditTopic extends React.Component {
                 formFields={formFields}
                 toggleModal={toggleModal}
                 handleChange={handleChange}
-                handleSave={handleSave}
+                handleSave={this.handleSave}
               />
             </Modal.Content>
           </Modal>

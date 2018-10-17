@@ -116,6 +116,7 @@ class MessagesWrapperContainer extends React.Component {
     const {
       messageList,
       isSidebarOpen,
+      isLoading,
 
       toggleRightSidebar,
       switchRightSidebarView,
@@ -123,6 +124,7 @@ class MessagesWrapperContainer extends React.Component {
     } = this.props;
     return (
       <MessagesWrapper
+        isLoading={isLoading}
         messageList={messageList}
         isSidebarOpen={isSidebarOpen}
         toggleRightSidebar={toggleRightSidebar}
@@ -149,6 +151,7 @@ MessagesWrapperContainer.propTypes = {
 
 const stateToProps = state => ({
   messageList: messageSelector.getMessageList(state),
+  isLoading: messageSelector.getMessageIsLoading(state),
   hasMoreMessage: messageSelector.getHasMoreMessage(state),
   currentTeam: teamSelector.getCurrentTeam(state),
   currentChannel: channelSelector.getCurrentChannel(state),

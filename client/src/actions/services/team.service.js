@@ -18,7 +18,7 @@ export default {
   /* dispatch dispatchReceivedChannel when new data is received */
   receiveSocketNewTeamMember: dispatch => {
     socket.on("team-receive-new-member", async data => {
-      if (data) dispatch(teamAction.dispatchReceivedTeamMemberl(data));
+      if (data) dispatch(teamAction.dispatchReceivedTeamMember(data));
     });
   }
 };

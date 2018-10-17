@@ -15,18 +15,21 @@ export default (state = initialState, action) => {
     case constants.USER_FETCH_LOGIN_SUCCESS:
       newState.currentUser = action.payload.user;
       return newState;
-
     case constants.USER_FETCH_EDIT:
+      newState.isLoading = true;
+      return newState;
+
+    case constants.USER_FETCH_EDIT_SUCCESS:
+      newState.isLoading = false;
       newState.currentUser = action.payload.user;
+      return newState;
+
+    case constants.ERROR_USER:
+      newState.isLoading = false;
       return newState;
 
     case constants.USER_FETCH_LOGOUT:
       return initialState;
-
-    case constants.ERROR_USER:
-      newState.error = action.payload;
-      newState.isLoading = false;
-      return newState;
 
     default:
       return state;
@@ -36,9 +39,11 @@ export default (state = initialState, action) => {
 /* state selectors */
 const getCurrentUser = state => state.userReducer.currentUser;
 
+const getUserIsLoading = state => state.userReducer.isLoading;
+
 const getUsername = state => {
   const currentUser = getCurrentUser(state);
   return currentUser.username;
 };
 
-export { getCurrentUser, getUsername };
+export { getCurrentUser, getUserIsLoading, getUsername };

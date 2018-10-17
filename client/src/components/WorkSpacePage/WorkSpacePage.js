@@ -2,10 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import LoadingOverlay from "react-loading-overlay";
 
 import { sessionStore } from "@/utils";
 import { teamAction, globalStateAction } from "@/actions";
-import { teamSelector, globalStateSelector } from "@/reducers/";
+import {
+  userSelector,
+  channelSelector,
+  teamSelector,
+  globalStateSelector
+} from "@/reducers/";
 import WorkSpacePage from "./WorkSpacePage.jsx";
 
 const WorkSpacePageHOC = WrappedComponent => {
@@ -34,22 +40,37 @@ const WorkSpacePageHOC = WrappedComponent => {
     };
 
     render() {
-      const { isSidebarOpen } = this.props;
+      const {
+        isSidebarOpen,
+        userIsLoading,
+        channelIsLoading,
+        teamIsLoading
+      } = this.props;
       return (
-        <React.Fragment>
-          {/* redirect to create team if user is not in any team */}
-          {this.isCurrentTeamExist ? (
-            <WrappedComponent isSidebarOpen={isSidebarOpen} />
-          ) : (
-            <Redirect to="/create-team" />
-          )}
-        </React.Fragment>
+        <LoadingOverlay
+          active={userIsLoading || channelIsLoading || teamIsLoading}
+          spinner
+          zIndex={10}
+          text="Loading"
+        >
+          <React.Fragment>
+            {/* redirect to create team if user is not in any team */}
+            {this.isCurrentTeamExist ? (
+              <WrappedComponent isSidebarOpen={isSidebarOpen} />
+            ) : (
+              <Redirect to="/create-team" />
+            )}
+          </React.Fragment>
+        </LoadingOverlay>
       );
     }
   }
   WorkSpacePageContainer.propTypes = {
     currentTeam: PropTypes.object.isRequired,
     isSidebarOpen: PropTypes.bool.isRequired,
+    userIsLoading: PropTypes.bool.isRequired,
+    channelIsLoading: PropTypes.bool.isRequired,
+    teamIsLoading: PropTypes.bool.isRequired,
 
     clearSocketConnection: PropTypes.func.isRequired,
     fetchTeamAssociatedList: PropTypes.func.isRequired,
@@ -60,7 +81,10 @@ const WorkSpacePageHOC = WrappedComponent => {
 
 const stateToProps = state => ({
   currentTeam: teamSelector.getCurrentTeam(state),
-  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state)
+  isSidebarOpen: globalStateSelector.getIsSidebarOpen(state),
+  userIsLoading: userSelector.getUserIsLoading(state),
+  channelIsLoading: channelSelector.getChannelIsLoading(state),
+  teamIsLoading: teamSelector.getTeamIsLoading(state)
 });
 
 const dispatchToProps = dispatch => ({

@@ -12,7 +12,7 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.CHANNEL_FETCH_ASSOCIATED_LIST:
+    case constants.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS:
       newState.messageList = action.payload.messageList;
 
       return newState;
@@ -30,6 +30,11 @@ export default (state = initialState, action) => {
       return newState;
 
     case constants.MESSAGE_FETCH_MORE:
+      newState.isLoading = true;
+      return newState;
+
+    case constants.MESSAGE_FETCH_MORE_SUCCESS:
+      newState.isLoading = false;
       newState.messageList = action.payload.messageList.concat(
         state.messageList
       );
@@ -38,13 +43,13 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.USER_FETCH_LOGOUT:
-      return initialState;
-
     case constants.ERROR_MESSAGE:
       newState.error = action.payload;
       newState.isLoading = false;
       return newState;
+
+    case constants.USER_FETCH_LOGOUT:
+      return initialState;
 
     default:
       return state;
@@ -55,6 +60,8 @@ export default (state = initialState, action) => {
 const getStateMessageList = state => state.messageReducer.messageList;
 
 const getHasMoreMessage = state => state.messageReducer.hasMoreMessage;
+
+const getMessageIsLoading = state => state.messageReducer.isLoading;
 
 /* derived data selectors */
 const getMessageList = createSelector(
@@ -85,4 +92,4 @@ const getMessageList = createSelector(
     })
 );
 
-export { getMessageList, getHasMoreMessage };
+export { getMessageList, getMessageIsLoading, getHasMoreMessage };

@@ -2,6 +2,9 @@ import constants from "../constants";
 import { globalStateService } from "./services";
 
 export default {
+  /**
+   * Local
+   */
   toggleRightSidebar: () => dispatch => {
     dispatch({
       type: constants.GLOBAL_RIGHT_SIDEBAR_TOGGLE
@@ -19,6 +22,10 @@ export default {
       payload: targetUserId
     });
   },
+
+  /**
+   * Web Socket with Socket.io
+   */
   clearSocketConnection: () => dispatch => {
     globalStateService.clearSocketConnection();
     dispatch({

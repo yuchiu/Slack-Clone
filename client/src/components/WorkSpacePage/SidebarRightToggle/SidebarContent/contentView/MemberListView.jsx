@@ -18,7 +18,7 @@ class MemberListView extends React.Component {
     }
   };
 
-  renderList = memberList => {
+  renderList = memberList =>
     memberList.map((member, i) => (
       <li
         key={`${member.id}-${i}`}
@@ -41,7 +41,6 @@ class MemberListView extends React.Component {
         </div>
       </li>
     ));
-  };
 
   render() {
     const {

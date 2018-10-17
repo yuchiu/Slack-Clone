@@ -2,6 +2,9 @@ import constants from "@/constants";
 import { userService } from "./services";
 
 export default {
+  /**
+   * fetch API with Axios
+   */
   fetchAutoAuth: () => async dispatch => {
     const response = await userService.fetchAutoAuth();
     const { data } = response;
@@ -12,17 +15,20 @@ export default {
   },
 
   fetchEditUser: editUserdata => async dispatch => {
+    dispatch({
+      type: constants.USER_FETCH_EDIT
+    });
     try {
       const response = await userService.fetchEditUser(editUserdata);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_EDIT,
+        type: constants.USER_FETCH_EDIT_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: constants.ERROR_USER,
         payload: data.meta.message
       });
     }
@@ -42,7 +48,7 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: constants.USER_FETCH_LOGIN_ERROR,
         payload: data.meta.message
       });
     }
@@ -62,18 +68,18 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: constants.USER_FETCH_LOGIN_ERROR,
         payload: data.meta.message
       });
     }
   },
 
   fetchLogoutUser: () => async dispatch => {
+    dispatch({
+      type: constants.USER_FETCH_LOGOUT
+    });
     try {
       await userService.fetchLogoutUser();
-      dispatch({
-        type: constants.USER_FETCH_LOGOUT
-      });
     } catch (err) {
       const { data } = err.response;
       dispatch({
