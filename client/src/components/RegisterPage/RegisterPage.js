@@ -22,10 +22,7 @@ class RegisterPageContainer extends React.Component {
       formFields: { username, email, password, confirmPassword }
     } = this.props;
 
-    console.log(this.props.clientErrors);
-
     if (password !== confirmPassword) {
-      console.log("password !=== confirm");
       setClientErrors({
         confirmPassword: "confirm password have to match with password"
       });
@@ -83,12 +80,13 @@ const dispatchToProps = dispatch => ({
     dispatch(userAction.fetchRegisterUser(credential));
   }
 });
+
+const formDataToProps = () => ({
+  formFields: { username: "", email: "", password: "", confirmPassword: "" },
+  fieldsToValidate: ["username", "email", "password"]
+});
+
 export default connect(
   stateToProps,
   dispatchToProps
-)(
-  HOCForm({
-    formFields: { username: "", email: "", password: "", confirmPassword: "" },
-    fieldsToValidate: ["username", "email", "password"]
-  })(RegisterPageContainer)
-);
+)(HOCForm(formDataToProps)(RegisterPageContainer));

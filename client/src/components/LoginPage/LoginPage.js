@@ -77,12 +77,12 @@ const dispatchToProps = dispatch => ({
   }
 });
 
+const formDataToProps = () => ({
+  formFields: { username: "", password: "" },
+  fieldsToValidate: ["username", "password"]
+});
+
 export default connect(
   stateToProps,
   dispatchToProps
-)(
-  HOCForm({
-    formFields: { username: "", password: "" },
-    fieldsToValidate: ["username", "password"]
-  })(LoginPageContainer)
-);
+)(HOCForm(formDataToProps)(LoginPageContainer));

@@ -2,21 +2,16 @@ import React from "react";
 
 import validateField from "@/utils/validateField";
 
-const HOCForm = propState => WrappedComponent => {
+const HOCForm = getInitialState => WrappedComponent => {
   class newForm extends React.Component {
-    constructor(props) {
-      super(props);
+    constructor() {
+      super();
       const normalizedState = this.normalizeState();
       this.state = { ...normalizedState, clientErrors: {} };
     }
 
     normalizeState = () => {
-      const normalizedState = { ...propState };
-      if (!propState) {
-        console.error(
-          "initial state formFields of type object, fieldsToValidate of type array, are required to passed in with HOC Form"
-        );
-      }
+      const normalizedState = getInitialState();
       if (!normalizedState.formFields) {
         console.error(
           "initial state formFields of type object is required to be passed in with HOC Form"
@@ -33,8 +28,9 @@ const HOCForm = propState => WrappedComponent => {
     };
 
     resetForm = () => {
+      const initialState = getInitialState();
       this.setState({
-        ...propState,
+        ...initialState,
         clientErrors: {}
       });
     };
@@ -74,16 +70,14 @@ const HOCForm = propState => WrappedComponent => {
 
     render() {
       return (
-        <div>
-          <WrappedComponent
-            {...this.props}
-            {...this.state}
-            resetForm={this.resetForm}
-            setClientErrors={this.setClientErrors}
-            handleChange={this.handleChange}
-            fieldsValidation={this.fieldsValidation}
-          />
-        </div>
+        <WrappedComponent
+          {...this.props}
+          {...this.state}
+          resetForm={this.resetForm}
+          setClientErrors={this.setClientErrors}
+          handleChange={this.handleChange}
+          fieldsValidation={this.fieldsValidation}
+        />
       );
     }
   }
