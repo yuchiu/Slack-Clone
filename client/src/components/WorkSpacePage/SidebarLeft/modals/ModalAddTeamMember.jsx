@@ -31,9 +31,9 @@ class ModalAddTeamMember extends React.Component {
         username: `${formFields.username} is already member of the team`
       });
     } else {
-      const clientErrors = fieldsValidation();
+      const fieldErrors = fieldsValidation();
       // proceed to send data to server if there's no error
-      if (Object.keys(clientErrors).length === 0) {
+      if (Object.keys(fieldErrors).length === 0) {
         emitSocketAddTeamMember({
           teamId: currentTeam.id,
           targetUsername: formFields.username
@@ -47,7 +47,7 @@ class ModalAddTeamMember extends React.Component {
     const {
       isModalOpen,
       formFields,
-      clientErrors,
+      fieldErrors,
 
       toggleModal,
       handleChange
@@ -61,7 +61,7 @@ class ModalAddTeamMember extends React.Component {
               <Modal.Content>
                 <AddTeamMemberForm
                   formFields={formFields}
-                  clientErrors={clientErrors}
+                  fieldErrors={fieldErrors}
                   handleChange={handleChange}
                   toggleModal={toggleModal}
                   handleSubmit={this.handleSubmit}
@@ -86,7 +86,7 @@ class ModalAddTeamMember extends React.Component {
 ModalAddTeamMember.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired,
   currentTeamMemberList: PropTypes.array.isRequired,
 

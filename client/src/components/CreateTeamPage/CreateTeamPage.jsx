@@ -7,7 +7,7 @@ import { Navbar, ErrorInline } from "../common";
 
 const CreateTeamPage = ({
   error,
-  clientErrors,
+  fieldErrors,
   name,
   about,
 
@@ -29,7 +29,7 @@ const CreateTeamPage = ({
               fluid
             />
           </Form.Field>
-          {clientErrors.name && <ErrorInline text={clientErrors.name} />}
+          {fieldErrors.name && <ErrorInline text={fieldErrors.name} />}
           <Form.Field>
             <Input
               name="about"
@@ -39,7 +39,7 @@ const CreateTeamPage = ({
               fluid
             />
           </Form.Field>
-          {clientErrors.about && <ErrorInline text={clientErrors.about} />}
+          {fieldErrors.about && <ErrorInline text={fieldErrors.about} />}
           <br />
           <Button primary type="button" onClick={handleSubmit}>
             Submit
@@ -55,7 +55,7 @@ CreateTeamPage.propTypes = {
   error: PropTypes.string.isRequired,
   about: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired

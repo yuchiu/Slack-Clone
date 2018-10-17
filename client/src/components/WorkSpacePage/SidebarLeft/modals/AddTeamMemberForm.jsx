@@ -6,7 +6,7 @@ import { ErrorInline } from "@/components/common";
 
 const ModalAddTeamMember = ({
   formFields,
-  clientErrors,
+  fieldErrors,
 
   handleChange,
   toggleModal,
@@ -22,7 +22,7 @@ const ModalAddTeamMember = ({
         fluid
         placeholder="# username"
       />
-      {clientErrors.username && <ErrorInline text={clientErrors.username} />}
+      {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
     </Form.Field>
     <br />
     <Form.Group widths="equal">
@@ -38,7 +38,7 @@ const ModalAddTeamMember = ({
 
 ModalAddTeamMember.propTypes = {
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,

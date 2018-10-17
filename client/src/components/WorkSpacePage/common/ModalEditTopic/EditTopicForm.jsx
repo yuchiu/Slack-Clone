@@ -6,7 +6,7 @@ import { HintInline, ErrorInline } from "@/components/common";
 
 const EditTopicForm = ({
   currentTopic,
-  clientErrors,
+  fieldErrors,
   formFields,
   toggleModal,
   handleChange,
@@ -29,8 +29,8 @@ const EditTopicForm = ({
           placeholder="Add a topic"
         />
       )}
-      {clientErrors.topic ? (
-        <ErrorInline text={clientErrors.topic} />
+      {fieldErrors.topic ? (
+        <ErrorInline text={fieldErrors.topic} />
       ) : (
         <HintInline text={"max characters: 128"} />
       )}
@@ -50,7 +50,7 @@ const EditTopicForm = ({
 EditTopicForm.propTypes = {
   currentTopic: PropTypes.string,
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,

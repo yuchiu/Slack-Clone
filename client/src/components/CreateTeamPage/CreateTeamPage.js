@@ -11,7 +11,7 @@ class CreateTeamPageContainer extends React.Component {
   state = {
     name: "",
     about: "",
-    clientErrors: {}
+    fieldErrors: {}
   };
 
   handleChange = e => {
@@ -23,11 +23,11 @@ class CreateTeamPageContainer extends React.Component {
 
   handleSubmit = () => {
     // validate user's login info on client side
-    const clientErrors = validateForm.createTeam(this.state);
-    this.setState({ clientErrors });
+    const fieldErrors = validateForm.createTeam(this.state);
+    this.setState({ fieldErrors });
 
     // proceed to send data to server if there's no error
-    if (Object.keys(clientErrors).length === 0) {
+    if (Object.keys(fieldErrors).length === 0) {
       const { fetchCreateTeam, history } = this.props;
       const { name, about } = this.state;
       fetchCreateTeam({ name, about });
@@ -36,12 +36,12 @@ class CreateTeamPageContainer extends React.Component {
   };
 
   render() {
-    const { clientErrors, name, about } = this.state;
+    const { fieldErrors, name, about } = this.state;
     const { error } = this.props;
 
     return (
       <CreateTeamPage
-        clientErrors={clientErrors}
+        fieldErrors={fieldErrors}
         name={name}
         about={about}
         handleChange={this.handleChange}

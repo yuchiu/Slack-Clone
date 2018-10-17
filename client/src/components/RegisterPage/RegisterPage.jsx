@@ -28,10 +28,10 @@ class RegisterPage extends React.Component {
         confirmPassword: "confirm password have to match with password"
       });
     } else {
-      const clientErrors = fieldsValidation();
+      const fieldErrors = fieldsValidation();
 
       // fetch login if there are no errors
-      if (Object.keys(clientErrors).length === 0) {
+      if (Object.keys(fieldErrors).length === 0) {
         fetchRegisterUser({
           username: formFields.username,
           email: formFields.email,
@@ -46,7 +46,7 @@ class RegisterPage extends React.Component {
     const {
       isUserLoggedIn,
       error,
-      clientErrors,
+      fieldErrors,
       formFields,
 
       handleChange
@@ -58,7 +58,7 @@ class RegisterPage extends React.Component {
         <main className="register-page">
           <Container text>
             <RegisterForm
-              clientErrors={clientErrors}
+              fieldErrors={fieldErrors}
               formFields={formFields}
               handleRegister={this.handleRegister}
               handleChange={handleChange}
@@ -82,7 +82,7 @@ RegisterPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string,
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
   fetchRegisterUser: PropTypes.func.isRequired,

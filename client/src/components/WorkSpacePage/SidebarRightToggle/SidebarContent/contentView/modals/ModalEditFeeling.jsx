@@ -13,11 +13,11 @@ class ModalEditFeeling extends React.Component {
       toggleModal,
       fetchEditUser
     } = this.props;
-    const clientErrors = fieldsValidation();
-    this.setState({ clientErrors });
+    const fieldErrors = fieldsValidation();
+    this.setState({ fieldErrors });
 
     // proceed to send data to server if there's no error
-    if (Object.keys(clientErrors).length === 0) {
+    if (Object.keys(fieldErrors).length === 0) {
       fetchEditUser({ brief_description: formFields.feeling });
       toggleModal();
     }
@@ -27,7 +27,7 @@ class ModalEditFeeling extends React.Component {
     const {
       formFields,
       isModalOpen,
-      clientErrors,
+      fieldErrors,
       currentFeeling,
 
       toggleModal,
@@ -42,7 +42,7 @@ class ModalEditFeeling extends React.Component {
                 formFields={formFields}
                 handleChange={handleChange}
                 handleSave={this.handleSave}
-                clientErrors={clientErrors}
+                fieldErrors={fieldErrors}
               />
             </Modal.Content>
           </Modal>
@@ -72,7 +72,7 @@ class ModalEditFeeling extends React.Component {
 ModalEditFeeling.propTypes = {
   formFields: PropTypes.object.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   currentFeeling: PropTypes.string.isRequired,
 
   toggleModal: PropTypes.func.isRequired,

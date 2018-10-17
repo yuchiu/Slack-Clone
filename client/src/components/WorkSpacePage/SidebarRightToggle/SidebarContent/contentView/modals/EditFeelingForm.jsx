@@ -6,7 +6,7 @@ import { ErrorInline, HintInline } from "@/components/common";
 
 const ModalEditFeeling = ({
   formFields,
-  clientErrors,
+  fieldErrors,
   currentFeeling,
 
   handleChange,
@@ -32,8 +32,8 @@ const ModalEditFeeling = ({
           placeholder="how you feeling"
         />
       )}
-      {clientErrors.text ? (
-        <ErrorInline text={clientErrors.text} />
+      {fieldErrors.text ? (
+        <ErrorInline text={fieldErrors.text} />
       ) : (
         <HintInline text={"max characters: 32"} />
       )}
@@ -51,7 +51,7 @@ const ModalEditFeeling = ({
 
 ModalEditFeeling.propTypes = {
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   handleChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired

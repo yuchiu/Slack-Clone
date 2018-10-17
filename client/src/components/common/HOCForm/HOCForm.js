@@ -1,13 +1,13 @@
 import React from "react";
 
-import validateField from "@/utils/validateField";
+import validateField from "./validateField";
 
 const HOCForm = getInitialState => WrappedComponent => {
   class newForm extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       const normalizedState = this.normalizeState();
-      this.state = { ...normalizedState, clientErrors: {} };
+      this.state = { ...normalizedState };
     }
 
     normalizeState = () => {
@@ -24,14 +24,16 @@ const HOCForm = getInitialState => WrappedComponent => {
         );
         normalizedState.fieldsToValidate = [];
       }
+      if (!normalizedState.fieldErrors) {
+        normalizedState.fieldErrors = {};
+      }
       return normalizedState;
     };
 
     resetForm = () => {
-      const initialState = getInitialState();
+      const normalizedState = this.normalizeState();
       this.setState({
-        ...initialState,
-        clientErrors: {}
+        ...normalizedState
       });
     };
 
@@ -55,16 +57,16 @@ const HOCForm = getInitialState => WrappedComponent => {
         return field;
       });
       this.setState({
-        clientErrors: errorList
+        fieldErrors: errorList
       });
       return errorList;
     };
 
-    setClientErrors = errorObj => {
-      const { clientErrors } = this.state;
-      const errorList = { ...clientErrors, ...errorObj };
+    setClientErrors = receivedErrors => {
+      const { fieldErrors } = this.state;
+      const errorList = { ...fieldErrors, ...receivedErrors };
       this.setState({
-        clientErrors: errorList
+        fieldErrors: errorList
       });
     };
 

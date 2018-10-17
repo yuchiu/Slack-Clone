@@ -15,10 +15,10 @@ class ModalEditPurpose extends React.Component {
       currentTeam,
       currentChannel
     } = this.props;
-    const clientErrors = fieldsValidation();
+    const fieldErrors = fieldsValidation();
 
     // proceed to send data to server if there's no error
-    if (Object.keys(clientErrors).length === 0) {
+    if (Object.keys(fieldErrors).length === 0) {
       fetchEditChannel({
         detail_description: formFields.purpose,
         channelId: currentChannel.id,
@@ -32,7 +32,7 @@ class ModalEditPurpose extends React.Component {
     const {
       currentPurpose,
       isModalOpen,
-      clientErrors,
+      fieldErrors,
       formFields,
 
       toggleModal,
@@ -45,7 +45,7 @@ class ModalEditPurpose extends React.Component {
           <Modal size="small" open={isModalOpen} onClose={toggleModal}>
             <Modal.Content>
               <EditPurposeForm
-                clientErrors={clientErrors}
+                fieldErrors={fieldErrors}
                 formFields={formFields}
                 handleChange={handleChange}
                 handleSave={handleSave}
@@ -77,7 +77,7 @@ class ModalEditPurpose extends React.Component {
 ModalEditPurpose.propTypes = {
   currentPurpose: PropTypes.string,
   isModalOpen: PropTypes.bool.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   formFields: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,

@@ -20,10 +20,10 @@ class LoginPage extends React.Component {
       formFields,
       fetchLoginUser
     } = this.props;
-    const clientErrors = fieldsValidation();
+    const fieldErrors = fieldsValidation();
 
     // fetch login if there are no errors
-    if (Object.keys(clientErrors).length === 0) {
+    if (Object.keys(fieldErrors).length === 0) {
       fetchLoginUser(formFields);
       clearAllError();
     }
@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
     const {
       isUserLoggedIn,
       error,
-      clientErrors,
+      fieldErrors,
       formFields,
 
       handleChange
@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
         <main className="login-page">
           <Container text>
             <LoginForm
-              clientErrors={clientErrors}
+              fieldErrors={fieldErrors}
               formFields={formFields}
               handleLogin={this.handleLogin}
               handleChange={handleChange}
@@ -70,7 +70,7 @@ LoginPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
   error: PropTypes.string,
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
   fetchLoginUser: PropTypes.func.isRequired,

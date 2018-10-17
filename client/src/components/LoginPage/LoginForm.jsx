@@ -5,7 +5,7 @@ import { Form, Button, Input, Header } from "semantic-ui-react";
 import { ErrorInline } from "@/components/common";
 
 const LoginForm = ({
-  clientErrors,
+  fieldErrors,
   formFields,
 
   handleLogin,
@@ -15,7 +15,7 @@ const LoginForm = ({
     <Header as="h2">Log In</Header>
     <Form.Field>
       <label htmlFor="username">Username:</label>
-      {clientErrors.username && <ErrorInline text={clientErrors.username} />}
+      {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
       <Input
         id="username"
         type="text"
@@ -29,7 +29,7 @@ const LoginForm = ({
     </Form.Field>
     <Form.Field>
       <label htmlFor="password">Password:</label>
-      {clientErrors.password && <ErrorInline text={clientErrors.password} />}
+      {fieldErrors.password && <ErrorInline text={fieldErrors.password} />}
       <Input
         id="password"
         type="password"
@@ -49,7 +49,7 @@ const LoginForm = ({
 
 LoginForm.propTypes = {
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   handleLogin: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired

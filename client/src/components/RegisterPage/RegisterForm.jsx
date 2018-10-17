@@ -5,7 +5,7 @@ import { Form, Button, Input, Header } from "semantic-ui-react";
 import { ErrorInline } from "@/components/common";
 
 const RegisterForm = ({
-  clientErrors,
+  fieldErrors,
   formFields,
 
   handleRegister,
@@ -15,7 +15,7 @@ const RegisterForm = ({
     <Header as="h2">Register</Header>
     <Form.Field>
       <label htmlFor="username">Username:</label>
-      {clientErrors.username && <ErrorInline text={clientErrors.username} />}
+      {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
       <Input
         id="username"
         type="username"
@@ -29,7 +29,7 @@ const RegisterForm = ({
     </Form.Field>
     <Form.Field>
       <label htmlFor="email">Email:</label>
-      {clientErrors.email && <ErrorInline text={clientErrors.email} />}
+      {fieldErrors.email && <ErrorInline text={fieldErrors.email} />}
       <Input
         id="email"
         type="email"
@@ -43,7 +43,7 @@ const RegisterForm = ({
     </Form.Field>
     <Form.Field>
       <label htmlFor="password">Password:</label>
-      {clientErrors.password && <ErrorInline text={clientErrors.password} />}
+      {fieldErrors.password && <ErrorInline text={fieldErrors.password} />}
       <Input
         id="password"
         type="password"
@@ -57,8 +57,8 @@ const RegisterForm = ({
     </Form.Field>
     <Form.Field>
       <label htmlFor="confirm_password">Confirm Password:</label>
-      {clientErrors.confirmPassword && (
-        <ErrorInline text={clientErrors.confirmPassword} />
+      {fieldErrors.confirmPassword && (
+        <ErrorInline text={fieldErrors.confirmPassword} />
       )}
       <Input
         id="confirm_password"
@@ -79,7 +79,7 @@ const RegisterForm = ({
 
 RegisterForm.propTypes = {
   formFields: PropTypes.object.isRequired,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
 
   handleChange: PropTypes.func.isRequired,
   handleRegister: PropTypes.func.isRequired

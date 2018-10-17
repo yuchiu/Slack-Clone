@@ -6,7 +6,7 @@ import { HintInline, ErrorInline } from "@/components/common";
 
 const ModalEditPurpose = ({
   currentPurpose,
-  clientErrors,
+  fieldErrors,
   formFields,
 
   toggleModal,
@@ -30,8 +30,8 @@ const ModalEditPurpose = ({
           placeholder="Add a purpose"
         />
       )}
-      {clientErrors.purpose ? (
-        <ErrorInline text={clientErrors.purpose} />
+      {fieldErrors.purpose ? (
+        <ErrorInline text={fieldErrors.purpose} />
       ) : (
         <HintInline text={"max characters: 256"} />
       )}
@@ -49,7 +49,7 @@ const ModalEditPurpose = ({
 
 ModalEditPurpose.propTypes = {
   currentPurpose: PropTypes.string,
-  clientErrors: PropTypes.object.isRequired,
+  fieldErrors: PropTypes.object.isRequired,
   formFields: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
