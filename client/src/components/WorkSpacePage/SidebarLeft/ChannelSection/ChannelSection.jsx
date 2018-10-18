@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import ChannelHeader from "./ChannelHeader.jsx";
-import ChannelList from "./ChannelList.jsx";
+import ChannelList from "./ChannelList";
 
 const ChannelSection = ({
   currentTeam,

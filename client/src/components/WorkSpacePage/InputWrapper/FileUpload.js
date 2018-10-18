@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import { Button, Icon } from "semantic-ui-react";
+import { connect } from "react-redux";
+
+import { messageAction, errorAction } from "@/actions";
+import { userSelector, channelSelector } from "@/reducers/";
 
 class FileUpload extends React.Component {
   handleUpload = file => {
@@ -55,6 +59,18 @@ class FileUpload extends React.Component {
   }
 }
 
+const stateToProps = state => ({
+  currentUser: userSelector.getCurrentUser(state),
+  currentChannel: channelSelector.getCurrentChannel(state)
+});
+const dispatchToProps = dispatch => ({
+  emitSocketMessage: file => {
+    dispatch(messageAction.emitSocketMessage(file));
+  },
+  createUploadError: text => {
+    dispatch(errorAction.createUploadError(text));
+  }
+});
 FileUpload.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentChannel: PropTypes.object.isRequired,
@@ -63,4 +79,7 @@ FileUpload.propTypes = {
   createUploadError: PropTypes.func.isRequired
 };
 
-export default FileUpload;
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(FileUpload);

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import LoadingOverlay from "react-loading-overlay";
 
 import "./MessagesWrapper.scss";
-import Message from "./Message.jsx";
+import Message from "./Message";
 
 class MessagesContainer extends React.Component {
   render() {

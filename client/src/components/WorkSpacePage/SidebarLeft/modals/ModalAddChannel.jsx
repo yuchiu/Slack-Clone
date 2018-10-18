@@ -1,61 +1,10 @@
 import React from "react";
-import { Modal, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { Modal, Icon } from "semantic-ui-react";
 
-import { validateForm } from "@/utils";
 import FormAddChannel from "./FormAddChannel";
 
 class ModalAddChannel extends React.Component {
-  handleSubmit = async () => {
-    const {
-      fetchCreateChannel,
-      formFields,
-      setFieldErrors,
-      fieldsValidation,
-      formOptions,
-      currentTeam,
-      resetForm,
-      toggleModal,
-      currentUser
-    } = this.props;
-    // validate user's login info on client side
-    const errorList = fieldsValidation();
-    const membersError = validateForm.addChannel(formOptions);
-    const fieldErrors = {
-      ...errorList,
-      ...membersError
-    };
-    setFieldErrors(fieldErrors);
-
-    // proceed to send data to server if there's no error
-    if (Object.keys(fieldErrors).length === 0) {
-      fetchCreateChannel({
-        teamId: currentTeam.id,
-        currentUserId: currentUser.id,
-        channelName: formFields.channelName,
-        detail_description: formFields.purpose,
-        isPublic: !formOptions.isChannelPrivate,
-        membersList: formOptions.members
-      });
-      toggleModal();
-      resetForm();
-    }
-  };
-
-  toggleCheckboxValue = e => {
-    const { updateFormOptions, formOptions } = this.props;
-    updateFormOptions({
-      isChannelPrivate: !formOptions.isChannelPrivate
-    });
-  };
-
-  handleDropDownChange = (e, { value }) => {
-    const { updateFormOptions } = this.props;
-    updateFormOptions({
-      members: value
-    });
-  };
-
   render() {
     const {
       isModalOpen,
@@ -66,7 +15,10 @@ class ModalAddChannel extends React.Component {
       currentUser,
 
       handleFieldChange,
-      toggleModal
+      toggleModal,
+      handleDropDownChange,
+      toggleCheckboxValue,
+      handleSubmit
     } = this.props;
     return (
       <React.Fragment>
@@ -88,9 +40,9 @@ class ModalAddChannel extends React.Component {
                 currentUser={currentUser}
                 handleFieldChange={handleFieldChange}
                 toggleModal={toggleModal}
-                handleSubmit={this.handleSubmit}
-                handleDropDownChange={this.handleDropDownChange}
-                toggleCheckboxValue={this.toggleCheckboxValue}
+                handleSubmit={handleSubmit}
+                handleDropDownChange={handleDropDownChange}
+                toggleCheckboxValue={toggleCheckboxValue}
               />
             </Modal.Content>
           </Modal>
@@ -108,18 +60,17 @@ class ModalAddChannel extends React.Component {
 
 ModalAddChannel.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
-  currentTeam: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   currentTeamMemberList: PropTypes.array.isRequired,
   fieldErrors: PropTypes.object.isRequired,
   formFields: PropTypes.object.isRequired,
   formOptions: PropTypes.object.isRequired,
 
-  resetForm: PropTypes.func.isRequired,
-  setFieldErrors: PropTypes.func.isRequired,
-  fieldsValidation: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  fetchCreateChannel: PropTypes.func.isRequired
+  handleDropDownChange: PropTypes.func.isRequired,
+  toggleCheckboxValue: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired
 };
 
 export default ModalAddChannel;
