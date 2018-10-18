@@ -22,18 +22,25 @@
 
 ### Server (Development)
 
-- install dependencies & start application in server  
-  server will be listening to http://localhost:3030
-
-  ```npm ./server
-  npm install
-  npm start
-  ```
-
-- populate postgres with sample data in server/seed
+- populate postgres with sample data in server/seed(Optional)
+  seed configuration & data is in dir ./server/seed
 
   ```npm ./server
   npm run seed
+  ```
+
+- For initial run on the machine, install dependencies & transpile TypeScript to JavaScript
+
+  ```npm ./server
+  npm install
+  npm run ts
+  ```
+
+- start application in server  
+  server will be listening to http://localhost:3030
+
+  ```npm ./server
+  npm start
   ```
 
 ### Client (Development)

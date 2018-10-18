@@ -33,7 +33,7 @@ app.use("/assets", express.static("assets"));
 if (NODE_ENV === "development") {
   app.use(logger("dev"));
   //first arg is min time in millisecond, second arg random time in millisecond add on top of min time
-  app.use(simulateLatency(10, 100));
+  app.use(simulateLatency(50, 1000));
 }
 // use client production build */
 if (NODE_ENV === "production") {
