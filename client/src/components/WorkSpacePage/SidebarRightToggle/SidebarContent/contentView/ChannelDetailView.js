@@ -1,8 +1,35 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
 import { channelSelector } from "@/reducers/";
 import ChannelDetailView from "./ChannelDetailView.jsx";
+
+class ChannelDetailViewContainer extends React.Component {
+  handleClick = () => {
+    const { switchRightSidebarView } = this.props;
+    switchRightSidebarView("channel-members");
+  };
+
+  render() {
+    const { currentChannel, currentChannelMemberList } = this.props;
+    return (
+      <ChannelDetailView
+        currentChannel={currentChannel}
+        currentChannelMemberList={currentChannelMemberList}
+        handleClick={this.handleClick}
+      />
+    );
+  }
+}
+
+ChannelDetailViewContainer.propTypes = {
+  currentChannel: PropTypes.object.isRequired,
+  currentChannelMemberList: PropTypes.array.isRequired,
+
+  switchRightSidebarView: PropTypes.func.isRequired
+};
 
 const stateToProps = state => ({
   currentChannel: channelSelector.getCurrentChannel(state),
@@ -18,4 +45,4 @@ const dispatchToProps = dispatch => ({
 export default connect(
   stateToProps,
   dispatchToProps
-)(ChannelDetailView);
+)(ChannelDetailViewContainer);

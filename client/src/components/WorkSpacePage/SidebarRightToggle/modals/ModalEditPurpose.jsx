@@ -1,33 +1,11 @@
 import React from "react";
-import { Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { Modal } from "semantic-ui-react";
 
 import { ButtonInline } from "@/components/common";
 import FormEditPurpose from "./FormEditPurpose.jsx";
 
 class ModalEditPurpose extends React.Component {
-  handleSave = () => {
-    const {
-      formFields,
-      fieldsValidation,
-      toggleModal,
-      fetchEditChannel,
-      currentTeam,
-      currentChannel
-    } = this.props;
-    const fieldErrors = fieldsValidation();
-
-    // proceed to send data to server if there's no error
-    if (Object.keys(fieldErrors).length === 0) {
-      fetchEditChannel({
-        detail_description: formFields.purpose,
-        channelId: currentChannel.id,
-        teamId: currentTeam.id
-      });
-      toggleModal();
-    }
-  };
-
   render() {
     const {
       currentPurpose,
@@ -79,11 +57,9 @@ ModalEditPurpose.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   fieldErrors: PropTypes.object.isRequired,
   formFields: PropTypes.object.isRequired,
-  currentTeam: PropTypes.object.isRequired,
-  currentChannel: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  fetchEditChannel: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired
 };
 
