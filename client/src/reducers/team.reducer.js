@@ -47,6 +47,15 @@ export default (state = initialState, action) => {
       sessionStore.setTeamId(newState.currentTeam.id);
       return newState;
 
+    case constants.TEAM_FETCH_EDIT:
+      newState.isLoading = true;
+      return newState;
+
+    case constants.TEAM_FETCH_EDIT_SUCCESS:
+      newState.isLoading = false;
+      newState.currentTeam = action.payload.team;
+      return newState;
+
     case constants.TEAM_FETCH_ASSOCIATED_LIST:
       newState.isLoading = true;
       return newState;

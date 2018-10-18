@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { ModalEditAbout } from "./modals";
+
 class TeamDetailView extends React.Component {
   handleClick = () => {
     const { switchRightSidebarView } = this.props;
@@ -39,7 +41,11 @@ class TeamDetailView extends React.Component {
             <span className="right-sidebar-label">
               About {currentTeam.name}:{" "}
             </span>
-            {`${currentTeam.brief_description}`}
+            {currentTeam.admin ? (
+              <ModalEditAbout currentAbout={currentTeam.brief_description} />
+            ) : (
+              <span>{`${currentTeam.brief_description}`}</span>
+            )}
           </div>
           <div className="view-detail__role  right-sidebar-item">
             <span className="right-sidebar-label">Role: </span>

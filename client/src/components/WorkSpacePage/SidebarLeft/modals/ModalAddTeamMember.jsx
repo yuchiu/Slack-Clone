@@ -18,7 +18,7 @@ class ModalAddTeamMember extends React.Component {
     const {
       formFields,
       fieldsValidation,
-      setClientErrors,
+      setFieldErrors,
       toggleModal,
       emitSocketAddTeamMember,
       currentTeam
@@ -27,7 +27,7 @@ class ModalAddTeamMember extends React.Component {
     const isMemberDuplicated = this.checkDuplicateMember();
     if (isMemberDuplicated) {
       // display error if the user is already member of the team
-      setClientErrors({
+      setFieldErrors({
         username: `${formFields.username} is already member of the team`
       });
     } else {

@@ -18,14 +18,14 @@ class RegisterPage extends React.Component {
     const {
       fetchRegisterUser,
       clearAllError,
-      setClientErrors,
+      setFieldErrors,
       fieldsValidation,
       formFields
     } = this.props;
 
     if (formFields.password !== formFields.confirmPassword) {
       // display error if confirm password does not match password
-      setClientErrors({
+      setFieldErrors({
         confirmPassword: "confirm password have to match with password"
       });
     } else {

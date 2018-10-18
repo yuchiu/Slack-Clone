@@ -55,6 +55,26 @@ export default {
     }
   },
 
+  fetchEditTeam: editTeamData => async dispatch => {
+    dispatch({
+      type: constants.TEAM_FETCH_EDIT
+    });
+    try {
+      const response = await teamService.fetchEditTeam(editTeamData);
+      const { data } = response;
+      dispatch({
+        type: constants.TEAM_FETCH_EDIT_SUCCESS,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.ERROR_TEAM,
+        payload: data.meta.message
+      });
+    }
+  },
+
   /**
    * Web Socket with Socket.io
    */

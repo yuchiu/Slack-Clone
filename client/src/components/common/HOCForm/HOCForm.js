@@ -62,7 +62,7 @@ const HOCForm = getInitialState => WrappedComponent => {
       return errorList;
     };
 
-    setClientErrors = receivedErrors => {
+    setFieldErrors = receivedErrors => {
       const { fieldErrors } = this.state;
       const errorList = { ...fieldErrors, ...receivedErrors };
       this.setState({
@@ -76,7 +76,7 @@ const HOCForm = getInitialState => WrappedComponent => {
           {...this.props}
           {...this.state}
           resetForm={this.resetForm}
-          setClientErrors={this.setClientErrors}
+          setFieldErrors={this.setFieldErrors}
           handleChange={this.handleChange}
           fieldsValidation={this.fieldsValidation}
         />
