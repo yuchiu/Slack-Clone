@@ -9,7 +9,7 @@ const RegisterForm = ({
   formFields,
 
   handleRegister,
-  handleChange
+  handleFieldChange
 }) => (
   <Form className="register-form">
     <Header as="h2">Register</Header>
@@ -22,7 +22,7 @@ const RegisterForm = ({
         name="username"
         value={formFields.username}
         className=""
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="username"
         size="large"
       />
@@ -36,7 +36,7 @@ const RegisterForm = ({
         name="email"
         value={formFields.email}
         className=""
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="email"
         size="large"
       />
@@ -50,7 +50,7 @@ const RegisterForm = ({
         name="password"
         value={formFields.password}
         className="validate"
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="password"
         size="large"
       />
@@ -66,7 +66,7 @@ const RegisterForm = ({
         name="confirmPassword"
         value={formFields.confirmPassword}
         className="validate"
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="confirm password"
         size="large"
       />
@@ -81,7 +81,7 @@ RegisterForm.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleRegister: PropTypes.func.isRequired
 };
 

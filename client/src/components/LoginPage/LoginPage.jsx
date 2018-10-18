@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
       fieldErrors,
       formFields,
 
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
               fieldErrors={fieldErrors}
               formFields={formFields}
               handleLogin={this.handleLogin}
-              handleChange={handleChange}
+              handleFieldChange={handleFieldChange}
             />
             <br />
             <br /> New to Slack?{" "}
@@ -77,7 +77,7 @@ LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
 
   fetchLoginUser: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   fieldsValidation: PropTypes.func.isRequired
 };
 

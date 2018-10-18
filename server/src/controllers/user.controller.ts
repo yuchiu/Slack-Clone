@@ -77,7 +77,7 @@ export default {
           status: 200,
           message: ""
         },
-        user
+        user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
@@ -92,7 +92,8 @@ export default {
   },
   getAllUsers: async (req: Request, res: Response) => {
     try {
-      const userList = await models.User.findAll({ raw: true });
+      let userList: any = await models.User.findAll({ raw: true });
+      userList = userList.map(user => userSummary(user));
       res.status(200).send({
         meta: {
           type: "sucess",
@@ -270,6 +271,17 @@ export default {
         user.password
       );
 
+      /* invalid password */
+      if (!isPasswordValid) {
+        return res.status(403).send({
+          meta: {
+            type: "error",
+            status: 403,
+            message: "invalid password"
+          }
+        });
+      }
+
       /* get user's teams */
       const teamList = await models.sequelize.query(
         "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
@@ -284,21 +296,14 @@ export default {
       req.session.user = user;
       req.session.save(() => {});
 
-      if (isPasswordValid) {
-        return res.status(200).send({
-          meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          user: userSummary(user),
-          teamList
-        });
-      }
-
-      /* invalid password */
-      res.status(403).send({
-        error: "invalid password"
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        user: userSummary(user),
+        teamList
       });
     } catch (err) {
       console.log(err);
@@ -387,11 +392,18 @@ export default {
           where: { id: currentUserId }
         });
 
+        console.log("password");
+        console.log(password);
+        console.log("user." + "password");
+        console.log(user.password);
         /* validate password */
+        console.log("password=== user.password");
+        console.log(password === user.password);
         const isPasswordValid = await comparePassword(password, user.password);
-
+        console.log("isPasswordValid");
+        console.log(isPasswordValid);
         if (!isPasswordValid) {
-          res.status(500).send({
+          return res.status(500).send({
             meta: {
               type: "error",
               status: 403,
@@ -459,7 +471,7 @@ export default {
           status: 200,
           message: ""
         },
-        user: updatedUser
+        user: userSummary(updatedUser)
       });
     } catch (err) {
       console.log(err);

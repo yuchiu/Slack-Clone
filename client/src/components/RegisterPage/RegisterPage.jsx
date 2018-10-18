@@ -51,7 +51,7 @@ class RegisterPage extends React.Component {
       isLoading,
       formFields,
 
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
@@ -63,7 +63,7 @@ class RegisterPage extends React.Component {
               fieldErrors={fieldErrors}
               formFields={formFields}
               handleRegister={this.handleRegister}
-              handleChange={handleChange}
+              handleFieldChange={handleFieldChange}
             />
             <br />
             <br /> Already have an account?{" "}
@@ -89,7 +89,7 @@ RegisterPage.propTypes = {
   history: PropTypes.object.isRequired,
 
   fetchRegisterUser: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   fieldsValidation: PropTypes.func.isRequired
 };
 

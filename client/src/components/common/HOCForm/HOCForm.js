@@ -10,26 +10,32 @@ const HOCForm = getInitialState => WrappedComponent => {
       this.state = { ...normalizedState };
     }
 
+    /**
+     * normalize initial State, check for errors
+     */
     normalizeState = () => {
       const normalizedState = getInitialState();
+      if (!normalizedState.fieldsToValidate) {
+        normalizedState.fieldsToValidate = [];
+      }
+      if (!normalizedState.fieldErrors) {
+        normalizedState.fieldErrors = {};
+      }
+      if (!normalizedState.formOptions) {
+        normalizedState.formOptions = {};
+      }
       if (!normalizedState.formFields) {
         console.error(
           "formFields of type object is required to be passed in with HOC Form as initial state"
         );
         normalizedState.formFields = {};
       }
-      if (!normalizedState.fieldsToValidate) {
-        console.error(
-          "fieldsToValidate of type array is required to be passed in with HOC Form as initial state"
-        );
-        normalizedState.fieldsToValidate = [];
-      }
-      if (!normalizedState.fieldErrors) {
-        normalizedState.fieldErrors = {};
-      }
       return normalizedState;
     };
 
+    /**
+     * methods to reset internal states
+     */
     resetForm = () => {
       const normalizedState = this.normalizeState();
       this.setState({
@@ -37,7 +43,58 @@ const HOCForm = getInitialState => WrappedComponent => {
       });
     };
 
-    handleChange = e => {
+    resetFormFields = () => {
+      const initialState = getInitialState();
+      this.setState({
+        formFields: { ...initialState.formFields }
+      });
+    };
+
+    resetFormOptions = () => {
+      const initialState = getInitialState();
+      this.setState({
+        formOptions: { ...initialState.formOptions }
+      });
+    };
+
+    resetFieldErrors = () => {
+      const initialState = getInitialState();
+      this.setState({
+        formFields: { ...initialState.formFields }
+      });
+    };
+
+    /**
+     * methods to set internal states directly
+     */
+    setFormFields = receivedFields => {
+      const { formFields } = this.state;
+      const fieldList = { ...formFields, ...receivedFields };
+      this.setState({
+        formFields: fieldList
+      });
+    };
+
+    setFormOptions = receivedOptions => {
+      const { formOptions } = this.state;
+      const optionList = { ...formOptions, ...receivedOptions };
+      this.setState({
+        formOptions: optionList
+      });
+    };
+
+    setFieldErrors = receivedErrors => {
+      const { fieldErrors } = this.state;
+      const errorList = { ...fieldErrors, ...receivedErrors };
+      this.setState({
+        fieldErrors: errorList
+      });
+    };
+
+    /**
+     * method for handle form field's value changes
+     */
+    handleFieldChange = e => {
       const { formFields } = this.state;
       const { name, value } = e.target;
       formFields[name] = value;
@@ -46,6 +103,9 @@ const HOCForm = getInitialState => WrappedComponent => {
       });
     };
 
+    /**
+     * method for validates form fields's values using validateField function
+     */
     fieldsValidation = () => {
       const { fieldsToValidate, formFields } = this.state;
       let errorList = {};
@@ -62,22 +122,19 @@ const HOCForm = getInitialState => WrappedComponent => {
       return errorList;
     };
 
-    setFieldErrors = receivedErrors => {
-      const { fieldErrors } = this.state;
-      const errorList = { ...fieldErrors, ...receivedErrors };
-      this.setState({
-        fieldErrors: errorList
-      });
-    };
-
     render() {
       return (
         <WrappedComponent
           {...this.props}
           {...this.state}
-          resetForm={this.resetForm}
+          setFormFields={this.setFormFields}
+          setFormOptions={this.setFormOptions}
           setFieldErrors={this.setFieldErrors}
-          handleChange={this.handleChange}
+          resetForm={this.resetForm}
+          resetFormFields={this.resetFormFields}
+          resetFormOptions={this.resetFormOptions}
+          resetFieldErrors={this.resetFieldErrors}
+          handleFieldChange={this.handleFieldChange}
           fieldsValidation={this.fieldsValidation}
         />
       );

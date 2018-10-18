@@ -30,7 +30,7 @@ class CreateTeamPage extends React.Component {
       formFields,
       isLoading,
 
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
@@ -40,7 +40,7 @@ class CreateTeamPage extends React.Component {
             <CreateTeamForm
               fieldErrors={fieldErrors}
               formFields={formFields}
-              handleChange={handleChange}
+              handleFieldChange={handleFieldChange}
               handleSubmit={this.handleSubmit}
             />
           </Container>
@@ -57,7 +57,7 @@ CreateTeamPage.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default CreateTeamPage;

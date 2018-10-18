@@ -36,7 +36,7 @@ class ModalEditPurpose extends React.Component {
       formFields,
 
       toggleModal,
-      handleChange,
+      handleFieldChange,
       handleSave
     } = this.props;
     return (
@@ -47,7 +47,7 @@ class ModalEditPurpose extends React.Component {
               <EditPurposeForm
                 fieldErrors={fieldErrors}
                 formFields={formFields}
-                handleChange={handleChange}
+                handleFieldChange={handleFieldChange}
                 handleSave={handleSave}
               />
             </Modal.Content>
@@ -84,7 +84,7 @@ ModalEditPurpose.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   fetchEditChannel: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default ModalEditPurpose;

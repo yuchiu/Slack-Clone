@@ -10,7 +10,7 @@ const ModalEditPurpose = ({
   formFields,
 
   toggleModal,
-  handleChange,
+  handleFieldChange,
   handleSave
 }) => (
   <Form>
@@ -18,14 +18,14 @@ const ModalEditPurpose = ({
       {currentPurpose ? (
         <Form.TextArea
           value={formFields.purpose}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="purpose"
           placeholder={`${currentPurpose}`}
         />
       ) : (
         <Form.TextArea
           value={formFields.purpose}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="purpose"
           placeholder="Add a purpose"
         />
@@ -53,7 +53,7 @@ ModalEditPurpose.propTypes = {
   formFields: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired
 };
 

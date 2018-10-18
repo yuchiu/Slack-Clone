@@ -48,7 +48,7 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN_ERROR,
+        type: constants.ERROR_AUTH,
         payload: data.meta.message
       });
     }
@@ -68,7 +68,7 @@ export default {
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN_ERROR,
+        type: constants.ERROR_AUTH,
         payload: data.meta.message
       });
     }

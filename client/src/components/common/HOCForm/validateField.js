@@ -31,6 +31,18 @@ export default (fieldName, data) => {
       }
       return error;
 
+    case "feeling":
+      if (data.length > 32) {
+        error = "length of feeling can not exceed 32 characters";
+      }
+      return error;
+
+    case "aboutMe":
+      if (data.length > 258) {
+        error = "length of about me can not exceed 258 characters";
+      }
+      return error;
+
     case "topic":
       if (data.length > 128) {
         error = "length of topic can not exceed 128 characters";
@@ -40,12 +52,6 @@ export default (fieldName, data) => {
     case "purpose":
       if (data.length > 256) {
         error = "length of purpose can not exceed 256 characters";
-      }
-      return error;
-
-    case "feeling":
-      if (data.length > 32) {
-        error = "length of feeling can not exceed 32 characters";
       }
       return error;
 

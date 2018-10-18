@@ -25,7 +25,7 @@ class ModalAddChannel extends React.Component {
     channelName: ""
   };
 
-  handleChange = e => {
+  handleFieldChange = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value
@@ -115,7 +115,7 @@ class ModalAddChannel extends React.Component {
                   <label>Channel name:</label>
                   <Input
                     value={channelName}
-                    onChange={this.handleChange}
+                    onChange={this.handleFieldChange}
                     name="channelName"
                     fluid
                     placeholder="# random channel"
@@ -136,7 +136,7 @@ class ModalAddChannel extends React.Component {
                   <label>Purpose:</label>
                   <Form.TextArea
                     value={purpose}
-                    onChange={this.handleChange}
+                    onChange={this.handleFieldChange}
                     name="purpose"
                     placeholder="purpose"
                   />

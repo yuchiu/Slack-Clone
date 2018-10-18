@@ -31,7 +31,7 @@ class ModalEditFeeling extends React.Component {
       currentFeeling,
 
       toggleModal,
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <React.Fragment>
@@ -40,7 +40,7 @@ class ModalEditFeeling extends React.Component {
             <Modal.Content>
               <EditFeelingForm
                 formFields={formFields}
-                handleChange={handleChange}
+                handleFieldChange={handleFieldChange}
                 handleSave={this.handleSave}
                 fieldErrors={fieldErrors}
               />
@@ -76,7 +76,7 @@ ModalEditFeeling.propTypes = {
   currentFeeling: PropTypes.string.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default ModalEditFeeling;

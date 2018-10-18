@@ -35,7 +35,7 @@ class ModalEditTopic extends React.Component {
       formFields,
       isModalOpen,
       toggleModal,
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <React.Fragment>
@@ -47,7 +47,7 @@ class ModalEditTopic extends React.Component {
                 fieldErrors={fieldErrors}
                 formFields={formFields}
                 toggleModal={toggleModal}
-                handleChange={handleChange}
+                handleFieldChange={handleFieldChange}
                 handleSave={this.handleSave}
               />
             </Modal.Content>
@@ -85,7 +85,7 @@ ModalEditTopic.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   fetchEditChannel: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default ModalEditTopic;

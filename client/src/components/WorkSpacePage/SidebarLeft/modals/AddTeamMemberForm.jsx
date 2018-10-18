@@ -8,7 +8,7 @@ const ModalAddTeamMember = ({
   formFields,
   fieldErrors,
 
-  handleChange,
+  handleFieldChange,
   toggleModal,
   handleSubmit
 }) => (
@@ -17,7 +17,7 @@ const ModalAddTeamMember = ({
       <label>Add user to the team:</label>
       <Input
         value={formFields.username}
-        onChange={handleChange}
+        onChange={handleFieldChange}
         name="username"
         fluid
         placeholder="# username"
@@ -41,7 +41,7 @@ ModalAddTeamMember.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
 

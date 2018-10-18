@@ -9,7 +9,7 @@ const ModalEditFeeling = ({
   fieldErrors,
   currentFeeling,
 
-  handleChange,
+  handleFieldChange,
   toggleModal,
   handleSave
 }) => (
@@ -18,7 +18,7 @@ const ModalEditFeeling = ({
       {currentFeeling ? (
         <Input
           value={formFields.feeling}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="feeling"
           fluid
           placeholder={`${currentFeeling}`}
@@ -26,7 +26,7 @@ const ModalEditFeeling = ({
       ) : (
         <Input
           value={formFields.feeling}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="feeling"
           fluid
           placeholder="how you feeling"
@@ -53,7 +53,7 @@ ModalEditFeeling.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired
 };
 

@@ -9,7 +9,7 @@ const LoginForm = ({
   formFields,
 
   handleLogin,
-  handleChange
+  handleFieldChange
 }) => (
   <Form className="login-form">
     <Header as="h2">Log In</Header>
@@ -22,7 +22,7 @@ const LoginForm = ({
         name="username"
         value={formFields.username}
         className=""
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="username"
         size="large"
       />
@@ -36,7 +36,7 @@ const LoginForm = ({
         name="password"
         value={formFields.password}
         className="validate"
-        onChange={handleChange}
+        onChange={handleFieldChange}
         placeholder="password"
         size="large"
       />
@@ -52,7 +52,7 @@ LoginForm.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
 
   handleLogin: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default LoginForm;

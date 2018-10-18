@@ -8,7 +8,7 @@ const CreateTeamPage = ({
   fieldErrors,
   formFields,
 
-  handleChange,
+  handleFieldChange,
   handleSubmit
 }) => (
   <Form className="create-team-form">
@@ -18,7 +18,7 @@ const CreateTeamPage = ({
       {fieldErrors.teamname && <ErrorInline text={fieldErrors.teamname} />}
       <Input
         name="teamname"
-        onChange={handleChange}
+        onChange={handleFieldChange}
         value={formFields.teamname}
         placeholder="Name"
         fluid
@@ -29,7 +29,7 @@ const CreateTeamPage = ({
       {fieldErrors.about && <ErrorInline text={fieldErrors.about} />}
       <Form.TextArea
         name="about"
-        onChange={handleChange}
+        onChange={handleFieldChange}
         value={formFields.about}
         placeholder="About the team"
       />
@@ -46,7 +46,7 @@ CreateTeamPage.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
 
   handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default CreateTeamPage;

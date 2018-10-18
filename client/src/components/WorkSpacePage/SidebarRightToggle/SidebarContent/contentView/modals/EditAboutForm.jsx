@@ -9,7 +9,7 @@ const EditAboutForm = ({
   fieldErrors,
   currentAbout,
 
-  handleChange,
+  handleFieldChange,
   toggleModal,
   handleSave
 }) => (
@@ -18,7 +18,7 @@ const EditAboutForm = ({
       {currentAbout ? (
         <Form.TextArea
           value={formFields.about}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="about"
           fluid
           placeholder={`${currentAbout}`}
@@ -26,7 +26,7 @@ const EditAboutForm = ({
       ) : (
         <Form.TextArea
           value={formFields.about}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="about"
           fluid
           placeholder="about team"
@@ -53,7 +53,7 @@ EditAboutForm.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired
 };
 

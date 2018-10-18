@@ -15,6 +15,7 @@ export default (state = initialState, action) => {
     case constants.USER_FETCH_LOGIN_SUCCESS:
       newState.currentUser = action.payload.user;
       return newState;
+
     case constants.USER_FETCH_EDIT:
       newState.isLoading = true;
       return newState;

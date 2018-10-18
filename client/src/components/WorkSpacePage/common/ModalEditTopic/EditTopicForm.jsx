@@ -9,7 +9,7 @@ const EditTopicForm = ({
   fieldErrors,
   formFields,
   toggleModal,
-  handleChange,
+  handleFieldChange,
   handleSave
 }) => (
   <Form>
@@ -17,14 +17,14 @@ const EditTopicForm = ({
       {currentTopic ? (
         <Form.TextArea
           value={formFields.topic}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="topic"
           placeholder={`${currentTopic}`}
         />
       ) : (
         <Form.TextArea
           value={formFields.topic}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           name="topic"
           placeholder="Add a topic"
         />
@@ -53,7 +53,7 @@ EditTopicForm.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired
 };
 

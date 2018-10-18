@@ -50,7 +50,7 @@ class ModalAddTeamMember extends React.Component {
       fieldErrors,
 
       toggleModal,
-      handleChange
+      handleFieldChange
     } = this.props;
     return (
       <React.Fragment>
@@ -62,7 +62,7 @@ class ModalAddTeamMember extends React.Component {
                 <AddTeamMemberForm
                   formFields={formFields}
                   fieldErrors={fieldErrors}
-                  handleChange={handleChange}
+                  handleFieldChange={handleFieldChange}
                   toggleModal={toggleModal}
                   handleSubmit={this.handleSubmit}
                 />
@@ -92,7 +92,7 @@ ModalAddTeamMember.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   emitSocketAddTeamMember: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default ModalAddTeamMember;
