@@ -7,49 +7,30 @@ import "./CreateTeamPage.scss";
 import { Navbar, ErrorInline } from "../common";
 import CreateTeamForm from "./CreateTeamForm";
 
-class CreateTeamPage extends React.Component {
-  handleSubmit = () => {
-    const {
-      fieldsValidation,
-      fetchCreateTeam,
-      history,
-      formFields
-    } = this.props;
-    const fieldErrors = fieldsValidation();
-    // proceed to send data to server if there's no error
-    if (Object.keys(fieldErrors).length === 0) {
-      fetchCreateTeam({ name: formFields.teamname, about: formFields.about });
-      history.push(`/`);
-    }
-  };
+const CreateTeamPage = ({
+  error,
+  fieldErrors,
+  formFields,
+  isLoading,
 
-  render() {
-    const {
-      error,
-      fieldErrors,
-      formFields,
-      isLoading,
-
-      handleFieldChange
-    } = this.props;
-    return (
-      <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
-        <main className="create-team-page">
-          <Navbar />
-          <Container text>
-            <CreateTeamForm
-              fieldErrors={fieldErrors}
-              formFields={formFields}
-              handleFieldChange={handleFieldChange}
-              handleSubmit={this.handleSubmit}
-            />
-          </Container>
-          {error && <ErrorInline text={error} />}
-        </main>
-      </LoadingOverlay>
-    );
-  }
-}
+  handleFieldChange,
+  handleSubmit
+}) => (
+  <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
+    <main className="create-team-page">
+      <Navbar />
+      <Container text>
+        <CreateTeamForm
+          fieldErrors={fieldErrors}
+          formFields={formFields}
+          handleFieldChange={handleFieldChange}
+          handleSubmit={handleSubmit}
+        />
+      </Container>
+      {error && <ErrorInline text={error} />}
+    </main>
+  </LoadingOverlay>
+);
 
 CreateTeamPage.propTypes = {
   error: PropTypes.string.isRequired,
@@ -57,7 +38,8 @@ CreateTeamPage.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
-  handleFieldChange: PropTypes.func.isRequired
+  handleFieldChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 
 export default CreateTeamPage;

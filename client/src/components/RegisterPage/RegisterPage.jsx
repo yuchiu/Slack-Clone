@@ -8,75 +8,40 @@ import "./RegisterPage.scss";
 import { Navbar, ErrorInline } from "@/components/common";
 import RegisterForm from "./RegisterForm.jsx";
 
-class RegisterPage extends React.Component {
-  redirectToLogin = () => {
-    const { history } = this.props;
-    history.push("/login");
-  };
+const RegisterPage = ({
+  isUserLoggedIn,
+  error,
+  fieldErrors,
+  isLoading,
+  formFields,
 
-  handleRegister = () => {
-    const {
-      fetchRegisterUser,
-      clearAllError,
-      updateFieldErrors,
-      fieldsValidation,
-      formFields
-    } = this.props;
-
-    const fieldErrors = fieldsValidation();
-    if (formFields.password !== formFields.confirmPassword) {
-      // display error if confirm password does not match password
-      updateFieldErrors({
-        confirmPassword: "confirm password have to match with password"
-      });
-    }
-    // fetch login if there are no errors
-    if (Object.keys(fieldErrors).length === 0) {
-      fetchRegisterUser({
-        username: formFields.username,
-        email: formFields.email,
-        password: formFields.password
-      });
-      clearAllError();
-    }
-  };
-
-  render() {
-    const {
-      isUserLoggedIn,
-      error,
-      fieldErrors,
-      isLoading,
-      formFields,
-
-      handleFieldChange
-    } = this.props;
-    return (
-      <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
-        <main className="register-page">
-          {isUserLoggedIn && <Redirect to="/workspace" />}
-          <Navbar />
-          <Container text>
-            <RegisterForm
-              fieldErrors={fieldErrors}
-              formFields={formFields}
-              handleRegister={this.handleRegister}
-              handleFieldChange={handleFieldChange}
-            />
-            <br />
-            <br /> Already have an account?{" "}
-            <a className="redirect" onClick={this.redirectToLogin}>
-              Log In
-            </a>
-            <div className="inline-error--center">
-              {error && <ErrorInline text={`Error: ${error}`} />}
-            </div>
-          </Container>
-        </main>
-      </LoadingOverlay>
-    );
-  }
-}
+  redirectToLogin,
+  handleRegister,
+  handleFieldChange
+}) => (
+  <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
+    <main className="register-page">
+      {isUserLoggedIn && <Redirect to="/workspace" />}
+      <Navbar />
+      <Container text>
+        <RegisterForm
+          fieldErrors={fieldErrors}
+          formFields={formFields}
+          handleRegister={handleRegister}
+          handleFieldChange={handleFieldChange}
+        />
+        <br />
+        <br /> Already have an account?{" "}
+        <a className="redirect" onClick={redirectToLogin}>
+          Log In
+        </a>
+        <div className="inline-error--center">
+          {error && <ErrorInline text={`Error: ${error}`} />}
+        </div>
+      </Container>
+    </main>
+  </LoadingOverlay>
+);
 
 RegisterPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
@@ -84,12 +49,10 @@ RegisterPage.propTypes = {
   error: PropTypes.string,
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 
-  updateFieldErrors: PropTypes.func.isRequired,
-  fetchRegisterUser: PropTypes.func.isRequired,
-  handleFieldChange: PropTypes.func.isRequired,
-  fieldsValidation: PropTypes.func.isRequired
+  redirectToLogin: PropTypes.func.isRequired,
+  handleRegister: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired
 };
 
 export default RegisterPage;

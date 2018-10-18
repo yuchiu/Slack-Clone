@@ -8,65 +8,41 @@ import "./LoginPage.scss";
 import { Navbar, ErrorInline } from "@/components/common";
 import LoginForm from "./LoginForm";
 
-class LoginPage extends React.Component {
-  redirectToRegister = () => {
-    const { history } = this.props;
-    history.push("/register");
-  };
+const LoginPage = ({
+  isUserLoggedIn,
+  error,
+  isLoading,
+  fieldErrors,
+  formFields,
 
-  handleLogin = () => {
-    const {
-      fieldsValidation,
-      clearAllError,
-      formFields,
-      fetchLoginUser
-    } = this.props;
-    const fieldErrors = fieldsValidation();
-
-    // fetch login if there are no errors
-    if (Object.keys(fieldErrors).length === 0) {
-      fetchLoginUser(formFields);
-      clearAllError();
-    }
-  };
-
-  render() {
-    const {
-      isUserLoggedIn,
-      error,
-      isLoading,
-      fieldErrors,
-      formFields,
-
-      handleFieldChange
-    } = this.props;
-    return (
-      <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
-        <main className="login-page">
-          {isUserLoggedIn && <Redirect to="/workspace" />}
-          <Navbar />{" "}
-          <Container text>
-            <LoginForm
-              fieldErrors={fieldErrors}
-              formFields={formFields}
-              handleLogin={this.handleLogin}
-              handleFieldChange={handleFieldChange}
-            />
-            <br />
-            <br /> New to Slack?{" "}
-            <a className="redirect" onClick={this.redirectToRegister}>
-              Register
-            </a>
-          </Container>
-          <br />
-          <div className="inline-error--center">
-            {error && <ErrorInline text={`Error: ${error}`} />}
-          </div>
-        </main>
-      </LoadingOverlay>
-    );
-  }
-}
+  handleFieldChange,
+  handleLogin,
+  redirectToRegister
+}) => (
+  <LoadingOverlay active={isLoading} spinner zIndex={10} text="Loading">
+    <main className="login-page">
+      {isUserLoggedIn && <Redirect to="/workspace" />}
+      <Navbar />{" "}
+      <Container text>
+        <LoginForm
+          fieldErrors={fieldErrors}
+          formFields={formFields}
+          handleLogin={handleLogin}
+          handleFieldChange={handleFieldChange}
+        />
+        <br />
+        <br /> New to Slack?{" "}
+        <a className="redirect" onClick={redirectToRegister}>
+          Register
+        </a>
+      </Container>
+      <br />
+      <div className="inline-error--center">
+        {error && <ErrorInline text={`Error: ${error}`} />}
+      </div>
+    </main>
+  </LoadingOverlay>
+);
 
 LoginPage.propTypes = {
   isUserLoggedIn: PropTypes.bool.isRequired,
@@ -74,11 +50,10 @@ LoginPage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 
-  fetchLoginUser: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
-  fieldsValidation: PropTypes.func.isRequired
+  handleLogin: PropTypes.func.isRequired,
+  redirectToRegister: PropTypes.func.isRequired
 };
 
 export default LoginPage;
