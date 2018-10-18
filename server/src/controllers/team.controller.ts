@@ -199,6 +199,47 @@ export default {
       };
     }
   },
+  updateTeam: async (req: any, res: Response) => {
+    try {
+      const { teamId, brief_description } = req.body;
+
+      /* update the channel */
+      await models.Team.update(
+        {
+          brief_description
+        },
+        {
+          where: {
+            id: teamId
+          }
+        }
+      );
+
+      const updatedTeam = await models.Team.findOne({
+        where: {
+          id: teamId
+        },
+        raw: true
+      });
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        team: updatedTeam
+      });
+    } catch (err) {
+      console.log(err);
+      return {
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      };
+    }
+  },
   getTeamData: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;

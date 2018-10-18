@@ -336,23 +336,6 @@ export default {
   tryAutoSingInUser: async (req: any, res: Response) => {
     try {
       const currentUserId = req.user.id;
-      // check if redis has the data
-      const userCache = await redisCache.get(`userId:${currentUserId}`);
-      const teamListCache = await redisCache.get(`teamList:${currentUserId}`);
-
-      if (userCache && teamListCache) {
-        const userCacheJSON = JSON.parse(userCache);
-        const teamListCacheArr = _.toArray(JSON.parse(teamListCache));
-        return res.status(200).send({
-          meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          user: userSummary(userCacheJSON),
-          teamList: teamListCacheArr
-        });
-      }
 
       const user = await models.User.findOne({
         where: { id: currentUserId },
@@ -367,10 +350,6 @@ export default {
           raw: true
         }
       );
-
-      // Save the responses in Redis store
-      redisCache.set(`userId:${currentUserId}`, user);
-      redisCache.set(`teamList:${currentUserId}`, teamList);
 
       res.status(200).send({
         meta: {

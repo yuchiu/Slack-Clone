@@ -1,8 +1,13 @@
 import { connect } from "react-redux";
 
+import { teamSelector } from "@/reducers/";
 import { teamAction } from "@/actions";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalEditAbout from "./ModalEditAbout.jsx";
+
+const stateToProps = state => ({
+  currentTeam: teamSelector.getCurrentTeam(state)
+});
 
 const dispatchToProps = dispatch => ({
   fetchEditTeam: editTeamData => {
@@ -16,6 +21,6 @@ const formDataToProps = () => ({
 });
 
 export default connect(
-  null,
+  stateToProps,
   dispatchToProps
 )(HOCModal(HOCForm(formDataToProps)(ModalEditAbout)));

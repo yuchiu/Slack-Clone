@@ -11,6 +11,7 @@ class ModalEditFeeling extends React.Component {
       formFields,
       fieldsValidation,
       toggleModal,
+      currentTeam,
       fetchEditTeam
     } = this.props;
     const fieldErrors = fieldsValidation();
@@ -18,7 +19,10 @@ class ModalEditFeeling extends React.Component {
 
     // proceed to send data to server if there's no error
     if (Object.keys(fieldErrors).length === 0) {
-      fetchEditTeam({ brief_description: formFields.about });
+      fetchEditTeam({
+        brief_description: formFields.about,
+        teamId: currentTeam.id
+      });
       toggleModal();
     }
   };
@@ -71,6 +75,7 @@ class ModalEditFeeling extends React.Component {
 
 ModalEditFeeling.propTypes = {
   formFields: PropTypes.object.isRequired,
+  currentTeam: PropTypes.object.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
   fieldErrors: PropTypes.object.isRequired,
   currentAbout: PropTypes.string.isRequired,
