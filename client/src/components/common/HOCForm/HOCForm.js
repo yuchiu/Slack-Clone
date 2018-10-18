@@ -83,7 +83,7 @@ const HOCForm = getInitialState => WrappedComponent => {
       });
     };
 
-    updateErrorFields = receivedErrors => {
+    updateFieldErrors = receivedErrors => {
       const { fieldErrors } = this.state;
       const errorList = { ...fieldErrors, ...receivedErrors };
       this.setState({
