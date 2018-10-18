@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { ModalEditTopic } from "@/components/WorkSpacePage/common";
-import { ModalEditPurpose } from "./modals";
+import { ModalEditPurpose } from "@/components/WorkSpacePage/SidebarRightToggle/modals";
 
 class ChannelDetailView extends React.Component {
   handleClick = () => {

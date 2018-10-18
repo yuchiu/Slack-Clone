@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ModalEditAbout } from "./modals";
+import { ModalEditAbout } from "@/components/WorkSpacePage/SidebarRightToggle/modals";
 
 class TeamDetailView extends React.Component {
   handleClick = () => {

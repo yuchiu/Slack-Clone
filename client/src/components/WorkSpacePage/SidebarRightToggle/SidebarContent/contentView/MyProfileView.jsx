@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
-import { ModalEditMyProfile, ModalEditFeeling } from "./modals";
+import {
+  ModalEditMyProfile,
+  ModalEditFeeling
+} from "@/components/WorkSpacePage/SidebarRightToggle/modals";
 
 const MyProfileView = ({ currentUser }) => (
   <React.Fragment>
