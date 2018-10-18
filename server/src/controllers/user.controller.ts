@@ -392,18 +392,9 @@ export default {
           where: { id: currentUserId }
         });
 
-        console.log("password");
-        console.log(password);
-        console.log("user." + "password");
-        console.log(user.password);
-        /* validate password */
-        console.log("password=== user.password");
-        console.log(password === user.password);
         const isPasswordValid = await comparePassword(password, user.password);
-        console.log("isPasswordValid");
-        console.log(isPasswordValid);
         if (!isPasswordValid) {
-          return res.status(500).send({
+          return res.status(403).send({
             meta: {
               type: "error",
               status: 403,
@@ -456,7 +447,8 @@ export default {
         {
           where: {
             id: currentUserId
-          }
+          },
+          individualHooks: true
         }
       );
       const updatedUser = await models.User.findOne({

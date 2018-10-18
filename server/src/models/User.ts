@@ -3,6 +3,7 @@ import * as Sequelize from "sequelize";
 
 const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;
+  console.log("hash function called");
   if (user.changed("password")) {
     const hashedPassword = await bcrypt.hash(user.password, SALT_FACTOR);
     // eslint-disable-next-line
