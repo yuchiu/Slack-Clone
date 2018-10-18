@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import AddTeamMemberForm from "./AddTeamMemberForm.jsx";
+import FormAddTeamMember from "./FormAddTeamMember.jsx";
 
 class ModalAddTeamMember extends React.Component {
   checkDuplicateMember = () => {
@@ -18,28 +18,27 @@ class ModalAddTeamMember extends React.Component {
     const {
       formFields,
       fieldsValidation,
-      setFieldErrors,
+      updateFieldErrors,
       toggleModal,
       emitSocketAddTeamMember,
       currentTeam
     } = this.props;
 
+    const fieldErrors = fieldsValidation();
     const isMemberDuplicated = this.checkDuplicateMember();
     if (isMemberDuplicated) {
       // display error if the user is already member of the team
-      setFieldErrors({
+      updateFieldErrors({
         username: `${formFields.username} is already member of the team`
       });
-    } else {
-      const fieldErrors = fieldsValidation();
-      // proceed to send data to server if there's no error
-      if (Object.keys(fieldErrors).length === 0) {
-        emitSocketAddTeamMember({
-          teamId: currentTeam.id,
-          targetUsername: formFields.username
-        });
-        toggleModal();
-      }
+    }
+    // proceed to send data to server if there's no error
+    if (Object.keys(fieldErrors).length === 0) {
+      emitSocketAddTeamMember({
+        teamId: currentTeam.id,
+        targetUsername: formFields.username
+      });
+      toggleModal();
     }
   };
 
@@ -59,7 +58,7 @@ class ModalAddTeamMember extends React.Component {
             <Modal size="small" open={isModalOpen} onClose={toggleModal}>
               <Modal.Header>Invite Team Member</Modal.Header>
               <Modal.Content>
-                <AddTeamMemberForm
+                <FormAddTeamMember
                   formFields={formFields}
                   fieldErrors={fieldErrors}
                   handleFieldChange={handleFieldChange}
@@ -90,6 +89,7 @@ ModalAddTeamMember.propTypes = {
   currentTeam: PropTypes.object.isRequired,
   currentTeamMemberList: PropTypes.array.isRequired,
 
+  updateFieldErrors: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   emitSocketAddTeamMember: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired

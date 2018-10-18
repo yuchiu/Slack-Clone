@@ -3,7 +3,7 @@ import { Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import { ButtonInline } from "@/components/common";
-import EditPurposeForm from "./EditPurposeForm.jsx";
+import FormEditPurpose from "./FormEditPurpose.jsx";
 
 class ModalEditPurpose extends React.Component {
   handleSave = () => {
@@ -44,7 +44,7 @@ class ModalEditPurpose extends React.Component {
         {isModalOpen && (
           <Modal size="small" open={isModalOpen} onClose={toggleModal}>
             <Modal.Content>
-              <EditPurposeForm
+              <FormEditPurpose
                 fieldErrors={fieldErrors}
                 formFields={formFields}
                 handleFieldChange={handleFieldChange}

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { ButtonOutline } from "@/components/common";
 import { OnlineStatusBubble } from "@/components/WorkSpacePage/common";
 
 class UserProfileView extends React.Component {
@@ -67,12 +68,11 @@ class UserProfileView extends React.Component {
                 {`${targetUser.brief_description}`}
               </div>
               <br />
-              <button
-                className="right-sidebar-button right-sidebar-item"
-                onClick={this.handleClick}
-              >
-                Direct Message
-              </button>
+              <ButtonOutline
+                cssClass="right-sidebar-item"
+                text="Direct Message"
+                handleClick={this.handleClick}
+              />
             </div>
 
             <div className="view-detail">

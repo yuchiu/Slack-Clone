@@ -18,28 +18,26 @@ class RegisterPage extends React.Component {
     const {
       fetchRegisterUser,
       clearAllError,
-      setFieldErrors,
+      updateFieldErrors,
       fieldsValidation,
       formFields
     } = this.props;
 
+    const fieldErrors = fieldsValidation();
     if (formFields.password !== formFields.confirmPassword) {
       // display error if confirm password does not match password
-      setFieldErrors({
+      updateFieldErrors({
         confirmPassword: "confirm password have to match with password"
       });
-    } else {
-      const fieldErrors = fieldsValidation();
-
-      // fetch login if there are no errors
-      if (Object.keys(fieldErrors).length === 0) {
-        fetchRegisterUser({
-          username: formFields.username,
-          email: formFields.email,
-          password: formFields.password
-        });
-        clearAllError();
-      }
+    }
+    // fetch login if there are no errors
+    if (Object.keys(fieldErrors).length === 0) {
+      fetchRegisterUser({
+        username: formFields.username,
+        email: formFields.email,
+        password: formFields.password
+      });
+      clearAllError();
     }
   };
 
@@ -88,6 +86,7 @@ RegisterPage.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
+  updateFieldErrors: PropTypes.func.isRequired,
   fetchRegisterUser: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   fieldsValidation: PropTypes.func.isRequired

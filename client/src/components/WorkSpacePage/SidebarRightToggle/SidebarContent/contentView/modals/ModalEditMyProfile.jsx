@@ -4,35 +4,24 @@ import PropTypes from "prop-types";
 
 import "./ModalEditMyProfile.scss";
 import { ButtonOutline } from "@/components/common";
-import EditMyProfileForm from "./EditMyProfileForm";
+import { validateForm } from "@/utils";
+import FormEditMyProfile from "./FormEditMyProfile";
 
 class ModalEditMyProfile extends React.Component {
   toggleEditPassword = () => {
-    const {
-      setFormFields,
-      setFormOptions,
-      resetFieldErrors,
-      formOptions
-    } = this.props;
-    setFormFields({
-      fieldErrors: {},
+    const { updateFormFields, updateFormOptions, formOptions } = this.props;
+    updateFormFields({
       password: "",
       newPassword: "",
-      confirmPassword: "",
+      confirmPassword: ""
+    });
+    updateFormOptions({
       isEditPasswordOn: !formOptions.isEditPasswordOn
     });
-    setFormOptions({
-      fieldErrors: {},
-      password: "",
-      newPassword: "",
-      confirmPassword: "",
-      isEditPasswordOn: !formOptions.isEditPasswordOn
-    });
-    resetFieldErrors();
   };
 
   uploadeFile = files => {
-    const { setFormOptions, createUploadError } = this.props;
+    const { updateFormOptions, createUploadError } = this.props;
     const file = files[0];
     if (file.size > 1024 * 1024 * 5) {
       createUploadError("file size exceed maximum upload size of 5 mb");
@@ -42,19 +31,25 @@ class ModalEditMyProfile extends React.Component {
       createUploadError("Avatar file can only be image. i.e png, jpg");
       return;
     }
-    setFormOptions({ isImgUploaded: true, imgFile: file });
+    updateFormOptions({ isImgUploaded: true, imgFile: file });
   };
 
   handleSave = () => {
     const {
       fetchEditUser,
       currentUser,
-      fieldsValidation,
       toggleModal,
       resetForm,
+      formOptions,
+      setFieldErrors,
       formFields
     } = this.props;
-    const fieldErrors = fieldsValidation();
+    const formData = {
+      ...formFields,
+      ...formOptions
+    };
+    const fieldErrors = validateForm.editProfile(formData);
+    setFieldErrors(fieldErrors);
     if (Object.keys(fieldErrors).length === 0) {
       if (this.editor) {
         const canvasScaled = this.editor.getImageScaledToCanvas();
@@ -82,33 +77,33 @@ class ModalEditMyProfile extends React.Component {
   };
 
   toggleChangeAvatar = () => {
-    const { setFormOptions } = this.props;
-    setFormOptions({
+    const { updateFormOptions } = this.props;
+    updateFormOptions({
       imgFile: {},
-      changeAvatar: !setFormOptions.changeAvatar,
+      changeAvatar: !updateFormOptions.changeAvatar,
       isImgUploaded: false
     });
   };
 
   changeImgScale = e => {
-    const { setFormOptions } = this.props;
+    const { updateFormOptions } = this.props;
     const sliderRange = e.target.value;
     if (sliderRange / 30 > 1) {
       const imgScale = sliderRange / 30;
-      setFormOptions({
+      updateFormOptions({
         imgScale
       });
     }
     if (sliderRange / 30 < 1) {
-      setFormOptions({
+      updateFormOptions({
         imgScale: 1
       });
     }
   };
 
   removeUploadImg = () => {
-    const { setFormOptions } = this.props;
-    setFormOptions({
+    const { updateFormOptions } = this.props;
+    updateFormOptions({
       imgFile: {},
       isImgUploaded: false
     });
@@ -133,7 +128,7 @@ class ModalEditMyProfile extends React.Component {
         {isModalOpen && (
           <Modal size="large" open={isModalOpen} onClose={toggleModal}>
             <Modal.Content>
-              <EditMyProfileForm
+              <FormEditMyProfile
                 formFields={formFields}
                 formOptions={formOptions}
                 fieldErrors={fieldErrors}

@@ -60,22 +60,22 @@ const HOCForm = getInitialState => WrappedComponent => {
     resetFieldErrors = () => {
       const initialState = getInitialState();
       this.setState({
-        formFields: { ...initialState.formFields }
+        fieldErrors: { ...initialState.fieldErrors }
       });
     };
 
     /**
-     * methods to set internal states directly
+     * methods to update internal states directly
      */
-    setFormFields = receivedFields => {
+    updateFormFields = receivedFields => {
       const { formFields } = this.state;
       const fieldList = { ...formFields, ...receivedFields };
       this.setState({
-        formFields: fieldList
+        formFields: { ...fieldList }
       });
     };
 
-    setFormOptions = receivedOptions => {
+    updateFormOptions = receivedOptions => {
       const { formOptions } = this.state;
       const optionList = { ...formOptions, ...receivedOptions };
       this.setState({
@@ -83,11 +83,32 @@ const HOCForm = getInitialState => WrappedComponent => {
       });
     };
 
-    setFieldErrors = receivedErrors => {
+    updateErrorFields = receivedErrors => {
       const { fieldErrors } = this.state;
       const errorList = { ...fieldErrors, ...receivedErrors };
       this.setState({
-        fieldErrors: errorList
+        formOptions: errorList
+      });
+    };
+
+    /**
+     * methods to set internal states directly
+     */
+    setFormFields = formFields => {
+      this.setState({
+        formFields
+      });
+    };
+
+    setFormOptions = formOptions => {
+      this.setState({
+        formOptions
+      });
+    };
+
+    setFieldErrors = fieldErrors => {
+      this.setState({
+        fieldErrors
       });
     };
 
@@ -127,6 +148,9 @@ const HOCForm = getInitialState => WrappedComponent => {
         <WrappedComponent
           {...this.props}
           {...this.state}
+          updateFormFields={this.updateFormFields}
+          updateFormOptions={this.updateFormOptions}
+          updateFieldErrors={this.updateFieldErrors}
           setFormFields={this.setFormFields}
           setFormOptions={this.setFormOptions}
           setFieldErrors={this.setFieldErrors}

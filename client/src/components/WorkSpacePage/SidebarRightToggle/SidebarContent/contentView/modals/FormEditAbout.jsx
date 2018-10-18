@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { ErrorInline, HintInline } from "@/components/common";
 
-const EditAboutForm = ({
+const FormEditAbout = ({
   formFields,
   fieldErrors,
   currentAbout,
@@ -49,7 +49,7 @@ const EditAboutForm = ({
   </Form>
 );
 
-EditAboutForm.propTypes = {
+FormEditAbout.propTypes = {
   formFields: PropTypes.object.isRequired,
   fieldErrors: PropTypes.object.isRequired,
 
@@ -57,4 +57,4 @@ EditAboutForm.propTypes = {
   handleSave: PropTypes.func.isRequired
 };
 
-export default EditAboutForm;
+export default FormEditAbout;

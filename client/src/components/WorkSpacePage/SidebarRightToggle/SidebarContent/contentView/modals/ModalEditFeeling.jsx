@@ -3,7 +3,7 @@ import { Modal } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import { ButtonInline } from "@/components/common";
-import EditFeelingForm from "./EditFeelingForm.jsx";
+import FormEditFeeling from "./FormEditFeeling.jsx";
 
 class ModalEditFeeling extends React.Component {
   handleSave = () => {
@@ -38,7 +38,7 @@ class ModalEditFeeling extends React.Component {
         {isModalOpen && (
           <Modal size="small" open={isModalOpen} onClose={toggleModal}>
             <Modal.Content>
-              <EditFeelingForm
+              <FormEditFeeling
                 formFields={formFields}
                 handleFieldChange={handleFieldChange}
                 handleSave={this.handleSave}
