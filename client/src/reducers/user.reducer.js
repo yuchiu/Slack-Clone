@@ -38,13 +38,11 @@ export default (state = initialState, action) => {
 };
 
 /* state selectors */
-const getCurrentUser = state => state.userReducer.currentUser;
+export const getCurrentUser = state => state.userReducer.currentUser;
 
-const getUserIsLoading = state => state.userReducer.isLoading;
+export const getUserIsLoading = state => state.userReducer.isLoading;
 
-const getUsername = state => {
+export const getUsername = state => {
   const currentUser = getCurrentUser(state);
   return currentUser.username;
 };
-
-export { getCurrentUser, getUserIsLoading, getUsername };

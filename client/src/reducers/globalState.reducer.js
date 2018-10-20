@@ -36,13 +36,14 @@ export default (state = initialState, action) => {
 };
 
 /* state selectors */
-const getIsSidebarOpen = state => state.globalStateReducer.isSidebarOpen;
-
-const getRightSidebarView = state => state.globalStateReducer.rightSidebarView;
-
 const getTargetUserId = state => state.globalStateReducer.targetUserId;
 
-const getRightSidebarTitle = createSelector(
+export const getIsSidebarOpen = state => state.globalStateReducer.isSidebarOpen;
+
+export const getRightSidebarView = state =>
+  state.globalStateReducer.rightSidebarView;
+
+export const getRightSidebarTitle = createSelector(
   getRightSidebarView,
   rightSidebarView =>
     rightSidebarView
@@ -52,7 +53,7 @@ const getRightSidebarTitle = createSelector(
       .join(" ")
 );
 
-const getTargetUser = createSelector(
+export const getTargetUser = createSelector(
   getCurrentTeamMemberList,
   getTargetUserId,
   (currentTeamMemberList, targetUserId) => {
@@ -62,10 +63,3 @@ const getTargetUser = createSelector(
     return targetUser[0];
   }
 );
-
-export {
-  getIsSidebarOpen,
-  getRightSidebarView,
-  getRightSidebarTitle,
-  getTargetUser
-};

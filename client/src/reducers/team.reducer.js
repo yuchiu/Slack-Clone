@@ -83,17 +83,17 @@ export default (state = initialState, action) => {
 };
 
 /* state selectors */
-const getCurrentTeam = state => state.teamReducer.currentTeam;
-
-const getCurrentTeamMemberList = state =>
-  state.teamReducer.currentTeamMemberList;
-
 const getStateTeamList = state => state.teamReducer.teamList;
 
-const getTeamIsLoading = state => state.teamReducer.isLoading;
+export const getCurrentTeam = state => state.teamReducer.currentTeam;
+
+export const getCurrentTeamMemberList = state =>
+  state.teamReducer.currentTeamMemberList;
+
+export const getTeamIsLoading = state => state.teamReducer.isLoading;
 
 /* derived data selectors */
-const getTeamList = createSelector(getStateTeamList, teamList =>
+export const getTeamList = createSelector(getStateTeamList, teamList =>
   teamList.map(team => {
     const newTeam = { ...team };
     newTeam.initials = team.name
@@ -104,10 +104,3 @@ const getTeamList = createSelector(getStateTeamList, teamList =>
     return newTeam;
   })
 );
-
-export {
-  getCurrentTeam,
-  getTeamIsLoading,
-  getCurrentTeamMemberList,
-  getTeamList
-};

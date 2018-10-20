@@ -59,12 +59,12 @@ export default (state = initialState, action) => {
 /* state selectors */
 const getStateMessageList = state => state.messageReducer.messageList;
 
-const getHasMoreMessage = state => state.messageReducer.hasMoreMessage;
+export const getHasMoreMessage = state => state.messageReducer.hasMoreMessage;
 
-const getMessageIsLoading = state => state.messageReducer.isLoading;
+export const getMessageIsLoading = state => state.messageReducer.isLoading;
 
 /* derived data selectors */
-const getMessageList = createSelector(
+export const getMessageList = createSelector(
   getStateMessageList,
   getCurrentUser,
   (messageList, currentUser) =>
@@ -91,5 +91,3 @@ const getMessageList = createSelector(
       return newMessage;
     })
 );
-
-export { getMessageList, getMessageIsLoading, getHasMoreMessage };

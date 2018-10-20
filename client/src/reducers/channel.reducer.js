@@ -114,21 +114,21 @@ const filterOutCurrentUsername = (messageGroupName, currentUsername) => {
 };
 
 /* state selectors */
-const getCurrentChannel = state => state.channelReducer.currentChannel;
-
-const getCurrentChannelMemberList = state =>
-  state.channelReducer.currentChannelMemberList;
-
 const getStateChannelList = state => state.channelReducer.channelList;
 
-const getChannelIsLoading = state => state.channelReducer.isLoading;
+export const getCurrentChannel = state => state.channelReducer.currentChannel;
+
+export const getCurrentChannelMemberList = state =>
+  state.channelReducer.currentChannelMemberList;
+
+export const getChannelIsLoading = state => state.channelReducer.isLoading;
 
 /* derived data selectors */
-const getChannelList = createSelector(getStateChannelList, channelList =>
+export const getChannelList = createSelector(getStateChannelList, channelList =>
   channelList.filter(channel => channel.message_group === false)
 );
 
-const getMessageGroupList = createSelector(
+export const getMessageGroupList = createSelector(
   getStateChannelList,
   getUsername,
   (messageGroupList, username) =>
@@ -163,7 +163,7 @@ const getMessageGroupList = createSelector(
       })
 );
 
-const getMessageGroupName = createSelector(
+export const getMessageGroupName = createSelector(
   getMessageGroupList,
   getCurrentChannel,
   (messageGroupList, currentChannel) => {
@@ -175,7 +175,7 @@ const getMessageGroupName = createSelector(
   }
 );
 
-const getMessageGroupMemberList = createSelector(
+export const getMessageGroupMemberList = createSelector(
   getCurrentChannelMemberList,
   getCurrentUser,
   (currentChannelMemberList, currentUser) =>
@@ -183,13 +183,3 @@ const getMessageGroupMemberList = createSelector(
       member => member.email !== currentUser.email
     )
 );
-
-export {
-  getChannelIsLoading,
-  getCurrentChannel,
-  getCurrentChannelMemberList,
-  getMessageGroupMemberList,
-  getChannelList,
-  getMessageGroupList,
-  getMessageGroupName
-};
