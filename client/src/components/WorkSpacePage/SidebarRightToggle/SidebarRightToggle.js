@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { globalStateSelector } from "@/reducers/";
+import { globalStateSelector } from "@/selectors/";
 import SidebarRightToggle from "./SidebarRightToggle.jsx";
 
 const stateToProps = state => ({

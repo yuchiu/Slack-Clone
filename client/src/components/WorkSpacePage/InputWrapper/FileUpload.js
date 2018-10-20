@@ -5,7 +5,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 import { messageAction, errorAction } from "@/actions";
-import { userSelector, channelSelector } from "@/reducers/";
+import { userSelector, channelSelector } from "@/selectors/";
 
 class FileUpload extends React.Component {
   handleUpload = file => {

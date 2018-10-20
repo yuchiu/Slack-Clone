@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { channelAction, globalStateAction } from "@/actions";
-import { teamSelector, channelSelector } from "@/reducers/";
+import { teamSelector, channelSelector } from "@/selectors/";
 import ChannelSection from "./ChannelSection.jsx";
 
 class ChannelSectionContainer extends React.Component {

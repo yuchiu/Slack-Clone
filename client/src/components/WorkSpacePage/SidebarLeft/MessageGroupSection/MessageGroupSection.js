@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { channelAction, globalStateAction } from "@/actions";
-import { teamSelector, channelSelector } from "@/reducers/";
+import { teamSelector, channelSelector } from "@/selectors/";
 import MessageGroupSection from "./MessageGroupSection.jsx";
 
 class SidebarList extends React.Component {

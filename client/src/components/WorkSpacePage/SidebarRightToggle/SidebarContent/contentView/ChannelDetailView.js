@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
-import { channelSelector } from "@/reducers/";
+import { channelSelector } from "@/selectors/";
 import ChannelDetailView from "./ChannelDetailView.jsx";
 
 class ChannelDetailViewContainer extends React.Component {

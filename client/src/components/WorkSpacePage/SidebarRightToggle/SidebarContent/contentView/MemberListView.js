@@ -8,7 +8,7 @@ import {
   globalStateSelector,
   teamSelector,
   userSelector
-} from "@/reducers/";
+} from "@/selectors/";
 import MemberListView from "./MemberListView.jsx";
 
 const stateToProps = state => ({

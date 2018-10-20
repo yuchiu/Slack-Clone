@@ -8,7 +8,7 @@ import {
   teamSelector,
   globalStateSelector,
   channelSelector
-} from "@/reducers/";
+} from "@/selectors/";
 import MessagesWrapper from "./MessagesWrapper.jsx";
 
 class MessagesWrapperContainer extends React.Component {

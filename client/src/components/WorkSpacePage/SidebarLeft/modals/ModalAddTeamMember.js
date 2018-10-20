@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { teamAction } from "@/actions";
-import { teamSelector } from "@/reducers/";
+import { teamSelector } from "@/selectors/";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalAddTeamMember from "./ModalAddTeamMember.jsx";
 

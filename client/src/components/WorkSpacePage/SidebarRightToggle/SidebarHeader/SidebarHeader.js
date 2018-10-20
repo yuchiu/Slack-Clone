@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
-import { globalStateSelector } from "@/reducers/";
+import { globalStateSelector } from "@/selectors/";
 import SidebarHeader from "./SidebarHeader.jsx";
 
 class SidebarHeaderContainer extends React.Component {

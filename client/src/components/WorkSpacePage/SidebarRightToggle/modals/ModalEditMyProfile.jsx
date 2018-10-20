@@ -62,7 +62,6 @@ ModalEditMyProfile.propTypes = {
   currentUser: PropTypes.object.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
 
-  resetForm: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   toggleEditPassword: PropTypes.func.isRequired,

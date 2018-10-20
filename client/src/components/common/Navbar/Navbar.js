@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { userAction } from "@/actions";
-import { authSelector, userSelector } from "@/reducers/";
+import { authSelector, userSelector } from "@/selectors/";
 import Navbar from "./Navbar.jsx";
 
 class NavbarContainer extends React.Component {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { globalStateAction } from "@/actions";
-import { teamSelector } from "@/reducers/";
+import { teamSelector } from "@/selectors/";
 import TeamDetailView from "./TeamDetailView.jsx";
 
 class TeamDetailViewContainer extends React.Component {

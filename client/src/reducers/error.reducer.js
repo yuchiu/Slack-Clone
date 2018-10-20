@@ -42,6 +42,3 @@ export default (state = initialState, action) => {
       return state;
   }
 };
-
-/* state selectors */
-export const getError = state => state.errorReducer.error;

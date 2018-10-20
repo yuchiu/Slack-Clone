@@ -8,7 +8,7 @@ import {
   channelSelector,
   teamSelector,
   userSelector
-} from "@/reducers/";
+} from "@/selectors/";
 import UserProfileView from "./UserProfileView.jsx";
 
 class UserProfileViewContainer extends React.Component {

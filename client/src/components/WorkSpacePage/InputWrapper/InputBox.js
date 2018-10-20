@@ -4,7 +4,7 @@ import { HOCForm } from "@/components/common";
 import { connect } from "react-redux";
 
 import { messageAction } from "@/actions";
-import { userSelector, channelSelector } from "@/reducers/";
+import { userSelector, channelSelector } from "@/selectors/";
 import InputBox from "./InputBox.jsx";
 
 class InputBoxContainer extends React.Component {

@@ -50,8 +50,7 @@ ChannelDetailView.propTypes = {
   currentChannel: PropTypes.object.isRequired,
   currentChannelMemberList: PropTypes.array.isRequired,
 
-  handleClick: PropTypes.func.isRequired,
-  switchRightSidebarView: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired
 };
 
 export default ChannelDetailView;

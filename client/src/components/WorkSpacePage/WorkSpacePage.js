@@ -9,7 +9,7 @@ import {
   channelSelector,
   teamSelector,
   globalStateSelector
-} from "@/reducers/";
+} from "@/selectors/";
 import WorkSpacePage from "./WorkSpacePage.jsx";
 
 class WorkSpacePageContainer extends React.Component {

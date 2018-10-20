@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { errorAction } from "@/actions";
-import { errorSelector } from "@/reducers/";
+import { errorSelector } from "@/selectors/";
 import HOCModal from "@/components/common/HOCModal/HOCModal";
 import ErrorModal from "./ErrorModal.jsx";
 

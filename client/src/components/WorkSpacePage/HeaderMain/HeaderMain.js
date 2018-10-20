@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { globalStateAction } from "@/actions";
-import { channelSelector, globalStateSelector } from "@/reducers/";
+import { channelSelector, globalStateSelector } from "@/selectors/";
 import HeaderMain from "./HeaderMain.jsx";
 
 class HeaderMainContainer extends React.Component {

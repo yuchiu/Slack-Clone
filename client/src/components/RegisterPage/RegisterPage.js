@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { userAction, errorAction } from "@/actions";
-import { authSelector, errorSelector } from "@/reducers/";
+import { authSelector, errorSelector } from "@/selectors/";
 import { HOCForm } from "@/components/common";
 import RegisterPage from "./RegisterPage.jsx";
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { validateForm } from "@/utils";
 import { userAction, errorAction } from "@/actions";
-import { userSelector } from "@/reducers/";
+import { userSelector } from "@/selectors/";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalEditMyProfile from "./ModalEditMyProfile.jsx";
 

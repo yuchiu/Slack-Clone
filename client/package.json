@@ -163,8 +163,10 @@
       "import/no-unresolved": 0,
       "import/no-cycle": 0,
       "no-plusplus": 0,
+      "no-use-before-define": 0,
       "camelcase": 0,
-      "prefer-destructuring": 0
+      "prefer-destructuring": 0,
+      "allowNamedFunctions": true
     },
     "settings": {
       "import/resolver": {

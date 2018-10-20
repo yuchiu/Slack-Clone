@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { teamSelector, channelSelector } from "@/reducers/";
+import { teamSelector, channelSelector } from "@/selectors/";
 import { channelAction } from "@/actions";
 import { HOCModal, HOCForm } from "@/components/common";
 import ModalEditPurpose from "./ModalEditPurpose.jsx";
