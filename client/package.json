@@ -32,6 +32,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "resolve": "1.6.0",
+    "seamless-immutable": "^7.1.4",
     "semantic-ui-react": "^0.82.3",
     "socket.io-client": "^2.1.1",
     "validator": "^10.6.0",

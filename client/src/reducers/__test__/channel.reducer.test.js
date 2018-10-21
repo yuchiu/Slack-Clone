@@ -1,4 +1,4 @@
-import channelReducer from "../channel.reducer";
+import channelReducer from "@/reducers/channel.reducer";
 
 const initialState = {
   channelList: [],
