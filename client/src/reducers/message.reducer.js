@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 
 const initialState = {
   messageList: [],
@@ -9,12 +9,12 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS:
+    case actionTypes.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS:
       newState.messageList = action.payload.messageList;
       newState.hasMoreMessage = true;
       return newState;
 
-    case constants.MESSAGE_SOCKET_RECEIVE:
+    case actionTypes.MESSAGE_SOCKET_RECEIVE:
       if (
         action.payload.message.channel_id === action.payload.currentChannel.id
       ) {
@@ -22,15 +22,15 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.GLOBAL_SOCKET_CONNECTION_CLEAR:
+    case actionTypes.GLOBAL_SOCKET_CONNECTION_CLEAR:
       newState.messageList = [];
       return newState;
 
-    case constants.MESSAGE_FETCH_MORE:
+    case actionTypes.MESSAGE_FETCH_MORE:
       newState.isLoading = true;
       return newState;
 
-    case constants.MESSAGE_FETCH_MORE_SUCCESS:
+    case actionTypes.MESSAGE_FETCH_MORE_SUCCESS:
       newState.isLoading = false;
       newState.messageList = action.payload.messageList.concat(
         state.messageList
@@ -40,12 +40,12 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case constants.ERROR_MESSAGE:
+    case actionTypes.ERROR_MESSAGE:
       newState.error = action.payload;
       newState.isLoading = false;
       return newState;
 
-    case constants.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_LOGOUT:
       return initialState;
 
     default:

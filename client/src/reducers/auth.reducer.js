@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 import { sessionStore } from "@/utils";
 
 const initialState = {
@@ -9,27 +9,27 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.USER_FETCH_AUTO_LOGIN:
+    case actionTypes.USER_FETCH_AUTO_LOGIN:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return newState;
 
-    case constants.USER_FETCH_LOGIN:
+    case actionTypes.USER_FETCH_LOGIN:
       newState.isLoading = true;
       return newState;
 
-    case constants.USER_FETCH_LOGIN_SUCCESS:
+    case actionTypes.USER_FETCH_LOGIN_SUCCESS:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       newState.isLoading = false;
       return newState;
 
-    case constants.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_LOGOUT:
       sessionStore.setUserLoggedOut();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return initialState;
 
-    case constants.ERROR_AUTH:
+    case actionTypes.ERROR_AUTH:
       newState.isLoading = false;
       return newState;
 

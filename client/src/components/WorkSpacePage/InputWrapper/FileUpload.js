@@ -14,10 +14,10 @@ class FileUpload extends React.Component {
         emitSocketMessage,
         currentUser,
         currentChannel,
-        createUploadError
+        createError
       } = this.props;
       if (file.size > 1024 * 1024 * 5) {
-        createUploadError("file size exceed maximum upload size of 5 mb");
+        createError("file size exceed maximum upload size of 5 mb");
         return;
       }
       if (
@@ -25,9 +25,7 @@ class FileUpload extends React.Component {
         !(file.type === "text/plain") &&
         !file.type.startsWith("audio/")
       ) {
-        createUploadError(
-          "Files upload can only be in text, image, or audio type"
-        );
+        createError("Files upload can only be in text, image, or audio type");
         return;
       }
       emitSocketMessage({
@@ -67,8 +65,8 @@ const dispatchToProps = dispatch => ({
   emitSocketMessage: file => {
     dispatch(messageAction.emitSocketMessage(file));
   },
-  createUploadError: text => {
-    dispatch(errorAction.createUploadError(text));
+  createError: text => {
+    dispatch(errorAction.createError(text));
   }
 });
 FileUpload.propTypes = {
@@ -76,7 +74,7 @@ FileUpload.propTypes = {
   currentChannel: PropTypes.object.isRequired,
 
   emitSocketMessage: PropTypes.func.isRequired,
-  createUploadError: PropTypes.func.isRequired
+  createError: PropTypes.func.isRequired
 };
 
 export default connect(

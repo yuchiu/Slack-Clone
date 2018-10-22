@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 
 const initialState = {
   error: ""
@@ -7,35 +7,35 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.ERROR_AUTH:
+    case actionTypes.ERROR_AUTH:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_USER:
+    case actionTypes.ERROR_USER:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_CHANNEL:
+    case actionTypes.ERROR_CHANNEL:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_MESSAGE:
+    case actionTypes.ERROR_MESSAGE:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_TEAM:
+    case actionTypes.ERROR_TEAM:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_UPLOAD:
+    case actionTypes.ERROR_CREATE:
       newState.error = action.payload;
       return newState;
 
-    case constants.ERROR_ALL_CLEAR:
+    case actionTypes.ERROR_ALL_CLEAR:
       newState.error = "";
       return newState;
 
-    case constants.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_LOGOUT:
       return initialState;
 
     default:

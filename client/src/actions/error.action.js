@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 
 export default {
   /**
@@ -6,12 +6,12 @@ export default {
    */
   clearAllError: () => dispatch => {
     dispatch({
-      type: constants.ERROR_ALL_CLEAR
+      type: actionTypes.ERROR_ALL_CLEAR
     });
   },
-  createUploadError: text => dispatch => {
+  createError: text => dispatch => {
     dispatch({
-      type: constants.ERROR_UPLOAD,
+      type: actionTypes.ERROR_CREATE,
       payload: text
     });
   }

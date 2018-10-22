@@ -22,14 +22,14 @@ class ModalEditMyProfileContainer extends React.Component {
   };
 
   uploadeFile = files => {
-    const { updateFormOptions, createUploadError } = this.props;
+    const { updateFormOptions, createError } = this.props;
     const file = files[0];
     if (file.size > 1024 * 1024 * 5) {
-      createUploadError("file size exceed maximum upload size of 5 mb");
+      createError("file size exceed maximum upload size of 5 mb");
       return;
     }
     if (!file.type.startsWith("image/")) {
-      createUploadError("Avatar file can only be image. i.e png, jpg");
+      createError("Avatar file can only be image. i.e png, jpg");
       return;
     }
     updateFormOptions({ isImgUploaded: true, imgFile: file });
@@ -164,8 +164,8 @@ const dispatchToProps = dispatch => ({
   fetchEditUser: editUserData => {
     dispatch(userAction.fetchEditUser(editUserData));
   },
-  createUploadError: text => {
-    dispatch(errorAction.createUploadError(text));
+  createError: text => {
+    dispatch(errorAction.createError(text));
   }
 });
 

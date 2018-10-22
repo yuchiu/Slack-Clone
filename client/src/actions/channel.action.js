@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 import { channelService } from "./services";
 
 export default {
@@ -7,7 +7,7 @@ export default {
    */
   switchChannel: channelId => async dispatch => {
     dispatch({
-      type: constants.CHANNEL_SWITCH,
+      type: actionTypes.CHANNEL_SWITCH,
       payload: channelId
     });
   },
@@ -17,26 +17,26 @@ export default {
    */
   fetchCreateChannel: channelFormInfo => async dispatch => {
     dispatch({
-      type: constants.CHANNEL_FETCH_CREATE
+      type: actionTypes.CHANNEL_FETCH_CREATE
     });
     try {
       const response = await channelService.fetchCreateChannel(channelFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_FETCH_CREATE_SUCCESS,
+        type: actionTypes.CHANNEL_FETCH_CREATE_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_CHANNEL,
+        type: actionTypes.ERROR_CHANNEL,
         payload: data.meta.message
       });
     }
   },
   fetchGetChannelAssociatedList: channelId => async dispatch => {
     dispatch({
-      type: constants.CHANNEL_FETCH_ASSOCIATED_LIST
+      type: actionTypes.CHANNEL_FETCH_ASSOCIATED_LIST
     });
     try {
       const response = await channelService.fetchGetChannelAssociatedList(
@@ -44,32 +44,32 @@ export default {
       );
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS,
+        type: actionTypes.CHANNEL_FETCH_ASSOCIATED_LIST_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_CHANNEL,
+        type: actionTypes.ERROR_CHANNEL,
         payload: data.meta.message
       });
     }
   },
   fetchEditChannel: editChannelData => async dispatch => {
     dispatch({
-      type: constants.CHANNEL_FETCH_EDIT
+      type: actionTypes.CHANNEL_FETCH_EDIT
     });
     try {
       const response = await channelService.fetchEditChannel(editChannelData);
       const { data } = response;
       dispatch({
-        type: constants.CHANNEL_FETCH_EDIT_SUCCESS,
+        type: actionTypes.CHANNEL_FETCH_EDIT_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_CHANNEL,
+        type: actionTypes.ERROR_CHANNEL,
         payload: data.meta.message
       });
     }

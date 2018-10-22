@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 import { userService } from "./services";
 
 export default {
@@ -9,26 +9,26 @@ export default {
     const response = await userService.fetchAutoAuth();
     const { data } = response;
     dispatch({
-      type: constants.USER_FETCH_AUTO_LOGIN,
+      type: actionTypes.USER_FETCH_AUTO_LOGIN,
       payload: data
     });
   },
 
   fetchEditUser: editUserdata => async dispatch => {
     dispatch({
-      type: constants.USER_FETCH_EDIT
+      type: actionTypes.USER_FETCH_EDIT
     });
     try {
       const response = await userService.fetchEditUser(editUserdata);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_EDIT_SUCCESS,
+        type: actionTypes.USER_FETCH_EDIT_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_USER,
+        type: actionTypes.ERROR_USER,
         payload: data.meta.message
       });
     }
@@ -36,19 +36,19 @@ export default {
 
   fetchRegisterUser: credentials => async dispatch => {
     dispatch({
-      type: constants.USER_FETCH_LOGIN
+      type: actionTypes.USER_FETCH_LOGIN
     });
     try {
       const response = await userService.fetchRegisterUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN_SUCCESS,
+        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: actionTypes.ERROR_AUTH,
         payload: data.meta.message
       });
     }
@@ -56,19 +56,19 @@ export default {
 
   fetchLoginUser: credentials => async dispatch => {
     dispatch({
-      type: constants.USER_FETCH_LOGIN
+      type: actionTypes.USER_FETCH_LOGIN
     });
     try {
       const response = await userService.fetchLoginUser(credentials);
       const { data } = response;
       dispatch({
-        type: constants.USER_FETCH_LOGIN_SUCCESS,
+        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: actionTypes.ERROR_AUTH,
         payload: data.meta.message
       });
     }
@@ -76,14 +76,14 @@ export default {
 
   fetchLogoutUser: () => async dispatch => {
     dispatch({
-      type: constants.USER_FETCH_LOGOUT
+      type: actionTypes.USER_FETCH_LOGOUT
     });
     try {
       await userService.fetchLogoutUser();
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_AUTH,
+        type: actionTypes.ERROR_AUTH,
         payload: data.meta.message
       });
     }

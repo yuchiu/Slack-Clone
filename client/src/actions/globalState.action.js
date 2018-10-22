@@ -1,4 +1,4 @@
-import constants from "../constants";
+import actionTypes from "../actionTypes";
 import { globalStateService } from "./services";
 
 export default {
@@ -7,18 +7,18 @@ export default {
    */
   toggleRightSidebar: () => dispatch => {
     dispatch({
-      type: constants.GLOBAL_RIGHT_SIDEBAR_TOGGLE
+      type: actionTypes.GLOBAL_RIGHT_SIDEBAR_TOGGLE
     });
   },
   switchRightSidebarView: selectedView => dispatch => {
     dispatch({
-      type: constants.GLOBAL_RIGHT_SIDEBAR_VIEW_SWITCH,
+      type: actionTypes.GLOBAL_RIGHT_SIDEBAR_VIEW_SWITCH,
       payload: selectedView
     });
   },
   switchTargetUser: targetUserId => dispatch => {
     dispatch({
-      type: constants.GLOBAL_TARGET_USER_SWITCH,
+      type: actionTypes.GLOBAL_TARGET_USER_SWITCH,
       payload: targetUserId
     });
   },
@@ -29,7 +29,7 @@ export default {
   clearSocketConnection: () => dispatch => {
     globalStateService.clearSocketConnection();
     dispatch({
-      type: constants.GLOBAL_SOCKET_CONNECTION_CLEAR
+      type: actionTypes.GLOBAL_SOCKET_CONNECTION_CLEAR
     });
   }
 };

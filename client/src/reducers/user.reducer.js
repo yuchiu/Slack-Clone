@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 
 const initialState = {
   currentUser: {},
@@ -8,28 +8,28 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case constants.USER_FETCH_AUTO_LOGIN:
+    case actionTypes.USER_FETCH_AUTO_LOGIN:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_FETCH_LOGIN_SUCCESS:
+    case actionTypes.USER_FETCH_LOGIN_SUCCESS:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.USER_FETCH_EDIT:
+    case actionTypes.USER_FETCH_EDIT:
       newState.isLoading = true;
       return newState;
 
-    case constants.USER_FETCH_EDIT_SUCCESS:
+    case actionTypes.USER_FETCH_EDIT_SUCCESS:
       newState.isLoading = false;
       newState.currentUser = action.payload.user;
       return newState;
 
-    case constants.ERROR_USER:
+    case actionTypes.ERROR_USER:
       newState.isLoading = false;
       return newState;
 
-    case constants.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_LOGOUT:
       return initialState;
 
     default:

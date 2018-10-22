@@ -1,4 +1,4 @@
-import constants from "@/constants";
+import actionTypes from "@/actionTypes";
 import { teamService } from "./services";
 
 export default {
@@ -7,7 +7,7 @@ export default {
    */
   switchTeam: teamId => async dispatch => {
     dispatch({
-      type: constants.TEAM_SWITCH,
+      type: actionTypes.TEAM_SWITCH,
       payload: teamId
     });
   },
@@ -17,19 +17,19 @@ export default {
    */
   fetchCreateTeam: teamFormInfo => async dispatch => {
     dispatch({
-      type: constants.TEAM_FETCH_CREATE
+      type: actionTypes.TEAM_FETCH_CREATE
     });
     try {
       const response = await teamService.fetchCreateTeam(teamFormInfo);
       const { data } = response;
       dispatch({
-        type: constants.TEAM_FETCH_CREATE_SUCCESS,
+        type: actionTypes.TEAM_FETCH_CREATE_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_TEAM,
+        type: actionTypes.ERROR_TEAM,
         payload: data.meta.message
       });
     }
@@ -37,19 +37,19 @@ export default {
 
   fetchTeamAssociatedList: teamId => async dispatch => {
     dispatch({
-      type: constants.TEAM_FETCH_ASSOCIATED_LIST
+      type: actionTypes.TEAM_FETCH_ASSOCIATED_LIST
     });
     try {
       const response = await teamService.fetchTeamAssociatedList(teamId);
       const { data } = response;
       dispatch({
-        type: constants.TEAM_FETCH_ASSOCIATED_LIST_SUCCESS,
+        type: actionTypes.TEAM_FETCH_ASSOCIATED_LIST_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_TEAM,
+        type: actionTypes.ERROR_TEAM,
         payload: data.meta.message
       });
     }
@@ -57,19 +57,19 @@ export default {
 
   fetchEditTeam: editTeamData => async dispatch => {
     dispatch({
-      type: constants.TEAM_FETCH_EDIT
+      type: actionTypes.TEAM_FETCH_EDIT
     });
     try {
       const response = await teamService.fetchEditTeam(editTeamData);
       const { data } = response;
       dispatch({
-        type: constants.TEAM_FETCH_EDIT_SUCCESS,
+        type: actionTypes.TEAM_FETCH_EDIT_SUCCESS,
         payload: data
       });
     } catch (err) {
       const { data } = err.response;
       dispatch({
-        type: constants.ERROR_TEAM,
+        type: actionTypes.ERROR_TEAM,
         payload: data.meta.message
       });
     }
@@ -90,12 +90,12 @@ export default {
   dispatchReceivedTeamMember: data => dispatch => {
     if (data.meta.type === "success") {
       dispatch({
-        type: constants.TEAM_SOCKET_RECEIVE_NEW_MEMBER,
+        type: actionTypes.TEAM_SOCKET_RECEIVE_NEW_MEMBER,
         payload: data
       });
     } else {
       dispatch({
-        type: constants.ERROR_TEAM,
+        type: actionTypes.ERROR_TEAM,
         payload: data.meta.message
       });
     }
