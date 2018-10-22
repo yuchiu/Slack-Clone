@@ -13,7 +13,7 @@
 ### DataBases
 
 - postgres needs to be setup first
-- configuration for database is store in server/src/config/index.js
+- configuration for database with sequelize is in server/src/config/sequelizeConfig.ts
 - PostgreSQL client also need to be install globally
 
   ```npm
@@ -22,14 +22,14 @@
 
 ### Server (Development)
 
-- populate postgres with sample data in server/seed(Optional)
+- populate postgres with sample data in server/seed(Optional)  
   seed configuration & data is in dir ./server/seed
 
   ```npm ./server
   npm run seed
   ```
 
-- For initial run on the machine, install dependencies & transpile TypeScript to JavaScript
+- For initial run on the machine, install dependencies & transpile TypeScript to output build directory
 
   ```npm ./server
   npm install
