@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/start.js",
-    "build": "cross-env NODE_ENV=production node scripts/build.js",
-    "afterbuild": "rm -rf ../server/build/client ; mv build ../server/build/client",
+    "build": "cross-env NODE_ENV=production SERVER_API_URL=http://localhost:3030/api/v1 SERVER_WS_URL=ws://localhost:3030 node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
