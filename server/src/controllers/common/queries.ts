@@ -1,4 +1,17 @@
 export default {
+  updateMessageUseravatar: `
+    UPDATE messages 
+    SET avatarurl=:newurl 
+    WHERE messages.user_id = :userId
+    RETURNING *
+  `,
+  getEstablishedMessageGroup: `
+    SELECT c.id, c.name
+    FROM CHANNELS as c, CHANNEL_MEMBERS cm
+    WHERE cm.channel_id = c.id AND c.message_group = true AND c.public = false AND c.team_id = :teamId
+    GROUP BY c.id, c.name
+    HAVING ARRAY_AGG(cm.user_id) @> ARRAY[:allMembers]::varchar[] AND COUNT(cm.user_id) = :allMembersLength;
+  `,
   getTeamList: `
     SELECT 
     teams.id, 
@@ -8,21 +21,21 @@ export default {
     teams.created_at, 
     teams.updated_at, 
     team_members.admin 
-    FROM TEAM_MEMBERS as team_members
-    INNER JOIN TEAMS as teams
+    FROM team_members
+    INNER JOIN teams
     ON teams.id = team_members.team_id 
     WHERE team_members.user_id = ?`,
   getInitialChannelId: `
     SELECT 
     channels.id 
-    FROM CHANNELS AS channels
+    FROM channels
     WHERE team_id = ? 
     ORDER BY created_at 
     LIMIT 1`,
   getInitialTeamId: `
     SELECT 
     teams.id 
-    FROM TEAMS AS teams
+    FROM teams
     WHERE team_id = ? 
     ORDER BY created_at 
     LIMIT 1`,
@@ -37,8 +50,8 @@ export default {
     users.detail_description, 
     team_members.created_at, 
     team_members.admin
-    FROM TEAM_MEMBERS AS team_members 
-    JOIN USERS as users
+    FROM team_members 
+    JOIN users
     ON team_members.user_id = users.id 
     WHERE team_members.team_id = ?`,
   getChannelList: `
@@ -52,8 +65,8 @@ export default {
     channels.created_at, 
     channels.updated_at, 
     channels.team_id
-    FROM CHANNELS AS channels
-    LEFT OUTER JOIN CHANNEL_MEMBERS AS channel_members
+    FROM channels
+    LEFT OUTER JOIN channel_members
     ON channels.id = channel_members.channel_id
     WHERE channels.team_id = :teamId AND (channels.public = true OR channel_members.user_id = :userId);`,
   getChannelMemberList: `
@@ -67,8 +80,8 @@ export default {
     users.detail_description,  
     channel_members.created_at, 
     channel_members.channel_id
-    FROM USERS AS users
-    JOIN CHANNEL_MEMBERS AS channel_members
+    FROM users
+    JOIN channel_members
     ON channel_members.user_id = users.id 
     WHERE channel_members.channel_id = ?`
 };

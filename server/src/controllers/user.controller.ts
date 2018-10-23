@@ -412,18 +412,11 @@ export default {
           raw: true
         });
         removePreviousImg(user.avatarurl);
-        await models.sequelize.query(
-          `
-          UPDATE messages 
-          SET avatarurl=:newurl 
-          WHERE messages.user_id=:userId
-          RETURNING *`,
-          {
-            replacements: { userId: currentUserId, newurl: avatarurl },
-            model: models.Channel,
-            raw: true
-          }
-        );
+        await models.sequelize.query(queries.updateMessageUseravatar, {
+          replacements: { userId: currentUserId, newurl: avatarurl },
+          model: models.Channel,
+          raw: true
+        });
       }
       // remove stale data from cache
       redisCache.delete(`userId:${currentUserId}`);

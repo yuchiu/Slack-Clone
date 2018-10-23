@@ -37,7 +37,6 @@ export default {
         membersList,
         messageGroup
       } = req.body;
-      console.log(teamId);
       // remove stale data from cache
       redisCache.delete(`channelList:${teamId}`);
 
@@ -62,16 +61,15 @@ export default {
             /* check if message group already created between requested members */
             const allMembers = [...membersList, currentUserId];
             const [data, result] = await models.sequelize.query(
-              `
-              SELECT c.id, c.name
-              FROM CHANNELS as c, CHANNEL_MEMBERS cm
-              WHERE cm.channel_id = c.id AND c.message_group = true AND c.public = false and c.team_id = ${teamId}
-              GROUP BY c.id, c.name
-              HAVING ARRAY_AGG(cm.user_id) @> Array[${allMembers.join(
-                ","
-              )}] AND COUNT(cm.user_id) = ${allMembers.length};
-              `,
-              { raw: true }
+              queries.getEstablishedMessageGroup,
+              {
+                replacements: {
+                  teamId,
+                  allMembers,
+                  allMembersLength: allMembers.length
+                },
+                raw: true
+              }
             );
 
             /* message group already exist, respond with error */
