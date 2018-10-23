@@ -1,11 +1,6 @@
 const bcrypt = require("bcryptjs");
-const uuid = require("uuid/v4");
 
-const getNewId = () => {
-  const id = uuid();
-  const removedHyphenId = id.replace(/-/g, "");
-  return removedHyphenId;
-};
+const getNewId = require("./getNewId");
 
 const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;

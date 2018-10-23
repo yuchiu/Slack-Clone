@@ -1,11 +1,6 @@
 import * as Sequelize from "sequelize";
-import * as uuid from "uuid/v4";
 
-const getNewId = () => {
-  const id = uuid();
-  const removedHyphenId = id.replace(/-/g, "");
-  return removedHyphenId;
-};
+import { getNewId } from "./common";
 
 export const TeamMemberFactory = (
   sequelize: Sequelize.Sequelize,
