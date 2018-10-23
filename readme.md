@@ -12,9 +12,8 @@
 
 ### DataBases
 
-- postgres needs to be setup first
-- configuration for database with sequelize is in server/src/config/sequelizeConfig.ts
-- PostgreSQL client need to be installed globally
+- postgre client need to be installed globally  
+  configuration for postgres database with sequelize is in server/src/config/sequelizeConfig.ts
 
   ```npm
   npm install pg -global
@@ -38,7 +37,7 @@
   ```
 
 - start application in server  
-  server will be listening to http://localhost:3030
+  server will be listening to [http://localhost:3030]
 
   ```npm ./server
   npm start
@@ -47,7 +46,7 @@
 ### Client (Development)
 
 - install dependencies & start application in client  
-  application will be running on http://localhost:3000
+  application will be running on [http://localhost:3000]
 
   ```npm ./client
   npm install
@@ -56,20 +55,7 @@
 
 ## Production Environment
 
-### 1. Production Build
-
-#### Server (Production)
-
-- install dependencies & run production build in server  
-  production build directory will be output to ./server/build  
-  the complete production include both frontend and backend will be contained inside server's build directory
-
-  ```npm ./server
-  npm install
-  npm run build
-  ```
-
-#### Client (Production)
+### Client (Production)
 
 - install dependencies & run production build in client  
   production build directory will be output to ./client/build
@@ -79,28 +65,39 @@
   npm run build
   ```
 
-- move client production build directory as client into server's production build directory
+- serve client application with static server  
+  static server will be listening to port 5000 by default
 
   ```npm ./client
-  npm run afterbuild
+  npm i -g serve
+  serve -s build
   ```
 
-### 2. Serving the Application
+### Server (Production)
 
-#### Option A. Local Machine
+- install dependencies & run production build in server  
+  production build directory will be output to ./server/build
 
-- start application with production build  
-  server will be listening to port 3030
+  ```npm ./server
+  npm install
+  npm run build
+  ```
+
+#### Option A. serve application on local machine
+
+- start server application with production build  
+  server will be listening to port 3030 by default
 
   ```npm ./server
   npm run serve
   ```
 
-#### Option B. Docker Container
+#### Option B. serve application with Nginx & Docker Container
 
 - Softwares required for this build
 
   ```version
+  nginx
   docker
   docker-compose
   ```
@@ -108,7 +105,8 @@
 - create directories in server for volumes that allows docker containers to persist its data
 
   ```shell ./server
-  mkdir pgdata assets
+  mkdir pgdata
+  mkdir assets
   ```
 
 - build the Docker image "slack-clone" using the production build

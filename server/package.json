@@ -9,10 +9,8 @@
     "ts": "tsc -w",
     "server": "nodemon NODE_ENV=development ./build/server.js",
     "build": "tsc && node ./build/server.js",
-    "seed": "cross-env PSQL_NAME=slack PSQL_USER=postgres PSQL_PASS=postgres node seed/index.js",
-    "old-start": "cross-env NODE_ENV=development nodemon --exec babel-node src/server.js",
-    "old-build": "babel src -d build",
-    "old-serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/server.js"
+    "serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/server.js",
+    "seed": "cross-env PSQL_NAME=slack PSQL_USER=postgres PSQL_PASS=postgres node seed/index.js"
   },
   "author": "",
   "license": "ISC",

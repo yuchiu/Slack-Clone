@@ -29,18 +29,23 @@ app.use(checkSession());
 app.use(helmet());
 app.use(compression());
 app.use("/assets", express.static("assets"));
-// use logger, simulateLatency for development
+
+/* development build, use logger & simulateLatency */
 if (NODE_ENV === "development") {
   app.use(logger("dev"));
-  //first arg is min time in millisecond, second arg random time in millisecond add on top of min time
   app.use(simulateLatency(50, 1000));
 }
-// use client production build */
+
+/* production build */
 if (NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./client")));
-  app.get("/", (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, "./client") });
-  });
+  /* serve with seperate client server, allow cors for that client server */
+  app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
+
+  /* serve within server */
+  // app.use(express.static(path.join(__dirname, "./client")));
+  // app.get("/", (req, res) => {
+  //   res.sendFile("index.html", { root: path.join(__dirname, "./client") });
+  // });
 }
 
 /* routes & websockets events listener */
