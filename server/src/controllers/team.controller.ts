@@ -113,15 +113,15 @@ export default {
       const { targetUsername, teamId } = teamData;
 
       /* find the initial channel general and add new user to the general channel */
-      const initialChannel = await models.sequelize.query(
-        "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+      const initialChannelData = await models.sequelize.query(
+        queries.getInitialChannelId,
         {
           replacements: [teamId],
           model: models.Channel,
           raw: true
         }
       );
-      const initialChannelId = initialChannel[0].id;
+      const initialChannelId = initialChannelData[0];
 
       const userToAdd = await models.User.findOne({
         where: { username: targetUsername },
@@ -160,7 +160,7 @@ export default {
 
       /*  get team and channel member list */
       const teamMemberList = await models.sequelize.query(
-        "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+        queries.getTeamMemberList,
         {
           replacements: [teamId],
           model: models.User,

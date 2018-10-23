@@ -169,15 +169,15 @@ export default {
           const avatarurl = await saveBase64Img(avatarBase64Img);
           const newCredentials = { ...credentials, avatarurl };
 
-          const initialDemoTeam = await models.sequelize.query(
-            "SELECT * FROM teams ORDER BY created_at LIMIT 1",
+          const initialTeamIdData = await models.sequelize.query(
+            queries.getInitialTeamId,
             {
               transaction,
               model: models.Channel,
               raw: true
             }
           );
-          const initialDemoTeamId = initialDemoTeam[0].id;
+          const initialTeamId = initialTeamIdData[0];
           const userData = await models.User.create(newCredentials, {
             transaction
           });
@@ -185,21 +185,21 @@ export default {
           await models.TeamMember.create(
             {
               user_id: user.id,
-              team_id: initialDemoTeamId
+              team_id: initialTeamId
             },
             { transaction }
           );
           /* find the channel general from initial team and add new user to the general channel */
-          const initialChannel = await models.sequelize.query(
-            "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
+          const initialChannelData = await models.sequelize.query(
+            queries.getInitialChannelId,
             {
               transaction,
-              replacements: [initialDemoTeamId],
+              replacements: [initialTeamId],
               model: models.Channel,
               raw: true
             }
           );
-          const initialChannelId = initialChannel[0].id;
+          const initialChannelId = initialChannelData[0];
 
           await models.ChannelMember.create(
             {
@@ -208,10 +208,10 @@ export default {
             },
             { transaction }
           );
-          return { user, initialChannelId, initialDemoTeamId };
+          return { user, initialChannelId, initialTeamId };
         }
       );
-      const { initialChannelId, initialDemoTeamId, user } = createUserResponse;
+      const { initialChannelId, initialTeamId, user } = createUserResponse;
 
       /* get user's teams */
       const teamList = await models.sequelize.query(queries.getTeamList, {
@@ -221,7 +221,7 @@ export default {
       });
 
       // remove stale data from cache
-      redisCache.delete(`teamMemberList:${initialDemoTeamId}`);
+      redisCache.delete(`teamMemberList:${initialTeamId}`);
       redisCache.delete(`channelMemberList:${initialChannelId}`);
 
       /* save session */
@@ -413,7 +413,8 @@ export default {
         });
         removePreviousImg(user.avatarurl);
         await models.sequelize.query(
-          `UPDATE messages 
+          `
+          UPDATE messages 
           SET avatarurl=:newurl 
           WHERE messages.user_id=:userId
           RETURNING *`,

@@ -37,7 +37,7 @@ export default {
         membersList,
         messageGroup
       } = req.body;
-
+      console.log(teamId);
       // remove stale data from cache
       redisCache.delete(`channelList:${teamId}`);
 
@@ -63,13 +63,13 @@ export default {
             const allMembers = [...membersList, currentUserId];
             const [data, result] = await models.sequelize.query(
               `
-              select c.id, c.name
-              from channels as c, channel_members cm
-              where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
-              group by c.id, c.name
-              having array_agg(cm.user_id) @> Array[${allMembers.join(
+              SELECT c.id, c.name
+              FROM CHANNELS as c, CHANNEL_MEMBERS cm
+              WHERE cm.channel_id = c.id AND c.message_group = true AND c.public = false and c.team_id = ${teamId}
+              GROUP BY c.id, c.name
+              HAVING ARRAY_AGG(cm.user_id) @> Array[${allMembers.join(
                 ","
-              )}] and count(cm.user_id) = ${allMembers.length};
+              )}] AND COUNT(cm.user_id) = ${allMembers.length};
               `,
               { raw: true }
             );
@@ -122,7 +122,7 @@ export default {
 
           /* create channel member relation for public member */
           const teamMemberList = await models.sequelize.query(
-            "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+            queries.getTeamMemberList,
             {
               replacements: [teamId],
               model: models.User,
@@ -147,7 +147,7 @@ export default {
       const { channel, channelMemberList } = createChannelResponse;
 
       const channelList = await models.sequelize.query(queries.getChannelList, {
-        replacements: { team_id: teamId, user_id: currentUserId },
+        replacements: { teamId, userId: currentUserId },
         model: models.Channel,
         raw: true
       });
