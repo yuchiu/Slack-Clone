@@ -1,4 +1,11 @@
 const bcrypt = require("bcryptjs");
+const uuid = require("uuid/v4");
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
 
 const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;
@@ -14,6 +21,11 @@ const UserModel = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "user",
     {
+      id: {
+        type: DataTypes.STRING,
+        defaultValue: getNewId,
+        primaryKey: true
+      },
       username: {
         type: DataTypes.STRING,
         unique: true,

@@ -1,10 +1,22 @@
 import * as Sequelize from "sequelize";
+import * as uuid from "uuid/v4";
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
 
 export const MessageFactory = (
   sequelize: Sequelize.Sequelize,
   DataTypes: Sequelize.DataTypes
 ): Sequelize.Model<MessageInstance, MessageAttributes> => {
   const attributes: SequelizeAttributes<MessageAttributes> = {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: getNewId,
+      primaryKey: true
+    },
     username: DataTypes.STRING,
     avatarurl: {
       type: DataTypes.STRING,

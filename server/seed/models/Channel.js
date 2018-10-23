@@ -1,5 +1,18 @@
+const uuid = require("uuid/v4");
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
+
 const ChannelModel = (sequelize, DataTypes) => {
   const Channel = sequelize.define("channel", {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: getNewId,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     public: {
       type: DataTypes.BOOLEAN,

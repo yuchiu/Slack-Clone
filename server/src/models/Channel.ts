@@ -1,10 +1,22 @@
 import * as Sequelize from "sequelize";
+import * as uuid from "uuid/v4";
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
 
 export const ChannelFactory = (
   sequelize: Sequelize.Sequelize,
   DataTypes: Sequelize.DataTypes
 ): Sequelize.Model<ChannelInstance, ChannelAttributes> => {
   const attributes: SequelizeAttributes<ChannelAttributes> = {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: getNewId,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     public: {
       type: DataTypes.BOOLEAN,

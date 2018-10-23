@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { Request, Response } from "express";
 
-import { redisCache } from "./common";
+import { redisCache, queries } from "./common";
 import models from "../models";
 
 export default {
@@ -37,7 +37,6 @@ export default {
         membersList,
         messageGroup
       } = req.body;
-
       // remove stale data from cache
       redisCache.delete(`channelList:${teamId}`);
 
@@ -62,16 +61,15 @@ export default {
             /* check if message group already created between requested members */
             const allMembers = [...membersList, currentUserId];
             const [data, result] = await models.sequelize.query(
-              `
-              select c.id, c.name
-              from channels as c, channel_members cm
-              where cm.channel_id = c.id and c.message_group = true and c.public = false and c.team_id = ${teamId}
-              group by c.id, c.name
-              having array_agg(cm.user_id) @> Array[${allMembers.join(
-                ","
-              )}] and count(cm.user_id) = ${allMembers.length};
-              `,
-              { raw: true }
+              queries.getEstablishedMessageGroup,
+              {
+                replacements: {
+                  teamId,
+                  allMembers,
+                  allMembersLength: allMembers.length
+                },
+                raw: true
+              }
             );
 
             /* message group already exist, respond with error */
@@ -122,7 +120,7 @@ export default {
 
           /* create channel member relation for public member */
           const teamMemberList = await models.sequelize.query(
-            "select * from users as u join team_members as m on m.user_id = u.id where m.team_id = ?",
+            queries.getTeamMemberList,
             {
               replacements: [teamId],
               model: models.User,
@@ -146,18 +144,11 @@ export default {
       );
       const { channel, channelMemberList } = createChannelResponse;
 
-      const channelList = await models.sequelize.query(
-        `
-          select distinct on (id) *
-          from channels as c left outer join channel_members as pcm
-          on c.id = pcm.channel_id
-          where c.team_id = :team_id and (c.public = true or pcm.user_id = :user_id);`,
-        {
-          replacements: { team_id: teamId, user_id: currentUserId },
-          model: models.Channel,
-          raw: true
-        }
-      );
+      const channelList = await models.sequelize.query(queries.getChannelList, {
+        replacements: { teamId, userId: currentUserId },
+        model: models.Channel,
+        raw: true
+      });
 
       res.status(200).send({
         meta: {
@@ -218,7 +209,7 @@ export default {
         }
         /*  get private channel member list */
         const channelMemberList = await models.sequelize.query(
-          "select * from users as u join channel_members as pcm on pcm.user_id = u.id where pcm.channel_id = ?",
+          queries.getChannelMemberList,
           {
             replacements: [channelId],
             model: models.User,
@@ -240,7 +231,7 @@ export default {
 
       /*  return channel's messages and channel public member list */
       const channelMemberList = await models.sequelize.query(
-        "select * from users as u join channel_members as cm on cm.user_id = u.id where cm.channel_id = ?",
+        queries.getChannelMemberList,
         {
           replacements: [channelId],
           model: models.User,
@@ -305,18 +296,11 @@ export default {
         raw: true
       });
 
-      const channelList = await models.sequelize.query(
-        `
-          select distinct on (id) *
-          from channels as c left outer join channel_members as pcm
-          on c.id = pcm.channel_id
-          where c.team_id = :team_id and (c.public = true or pcm.user_id = :user_id);`,
-        {
-          replacements: { team_id: teamId, user_id: currentUserId },
-          model: models.Channel,
-          raw: true
-        }
-      );
+      const channelList = await models.sequelize.query(queries.getChannelList, {
+        replacements: { team_id: teamId, user_id: currentUserId },
+        model: models.Channel,
+        raw: true
+      });
       res.status(200).send({
         meta: {
           type: "success",
