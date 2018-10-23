@@ -18,13 +18,13 @@ declare global {
    * Channel
    */
   interface ChannelAttributes {
-    id?: number;
+    id?: string;
     name?: string;
     public?: boolean;
     message_group?: boolean;
     brief_description?: string;
     detail_description?: string;
-    team_id?: number;
+    team_id?: string;
     created_at?: Date;
     updated_at?: Date;
   }
@@ -37,14 +37,14 @@ declare global {
    * Message
    */
   interface MessageAttributes {
-    id?: number;
+    id?: string;
     username: string;
     avatarurl?: string;
     text?: string;
     url?: string;
     filetype?: string;
-    channel_id?: number;
-    user_id?: number;
+    channel_id?: string;
+    user_id?: string;
     created_at?: Date;
     updated_at?: Date;
   }
@@ -57,7 +57,7 @@ declare global {
    * Team
    */
   interface TeamAttributes {
-    id?: number;
+    id?: string;
     name: string;
     brief_description?: string;
     created_at?: Date;
@@ -72,7 +72,7 @@ declare global {
    * User
    */
   interface UserAttributes {
-    id?: number;
+    id?: string;
     username: string;
     email: string;
     password: string;
@@ -92,9 +92,9 @@ declare global {
    * TeamMember
    */
   interface TeamMemberAttributes {
-    id?: number;
-    team_id?: number;
-    user_id?: number;
+    id?: string;
+    team_id?: string;
+    user_id?: string;
     admin?: boolean;
     created_at?: Date;
     updated_at?: Date;
@@ -108,9 +108,9 @@ declare global {
    * ChannelMember
    */
   interface ChannelMemberAttributes {
-    id?: number;
-    channel_id?: number;
-    user_id?: number;
+    id?: string;
+    channel_id?: string;
+    user_id?: string;
     created_at?: Date;
     updated_at?: Date;
   }

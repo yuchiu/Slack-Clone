@@ -1,9 +1,15 @@
 import * as bcrypt from "bcryptjs";
 import * as Sequelize from "sequelize";
+import * as uuid from "uuid/v4";
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
 
 const hashPasswordIfChanged = async (user, options) => {
   const SALT_FACTOR = 10;
-  console.log("hash function called");
   if (user.changed("password")) {
     const hashedPassword = await bcrypt.hash(user.password, SALT_FACTOR);
     // eslint-disable-next-line
@@ -17,6 +23,11 @@ export const UserFactory = (
   DataTypes: Sequelize.DataTypes
 ): Sequelize.Model<UserInstance, UserAttributes> => {
   const attributes: SequelizeAttributes<UserAttributes> = {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: getNewId,
+      primaryKey: true
+    },
     username: {
       type: DataTypes.STRING,
       unique: true,

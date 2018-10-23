@@ -22,7 +22,8 @@
 
 ### Server (Development)
 
-- populate postgres with sample data in server/seed(Optional)  
+- populate postgres with sample data in server/seed  
+  it is required to initialize first demo team that all new registered user joins  
   seed configuration & data is in dir ./server/seed
 
   ```npm ./server

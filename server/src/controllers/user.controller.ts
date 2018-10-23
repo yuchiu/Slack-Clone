@@ -6,7 +6,7 @@ import * as _ from "lodash";
 import * as bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
-import { redisCache } from "./common";
+import { redisCache, queries } from "./common";
 import models from "../models";
 import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
 
@@ -168,7 +168,16 @@ export default {
           const avatarBase64Img = generateRandomImg();
           const avatarurl = await saveBase64Img(avatarBase64Img);
           const newCredentials = { ...credentials, avatarurl };
-          const initialDemoTeamId = 1;
+
+          const initialDemoTeam = await models.sequelize.query(
+            "SELECT * FROM teams ORDER BY created_at LIMIT 1",
+            {
+              transaction,
+              model: models.Channel,
+              raw: true
+            }
+          );
+          const initialDemoTeamId = initialDemoTeam[0].id;
           const userData = await models.User.create(newCredentials, {
             transaction
           });
@@ -180,13 +189,12 @@ export default {
             },
             { transaction }
           );
-
-          /* find the initial channel general and add new user to the general channel */
+          /* find the channel general from initial team and add new user to the general channel */
           const initialChannel = await models.sequelize.query(
             "SELECT * FROM channels WHERE team_id = ? ORDER BY created_at LIMIT 1",
             {
               transaction,
-              replacements: [1],
+              replacements: [initialDemoTeamId],
               model: models.Channel,
               raw: true
             }
@@ -206,14 +214,11 @@ export default {
       const { initialChannelId, initialDemoTeamId, user } = createUserResponse;
 
       /* get user's teams */
-      const teamList = await models.sequelize.query(
-        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
-        {
-          replacements: [user.id],
-          model: models.Team,
-          raw: true
-        }
-      );
+      const teamList = await models.sequelize.query(queries.getTeamList, {
+        replacements: [user.id],
+        model: models.Team,
+        raw: true
+      });
 
       // remove stale data from cache
       redisCache.delete(`teamMemberList:${initialDemoTeamId}`);
@@ -281,17 +286,12 @@ export default {
           }
         });
       }
-
       /* get user's teams */
-      const teamList = await models.sequelize.query(
-        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
-        {
-          replacements: [user.id],
-          model: models.Team,
-          raw: true
-        }
-      );
-
+      const teamList = await models.sequelize.query(queries.getTeamList, {
+        replacements: [user.id],
+        model: models.Team,
+        raw: true
+      });
       /* save session */
       req.session.user = user;
       req.session.save(() => {});
@@ -347,14 +347,11 @@ export default {
         raw: true
       });
       /* get user's teams */
-      const teamList = await models.sequelize.query(
-        "select * from teams as team join team_members as member on team.id = member.team_id where member.user_id = ?",
-        {
-          replacements: [user.id],
-          model: models.Team,
-          raw: true
-        }
-      );
+      const teamList = await models.sequelize.query(queries.getTeamList, {
+        replacements: [user.id],
+        model: models.Team,
+        raw: true
+      });
 
       res.status(200).send({
         meta: {

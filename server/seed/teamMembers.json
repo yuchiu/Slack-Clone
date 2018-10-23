@@ -1,37 +1,14 @@
 [
   {
-    "user_id": "1",
-    "team_id": "1",
     "admin": true
   },
   {
-    "user_id": "2",
-    "team_id": "2",
     "admin": true
   },
   {
-    "user_id": "3",
-    "team_id": "3",
     "admin": true
   },
   {
-    "user_id": "4",
-    "team_id": "4",
-    "admin": true
-  },
-  {
-    "user_id": "2",
-    "team_id": "1",
-    "admin": true
-  },
-  {
-    "user_id": "3",
-    "team_id": "1",
-    "admin": true
-  },
-  {
-    "user_id": "4",
-    "team_id": "1",
     "admin": true
   }
 ]

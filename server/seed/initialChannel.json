@@ -1,0 +1,8 @@
+[
+  {
+    "name": "general",
+    "brief_description": "Company-wide announcements and work-based matters",
+    "detail_description": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
+    "public": true
+  }
+]

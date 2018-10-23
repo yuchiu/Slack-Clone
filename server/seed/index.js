@@ -4,10 +4,9 @@ require("dotenv").config();
 
 const models = require("./models");
 const users = require("./users.json");
-const teams = require("./teams.json");
-const initialTeams = require("./initialTeams.json");
+const initialTeam = require("./initialTeam.json");
 const teamMembers = require("./teamMembers.json");
-const channels = require("./channels.json");
+const initialChannel = require("./initialChannel.json");
 const channelMembers = require("./channelMembers.json");
 
 const redisClient = Promise.promisifyAll(redis.createClient());
@@ -21,16 +20,53 @@ redisClient.flushdb((err, succeeded) => {
 models.sequelize.sync({ force: true }).then(async () => {
   await Promise.all(users.map(user => models.User.create(user)));
   console.log("✔ users populated");
-  await Promise.all(initialTeams.map(team => models.Team.create(team)));
+  const usersData = await models.User.findAll({ raw: true });
+  console.log(usersData);
+
+  await Promise.all(initialTeam.map(team => models.Team.create(team)));
   console.log("✔ initial team populated");
-  await Promise.all(teams.map(team => models.Team.create(team)));
-  console.log("✔ teams populated");
-  await Promise.all(teamMembers.map(tm => models.TeamMember.create(tm)));
+  const initialTeamData = await models.Team.findAll({ raw: true });
+  console.log(initialTeamData);
+
+  let tmIndex = 0;
+  await Promise.all(
+    teamMembers.map(tm => {
+      const newTm = { ...tm };
+      newTm.team_id = initialTeamData[0].id;
+      newTm.user_id = usersData[tmIndex].id;
+      tmIndex++;
+      return models.TeamMember.create(newTm);
+    })
+  );
   console.log("✔ team members populated");
-  await Promise.all(channels.map(channel => models.Channel.create(channel)));
+  const teamMembersData = await models.TeamMember.findAll({ raw: true });
+  console.log(teamMembersData);
+
+  await Promise.all(
+    initialChannel.map(channel => {
+      const newChannel = { ...channel };
+      newChannel.team_id = initialTeamData[0].id;
+      return models.Channel.create(newChannel);
+    })
+  );
   console.log("✔ channels populated");
-  await Promise.all(channelMembers.map(cm => models.ChannelMember.create(cm)));
+  const initialChannelsData = await models.Channel.findAll({ raw: true });
+  console.log(initialChannelsData);
+
+  let userIndex = 0;
+  await Promise.all(
+    channelMembers.map(cm => {
+      const newCm = { ...cm };
+      newCm.channel_id = initialChannelsData[0].id;
+      newCm.user_id = usersData[userIndex].id;
+      userIndex++;
+      return models.ChannelMember.create(newCm);
+    })
+  );
   console.log("✔ channelMembers populated");
+  const channelMembersData = await models.ChannelMember.findAll({ raw: true });
+  console.log(channelMembersData);
+
   console.log("-----------------------------------------");
   console.log("Populated database with seed successfully");
   process.exit(0);

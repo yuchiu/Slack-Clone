@@ -1,5 +1,18 @@
+const uuid = require("uuid/v4");
+
+const getNewId = () => {
+  const id = uuid();
+  const removedHyphenId = id.replace(/-/g, "");
+  return removedHyphenId;
+};
+
 const MessageModel = (sequelize, DataTypes) => {
   const Message = sequelize.define("message", {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: getNewId,
+      primaryKey: true
+    },
     username: DataTypes.STRING,
     avatarurl: {
       type: DataTypes.STRING,
