@@ -18,16 +18,36 @@ redisClient.flushdb((err, succeeded) => {
 });
 
 models.sequelize.sync({ force: true }).then(async () => {
+  /**
+   * generate users
+   */
   await Promise.all(users.map(user => models.User.create(user)));
   console.log("✔ users populated");
   const usersData = await models.User.findAll({ raw: true });
-  console.log(usersData);
 
+  /**
+   * generate initial team
+   */
   await Promise.all(initialTeam.map(team => models.Team.create(team)));
   console.log("✔ initial team populated");
   const initialTeamData = await models.Team.findAll({ raw: true });
-  console.log(initialTeamData);
 
+  /**
+   * generate initial channel under intial team
+   */
+  await Promise.all(
+    initialChannel.map(channel => {
+      const newChannel = { ...channel };
+      newChannel.team_id = initialTeamData[0].id;
+      return models.Channel.create(newChannel);
+    })
+  );
+  console.log("✔ channels populated");
+  const initialChannelsData = await models.Channel.findAll({ raw: true });
+
+  /**
+   * generate team members with initial team and users that were generated
+   */
   let tmIndex = 0;
   await Promise.all(
     teamMembers.map(tm => {
@@ -39,20 +59,10 @@ models.sequelize.sync({ force: true }).then(async () => {
     })
   );
   console.log("✔ team members populated");
-  const teamMembersData = await models.TeamMember.findAll({ raw: true });
-  console.log(teamMembersData);
 
-  await Promise.all(
-    initialChannel.map(channel => {
-      const newChannel = { ...channel };
-      newChannel.team_id = initialTeamData[0].id;
-      return models.Channel.create(newChannel);
-    })
-  );
-  console.log("✔ channels populated");
-  const initialChannelsData = await models.Channel.findAll({ raw: true });
-  console.log(initialChannelsData);
-
+  /**
+   * generate channel members with initial channel and users that were generated
+   */
   let userIndex = 0;
   await Promise.all(
     channelMembers.map(cm => {
@@ -64,8 +74,6 @@ models.sequelize.sync({ force: true }).then(async () => {
     })
   );
   console.log("✔ channelMembers populated");
-  const channelMembersData = await models.ChannelMember.findAll({ raw: true });
-  console.log(channelMembersData);
 
   console.log("-----------------------------------------");
   console.log("Populated database with seed successfully");

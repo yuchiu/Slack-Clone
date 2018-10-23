@@ -1,10 +1,4 @@
-const uuid = require("uuid/v4");
-
-const getNewId = () => {
-  const id = uuid();
-  const removedHyphenId = id.replace(/-/g, "");
-  return removedHyphenId;
-};
+const getNewId = require("./getNewId");
 
 const TeamModel = (sequelize, DataTypes) => {
   const Team = sequelize.define("team", {

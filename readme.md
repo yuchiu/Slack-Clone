@@ -22,19 +22,19 @@
 
 ### Server (Development)
 
-- populate postgres with sample data in server/seed  
-  it is required to initialize first demo team that all new registered user joins  
-  seed configuration & data is in dir ./server/seed
+- populate postgres with sample data & generate initial demo team in server/seed  
+  All new users will join the initial demo team by default once they were registered  
+  seed configuration & schema is in dir ./server/seed
 
   ```npm ./server
   npm run seed
   ```
 
-- For initial run on the machine, install dependencies & transpile TypeScript to output build directory
+- For initial run on the machine, install dependencies & Output build directory
 
   ```npm ./server
   npm install
-  npm run ts
+  npm run initial-build
   ```
 
 - start application in server  
