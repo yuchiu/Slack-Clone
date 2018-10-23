@@ -14,7 +14,7 @@
 
 - postgres needs to be setup first
 - configuration for database with sequelize is in server/src/config/sequelizeConfig.ts
-- PostgreSQL client also need to be install globally
+- PostgreSQL client need to be installed globally
 
   ```npm
   npm install pg -global
@@ -22,18 +22,18 @@
 
 ### Server (Development)
 
-- populate postgres with sample data & generate initial demo team in server/seed  
-  All new users will join the initial demo team by default once they were registered  
-  seed configuration & schema is in dir ./server/seed
-
-  ```npm ./server
-  npm run seed
-  ```
-
-- For initial run on the machine, install dependencies & Output build directory
+- install dependencies
 
   ```npm ./server
   npm install
+  ```
+
+- For initial run on the machine populate postgres with initial sample data & Output build directory  
+  all new users will join the initial demo team by default once they were registered, seed configuration & schema is in dir ./server/seed  
+  build directory will output to ./server/build as default
+
+  ```npm ./server
+  npm run seed
   npm run initial-build
   ```
 
