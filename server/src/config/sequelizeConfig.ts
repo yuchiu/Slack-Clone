@@ -1,4 +1,4 @@
-import { PSQL_NAME, PSQL_PASS, PSQL_USER } from "../utils/secrets";
+import { PSQL_HOST, PSQL_NAME, PSQL_PASS, PSQL_USER } from "../utils/secrets";
 
 export default {
   database: PSQL_NAME,
@@ -8,7 +8,7 @@ export default {
     dialect: "postgres",
     logging: false,
     operatorsAliases: false,
-    host: "localhost",
+    host: PSQL_HOST,
     define: {
       underscored: true
     }

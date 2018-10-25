@@ -4,11 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "initial-build": "tsc",
     "start": "concurrently --kill-others \"npm run ts\" \"npm run server\"",
     "ts": "tsc -w",
     "server": "nodemon NODE_ENV=development ./build/server.js",
-    "build": "tsc && node ./build/server.js",
+    "build": "tsc",
     "serve": "cross-env NODE_ENV=production SERVER_URL=http://localhost PORT=3030 node build/server.js",
     "seed": "cross-env PSQL_NAME=slack PSQL_USER=postgres PSQL_PASS=postgres node seed/index.js"
   },

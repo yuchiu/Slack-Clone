@@ -25,17 +25,16 @@ export default {
     INNER JOIN teams
     ON teams.id = team_members.team_id 
     WHERE team_members.user_id = ?`,
-  getInitialChannelId: `
-    SELECT 
-    channels.id 
-    FROM channels
-    WHERE team_id = ? 
-    ORDER BY created_at 
-    LIMIT 1`,
   getInitialTeamId: `
     SELECT 
     teams.id 
     FROM teams
+    ORDER BY created_at 
+    LIMIT 1`,
+  getInitialChannelId: `
+    SELECT 
+    channels.id 
+    FROM channels
     WHERE team_id = ? 
     ORDER BY created_at 
     LIMIT 1`,

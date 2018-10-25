@@ -5,6 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/start.js",
     "build": "cross-env NODE_ENV=production SERVER_API_URL=http://localhost:3030/api/v1 SERVER_WS_URL=ws://localhost:3030 node scripts/build.js",
+    "serve": "serve -s build",
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {

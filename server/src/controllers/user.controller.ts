@@ -61,6 +61,24 @@ const removePreviousImg = avatarurl => {
   });
 };
 
+const generateInitialDemoTeam = async () => {
+  await models.Team.create({
+    name: "Demo Team",
+    brief_description: "New users join this team for demo purposes"
+  });
+  const initialTeamData = await models.Team.findAll({ raw: true });
+  const newChannel: any = {
+    name: "general",
+    brief_description: "Company-wide announcements and work-based matters",
+    detail_description:
+      "This channel is for workspace-wide communication and announcements. All members are in this channel.",
+    public: true
+  };
+  newChannel.team_id = initialTeamData[0].id;
+  await models.Channel.create(newChannel);
+  return initialTeamData;
+};
+
 export default {
   getUser: async (req: Request, res: Response) => {
     try {
@@ -168,8 +186,12 @@ export default {
           const avatarBase64Img = generateRandomImg();
           const avatarurl = await saveBase64Img(avatarBase64Img);
           const newCredentials = { ...credentials, avatarurl };
-
-          const initialTeamIdData = await models.sequelize.query(
+          const hasInitialTeamCreated = await models.Team.count();
+          let initialTeamIdData;
+          if (!hasInitialTeamCreated) {
+            initialTeamIdData = await generateInitialDemoTeam();
+          }
+          initialTeamIdData = await models.sequelize.query(
             queries.getInitialTeamId,
             {
               transaction,
@@ -177,7 +199,7 @@ export default {
               raw: true
             }
           );
-          const initialTeamId = initialTeamIdData[0];
+          const initialTeamId = initialTeamIdData[0].id;
           const userData = await models.User.create(newCredentials, {
             transaction
           });
@@ -199,7 +221,7 @@ export default {
               raw: true
             }
           );
-          const initialChannelId = initialChannelData[0];
+          const initialChannelId = initialChannelData[0].id;
 
           await models.ChannelMember.create(
             {
