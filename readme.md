@@ -8,16 +8,14 @@
   nodejs 10.10.0
   ```
 
-## Development Environment
-
-### DataBases
-
-- postgre client need to be installed globally  
+- postgres client need to be installed globally  
   configuration for postgres database with sequelize is in server/src/config/sequelizeConfig.ts
 
   ```npm
   npm install pg -global
   ```
+
+## Development Environment
 
 ### Server (Development)
 
@@ -33,7 +31,7 @@
 
   ```npm ./server
   npm run seed
-  npm run initial-build
+  npm run build
   ```
 
 - start application in server  
@@ -70,7 +68,7 @@
 
   ```npm ./client
   npm i -g serve
-  serve -s build
+  npm run serve
   ```
 
 ### Server (Production)
@@ -102,14 +100,7 @@
   docker-compose
   ```
 
-- create directories in server for volumes that allows docker containers to persist its data
-
-  ```shell ./server
-  mkdir pgdata
-  mkdir assets
-  ```
-
-- build the Docker image "slack-clone" using the production build
+- build the Docker image as "slack-clone" with Dockerfile using the production build
 
   ```shell ./server
   sudo docker build -t slack-clone .
@@ -119,5 +110,5 @@
   server will be listening to [https://localhost]
 
   ```shell ./server
-  docker-compose up -d
+  docker-compose up
   ```

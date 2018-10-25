@@ -1,5 +1,10 @@
 version: "3"
 services:
+  redis:
+    image: redis
+    command: ["redis-server"]
+    networks:
+      - webnet
   pg_db:
     image: postgres
     volumes:
@@ -15,17 +20,17 @@ services:
     networks:
       - webnet
     environment:
-      PSQL_HOST: pg_db
-      PSQL_PASS: postgres
-      PSQL_USER: postgres
-      PSQL_NAME: slack
       NODE_ENV: production
       SERVER_URL: http://localhost
       SERVER_PORT: 3030
+      PSQL_PASS: postgres
+      PSQL_USER: postgres
+      PSQL_NAME: slack
     volumes:
       - ./assets:/app/assets
     depends_on:
       - pg_db
+      - redis
   web:
     image: nginx
     volumes:
