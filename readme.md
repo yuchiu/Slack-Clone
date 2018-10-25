@@ -1,24 +1,42 @@
 # Slack Clone
 
+## Quick Link
+
+[Tech Stack](#tech-stack)
+
+- [Client Side](#client-side)
+- [Server Side](#server-side)
+
+[Required Softwares](#required-softwares)
+
+[Development Environment](#development-environment)
+
+- [Server Development](#server-development)
+- [Client Development](#client-development)
+
+[Production Environment](#production-environment)
+
+- [Server Production](#server-production)
+- [Client Production](#client-production)
+
+---
+
 ## Tech Stack
 
 ### Client Side
 
-    React ∙ Redux ∙ React-Redux ∙ React-Router ∙ React-Thunk ∙ Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
+    Reactjs ∙ Redux ∙ React-Redux ∙ React-Router ∙ Redux-Thunk ∙ Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
 
 ### Server Side
 
-    Node ∙ TypeScript ∙ Express ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Jest ∙ Nginx ∙ Docker
+    Nodejs ∙ TypeScript ∙ Expressjs ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Jest ∙
+    Nginx ∙ Docker
 
-## Environment & Required Softwares
+---
 
-- OS environment
+## Required Softwares
 
-  ```version
-  ubuntu 18.04.1
-  ```
-
-- Required softwares and the versions this project is running on
+- **required softwares** and the versions this project is running on
 
   ```version
   npm            6.4.1
@@ -27,7 +45,7 @@
   redis-server   4.0.3
   ```
 
-- postgres client for version need to be installed globally
+- postgres client for Nodejs need to be installed globally
 
   ```npm
   npm install pg -global
@@ -36,9 +54,11 @@
 - .env file is required for setting up environment variables  
   an example of .env file is located at ./server/.env
 
+---
+
 ## Development Environment
 
-### Server (Development)
+### Server Development
 
 - install dependencies
 
@@ -46,7 +66,7 @@
   npm install
   ```
 
-- optional: populate/reset Postgres database with initial seed data  
+- **optional:** populate/reset Postgres database with initial seed data  
   seed configuration & schema is in dir ./server/seed
 
   ```npm ./server
@@ -67,7 +87,7 @@
   npm start
   ```
 
-### Client (Development)
+### Client Development
 
 - install dependencies & start application in client  
   application will be running on [http://localhost:3000]
@@ -77,9 +97,11 @@
   npm start
   ```
 
+---
+
 ## Production Environment
 
-### Server (Production)
+### Server Production
 
 - install dependencies & output production build in server  
   production build directory will be output to ./server/build
@@ -123,7 +145,7 @@
   docker-compose up
   ```
 
-### Client (Production)
+### Client Production
 
 - install dependencies & output production build in client  
   production build directory will be output to ./client/build
