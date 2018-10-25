@@ -2,7 +2,6 @@ FROM node:10.10
 WORKDIR /app
 COPY package-lock.json .
 COPY package.json .
-COPY seed seed
 COPY build build
 COPY .env .
 RUN npm install

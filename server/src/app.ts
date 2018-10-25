@@ -33,14 +33,14 @@ if (NODE_ENV === "development") {
 
 /* production build */
 if (NODE_ENV === "production") {
-  /* serve with seperate client server, allow cors for that client server */
-  // app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
+  /* client is served with seperate server, allow cors for that client server */
+  app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
 
-  /* serve within server */
-  app.use(express.static(path.join(__dirname, "./client")));
-  app.get("/", (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, "./client") });
-  });
+  /* client is served within server, join client build path */
+  // app.use(express.static(path.join(__dirname, "./client")));
+  // app.get("/", (req, res) => {
+  //   res.sendFile("index.html", { root: path.join(__dirname, "./client") });
+  // });
 }
 
 app.set("port", SERVER_PORT);
