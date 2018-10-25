@@ -1,7 +1,9 @@
 FROM node:10.10
 WORKDIR /app
+COPY package-lock.json .
 COPY package.json .
-RUN npm install
-COPY build .
+COPY seed seed
+COPY build build
 COPY .env .
-CMD node server.js
+RUN npm install
+CMD node build/server.js

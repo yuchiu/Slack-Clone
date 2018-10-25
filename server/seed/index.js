@@ -9,7 +9,9 @@ const teamMembers = require("./teamMembers.json");
 const initialChannel = require("./initialChannel.json");
 const channelMembers = require("./channelMembers.json");
 
-const redisClient = Promise.promisifyAll(redis.createClient());
+const redisClient = Promise.promisifyAll(
+  redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
+);
 
 redisClient.flushdb((err, succeeded) => {
   if (err) {
