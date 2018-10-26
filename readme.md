@@ -120,6 +120,9 @@
   npm run serve
   ```
 
+- **! important**: client API url's port is set to **80** by default in its production build  
+  change client API url's port setting to **3030** that's located at **./client/src/actions/services/API.js**
+
 #### Option B. Serve Application with Nginx & Docker Container (Recommended)
 
 - softwares required for this build
@@ -139,7 +142,7 @@
 
 - start server application as Docker container locally using docker-compose  
   docker-compose file is located at ./server/docker-compose.yml
-  server will be listening to [http://localhost:3030] by default
+  server will be listening to [http://localhost:80] by default
 
   ```shell ./server
   docker-compose up
