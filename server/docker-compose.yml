@@ -14,7 +14,7 @@ services:
       POSTGRES_DB: slack
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-  backend:
+  backend_1:
     image: slack-clone
     networks:
       - webnet
@@ -34,18 +34,38 @@ services:
     depends_on:
       - pg_db
       - redis_db
+  backend_2:
+    image: slack-clone
+    networks:
+      - webnet
+    environment:
+      NODE_ENV: production
+      SERVER_URL: http://localhost
+      SERVER_PORT: 3031
+      PSQL_HOST: pg_db
+      PSQL_PASS: postgres
+      PSQL_USER: postgres
+      PSQL_NAME: slack
+      REDIS_HOST: redis_db
+      REDIS_PORT: 6379
+      REDIS_TIME_TO_LIVE: 36000
+    volumes:
+      - ./assets:/app/assets
+    depends_on:
+      - pg_db
+      - redis_db
   web:
     image: nginx
     volumes:
-      - ./slack-clone.conf:/etc/nginx/conf.d/slack-clone.conf
+      - ./slack-clone.conf:/etc/nginx/conf.d/default.conf
       - ./assets:/app/assets
     ports:
-      - "3030:80"
+      - "80:80"
     networks:
       - webnet
     depends_on:
-      - backend
-    command:
-      /bin/bash -c "cat /etc/nginx/conf.d/slack-clone.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+      - backend_1
+      - backend_2
+    command: /bin/bash -c "exec nginx -g 'daemon off;'"
 networks:
   ? webnet
