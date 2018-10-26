@@ -23,12 +23,8 @@ services:
       SERVER_URL: http://localhost
       SERVER_PORT: 3030
       PSQL_HOST: pg_db
-      PSQL_PASS: postgres
-      PSQL_USER: postgres
-      PSQL_NAME: slack
       REDIS_HOST: redis_db
       REDIS_PORT: 6379
-      REDIS_TIME_TO_LIVE: 36000
     volumes:
       - ./assets:/app/assets
     depends_on:
@@ -43,12 +39,8 @@ services:
       SERVER_URL: http://localhost
       SERVER_PORT: 3031
       PSQL_HOST: pg_db
-      PSQL_PASS: postgres
-      PSQL_USER: postgres
-      PSQL_NAME: slack
       REDIS_HOST: redis_db
       REDIS_PORT: 6379
-      REDIS_TIME_TO_LIVE: 36000
     volumes:
       - ./assets:/app/assets
     depends_on:

@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 
 import { redisCache, queries } from "./common";
 import models from "../models";
-import { SERVER_URL, SERVER_PORT } from "../utils/secrets";
+import { SERVER_URL, SERVER_PORT, NODE_ENV } from "../utils/secrets";
 
 const userSummary = user => {
   const summary = {
@@ -46,8 +46,12 @@ const saveBase64Img = async avatarBase64Img => {
 
   await fse.outputFile(filePath, avatarImage, { encoding: "base64" });
 
-  const avatarurl = `${SERVER_URL}:${SERVER_PORT}/assets/${avatarName}`;
+  let avatarurl = `${SERVER_URL}:${SERVER_PORT}/assets/${avatarName}`;
 
+  //assume port would be 80 for production build
+  if (NODE_ENV === "production") {
+    avatarurl = `${SERVER_URL}/assets/${avatarName}`;
+  }
   return avatarurl;
 };
 
