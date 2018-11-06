@@ -36,14 +36,18 @@
 
 ## Required Softwares
 
-- **required softwares** and the versions this project is running on
+- **required softwaress** and the versions this project is running on
 
-  ```version
-  npm            6.4.1
-  nodejs         10.10.0
-  postgres       10.5
-  redis-server   4.0.3
-  ```
+  | Softwares                         | Versions   |
+  | --------------------------------- | ---------- |
+  | npm                               | 6.4.1      |
+  | nodejs                            | 10.10.0    |
+  | postgres                          | 10.5       |
+  | redis-server                      | 4.0.3      |
+  | **Optional for production build** |
+  | nginx                             | 1.14.0     |
+  | docker                            | 18.06.1-ce |
+  | docker-compose                    | 1.22.0     |
 
 - postgres client for Nodejs need to be installed globally
 
@@ -120,18 +124,18 @@
   npm run serve
   ```
 
-- **! important**: client API url's port is set to **80** by default in its production build  
+- **!important**: client API url's port is set to **80** by default in its production build  
   change client API url's port setting to **3030** that's located at **./client/src/actions/services/API.js**
 
 #### Option B. Serve Application with Nginx & Docker Container (Recommended)
 
 - softwares required for this build
 
-  ```version
-  nginx            1.14.0
-  docker           18.06.1-ce
-  docker-compose   1.22.0
-  ```
+  | Softwares      | Versions   |
+  | -------------- | ---------- |
+  | nginx          | 1.14.0     |
+  | docker         | 18.06.1-ce |
+  | docker-compose | 1.22.0     |
 
 - build the Docker image as "slack-clone" with Dockerfile using the server's production build
   Docker build file is located at ./server/Dockerfile
