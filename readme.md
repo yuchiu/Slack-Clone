@@ -35,7 +35,7 @@
 
 ### Live Site Demo
 
-Link: [Not deploy yet](https://github.com/yuchiu/slack-clone)
+Link: Not deploy yet
 
 ### Video Demo
 
