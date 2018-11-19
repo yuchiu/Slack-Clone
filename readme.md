@@ -35,7 +35,7 @@
 
 ### Live Site Demo
 
-Link: Not deploy yet
+Link: Not deployed yet
 
 ### Video Demo
 
@@ -64,7 +64,7 @@ Link: Not deploy yet
 
 ### Server Diagram
 
-![server](https://i.imgur.com/jSBct94.jpg)
+![server](https://i.imgur.com/EthSDOc.jpg)
 
 ---
 
