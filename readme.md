@@ -2,15 +2,20 @@
 
 ## Quick Link
 
-[System Architecture Diagram](#system-architecture-diagram)
+[Demo](#demo)
 
-- [Client Diagram](#client-diagram)
-- [Server Diagram](#server-diagram)
+- [Live Site Demo](#live-site-demo)
+- [Video Demo](#video-demo)
 
 [Tech Stack](#tech-stack)
 
 - [Client Side](#client-side)
 - [Server Side](#server-side)
+
+[System Architecture Diagram](#system-architecture-diagram)
+
+- [Client Diagram](#client-diagram)
+- [Server Diagram](#server-diagram)
 
 [Required Softwares](#required-softwares)
 
@@ -26,15 +31,15 @@
 
 ---
 
-## System Architecture Diagram
+## Demo
 
-### Client Diagram
+### Live Site Demo
 
-![client](https://i.imgur.com/YLYwRGV.jpg)
+Link: [Not deploy yet](https://github.com/yuchiu/slack-clone)
 
-### Server Diagram
+### Video Demo
 
-![server](https://i.imgur.com/jSBct94.jpg)
+![demogif](https://i.imgur.com/L7nUeVU.gif)
 
 ---
 
@@ -48,6 +53,18 @@
 
     Nodejs ∙ TypeScript ∙ Expressjs ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Jest ∙
     Nginx ∙ Docker
+
+---
+
+## System Architecture Diagram
+
+### Client Diagram
+
+![client](https://i.imgur.com/YLYwRGV.jpg)
+
+### Server Diagram
+
+![server](https://i.imgur.com/jSBct94.jpg)
 
 ---
 
