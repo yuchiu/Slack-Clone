@@ -60,11 +60,11 @@ Link: Not deployed yet
 
 ### Client Diagram
 
-![client](https://i.imgur.com/YLYwRGV.jpg)
+![client](https://i.imgur.com/iAgUV0i.jpg)
 
 ### Server Diagram
 
-![server](https://i.imgur.com/EthSDOc.jpg)
+![server](https://i.imgur.com/WcDg0xQ.jpg)
 
 ---
 
