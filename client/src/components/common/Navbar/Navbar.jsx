@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./Navbar.scss";
 import AuthNavBar from "./AuthNavbar.jsx";
 import UnauthNavBar from "./UnauthNavbar.jsx";
 

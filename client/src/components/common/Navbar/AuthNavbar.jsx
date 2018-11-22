@@ -6,13 +6,23 @@ import { LogoSlack } from "@/components/common";
 
 const AuthNavbar = ({ username, handleLogout, history }) => (
   <Menu size="large">
-    <Menu.Item name="home" onClick={() => history.push("/")}>
+    <Menu.Item
+      className="borderless"
+      name="home"
+      style={{ padding: "10px", fontSize: "1.2em" }}
+      onClick={() => history.push("/")}
+    >
       <LogoSlack size="32" />
       Slack
     </Menu.Item>
 
     <Menu.Menu position="right">
-      <Menu.Item name="workspace" onClick={() => history.push("/workspace")}>
+      <Menu.Item
+        style={{ padding: "10px", fontSize: "1.2em" }}
+        className="borderless"
+        name="workspace"
+        onClick={() => history.push("/workspace")}
+      >
         WorkSpace
       </Menu.Item>
       <Dropdown item text={username}>

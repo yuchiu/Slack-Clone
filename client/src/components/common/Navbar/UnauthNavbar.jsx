@@ -6,16 +6,31 @@ import { LogoSlack } from "@/components/common";
 
 const UnauthNavBar = ({ history }) => (
   <Menu size="large">
-    <Menu.Item name="home" onClick={() => history.push("/")}>
+    <Menu.Item
+      style={{ padding: "10px", fontSize: "1.2em" }}
+      name="home"
+      className="borderless"
+      onClick={() => history.push("/")}
+    >
       <LogoSlack size="32" />
       Slack
     </Menu.Item>
     <Menu.Menu position="right">
-      <Menu.Item name="login" onClick={() => history.push("/login")}>
-        login
+      <Menu.Item
+        style={{ padding: "10px", fontSize: "1.2em" }}
+        name="login"
+        className="borderless"
+        onClick={() => history.push("/login")}
+      >
+        Login
       </Menu.Item>
-      <Menu.Item name="register" onClick={() => history.push("/register")}>
-        register
+      <Menu.Item
+        style={{ padding: "10px", fontSize: "1.2em" }}
+        name="register"
+        className="borderless"
+        onClick={() => history.push("/register")}
+      >
+        Register
       </Menu.Item>
     </Menu.Menu>
   </Menu>
