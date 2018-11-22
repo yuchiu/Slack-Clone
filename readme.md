@@ -47,12 +47,11 @@ Link: Not deployed yet
 
 ### Client Side
 
-    Reactjs ∙ Redux ∙ React-Redux ∙ React-Router ∙ Redux-Thunk ∙ Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
+- Reactjs ∙ Redux ∙ React-Redux ∙ React-Router ∙ Redux-Thunk ∙ Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
 
 ### Server Side
 
-    Nodejs ∙ TypeScript ∙ Expressjs ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Jest ∙
-    Nginx ∙ Docker
+- Nodejs ∙ TypeScript ∙ Expressjs ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Nginx ∙ Docker
 
 ---
 

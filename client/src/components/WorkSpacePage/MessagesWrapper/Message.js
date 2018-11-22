@@ -1,6 +1,7 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import Moment from "react-moment";
 
 import TextType from "./TextType";
 import ImageType from "./ImageType.jsx";
@@ -44,7 +45,7 @@ class Message extends React.Component {
             {message.username}
           </Comment.Author>
           <Comment.Metadata>
-            <span>{message.created_at}</span>
+            <Moment format="HH:mm MMM DD, YYYY" date={message.created_at} />
           </Comment.Metadata>
           <br />
           {message.url ? (
