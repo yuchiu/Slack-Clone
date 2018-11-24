@@ -25,7 +25,12 @@ const AuthNavbar = ({ username, handleLogout, history }) => (
       >
         WorkSpace
       </Menu.Item>
-      <Dropdown item text={username}>
+      <Dropdown
+        item
+        text={username}
+        className="borderless"
+        style={{ padding: "10px", fontSize: "1.2em" }}
+      >
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => history.push("/create-team")}>
             Create Team
