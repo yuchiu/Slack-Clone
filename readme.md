@@ -17,7 +17,7 @@
 - [Client Diagram](#client-diagram)
 - [Server Diagram](#server-diagram)
 
-[Required Softwares](#required-softwares)
+[Required Development Tools](#required-development-tools)
 
 [Development Environment](#development-environment)
 
@@ -67,9 +67,9 @@ Link: Not deployed yet
 
 ---
 
-## Required Softwares
+## Required Development Tools
 
-- **required softwaress** and the versions this project is running on
+- **required development tools** and the versions this project is running on
 
   | Softwares                         | Versions   |
   | --------------------------------- | ---------- |
@@ -82,42 +82,53 @@ Link: Not deployed yet
   | docker                            | 18.06.1-ce |
   | docker-compose                    | 1.22.0     |
 
-- postgres client for Nodejs need to be installed globally
-
-  ```npm
-  npm install pg -global
-  ```
-
-- .env file is required for setting up environment variables  
-  an example of .env file is located at ./server/.env
-
 ---
 
 ## Development Environment
 
 ### Server Development
 
-- install dependencies
+- postgres client for Nodejs need to be installed globally
+
+  ```npm
+  npm install pg -global
+  ```
+
+- **!important** .env file is required for setting up environment variables  
+  an example of .env file is located at ./server/.env
+
+- we are using default value for redis's environment variables in this application, modify accordingly to your environment
+
+- postgres database needs to be setup first  
+  Postgres configuration is stored in .env file, modifiy .env variables for your own environment  
+  The list of default .env variable values this this application use:  
+  PSQL_HOST(database host) = "localhost"  
+  PSQL_NAME(database name) = "slack"  
+  PSQL_USER(database admin username) = "postgres"  
+  PSQL_PASS(database admin password) = "postgres"
+
+* install Slack-Clone server's dependencies
 
   ```npm ./server
+  cd slack-clone/server
   npm install
   ```
 
-- **optional:** populate/reset Postgres database with initial seed data  
+* **optional:** populate/reset Postgres database with initial seed data  
   seed configuration & schema is in dir ./server/seed
 
   ```npm ./server
   npm run seed
   ```
 
-- for initial run on the machine, output a build directory  
+* for initial run on the machine, output a build directory  
   build directory will output to ./server/build
 
   ```npm ./server
   npm run build
   ```
 
-- start application in server  
+* start application in server  
   server will be listening to [http://localhost:3030]
 
   ```npm ./server
@@ -130,6 +141,7 @@ Link: Not deployed yet
   application will be running on [http://localhost:3000]
 
   ```npm ./client
+  cd slack-clone/client
   npm install
   npm start
   ```
