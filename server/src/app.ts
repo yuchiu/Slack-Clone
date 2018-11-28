@@ -28,7 +28,9 @@ const io = socketIo(httpServer);
 if (NODE_ENV === "development") {
   app.use(logger("dev"));
   app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-  app.use(simulateLatency(50, 1000));
+
+  // to simulate latency of 50ms - 1000ms
+  // app.use(simulateLatency(50, 1000));
 }
 
 /* production build */
