@@ -63,7 +63,7 @@ Link: Not deployed yet
 
 ### Server Diagram
 
-![server](https://i.imgur.com/WcDg0xQ.jpg)
+![server](https://i.imgur.com/ZCWscsa.jpg)
 
 ---
 
