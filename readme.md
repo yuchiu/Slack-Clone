@@ -35,7 +35,7 @@
 
 ### Live Site Demo
 
-Link: Not deployed yet
+[Link](http://yuchiu-slack.surge.sh)
 
 ### Video Demo
 
