@@ -7,6 +7,7 @@ import ButtonInline from "./ButtonInline/ButtonInline.jsx";
 import HOCModal from "./HOCModal/HOCModal";
 import HOCForm from "./HOCForm/HOCForm";
 import ErrorModal from "./ErrorModal/ErrorModal";
+import OAuthSection from "./OAuthSection/OAuthSection";
 
 export {
   Navbar,
@@ -17,5 +18,6 @@ export {
   ButtonOutline,
   ButtonInline,
   ErrorModal,
-  LogoSlack
+  LogoSlack,
+  OAuthSection
 };

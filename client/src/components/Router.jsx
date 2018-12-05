@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 import "./Router.scss";
 import AuthenticatedRoute from "./AuthenticatedRoute";
@@ -15,7 +15,7 @@ const Router = ({ hasError }) =>
   hasError ? (
     <ErrorPage />
   ) : (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/login" component={LoginPage} />
@@ -32,7 +32,7 @@ const Router = ({ hasError }) =>
         />
         <Route exact path="/:unfoundLocation" component={NotFoundPage} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 
 export default Router;

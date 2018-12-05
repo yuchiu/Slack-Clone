@@ -3,13 +3,13 @@ services:
   redis_db:
     image: redis
     networks:
-      - webnet
+      - host
   pg_db:
     image: postgres
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     networks:
-      - webnet
+      - host
     environment:
       POSTGRES_DB: slack
       POSTGRES_USER: postgres
@@ -17,7 +17,7 @@ services:
   backend_1:
     image: slack-clone
     networks:
-      - webnet
+      - host
     environment:
       NODE_ENV: production
       SERVER_URL: http://localhost
@@ -33,7 +33,7 @@ services:
   backend_2:
     image: slack-clone
     networks:
-      - webnet
+      - host
     environment:
       NODE_ENV: production
       SERVER_URL: http://localhost
@@ -54,10 +54,10 @@ services:
     ports:
       - "80:80"
     networks:
-      - webnet
+      - host
     depends_on:
       - backend_1
       - backend_2
     command: /bin/bash -c "exec nginx -g 'daemon off;'"
 networks:
-  ? webnet
+  ? host

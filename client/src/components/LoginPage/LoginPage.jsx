@@ -5,7 +5,7 @@ import { Container } from "semantic-ui-react";
 import LoadingOverlay from "react-loading-overlay";
 
 import "./LoginPage.scss";
-import { Navbar, ErrorInline } from "@/components/common";
+import { Navbar, OAuthSection, ErrorInline } from "@/components/common";
 import LoginForm from "./LoginForm";
 
 const LoginPage = ({
@@ -30,6 +30,7 @@ const LoginPage = ({
           handleLogin={handleLogin}
           handleFieldChange={handleFieldChange}
         />
+        <OAuthSection />
         <br />
         <br /> New to Slack?{" "}
         <a className="redirect" onClick={redirectToRegister}>

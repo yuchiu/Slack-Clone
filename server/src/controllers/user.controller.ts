@@ -4,11 +4,18 @@ import * as randomstring from "randomstring";
 import * as randomHex from "randomhex";
 import * as _ from "lodash";
 import * as bcrypt from "bcryptjs";
+import * as request from "superagent";
 import { Request, Response } from "express";
 
 import { redisCache, queries } from "./common";
 import models from "../models";
-import { SERVER_URL, SERVER_PORT, NODE_ENV } from "../utils/secrets";
+import {
+  SERVER_URL,
+  SERVER_PORT,
+  NODE_ENV,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET
+} from "../utils/secrets";
 
 const userSummary = user => {
   const summary = {
@@ -136,6 +143,56 @@ export default {
     }
   },
 
+  signInGithubOauth: async (req: Request, res: Response) => {
+    try {
+      const { code } = req.query;
+      console.log(code);
+
+      if (!code) {
+        res.status(403).send({
+          meta: {
+            type: "error",
+            status: 403,
+            message: "no authorization code from Github"
+          }
+        });
+      }
+      request
+        .get("https://github.com/login/oauth/access_token")
+        .send({
+          client_id: GITHUB_CLIENT_ID,
+          client_secret: GITHUB_CLIENT_SECRET,
+          code
+        }) // query string
+        .set("Accept", "application/json")
+        .then(tokenResult => {
+          const accessToken = tokenResult.body.access_token;
+          request
+            .get("https://api.github.com/user")
+            .set("Authorization", "token " + accessToken)
+            .then(userResult => {
+              const { body } = userResult;
+              res.status(200).send({
+                meta: {
+                  type: "success",
+                  status: 200,
+                  message: ""
+                },
+                result: body
+              });
+            });
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        meta: {
+          type: "error",
+          status: 500,
+          message: "server error"
+        }
+      });
+    }
+  },
   signUpUser: async (req: Request, res: Response) => {
     try {
       const credentials = req.body;
