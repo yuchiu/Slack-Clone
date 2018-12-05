@@ -35,7 +35,7 @@
 
 ### Live Site Demo
 
-Link: Not deployed yet
+[Link](http://yuchiu-slack.surge.sh)
 
 ### Video Demo
 
@@ -63,7 +63,7 @@ Link: Not deployed yet
 
 ### Server Diagram
 
-![server](https://i.imgur.com/WcDg0xQ.jpg)
+![server](https://i.imgur.com/ZCWscsa.jpg)
 
 ---
 
