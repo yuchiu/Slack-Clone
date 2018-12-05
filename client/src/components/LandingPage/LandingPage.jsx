@@ -1,15 +1,20 @@
 import React from "react";
 
 import "./LandingPage.scss";
-import { Navbar } from "@/components/common";
+import { Navbar, LogoSlack } from "@/components/common";
 
 const LandingPage = () => (
   <React.Fragment>
     <Navbar />
     <main className="landing-page">
       <h4 className="landing-header">
-        <i class="fa fa-slack" />
-        <b> Slack Clone</b>
+        <LogoSlack size="32" />
+        <b>
+          <span className="landing-header--red">Sl</span>
+          <span className="landing-header--teal">ack</span>{" "}
+          <span className="landing-header--yellow">Cl</span>
+          <span className="landing-header--green">one</span>
+        </b>
       </h4>
       <div className="landing-href-group">
         <a
@@ -18,7 +23,7 @@ const LandingPage = () => (
           target="_blank"
           href="http://www.yuchiu.com/#showcases-wrapper"
         >
-          <i class="fa fa-list-ul" />
+          <i className="fa fa-list-ul" />
           <b> Technical Specifications</b>
         </a>
         <a
@@ -29,15 +34,6 @@ const LandingPage = () => (
         >
           <i className="fa fa-github" />
           <b> Github</b>
-        </a>
-        <a
-          className="landing-href-group__demo"
-          rel="noopener noreferrer"
-          target="_blank"
-          href="https://www.github.com/yuchiu/slack-clone"
-        >
-          <i class="fa fa-window-maximize" />
-          <b> Demo</b>
         </a>
       </div>
       <div className="landing-desc">
