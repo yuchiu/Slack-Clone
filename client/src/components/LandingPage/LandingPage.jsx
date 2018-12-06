@@ -8,12 +8,15 @@ const LandingPage = () => (
     <Navbar />
     <main className="landing-page">
       <h4 className="landing-header">
-        <LogoSlack size="32" />
+        Welcome to{" "}
         <b>
-          <span className="landing-header--red">Sl</span>
+          <span className="landing-header--red">
+            <i className="fa fa-slack" />
+            Sl
+          </span>
           <span className="landing-header--teal">ack</span>{" "}
-          <span className="landing-header--yellow">Cl</span>
-          <span className="landing-header--green">one</span>
+          <span className="landing-header--yellow">Clo</span>
+          <span className="landing-header--green">ne!</span>
         </b>
       </h4>
       <div className="landing-href-group">
@@ -38,7 +41,6 @@ const LandingPage = () => (
       </div>
       <div className="landing-desc">
         <div className="landing-desc__header">
-          Welcome to Slack Clone! <br />
           Once you are registered, you will be joining the Demo Team and general
           channel by default.
           <br />
