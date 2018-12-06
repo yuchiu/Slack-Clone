@@ -21,6 +21,10 @@ export default {
     const response = await apiV1().post(`/users/signin`, credentials);
     return response;
   },
+  fetchOAuthLogin: async credentials => {
+    const response = await apiV1().post(`/users/oauth`, credentials);
+    return response;
+  },
   fetchLogoutUser: async () => {
     const response = await apiV1().get(`/users/signout`);
     return response;

@@ -74,6 +74,26 @@ export default {
     }
   },
 
+  fetchOAuthLogin: credentials => async dispatch => {
+    dispatch({
+      type: actionTypes.USER_FETCH_LOGIN
+    });
+    try {
+      const response = await userService.fetchOAuthLogin(credentials);
+      const { data } = response;
+      dispatch({
+        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: actionTypes.ERROR_AUTH,
+        payload: data.meta.message
+      });
+    }
+  },
+
   fetchLogoutUser: () => async dispatch => {
     dispatch({
       type: actionTypes.USER_FETCH_LOGOUT

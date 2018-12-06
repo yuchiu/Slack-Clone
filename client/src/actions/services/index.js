@@ -3,13 +3,11 @@ import teamService from "./team.service";
 import channelService from "./channel.service";
 import messageService from "./message.service";
 import globalStateService from "./globalState.service";
-import oauthService from "./oauth.service";
 
 export {
   userService,
   globalStateService,
   channelService,
   teamService,
-  messageService,
-  oauthService
+  messageService
 };

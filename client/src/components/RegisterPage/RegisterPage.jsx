@@ -5,7 +5,7 @@ import { Container } from "semantic-ui-react";
 import LoadingOverlay from "react-loading-overlay";
 
 import "./RegisterPage.scss";
-import { Navbar, ErrorInline, OAuthSection } from "@/components/common";
+import { Navbar, ErrorInline } from "@/components/common";
 import RegisterForm from "./RegisterForm.jsx";
 
 const RegisterPage = ({
@@ -30,7 +30,6 @@ const RegisterPage = ({
           handleRegister={handleRegister}
           handleFieldChange={handleFieldChange}
         />
-        <OAuthSection />
         <br />
         <br /> Already have an account?{" "}
         <a className="redirect" onClick={redirectToLogin}>

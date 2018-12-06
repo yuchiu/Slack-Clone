@@ -4,6 +4,8 @@ process.env.REACT_APP_NODE_ENV
   ? (NODE_ENV = process.env.REACT_APP_NODE_ENV)
   : (NODE_ENV = "development");
 
+export const OAUTH_REDIRECT = process.env.REACT_APP_OAUTH_REDIRECT;
+
 export const DEV_SERVER_URL = process.env.REACT_APP_DEV_SERVER_URL;
 export const DEV_SERVER_PORT = process.env.REACT_APP_DEV_SERVER_PORT;
 export const DEV_SERVER_WS = process.env.REACT_APP_DEV_SERVER_WS;
@@ -21,3 +23,11 @@ export const FACEBOOK_CLIENT_SECRET =
 
 export const GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
 export const GITHUB_CLIENT_SECRET = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+
+export const LINKEDIN_CLIENT_ID = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
+export const LINKEDIN_CLIENT_SECRET =
+  process.env.REACT_APP_LINKEDIN_CLIENT_SECRET;
+
+export const INSTAGRAM_CLIENT_ID = process.env.REACT_APP_INSTAGRAM_CLIENT_ID;
+export const INSTAGRAM_CLIENT_SECRET =
+  process.env.REACT_APP_INSTAGRAM_CLIENT_SECRET;

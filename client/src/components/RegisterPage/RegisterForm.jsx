@@ -71,7 +71,7 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Field>
-    <Button primary className="" size="large" onClick={handleRegister}>
+    <Button className="" size="large" onClick={handleRegister}>
       Register
     </Button>
   </Form>

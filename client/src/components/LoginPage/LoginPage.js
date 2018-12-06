@@ -29,6 +29,26 @@ class LoginPageContainer extends React.Component {
     }
   };
 
+  handleSocialLogin = res => {
+    const { fetchOAuthLogin, clearAllError } = this.props;
+    console.log(res);
+    const user = {
+      provider: res.provider,
+      username: res.profile.firstName,
+      email: res.profile.email,
+      avatarurl: res.profile.profilePicURL,
+      access_token: res.token.accessToken
+    };
+    fetchOAuthLogin(user);
+    clearAllError();
+  };
+
+  handleSocialLoginFailure = err => {
+    console.error(err);
+    const { createError } = this.props;
+    createError("error occured while logging in with social media");
+  };
+
   render() {
     const {
       isUserLoggedIn,
@@ -47,6 +67,8 @@ class LoginPageContainer extends React.Component {
         fieldErrors={fieldErrors}
         formFields={formFields}
         handleFieldChange={handleFieldChange}
+        handleSocialLogin={this.handleSocialLogin}
+        handleSocialLoginFailure={this.handleSocialLoginFailure}
         handleLogin={this.handleLogin}
         redirectToRegister={this.redirectToRegister}
       />
@@ -77,6 +99,12 @@ const dispatchToProps = dispatch => ({
   clearAllError: () => dispatch(errorAction.clearAllError()),
   fetchLoginUser: credential => {
     dispatch(userAction.fetchLoginUser(credential));
+  },
+  fetchOAuthLogin: credential => {
+    dispatch(userAction.fetchOAuthLogin(credential));
+  },
+  createError: text => {
+    dispatch(errorAction.createError(text));
   }
 });
 
