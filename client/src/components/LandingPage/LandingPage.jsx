@@ -41,8 +41,8 @@ const LandingPage = () => (
       </div>
       <div className="landing-desc">
         <div className="landing-desc__header">
-          Once you are registered, you will be joining the Demo Team and general
-          channel by default.
+          Once you are registered or Login with your social media account, you
+          will be joining the Demo Team and general channel by default.
           <br />
           And... that's it! You are set to start playing around with features
           such as sending messages, creating channels and sharing files along
@@ -67,6 +67,8 @@ const LandingPage = () => (
           </div>
           User Stories:
           <div className="landing-desc__detail__user-story">
+            Users can log in with Google or Facebook
+            <br />
             Users can register and log in with their account
             <br />
             Users profile image are randomly generated once he/she is registered

@@ -32,6 +32,9 @@ process.env.SERVER_PORT
 export const { FACEBOOK_CLIENT_ID } = process.env;
 export const { FACEBOOK_CLIENT_SECRET } = process.env;
 
+export const { GOOGLE_CLIENT_ID } = process.env;
+export const { GOOGLE_CLIENT_SECRET } = process.env;
+
 export const { SESSION_NAME } = process.env;
 export const { SESSION_SECRET } = process.env;
 

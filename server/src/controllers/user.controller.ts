@@ -220,7 +220,9 @@ export default {
             credentials.access_token
           }`;
           const response = await axios.get(googleAcessTokenVerifyUrl);
-          if (response.issued_to === GOOGLE_CLIENT_ID) {
+          if (
+            response.data.issued_to.toString() === GOOGLE_CLIENT_ID.toString()
+          ) {
             isOAuthVerified = true;
           }
         }

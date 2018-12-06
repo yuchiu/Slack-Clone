@@ -5,7 +5,8 @@ import { Container } from "semantic-ui-react";
 import LoadingOverlay from "react-loading-overlay";
 
 import "./RegisterPage.scss";
-import { Navbar, ErrorInline } from "@/components/common";
+import { GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID } from "@/utils/secrets";
+import { Navbar, ErrorInline, SocialButton } from "@/components/common";
 import RegisterForm from "./RegisterForm.jsx";
 
 const RegisterPage = ({
@@ -16,6 +17,8 @@ const RegisterPage = ({
   formFields,
 
   redirectToLogin,
+  handleSocialLogin,
+  handleSocialLoginFailure,
   handleRegister,
   handleFieldChange
 }) => (
@@ -30,15 +33,39 @@ const RegisterPage = ({
           handleRegister={handleRegister}
           handleFieldChange={handleFieldChange}
         />
-        <br />
-        <br /> Already have an account?{" "}
+        Already have an account?{" "}
         <a className="redirect" onClick={redirectToLogin}>
           Log In
         </a>
-        <div className="inline-error--center">
-          {error && <ErrorInline text={`Error: ${error}`} />}
+        <br />
+        <br />
+        Or Log In With:
+        <br />
+        <div className="social-btn-group">
+          <SocialButton
+            provider="facebook"
+            appId={FACEBOOK_CLIENT_ID}
+            onLoginSuccess={handleSocialLogin}
+            onLoginFailure={handleSocialLoginFailure}
+          >
+            <i className="fab fa-facebook fa-2x" />
+            Facebook
+          </SocialButton>
+          <SocialButton
+            provider="google"
+            appId={GOOGLE_CLIENT_ID}
+            onLoginSuccess={handleSocialLogin}
+            onLoginFailure={handleSocialLoginFailure}
+          >
+            <i className="fab fa-google-plus-g fa-2x" />
+            Google
+          </SocialButton>
         </div>
       </Container>
+      <br />
+      <div className="inline-error--center">
+        {error && <ErrorInline text={`Error: ${error}`} />}
+      </div>
     </main>
   </LoadingOverlay>
 );

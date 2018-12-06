@@ -40,6 +40,26 @@ class RegisterPageContainer extends React.Component {
     }
   };
 
+  handleSocialLogin = res => {
+    const { fetchOAuthLogin, clearAllError } = this.props;
+    console.log(res);
+    const user = {
+      provider: res.provider,
+      username: res.profile.firstName + res.profile.lastName,
+      email: res.profile.email,
+      avatarurl: res.profile.profilePicURL,
+      access_token: res.token.accessToken
+    };
+    fetchOAuthLogin(user);
+    clearAllError();
+  };
+
+  handleSocialLoginFailure = err => {
+    console.error(err);
+    const { createError, error } = this.props;
+    createError(error);
+  };
+
   render() {
     const {
       isUserLoggedIn,
@@ -58,6 +78,8 @@ class RegisterPageContainer extends React.Component {
         isLoading={isLoading}
         formFields={formFields}
         handleFieldChange={handleFieldChange}
+        handleSocialLogin={this.handleSocialLogin}
+        handleSocialLoginFailure={this.handleSocialLoginFailure}
         handleRegister={this.handleRegister}
         redirectToLogin={this.redirectToLogin}
       />
@@ -89,6 +111,12 @@ const dispatchToProps = dispatch => ({
   clearAllError: () => dispatch(errorAction.clearAllError()),
   fetchRegisterUser: credential => {
     dispatch(userAction.fetchRegisterUser(credential));
+  },
+  fetchOAuthLogin: credential => {
+    dispatch(userAction.fetchOAuthLogin(credential));
+  },
+  createError: text => {
+    dispatch(errorAction.createError(text));
   }
 });
 

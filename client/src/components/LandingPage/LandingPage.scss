@@ -12,16 +12,16 @@
   font-size: 1.5em;
   margin-bottom: 20px;
   &--red {
-    color: $slack-red;
-  }
-  &--teal {
     color: $slack-teal;
   }
+  &--teal {
+    color: $slack-red;
+  }
   &--yellow {
-    color: $slack-yellow;
+    color: $slack-green;
   }
   &--green {
-    color: $slack-green;
+    color: $slack-yellow;
   }
 }
 

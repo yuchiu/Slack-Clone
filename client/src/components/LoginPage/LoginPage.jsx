@@ -33,6 +33,11 @@ const LoginPage = ({
           handleLogin={handleLogin}
           handleFieldChange={handleFieldChange}
         />
+        New to Slack Clone?{" "}
+        <a className="redirect" onClick={redirectToRegister}>
+          Register
+        </a>
+        <br />
         <br />
         Or Log In With:
         <br />
@@ -56,11 +61,6 @@ const LoginPage = ({
             Google
           </SocialButton>
         </div>
-        <br />
-        <br /> New to Slack Clone?{" "}
-        <a className="redirect" onClick={redirectToRegister}>
-          Register
-        </a>
       </Container>
       <br />
       <div className="inline-error--center">
