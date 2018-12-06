@@ -4,7 +4,7 @@ import * as randomstring from "randomstring";
 import * as randomHex from "randomhex";
 import * as _ from "lodash";
 import * as bcrypt from "bcryptjs";
-import * as axios from "axios";
+import axios from "axios";
 import { Request, Response } from "express";
 
 import { redisCache, queries } from "./common";
@@ -296,9 +296,9 @@ export default {
             },
             { transaction }
           );
-          /* find the channel general from initial team and add new user to the general channel */
-          const initialChannelData = await models.sequelize.query(
-            queries.getInitialChannelId,
+          /* join all public channels */
+          const publicChannelList = await models.sequelize.query(
+            queries.getPublicChannelList,
             {
               transaction,
               replacements: [initialTeamId],
@@ -306,20 +306,20 @@ export default {
               raw: true
             }
           );
-          const initialChannelId = initialChannelData[0].id;
+          const publicChannelListMember = publicChannelList.map(channel => ({
+            user_id: createdUser.id,
+            channel_id: channel.id
+          }));
 
-          await models.ChannelMember.create(
-            {
-              user_id: createdUser.id,
-              channel_id: initialChannelId
-            },
-            { transaction }
-          );
-          return { createdUser, initialChannelId, initialTeamId };
+          /* create channel member relation for all public channels */
+          await models.ChannelMember.bulkCreate(publicChannelListMember, {
+            transaction
+          });
+          return { createdUser, publicChannelList, initialTeamId };
         }
       );
       const {
-        initialChannelId,
+        publicChannelList,
         initialTeamId,
         createdUser
       } = createUserResponse;
@@ -333,7 +333,9 @@ export default {
 
       // remove stale data from cache
       redisCache.delete(`teamMemberList:${initialTeamId}`);
-      redisCache.delete(`channelMemberList:${initialChannelId}`);
+      publicChannelList.forEach(element => {
+        redisCache.delete(`channelMemberList:${element.id}`);
+      });
 
       /* save session */
       req.session.user = createdUser;
@@ -423,9 +425,9 @@ export default {
             },
             { transaction }
           );
-          /* find the channel general from initial team and add new user to the general channel */
-          const initialChannelData = await models.sequelize.query(
-            queries.getInitialChannelId,
+          /* join all public channels */
+          const publicChannelList = await models.sequelize.query(
+            queries.getPublicChannelList,
             {
               transaction,
               replacements: [initialTeamId],
@@ -433,19 +435,19 @@ export default {
               raw: true
             }
           );
-          const initialChannelId = initialChannelData[0].id;
+          const publicChannelListMember = publicChannelList.map(channel => ({
+            user_id: user.id,
+            channel_id: channel.id
+          }));
 
-          await models.ChannelMember.create(
-            {
-              user_id: user.id,
-              channel_id: initialChannelId
-            },
-            { transaction }
-          );
-          return { user, initialChannelId, initialTeamId };
+          /* create channel member relation for all public channels */
+          await models.ChannelMember.bulkCreate(publicChannelListMember, {
+            transaction
+          });
+          return { user, publicChannelList, initialTeamId };
         }
       );
-      const { initialChannelId, initialTeamId, user } = createUserResponse;
+      const { publicChannelList, initialTeamId, user } = createUserResponse;
 
       /* get user's teams */
       const teamList = await models.sequelize.query(queries.getTeamList, {
@@ -456,7 +458,9 @@ export default {
 
       // remove stale data from cache
       redisCache.delete(`teamMemberList:${initialTeamId}`);
-      redisCache.delete(`channelMemberList:${initialChannelId}`);
+      publicChannelList.forEach(element => {
+        redisCache.delete(`channelMemberList:${element.id}`);
+      });
 
       /* save session */
       req.session.user = user;

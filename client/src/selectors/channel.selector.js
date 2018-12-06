@@ -67,7 +67,9 @@ export const getChannelIsLoading = state => state.channelReducer.isLoading;
 
 /* derived data selectors */
 export const getChannelList = createSelector(getStateChannelList, channelList =>
-  channelList.filter(channel => channel.message_group === false)
+  channelList
+    .filter(channel => channel.message_group === false)
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
 );
 
 export const getMessageGroupList = createSelector(
@@ -76,6 +78,7 @@ export const getMessageGroupList = createSelector(
   (messageGroupList, username) =>
     messageGroupList
       .filter(channel => channel.message_group === true)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .map(messageGroup => {
         if (messageGroup.name) {
           // filter out current username from the group name

@@ -143,64 +143,67 @@ const ModalEditMyProfile = ({
       {fieldErrors.aboutMe && <ErrorInline text={fieldErrors.aboutMe} />}
     </Form.Field>
 
-    {!formOptions.isEditPasswordOn ? (
-      <React.Fragment>
-        <label className="edit-toggle-button" onClick={toggleEditPassword}>
-          Edit Password
-        </label>
-        <br />
-        <br />
-      </React.Fragment>
-    ) : (
-      <React.Fragment>
-        <label className="edit-toggle-button" onClick={toggleEditPassword}>
-          Hide Edit Password
-        </label>
-        <br />
-        <br />
-        <Form.Field>
-          <label>Password:</label>
-          <Input
-            value={formFields.password}
-            onChange={handleFieldChange}
-            name="password"
-            type="password"
-            fluid
-            placeholder={`password`}
-          />
-          {fieldErrors.password && <ErrorInline text={fieldErrors.password} />}
-        </Form.Field>
+    {!currentUser.provider &&
+      (!formOptions.isEditPasswordOn ? (
+        <React.Fragment>
+          <label className="edit-toggle-button" onClick={toggleEditPassword}>
+            Edit Password
+          </label>
+          <br />
+          <br />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <label className="edit-toggle-button" onClick={toggleEditPassword}>
+            Hide Edit Password
+          </label>
+          <br />
+          <br />
+          <Form.Field>
+            <label>Password:</label>
+            <Input
+              value={formFields.password}
+              onChange={handleFieldChange}
+              name="password"
+              type="password"
+              fluid
+              placeholder={`password`}
+            />
+            {fieldErrors.password && (
+              <ErrorInline text={fieldErrors.password} />
+            )}
+          </Form.Field>
 
-        <Form.Field>
-          <label>New Password:</label>
-          <Input
-            value={formFields.newPassword}
-            onChange={handleFieldChange}
-            name="newPassword"
-            type="password"
-            fluid
-            placeholder="new password"
-          />
-          {fieldErrors.newPassword && (
-            <ErrorInline text={fieldErrors.newPassword} />
-          )}
-        </Form.Field>
-        <Form.Field>
-          <label>Confirm New Password:</label>
-          <Input
-            value={formFields.confirmPassword}
-            onChange={handleFieldChange}
-            name="confirmPassword"
-            type="password"
-            fluid
-            placeholder="confirm new password"
-          />
-          {fieldErrors.confirmPassword && (
-            <ErrorInline text={fieldErrors.confirmPassword} />
-          )}
-        </Form.Field>
-      </React.Fragment>
-    )}
+          <Form.Field>
+            <label>New Password:</label>
+            <Input
+              value={formFields.newPassword}
+              onChange={handleFieldChange}
+              name="newPassword"
+              type="password"
+              fluid
+              placeholder="new password"
+            />
+            {fieldErrors.newPassword && (
+              <ErrorInline text={fieldErrors.newPassword} />
+            )}
+          </Form.Field>
+          <Form.Field>
+            <label>Confirm New Password:</label>
+            <Input
+              value={formFields.confirmPassword}
+              onChange={handleFieldChange}
+              name="confirmPassword"
+              type="password"
+              fluid
+              placeholder="confirm new password"
+            />
+            {fieldErrors.confirmPassword && (
+              <ErrorInline text={fieldErrors.confirmPassword} />
+            )}
+          </Form.Field>
+        </React.Fragment>
+      ))}
 
     <Form.Group widths="equal">
       <Button type="button" primary onClick={handleSave} fluid>

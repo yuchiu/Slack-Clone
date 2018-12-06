@@ -112,17 +112,6 @@ export default {
     try {
       const { targetUsername, teamId } = teamData;
 
-      /* find the initial channel general and add new user to the general channel */
-      const initialChannelData = await models.sequelize.query(
-        queries.getInitialChannelId,
-        {
-          replacements: [teamId],
-          model: models.Channel,
-          raw: true
-        }
-      );
-      const initialChannelId = initialChannelData[0];
-
       const userToAdd = await models.User.findOne({
         where: { username: targetUsername },
         raw: true
@@ -137,10 +126,19 @@ export default {
         };
       }
 
-      // remove stale data from cache
-
-      redisCache.delete(`teamMemberList:${teamId}`);
-      redisCache.delete(`channelMemberList:${initialChannelId}`);
+      /* join all public channels */
+      const publicChannelList = await models.sequelize.query(
+        queries.getPublicChannelList,
+        {
+          replacements: [teamId],
+          model: models.Channel,
+          raw: true
+        }
+      );
+      const publicChannelListMember = publicChannelList.map(channel => ({
+        user_id: userToAdd.id,
+        channel_id: channel.id
+      }));
 
       /* create new member  */
       await models.sequelize.transaction(async transaction => {
@@ -149,13 +147,15 @@ export default {
           { transaction }
         );
 
-        await models.ChannelMember.create(
-          {
-            user_id: userToAdd.id,
-            channel_id: initialChannelId
-          },
-          { transaction }
-        );
+        /* create channel member relation for all public channels */
+        await models.ChannelMember.bulkCreate(publicChannelListMember, {
+          transaction
+        });
+        // remove stale data from cache
+        redisCache.delete(`teamMemberList:${teamId}`);
+        publicChannelList.forEach(element => {
+          redisCache.delete(`channelMemberList:${element.id}`);
+        });
       });
 
       /*  get team and channel member list */
@@ -170,7 +170,7 @@ export default {
       const channelMemberList = await models.sequelize.query(
         queries.getChannelMemberList,
         {
-          replacements: [initialChannelId],
+          replacements: [publicChannelList[0].id],
           model: models.User,
           raw: true
         }
@@ -241,29 +241,6 @@ export default {
     try {
       const currentUserId = req.user.id;
       const { teamId } = req.params;
-      // check if redis has the data
-      const channelListCache = await redisCache.get(`channelList:${teamId}`);
-      const teamMemberListCache = await redisCache.get(
-        `teamMemberList:${teamId}`
-      );
-
-      if (channelListCache && teamMemberListCache) {
-        const channelListCacheArr = _.toArray(JSON.parse(channelListCache));
-        const teamMemberListCacheArr = _.toArray(
-          JSON.parse(teamMemberListCache)
-        );
-
-        return res.status(200).send({
-          meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          channelList: channelListCacheArr,
-          teamMemberList: teamMemberListCacheArr
-        });
-      }
-
       const teamMemberList = await models.sequelize.query(
         queries.getTeamMemberList,
         {
@@ -278,10 +255,6 @@ export default {
         model: models.Channel,
         raw: true
       });
-
-      // Save the responses in Redis store
-      redisCache.set(`channelList:${teamId}`, channelList);
-      redisCache.set(`teamMemberList:${teamId}`, teamMemberList);
 
       res.status(200).send({
         meta: {

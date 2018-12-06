@@ -31,13 +31,12 @@ export default {
     FROM teams
     ORDER BY created_at 
     LIMIT 1`,
-  getInitialChannelId: `
+  getPublicChannelList: `
     SELECT 
     channels.id 
     FROM channels
-    WHERE team_id = ? 
-    ORDER BY created_at 
-    LIMIT 1`,
+    WHERE team_id = ? AND channels.public = true
+    ORDER BY created_at`,
   getTeamMemberList: `
     SELECT 
     users.id, 

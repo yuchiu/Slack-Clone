@@ -41,7 +41,7 @@ const LoginForm = ({
         size="large"
       />
     </Form.Field>
-    <Button className="" size="large" onClick={handleLogin}>
+    <Button className="" primary size="large" onClick={handleLogin}>
       Log In
     </Button>
   </Form>
