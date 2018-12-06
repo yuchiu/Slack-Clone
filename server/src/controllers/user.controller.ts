@@ -4,12 +4,19 @@ import * as randomstring from "randomstring";
 import * as randomHex from "randomhex";
 import * as _ from "lodash";
 import * as bcrypt from "bcryptjs";
-import * as request from "superagent";
+import * as axios from "axios";
 import { Request, Response } from "express";
 
 import { redisCache, queries } from "./common";
 import models from "../models";
-import { SERVER_URL, SERVER_PORT, NODE_ENV } from "../utils/secrets";
+import {
+  SERVER_URL,
+  SERVER_PORT,
+  NODE_ENV,
+  GOOGLE_CLIENT_ID,
+  FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET
+} from "../utils/secrets";
 
 const userSummary = user => {
   const summary = {
@@ -194,31 +201,65 @@ export default {
 
       /* oauth user exist, sign in user */
       if (isEmailRegistered && isEmailRegistered.provider) {
-        /* get user's teams */
+        let isOAuthVerified = false;
+        /* validate facebook access token*/
+        if (credentials.provider === "facebook") {
+          const facebookAcessTokenVerifyUrl = `https://graph.facebook.com/debug_token?%20input_token=${
+            credentials.access_token
+          }&access_token=${FACEBOOK_CLIENT_ID}|${FACEBOOK_CLIENT_SECRET}`;
 
-        const signInUser = await models.User.findOne({
-          where: {
-            email: credentials.email
-          },
-          raw: true
-        });
-        const teamList = await models.sequelize.query(queries.getTeamList, {
-          replacements: [signInUser.id],
-          model: models.Team,
-          raw: true
-        });
-        /* save session */
-        req.session.user = signInUser;
-        req.session.save(() => {});
+          const response = await axios.get(facebookAcessTokenVerifyUrl);
+          if (response.data.data.is_valid) {
+            isOAuthVerified = true;
+          }
+        }
 
-        res.status(200).send({
+        /* validate google access token*/
+        if (credentials.provider === "google") {
+          const googleAcessTokenVerifyUrl = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${
+            credentials.access_token
+          }`;
+          const response = await axios.get(googleAcessTokenVerifyUrl);
+          if (response.issued_to === GOOGLE_CLIENT_ID) {
+            isOAuthVerified = true;
+          }
+        }
+
+        /* access token verified*/
+        if (isOAuthVerified) {
+          const signInUser = await models.User.findOne({
+            where: {
+              email: credentials.email
+            },
+            raw: true
+          });
+          const teamList = await models.sequelize.query(queries.getTeamList, {
+            replacements: [signInUser.id],
+            model: models.Team,
+            raw: true
+          });
+          /* save session */
+          req.session.user = signInUser;
+          req.session.save(() => {});
+
+          res.status(200).send({
+            meta: {
+              type: "success",
+              status: 200,
+              message: ""
+            },
+            user: userSummary(signInUser),
+            teamList
+          });
+        }
+
+        /* access token is notverified*/
+        return res.status(403).send({
           meta: {
-            type: "success",
-            status: 200,
-            message: ""
-          },
-          user: userSummary(signInUser),
-          teamList
+            type: "error",
+            status: 403,
+            message: `authorization with ${credentials.provider} failed.`
+          }
         });
       }
 

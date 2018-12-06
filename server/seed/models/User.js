@@ -23,7 +23,6 @@ const UserModel = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        unique: true,
         validate: {
           isAlphanumeric: {
             args: true,

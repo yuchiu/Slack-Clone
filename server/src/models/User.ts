@@ -25,7 +25,6 @@ export const UserFactory = (
     },
     username: {
       type: DataTypes.STRING,
-      unique: true,
       validate: {
         isAlphanumeric: {
           args: true,

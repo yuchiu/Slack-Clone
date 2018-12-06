@@ -29,15 +29,8 @@ process.env.SERVER_PORT
   ? (SERVER_PORT = process.env.SERVER_PORT)
   : (SERVER_PORT = 3030);
 
-export let GITHUB_CLIENT_ID;
-process.env.NODE_ENV === "development"
-  ? (GITHUB_CLIENT_ID = process.env.GITHUB_DEV_CLIENT_ID)
-  : (GITHUB_CLIENT_ID = process.env.GITHUB_PROD_CLIENT_ID);
-
-export let GITHUB_CLIENT_SECRET;
-process.env.NODE_ENV === "development"
-  ? (GITHUB_CLIENT_SECRET = process.env.GITHUB_DEV_CLIENT_SECRET)
-  : (GITHUB_CLIENT_SECRET = process.env.GITHUB_PROD_CLIENT_SECRET);
+export const { FACEBOOK_CLIENT_ID } = process.env;
+export const { FACEBOOK_CLIENT_SECRET } = process.env;
 
 export const { SESSION_NAME } = process.env;
 export const { SESSION_SECRET } = process.env;
