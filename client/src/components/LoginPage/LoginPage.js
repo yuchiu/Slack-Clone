@@ -34,7 +34,7 @@ class LoginPageContainer extends React.Component {
     console.log(res);
     const user = {
       provider: res.provider,
-      username: res.profile.firstName,
+      username: res.profile.firstName + res.profile.lastName,
       email: res.profile.email,
       avatarurl: res.profile.profilePicURL,
       access_token: res.token.accessToken
@@ -45,8 +45,8 @@ class LoginPageContainer extends React.Component {
 
   handleSocialLoginFailure = err => {
     console.error(err);
-    const { createError } = this.props;
-    createError("error occured while logging in with social media");
+    const { createError, error } = this.props;
+    createError(error);
   };
 
   render() {
@@ -109,8 +109,8 @@ const dispatchToProps = dispatch => ({
 });
 
 const formDataToProps = () => ({
-  formFields: { username: "", password: "" },
-  fieldsToValidate: ["username", "password"]
+  formFields: { email: "", password: "" },
+  fieldsToValidate: ["email", "password"]
 });
 
 export default connect(

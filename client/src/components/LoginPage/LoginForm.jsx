@@ -14,16 +14,16 @@ const LoginForm = ({
   <Form className="login-form">
     <Header as="h2">Log In</Header>
     <Form.Field>
-      <label>Username:</label>
-      {fieldErrors.username && <ErrorInline text={fieldErrors.username} />}
+      <label>Email:</label>
+      {fieldErrors.email && <ErrorInline text={fieldErrors.email} />}
       <Input
-        id="username"
+        id="email"
         type="text"
-        name="username"
-        value={formFields.username}
+        name="email"
+        value={formFields.email}
         className=""
         onChange={handleFieldChange}
-        placeholder="username"
+        placeholder="email"
         size="large"
       />
     </Form.Field>

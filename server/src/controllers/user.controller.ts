@@ -9,13 +9,7 @@ import { Request, Response } from "express";
 
 import { redisCache, queries } from "./common";
 import models from "../models";
-import {
-  SERVER_URL,
-  SERVER_PORT,
-  NODE_ENV,
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET
-} from "../utils/secrets";
+import { SERVER_URL, SERVER_PORT, NODE_ENV } from "../utils/secrets";
 
 const userSummary = user => {
   const summary = {
@@ -24,6 +18,7 @@ const userSummary = user => {
     email: user.email,
     brief_description: user.brief_description,
     avatarurl: user.avatarurl,
+    provider: user.provider,
     detail_description: user.detail_description
   };
   return summary;
@@ -143,45 +138,174 @@ export default {
     }
   },
 
-  signInGithubOauth: async (req: Request, res: Response) => {
+  signInOauth: async (req: Request, res: Response) => {
     try {
-      const { code } = req.query;
-      console.log(code);
-
-      if (!code) {
-        res.status(403).send({
+      const credentials = req.body;
+      if (!credentials.username || !credentials.email) {
+        return res.status(403).send({
           meta: {
             type: "error",
             status: 403,
-            message: "no authorization code from Github"
+            message: "username and email are required"
           }
         });
       }
-      request
-        .get("https://github.com/login/oauth/access_token")
-        .send({
-          client_id: GITHUB_CLIENT_ID,
-          client_secret: GITHUB_CLIENT_SECRET,
-          code
-        }) // query string
-        .set("Accept", "application/json")
-        .then(tokenResult => {
-          const accessToken = tokenResult.body.access_token;
-          request
-            .get("https://api.github.com/user")
-            .set("Authorization", "token " + accessToken)
-            .then(userResult => {
-              const { body } = userResult;
-              res.status(200).send({
-                meta: {
-                  type: "success",
-                  status: 200,
-                  message: ""
-                },
-                result: body
-              });
-            });
+      const isEmailRegistered = await models.User.findOne({
+        where: {
+          email: credentials.email
+        },
+        raw: true
+      });
+
+      /* email already registered */
+      if (isEmailRegistered) {
+        if (!isEmailRegistered.provider) {
+          return res.status(403).send({
+            meta: {
+              type: "error",
+              status: 403,
+              message: `email: ${credentials.email} is already registered`
+            }
+          });
+        }
+        if (isEmailRegistered.provider !== credentials.provider) {
+          /* conditions are validated, update the user */
+          // remove empty field
+          const updatedUserData: any = {
+            username: isEmailRegistered.username,
+            avatarurl: isEmailRegistered.avatarurl,
+            email: isEmailRegistered.email,
+            access_token: credentials.access_token,
+            provider: credentials.provider
+          };
+          await models.User.update(
+            {
+              ...updatedUserData
+            },
+            {
+              where: {
+                email: isEmailRegistered.email
+              },
+              individualHooks: true
+            }
+          );
+        }
+      }
+
+      /* oauth user exist, sign in user */
+      if (isEmailRegistered && isEmailRegistered.provider) {
+        /* get user's teams */
+
+        const signInUser = await models.User.findOne({
+          where: {
+            email: credentials.email
+          },
+          raw: true
         });
+        const teamList = await models.sequelize.query(queries.getTeamList, {
+          replacements: [signInUser.id],
+          model: models.Team,
+          raw: true
+        });
+        /* save session */
+        req.session.user = signInUser;
+        req.session.save(() => {});
+
+        res.status(200).send({
+          meta: {
+            type: "success",
+            status: 200,
+            message: ""
+          },
+          user: userSummary(signInUser),
+          teamList
+        });
+      }
+
+      /* new oauth user, register user*/
+
+      /* create new member & auto join default team and channel */
+      const createUserResponse = await models.sequelize.transaction(
+        async transaction => {
+          const newCredentials = { ...credentials };
+          const hasInitialTeamCreated = await models.Team.count();
+          let initialTeamIdData;
+          if (!hasInitialTeamCreated) {
+            initialTeamIdData = await generateInitialDemoTeam();
+          }
+          initialTeamIdData = await models.sequelize.query(
+            queries.getInitialTeamId,
+            {
+              transaction,
+              model: models.Channel,
+              raw: true
+            }
+          );
+          const initialTeamId = initialTeamIdData[0].id;
+          const userData = await models.User.create(newCredentials, {
+            transaction
+          });
+          const createdUser = userData.get({ plain: true });
+          await models.TeamMember.create(
+            {
+              user_id: createdUser.id,
+              team_id: initialTeamId
+            },
+            { transaction }
+          );
+          /* find the channel general from initial team and add new user to the general channel */
+          const initialChannelData = await models.sequelize.query(
+            queries.getInitialChannelId,
+            {
+              transaction,
+              replacements: [initialTeamId],
+              model: models.Channel,
+              raw: true
+            }
+          );
+          const initialChannelId = initialChannelData[0].id;
+
+          await models.ChannelMember.create(
+            {
+              user_id: createdUser.id,
+              channel_id: initialChannelId
+            },
+            { transaction }
+          );
+          return { createdUser, initialChannelId, initialTeamId };
+        }
+      );
+      const {
+        initialChannelId,
+        initialTeamId,
+        createdUser
+      } = createUserResponse;
+
+      /* get user's teams */
+      const teamList = await models.sequelize.query(queries.getTeamList, {
+        replacements: [createdUser.id],
+        model: models.Team,
+        raw: true
+      });
+
+      // remove stale data from cache
+      redisCache.delete(`teamMemberList:${initialTeamId}`);
+      redisCache.delete(`channelMemberList:${initialChannelId}`);
+
+      /* save session */
+      req.session.user = createdUser;
+      req.session.save(() => {});
+
+      /* response */
+      res.status(200).send({
+        meta: {
+          type: "success",
+          status: 200,
+          message: ""
+        },
+        user: userSummary(createdUser),
+        teamList
+      });
     } catch (err) {
       console.log(err);
       res.status(500).send({
@@ -203,22 +327,6 @@ export default {
             type: "error",
             status: 403,
             message: "username and email are required"
-          }
-        });
-      }
-
-      const isUsernameRegistered = await models.User.findOne({
-        where: { username: credentials.username },
-        raw: true
-      });
-
-      /* username already registered */
-      if (isUsernameRegistered) {
-        return res.status(403).send({
-          meta: {
-            type: "error",
-            status: 403,
-            message: `username: ${credentials.username} is already registered`
           }
         });
       }
@@ -336,7 +444,7 @@ export default {
     try {
       const credentials = req.body;
       const user = await models.User.findOne({
-        where: { username: credentials.username },
+        where: { email: credentials.email },
         raw: true
       });
 
@@ -346,9 +454,7 @@ export default {
           meta: {
             type: "error",
             status: 403,
-            message: `this account ${
-              credentials.username
-            } is not yet registered`
+            message: `this account ${credentials.email} is not yet registered`
           }
         });
       }

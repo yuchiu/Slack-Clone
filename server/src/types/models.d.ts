@@ -78,6 +78,8 @@ declare global {
     password: string;
     avatarurl?: string;
     online?: boolean;
+    provider?: string;
+    access_token?: string;
     brief_description?: string;
     detail_description?: string;
     created_at?: Date;

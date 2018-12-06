@@ -68,6 +68,26 @@ const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false
       },
+      provider: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        validate: {
+          len: {
+            args: [0, 1023],
+            msg: "The length cannot be longer than 1024 characters"
+          }
+        }
+      },
+      access_token: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+        validate: {
+          len: {
+            args: [0, 1023],
+            msg: "The length cannot be longer than 1024 characters"
+          }
+        }
+      },
       brief_description: {
         type: DataTypes.STRING,
         defaultValue: "",

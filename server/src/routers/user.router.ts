@@ -7,7 +7,7 @@ const router: express.Router = express.Router();
 
 /* user routes */
 router.get("/auth", authenticationPolicy, userController.tryAutoSingInUser);
-router.get("/signin/github_callback", userController.signInGithubOauth);
+router.post("/oauth", userController.signInOauth);
 router.post("/signup", registerPolicy, userController.signUpUser);
 router.post("/signin", userController.singInUser);
 router.get("/signout", userController.signOutUser);
