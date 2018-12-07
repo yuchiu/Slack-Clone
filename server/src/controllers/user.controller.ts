@@ -202,18 +202,6 @@ export default {
       /* oauth user exist, sign in user */
       if (isEmailRegistered && isEmailRegistered.provider) {
         let isOAuthVerified = false;
-        /* validate facebook access token*/
-        if (credentials.provider === "facebook") {
-          const facebookAcessTokenVerifyUrl = `https://graph.facebook.com/debug_token?%20input_token=${
-            credentials.access_token
-          }&access_token=${FACEBOOK_CLIENT_ID}|${FACEBOOK_CLIENT_SECRET}`;
-
-          const response = await axios.get(facebookAcessTokenVerifyUrl);
-          if (response.data.data.is_valid) {
-            isOAuthVerified = true;
-          }
-        }
-
         /* validate google access token*/
         if (credentials.provider === "google") {
           const googleAcessTokenVerifyUrl = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${

@@ -43,15 +43,6 @@ const RegisterPage = ({
         <br />
         <div className="social-btn-group">
           <SocialButton
-            provider="facebook"
-            appId={FACEBOOK_CLIENT_ID}
-            onLoginSuccess={handleSocialLogin}
-            onLoginFailure={handleSocialLoginFailure}
-          >
-            <i className="fab fa-facebook fa-2x" />
-            Facebook
-          </SocialButton>
-          <SocialButton
             provider="google"
             appId={GOOGLE_CLIENT_ID}
             onLoginSuccess={handleSocialLogin}

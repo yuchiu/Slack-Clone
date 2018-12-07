@@ -1,5 +1,4 @@
 import * as express from "express";
-import * as path from "path";
 import * as http from "http";
 import * as socketIo from "socket.io";
 import * as cors from "cors";
@@ -36,7 +35,7 @@ if (NODE_ENV === "development") {
 /* production build */
 if (NODE_ENV === "production") {
   /* client is served with seperate server, allow cors for that client server */
-  app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
+  app.use(cors({ credentials: true, origin: "http://yuchiu-slack.surge.sh" }));
 
   /* client is served within server, join client build path */
   // app.use(express.static(path.join(__dirname, "./client")));
