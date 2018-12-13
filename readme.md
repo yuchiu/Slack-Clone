@@ -7,27 +7,35 @@
 - [Live Site Demo](#live-site-demo)
 - [Video Demo](#video-demo)
 
-[Tech Stack](#tech-stack)
+[Objectives](#objectives)
 
-- [Client Side](#client-side)
-- [Server Side](#server-side)
+- [User Stories](#user-stories)
+- [Future Expansions](#future-expansions)
+
+[Tech Stack](#tech-stack)
 
 [System Architecture Diagram](#system-architecture-diagram)
 
 - [Client Diagram](#client-diagram)
 - [Server Diagram](#server-diagram)
 
-[Required Development Tools](#required-development-tools)
+[Getting Started](#getting-started)
 
-[Development Environment](#development-environment)
+- [Prerequisites](#prerequisites)
+- [Server Development Environment](#server-development-emvironment)
+- [Client Development Environment](#client-development-environment)
 
-- [Server Development](#server-development)
-- [Client Development](#client-development)
+[Production Deployment](#production-deployment)
 
-[Production Environment](#production-environment)
+- [Prerequisites](#prerequisites)
+- [Server Production Deployment](#server-production-deployment)
+- [Client Production Deployment](#client-production-deployment)
 
-- [Server Production](#server-production)
-- [Client Production](#client-production)
+[Author](#author)
+
+[License](#liscense)
+
+[Acknowledgments](#acknowledgments)
 
 ---
 
@@ -43,15 +51,61 @@
 
 ---
 
+## Objectives
+
+- single page application with React and its ecosystem
+- Flexbox and CSS Grid for UI layout
+- User authentications with sessions and OAuth2
+- Real time messaging and file sharing
+- cache SQL queries and static files for optimized performance
+- loading balancing for scalability
+- Containerized with Docker
+
+### User Stories
+
+- users can register and log in to their account
+- users can edit his/her profile info, including profile image & password
+- users can create team
+- teams description can be edited only by admin
+- users can invite people to join their team
+- users can create channel inside his/her team
+- channels can be public or private for invited members only
+- channels description can be edited by channel members
+- users can create direct message or group message with other team members
+- users can send real time message within channels or direct message
+- users can share images, audio or text files to other users
+
+### Future Expansions
+
+- Splitting different functionalities into its own services to maximize resource allocations
+- implemented more features in WebSocket instead of REST, similiar to Slack's implementation
+- Implements more test coverage
+- Optimization
+  - More advanced webpack config
+  - Prerendering
+
+---
+
 ## Tech Stack
 
-### Client Side
-
-- Reactjs ∙ Redux ∙ React-Redux ∙ React-Router ∙ Redux-Thunk ∙ Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
-
-### Server Side
-
-- Nodejs ∙ TypeScript ∙ Expressjs ∙ RESTful API ∙ Socket io ∙ Redis ∙ PostgreSQL ∙ Sequelize ∙ Nginx ∙ Docker
+- [React](https://github.com/facebook/react) ∙ [React-Router](https://github.com/ReactTraining/react-router)
+  - component based single page application
+- [Redux](https://github.com/reduxjs/redux) ∙ [Redux-Thunk](https://github.com/reduxjs/redux-thunk) ∙ [Reselect](https://github.com/reduxjs/reselect)
+  - client side data management
+- [SCSS](https://sass-lang.com/) ∙ [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React)
+  - Styling
+- [Node.js](https://github.com/nodejs) ∙ [Express](https://github.com/expressjs/express) ∙ [TypeScript](https://github.com/Microsoft/TypeScript)
+  - web server & services in service oriented architecure
+- RESTful API ∙ [Socket.io](https://github.com/socketio/socket.io)
+  - HTTP & WebSocket implementations
+- [Redis](https://github.com/antirez/redis)
+  - session store, cache SQL query results
+- [Postgres](https://github.com/postgres/postgres) ∙ [Sequelize](https://github.com/sequelize/sequelize)
+  - persisted database
+- [Nginx](https://github.com/nginx/nginx)
+  - load balancer, reverse proxy, caching static file
+- [Docker](https://github.com/docker)
+  - containerization
 
 ---
 
@@ -67,26 +121,24 @@
 
 ---
 
-## Required Development Tools
+## Getting Started
 
-- **required development tools** and the versions this project is running on
+### Prerequisites
 
-  | Softwares                         | Versions   |
-  | --------------------------------- | ---------- |
-  | npm                               | 6.4.1      |
-  | nodejs                            | 10.10.0    |
-  | postgres                          | 10.5       |
-  | redis-server                      | 4.0.3      |
-  | **Optional for production build** |
-  | nginx                             | 1.14.0     |
-  | docker                            | 18.06.1-ce |
-  | docker-compose                    | 1.22.0     |
+**!important** .env file is required for setting up environment variables for this project  
+ an example of .env file client is using by default is located at ./client/.env  
+ an example of .env file server is using by default is located at ./server/.env
 
----
+#### Tools & Versions
 
-## Development Environment
+| Softwares    | Versions |
+| ------------ | -------- |
+| npm          | 6.4.1    |
+| nodejs       | 10.10.0  |
+| postgres     | 10.5     |
+| redis-server | 4.0.3    |
 
-### Server Development
+### Server Development Environment
 
 - postgres client for Nodejs need to be installed globally
 
@@ -94,48 +146,40 @@
   npm install pg -global
   ```
 
-- **!important** .env file is required for setting up environment variables  
-  an example of .env file is located at ./server/.env
+* we are using default value for redis's environment variables in this application, modify accordingly to your environment in .env file
 
-- we are using default value for redis's environment variables in this application, modify accordingly to your environment
+* postgres database needs to be setup first  
+  Postgres configuration is stored in .env file, modifiy .env variables for your own environment
 
-- postgres database needs to be setup first  
-  Postgres configuration is stored in .env file, modifiy .env variables for your own environment  
-  The list of default .env variable values this this application use:  
-  PSQL_HOST(database host) = "localhost"  
-  PSQL_NAME(database name) = "slack"  
-  PSQL_USER(database admin username) = "postgres"  
-  PSQL_PASS(database admin password) = "postgres"
-
-* install Slack-Clone server's dependencies
+- install Slack-Clone server's dependencies
 
   ```npm ./server
   cd slack-clone/server
   npm install
   ```
 
-* **optional:** populate/reset Postgres database with initial seed data  
+- **optional:** populate/reset Postgres database with initial seed data  
   seed configuration & schema is in dir ./server/seed
 
   ```npm ./server
   npm run seed
   ```
 
-* for initial run on the machine, output a build directory  
+- for initial run on the machine, output a build directory  
   build directory will output to ./server/build
 
   ```npm ./server
   npm run build
   ```
 
-* start application in server  
+- start application in server  
   server will be listening to [http://localhost:3030]
 
   ```npm ./server
   npm start
   ```
 
-### Client Development
+#### Client Development Environment
 
 - install dependencies & start application in client  
   application will be running on [http://localhost:3000]
@@ -148,14 +192,25 @@
 
 ---
 
-## Production Environment
+## Production Deployment
 
-### Server Production
+### Prerequisites
+
+#### Tools & Versions
+
+| Softwares for Production Deployment | Versions   |
+| ----------------------------------- | ---------- |
+| nginx                               | 1.14.0     |
+| docker                              | 18.06.1-ce |
+| docker-compose                      | 1.22.0     |
+
+### Server Production Deployment
 
 - install dependencies & output production build in server  
   production build directory will be output to ./server/build
 
   ```npm ./server
+  cd slack-clone/server
   npm install
   npm run build
   ```
@@ -170,17 +225,9 @@
   ```
 
 - **!important**: client API url's port is set to **80** by default in its production build  
-  change client API url's port setting to **3030** that's located at **./client/src/actions/services/API.js**
+  change server port from **3030** to **80** in server's .env file
 
 #### Option B. Serve Application with Nginx & Docker Container (Recommended)
-
-- softwares required for this build
-
-  | Softwares      | Versions   |
-  | -------------- | ---------- |
-  | nginx          | 1.14.0     |
-  | docker         | 18.06.1-ce |
-  | docker-compose | 1.22.0     |
 
 - build the Docker image as "slack-clone" with Dockerfile using the server's production build
   Docker build file is located at ./server/Dockerfile
@@ -197,12 +244,13 @@
   docker-compose up
   ```
 
-### Client Production
+### Client Production Deployment
 
 - install dependencies & output production build in client  
   production build directory will be output to ./client/build
 
   ```npm ./client
+  cd slack-clone/client
   npm install
   npm run build
   ```
@@ -214,3 +262,31 @@
   npm i -g serve
   npm run serve
   ```
+
+## Author
+
+- Yu Chiu
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+---
+
+## Acknowledgments
+
+### Project inspired by [Ben Awad](https://github.com/benawad)'s [Slack Clone](https://github.com/benawad/slack-clone-client).
+
+### key differences are the followings:
+
+- Restructure Client and Server code base from ground zero
+- Use Redux as state management instead of Apollo
+- Optimized code base structure to be more scalable and reusable
+- Use RESTful and Socket.io instead of GraphQL and Redis Pub Sub for data transmission
+- Use TypeScript in Server instead of ES6 JavaScript
+- modified database schema for better performance
+- expanded functionalities including uploading profile image, sidebars, profile editing and so on
+
+---

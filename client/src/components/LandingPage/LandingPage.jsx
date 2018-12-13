@@ -56,8 +56,8 @@ const LandingPage = () => (
           <div className="landing-desc__detail__tech-stack">
             Client Side
             <div className="landing-desc__detail__tech-stack__client">
-              Reactjs ∙ Redux ∙ React-Redux ∙ React-Router ∙ Redux-Thunk ∙
-              Reselect ∙ Axios ∙ Jest ∙ SCSS ∙ Semantic UI
+              Reactjs ∙ Redux ∙ React-Router ∙ Redux-Thunk ∙ Reselect ∙ SCSS ∙
+              Semantic UI
             </div>
             Server Side
             <div className="landing-desc__detail__tech-stack__server">
