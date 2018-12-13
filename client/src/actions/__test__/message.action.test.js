@@ -9,7 +9,7 @@ describe("message.action", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
-  it("should fetch message list from server", async () => {
+  it("messageAction.fetchMoreMessage - should fetch message list from server", async () => {
     messageService.fetchMoreMessage.mockReturnValueOnce({
       data: {
         messageList: []

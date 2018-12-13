@@ -9,8 +9,8 @@ import Navbar from "./Navbar.jsx";
 
 class NavbarContainer extends React.Component {
   handleLogout = () => {
-    const { fetchLogoutUser, history } = this.props;
-    fetchLogoutUser();
+    const { fetchSignOutUser, history } = this.props;
+    fetchSignOutUser();
     history.push("/");
   };
 
@@ -33,7 +33,7 @@ NavbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
-  fetchLogoutUser: PropTypes.func.isRequired
+  fetchSignOutUser: PropTypes.func.isRequired
 };
 
 const stateToProps = state => ({
@@ -42,8 +42,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  fetchLogoutUser: () => {
-    dispatch(userAction.fetchLogoutUser());
+  fetchSignOutUser: () => {
+    dispatch(userAction.fetchSignOutUser());
   }
 });
 

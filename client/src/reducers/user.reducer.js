@@ -8,12 +8,17 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case actionTypes.USER_FETCH_AUTO_LOGIN:
+    case actionTypes.USER_FETCH_TRY_AUTO_SIGNIN:
       newState.currentUser = action.payload.user;
       return newState;
 
-    case actionTypes.USER_FETCH_LOGIN_SUCCESS:
+    case actionTypes.USER_FETCH_SIGNIN:
+      newState.isLoading = true;
+      return newState;
+
+    case actionTypes.USER_FETCH_SIGNIN_SUCCESS:
       newState.currentUser = action.payload.user;
+      newState.isLoading = false;
       return newState;
 
     case actionTypes.USER_FETCH_EDIT:
@@ -29,7 +34,7 @@ export default (state = initialState, action) => {
       newState.isLoading = false;
       return newState;
 
-    case actionTypes.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_SIGNOUT:
       return initialState;
 
     default:

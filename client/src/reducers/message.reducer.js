@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
       newState.isLoading = false;
       return newState;
 
-    case actionTypes.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_SIGNOUT:
       return initialState;
 
     default:

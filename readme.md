@@ -1,6 +1,6 @@
 # Slack Clone
 
-## Quick Link
+## Quick Links
 
 [Demo](#demo)
 
@@ -24,6 +24,8 @@
 - [Prerequisites](#prerequisites)
 - [Server Development Environment](#server-development-emvironment)
 - [Client Development Environment](#client-development-environment)
+
+[Testing](#testing)
 
 [Production Deployment](#production-deployment)
 
@@ -192,6 +194,20 @@
 
 ---
 
+## Testing
+
+### Client
+
+- Redux data flow are covered in the tests including actions, reducers, selectors
+
+  ```npm ./client
+  cd slack-clone/client
+  npm install
+  npm run test
+  ```
+
+---
+
 ## Production Deployment
 
 ### Prerequisites
@@ -277,16 +293,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-### Project inspired by [Ben Awad](https://github.com/benawad)'s [Slack Clone](https://github.com/benawad/slack-clone-client).
+- Project inspired by [Ben Awad](https://github.com/benawad)'s [Slack Clone](https://github.com/benawad/slack-clone-client).
 
-### key differences are the followings:
+- key differences are the followings:
 
-- Restructure Client and Server code base from ground zero
-- Use Redux as state management instead of Apollo
-- Optimized code base structure to be more scalable and reusable
-- Use RESTful and Socket.io instead of GraphQL and Redis Pub Sub for data transmission
-- Use TypeScript in Server instead of ES6 JavaScript
-- modified database schema for better performance
-- expanded functionalities including uploading profile image, sidebars, profile editing and so on
+  - Restructure Client and Server code base from ground zero
+  - Use Redux as state management instead of Apollo
+  - Use sessions and OAuth2 intead of JWT for authentications
+  - Use RESTful and Socket.io instead of GraphQL and Redis Pub Sub for data transmission
+  - Use TypeScript in Server instead of ES6 JavaScript
+  - modified database schema for better performance
+  - expanded functionalities including uploading profile image, sidebars, profile editing and so on
 
 ---

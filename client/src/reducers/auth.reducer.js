@@ -9,22 +9,22 @@ const initialState = {
 export default (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
-    case actionTypes.USER_FETCH_AUTO_LOGIN:
+    case actionTypes.USER_FETCH_TRY_AUTO_SIGNIN:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return newState;
 
-    case actionTypes.USER_FETCH_LOGIN:
+    case actionTypes.USER_FETCH_SIGNIN:
       newState.isLoading = true;
       return newState;
 
-    case actionTypes.USER_FETCH_LOGIN_SUCCESS:
+    case actionTypes.USER_FETCH_SIGNIN_SUCCESS:
       sessionStore.setUserLoggedIn();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       newState.isLoading = false;
       return newState;
 
-    case actionTypes.USER_FETCH_LOGOUT:
+    case actionTypes.USER_FETCH_SIGNOUT:
       sessionStore.setUserLoggedOut();
       newState.isUserLoggedIn = sessionStore.getLoginStatus();
       return initialState;

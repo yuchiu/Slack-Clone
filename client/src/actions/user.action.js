@@ -5,11 +5,11 @@ export default {
   /**
    * fetch API with Axios
    */
-  fetchAutoAuth: () => async dispatch => {
-    const response = await userService.fetchAutoAuth();
+  fetchTryAutoSignIn: () => async dispatch => {
+    const response = await userService.fetchTryAutoSignIn();
     const { data } = response;
     dispatch({
-      type: actionTypes.USER_FETCH_AUTO_LOGIN,
+      type: actionTypes.USER_FETCH_TRY_AUTO_SIGNIN,
       payload: data
     });
   },
@@ -34,15 +34,15 @@ export default {
     }
   },
 
-  fetchRegisterUser: credentials => async dispatch => {
+  fetchSignUpUser: credentials => async dispatch => {
     dispatch({
-      type: actionTypes.USER_FETCH_LOGIN
+      type: actionTypes.USER_FETCH_SIGNIN
     });
     try {
-      const response = await userService.fetchRegisterUser(credentials);
+      const response = await userService.fetchSignUpUser(credentials);
       const { data } = response;
       dispatch({
-        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
+        type: actionTypes.USER_FETCH_SIGNIN_SUCCESS,
         payload: data
       });
     } catch (err) {
@@ -54,15 +54,15 @@ export default {
     }
   },
 
-  fetchLoginUser: credentials => async dispatch => {
+  fetchSignInUser: credentials => async dispatch => {
     dispatch({
-      type: actionTypes.USER_FETCH_LOGIN
+      type: actionTypes.USER_FETCH_SIGNIN
     });
     try {
-      const response = await userService.fetchLoginUser(credentials);
+      const response = await userService.fetchSignInUser(credentials);
       const { data } = response;
       dispatch({
-        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
+        type: actionTypes.USER_FETCH_SIGNIN_SUCCESS,
         payload: data
       });
     } catch (err) {
@@ -76,13 +76,13 @@ export default {
 
   fetchOAuthLogin: credentials => async dispatch => {
     dispatch({
-      type: actionTypes.USER_FETCH_LOGIN
+      type: actionTypes.USER_FETCH_SIGNIN
     });
     try {
       const response = await userService.fetchOAuthLogin(credentials);
       const { data } = response;
       dispatch({
-        type: actionTypes.USER_FETCH_LOGIN_SUCCESS,
+        type: actionTypes.USER_FETCH_SIGNIN_SUCCESS,
         payload: data
       });
     } catch (err) {
@@ -94,12 +94,12 @@ export default {
     }
   },
 
-  fetchLogoutUser: () => async dispatch => {
+  fetchSignOutUser: () => async dispatch => {
     dispatch({
-      type: actionTypes.USER_FETCH_LOGOUT
+      type: actionTypes.USER_FETCH_SIGNOUT
     });
     try {
-      await userService.fetchLogoutUser();
+      await userService.fetchSignOutUser();
     } catch (err) {
       const { data } = err.response;
       dispatch({

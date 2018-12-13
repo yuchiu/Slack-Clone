@@ -297,7 +297,7 @@ export default {
       });
 
       const channelList = await models.sequelize.query(queries.getChannelList, {
-        replacements: { team_id: teamId, user_id: currentUserId },
+        replacements: { teamId, userId: currentUserId },
         model: models.Channel,
         raw: true
       });

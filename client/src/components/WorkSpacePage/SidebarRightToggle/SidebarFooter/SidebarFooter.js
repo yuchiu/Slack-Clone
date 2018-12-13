@@ -8,9 +8,9 @@ import SidebarFooter from "./SidebarFooter.jsx";
 
 class SidebarFooterContainer extends React.Component {
   handleClick = () => {
-    const { history, fetchLogoutUser, clearAllError } = this.props;
+    const { history, fetchSignOutUser, clearAllError } = this.props;
     clearAllError();
-    fetchLogoutUser();
+    fetchSignOutUser();
     history.push("/");
   };
 
@@ -23,15 +23,15 @@ SidebarFooterContainer.propTypes = {
   history: PropTypes.object.isRequired,
 
   clearAllError: PropTypes.func.isRequired,
-  fetchLogoutUser: PropTypes.func.isRequired
+  fetchSignOutUser: PropTypes.func.isRequired
 };
 
 const dispatchToProps = dispatch => ({
   clearAllError: () => {
     dispatch(errorAction.clearAllError());
   },
-  fetchLogoutUser: () => {
-    dispatch(userAction.fetchLogoutUser());
+  fetchSignOutUser: () => {
+    dispatch(userAction.fetchSignOutUser());
   }
 });
 

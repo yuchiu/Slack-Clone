@@ -18,13 +18,13 @@ class LoginPageContainer extends React.Component {
       fieldsValidation,
       clearAllError,
       formFields,
-      fetchLoginUser
+      fetchSignInUser
     } = this.props;
     const fieldErrors = fieldsValidation();
 
     // fetch login if there are no errors
     if (Object.keys(fieldErrors).length === 0) {
-      fetchLoginUser(formFields);
+      fetchSignInUser(formFields);
       clearAllError();
     }
   };
@@ -84,7 +84,7 @@ LoginPageContainer.propTypes = {
   fieldErrors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
-  fetchLoginUser: PropTypes.func.isRequired,
+  fetchSignInUser: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   fieldsValidation: PropTypes.func.isRequired
 };
@@ -97,8 +97,8 @@ const stateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
   clearAllError: () => dispatch(errorAction.clearAllError()),
-  fetchLoginUser: credential => {
-    dispatch(userAction.fetchLoginUser(credential));
+  fetchSignInUser: credential => {
+    dispatch(userAction.fetchSignInUser(credential));
   },
   fetchOAuthLogin: credential => {
     dispatch(userAction.fetchOAuthLogin(credential));

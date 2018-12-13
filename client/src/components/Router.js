@@ -11,8 +11,8 @@ class RouterContainer extends React.Component {
   };
 
   UNSAFE_componentWillMount() {
-    const { fetchAutoAuth } = this.props;
-    fetchAutoAuth();
+    const { fetchTryAutoSignIn } = this.props;
+    fetchTryAutoSignIn();
   }
 
   componentDidCatch(error, info) {
@@ -29,12 +29,12 @@ class RouterContainer extends React.Component {
 }
 
 RouterContainer.propTypes = {
-  fetchAutoAuth: PropTypes.func.isRequired
+  fetchTryAutoSignIn: PropTypes.func.isRequired
 };
 
 const dispatchToProps = dispatch => ({
-  fetchAutoAuth: () => {
-    dispatch(userAction.fetchAutoAuth());
+  fetchTryAutoSignIn: () => {
+    dispatch(userAction.fetchTryAutoSignIn());
   }
 });
 

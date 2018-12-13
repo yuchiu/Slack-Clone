@@ -15,7 +15,7 @@ class RegisterPageContainer extends React.Component {
 
   handleRegister = () => {
     const {
-      fetchRegisterUser,
+      fetchSignUpUser,
       clearAllError,
       updateFieldErrors,
       fieldsValidation,
@@ -31,7 +31,7 @@ class RegisterPageContainer extends React.Component {
     }
     // fetch login if there are no errors
     if (Object.keys(fieldErrors).length === 0) {
-      fetchRegisterUser({
+      fetchSignUpUser({
         username: formFields.username,
         email: formFields.email,
         password: formFields.password
@@ -96,7 +96,7 @@ RegisterPageContainer.propTypes = {
   history: PropTypes.object.isRequired,
 
   updateFieldErrors: PropTypes.func.isRequired,
-  fetchRegisterUser: PropTypes.func.isRequired,
+  fetchSignUpUser: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   fieldsValidation: PropTypes.func.isRequired
 };
@@ -109,8 +109,8 @@ const stateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
   clearAllError: () => dispatch(errorAction.clearAllError()),
-  fetchRegisterUser: credential => {
-    dispatch(userAction.fetchRegisterUser(credential));
+  fetchSignUpUser: credential => {
+    dispatch(userAction.fetchSignUpUser(credential));
   },
   fetchOAuthLogin: credential => {
     dispatch(userAction.fetchOAuthLogin(credential));
