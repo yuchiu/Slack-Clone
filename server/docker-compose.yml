@@ -20,7 +20,7 @@ services:
       - host
     environment:
       NODE_ENV: production
-      SERVER_URL: http://localhost
+      SERVER_URL: http://18.224.68.146
       SERVER_PORT: 3030
       PSQL_HOST: pg_db
       REDIS_HOST: redis_db
@@ -36,7 +36,7 @@ services:
       - host
     environment:
       NODE_ENV: production
-      SERVER_URL: http://localhost
+      SERVER_URL: http://18.224.68.146
       SERVER_PORT: 3031
       PSQL_HOST: pg_db
       REDIS_HOST: redis_db
