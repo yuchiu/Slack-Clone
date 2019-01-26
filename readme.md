@@ -49,7 +49,7 @@
 
 ### Video Demo
 
-![demogif](https://i.imgur.com/L7nUeVU.gif)
+![demogif](https://github.com/yuchiu/slack-clone/blob/master/slack-clone-demo.gif)
 
 ---
 
